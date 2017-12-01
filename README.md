@@ -17,7 +17,7 @@ Also remember this tool is free - if you payed for it, you were scammed!
 Simply unzip archive anywhere you want.
 
 ## Contribution
-Anyone who will can contribute into this project. It seriously needs some work, y'kno?
+Anyone who will can contribute into this project (when I'll figure out this Git thing...). It seriously needs some work, y'kno?
 
 ## Versioning
 We version it by year, month, day and time (HHMMss). I personally use [Automatic Versions tool by Precision Infinity](https://marketplace.visualstudio.com/items?itemName=PrecisionInfinity.AutomaticVersions), which does that automaticly.
