@@ -39,6 +39,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lookForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,7 +125,8 @@
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.infoToolStripMenuItem,
-            this.lookForUpdateToolStripMenuItem});
+            this.lookForUpdateToolStripMenuItem,
+            this.gitToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.aboutToolStripMenuItem.Text = "Tool";
@@ -139,8 +141,16 @@
             // lookForUpdateToolStripMenuItem
             // 
             this.lookForUpdateToolStripMenuItem.Name = "lookForUpdateToolStripMenuItem";
-            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.lookForUpdateToolStripMenuItem.Text = "Look for update";
+            this.lookForUpdateToolStripMenuItem.Click += new System.EventHandler(this.lookForUpdateToolStripMenuItem_Click);
+            // 
+            // gitToolStripMenuItem
+            // 
+            this.gitToolStripMenuItem.Name = "gitToolStripMenuItem";
+            this.gitToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.gitToolStripMenuItem.Text = "Check source code";
+            this.gitToolStripMenuItem.Click += new System.EventHandler(this.gitToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -182,6 +192,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lookForUpdateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gitToolStripMenuItem;
     }
 }
 

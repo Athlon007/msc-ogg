@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NReco.VideoConverter;
 using Microsoft.Win32;
@@ -30,6 +23,10 @@ namespace OggConverter
             version = fvi.FileVersion;
 
             log.Text += "MSC OGG Converter " + version;
+
+            //Looking for updates
+            Update upd = new Update();
+            upd.LookForUpdate();
 
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
             {
@@ -148,6 +145,16 @@ namespace OggConverter
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(":)");
+        }
+
+        private void gitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://gitlab.com/aathlon/msc-ogg");
+        }
+
+        private void lookForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Update upd = new Update();
         }
     }
 }
