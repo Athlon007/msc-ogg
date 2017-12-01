@@ -45,6 +45,14 @@ namespace OggConverter
 
         bool skipCD;
 
+        /*
+            ####  ##### ####  #   # ##### #     #####
+            #   # #     #   # #  #  #     #     #
+            ####  ####  ####  ###   ####  #     ####
+            #     #     #  #  # ##  #     #     #
+            #     ##### #   # #  ## ##### ##### #####
+         */
+
         private void button1_Click(object sender, EventArgs e)
         {
             log.Text += Environment.NewLine + "Initializing Radio folder convertion...";
@@ -144,7 +152,13 @@ namespace OggConverter
 
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(":)");
+            string l = Environment.NewLine;
+            MessageBox.Show(
+                "MSC OGG Converter " + version + l
+                + "by Athlon"+ l +
+                l+
+                "All info about third party libraries you can find on official GitLab repo."
+                , "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void gitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,6 +169,7 @@ namespace OggConverter
         private void lookForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Update upd = new Update();
+            upd.LookForUpdate();
         }
     }
 }

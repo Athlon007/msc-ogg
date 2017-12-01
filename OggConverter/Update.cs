@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.IO;
-using Microsoft.Win32;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -21,7 +20,7 @@ namespace OggConverter
 
                 if (res == DialogResult.Yes)
                 {
-                    Process.Start("");
+                    Process.Start("https://gitlab.com/aathlon/msc-ogg");
                 }
             }
             else
