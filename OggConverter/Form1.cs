@@ -82,6 +82,7 @@ namespace OggConverter
                     string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                     cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg);
                     log.Text += file.Name + " as track" + i + ".ogg" + Environment.NewLine;
+                    File.Delete(file.Name);
                     i++;
                     totalConvertionsRadio++;
                 }
@@ -107,6 +108,7 @@ namespace OggConverter
                     string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                     cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg);
                     log.Text += file.Name + " as track" + a + ".ogg" + Environment.NewLine;
+                    File.Delete(file.Name);
                     a++;
                     totalConvertionsCD++;
                 }
