@@ -238,5 +238,15 @@ namespace OggConverter
         {
             Process.Start("LastConversion.txt");
         }
+
+        private void launchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (txtboxPath.Text.Length == 0)
+            {
+                MessageBox.Show("Select game directory first.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+            Process.Start(txtboxPath.Text + @"\mysummercar.exe");
+        }
     }
 }

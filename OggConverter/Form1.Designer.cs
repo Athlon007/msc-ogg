@@ -44,6 +44,7 @@
             this.removeOldMP3FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLOGFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLastConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.launchTheGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +120,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem,
+            this.launchTheGameToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -189,6 +191,13 @@
             this.openLastConversionToolStripMenuItem.Text = "Open last conversion log";
             this.openLastConversionToolStripMenuItem.Click += new System.EventHandler(this.openLastConversionToolStripMenuItem_Click);
             // 
+            // launchTheGameToolStripMenuItem
+            // 
+            this.launchTheGameToolStripMenuItem.Name = "launchTheGameToolStripMenuItem";
+            this.launchTheGameToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.launchTheGameToolStripMenuItem.Text = "Launch the game";
+            this.launchTheGameToolStripMenuItem.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -235,6 +244,7 @@
         private System.Windows.Forms.ToolStripMenuItem removeOldMP3FilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLOGFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLastConversionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem launchTheGameToolStripMenuItem;
     }
 }
 
