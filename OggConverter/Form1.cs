@@ -28,22 +28,32 @@ namespace OggConverter
 
             log.Text += "MSC OGG Converter " + version;
 
-            //Looking for updates
-            Update upd = new Update();
-            upd.LookForUpdate();
 
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
+            try
             {
-                if (Key != null)
+                //Looking for updates
+                Update upd = new Update();
+                upd.LookForUpdate();
+
+                using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
                 {
-                    txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+                    if (Key != null)
+                    {
+                        txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+                    }
+                }
+
+                if (!Directory.Exists(txtboxPath.Text + @"\CD"))
+                {
+                    skipCD = true;
+                    log.Text += l + "CD folder is missing (you're propably using 24.10.2017 version of game or older), so it will be skipped.";
                 }
             }
-
-            if (!Directory.Exists(txtboxPath.Text + @"\CD"))
+            catch (Exception ex)
             {
-                skipCD = true;
-                log.Text += l + "CD folder is missing (you're propably using 24.10.2017 version of game or older), so it will be skipped.";
+                //new Log(ex.ToString());
+                //TODO
+                //This is temporary fix for NullReferenceException error while loading. It'll be fixed later                
             }
         }
 
