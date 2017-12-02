@@ -27,24 +27,7 @@ namespace OggConverter
             version = fvi.FileVersion;
 
             log.Text += "MSC OGG Converter " + version;
-            log.Text += l +l + "What's new:" + l +
-                "Added:" + l +
-                "- LOG handler(they're now saved into LOG folder in program's directory)" + l +
-                "- Conversion output as TXT file as for request of Crazysteve190" + l +
-                "- Open LOG folder button into Tool menu strip" + l +
-                "- Open last conversion log button into Tool menu strip" + l +
-                "- After finished conversion, Windows sound now plays" + l +
-                "- Launch the game button" + l +
-                l +
-                "Changes:" + l +
-                "- Moved conversion void to async void" + l +
-                "- You cannot close program if you've started one conversion" + l +
-                l +
-                "Bug fixes:" + l +
-                "-Fixed bug that would allow start second conversion if one is running already" + l +
-                "- You can now move window freely when conversion is in progress" + l +
-                "- Fixed typos" + l +
-                "- Temporary fix for NullReferenceException error while loading.It'll be fixed later. For now the error window will not pop up";
+            log.Text += l +l + "You can check out log at Steam community discussion: http://steamcommunity.com/app/516750/discussions/2/1489992713697876617/";
 
             try
             {

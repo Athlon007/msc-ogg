@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.txtboxPath = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.log = new System.Windows.Forms.TextBox();
@@ -40,11 +41,11 @@
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lookForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeOldMP3FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLOGFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLastConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launchTheGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeOldMP3FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -150,7 +151,7 @@
             // lookForUpdateToolStripMenuItem
             // 
             this.lookForUpdateToolStripMenuItem.Name = "lookForUpdateToolStripMenuItem";
-            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.lookForUpdateToolStripMenuItem.Text = "Look for update";
             this.lookForUpdateToolStripMenuItem.Click += new System.EventHandler(this.lookForUpdateToolStripMenuItem_Click);
             // 
@@ -160,6 +161,27 @@
             this.gitToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
             this.gitToolStripMenuItem.Text = "Checkout project repo at GitLab";
             this.gitToolStripMenuItem.Click += new System.EventHandler(this.gitToolStripMenuItem_Click);
+            // 
+            // openLOGFolderToolStripMenuItem
+            // 
+            this.openLOGFolderToolStripMenuItem.Name = "openLOGFolderToolStripMenuItem";
+            this.openLOGFolderToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.openLOGFolderToolStripMenuItem.Text = "Open LOG folder";
+            this.openLOGFolderToolStripMenuItem.Click += new System.EventHandler(this.openLOGFolderToolStripMenuItem_Click);
+            // 
+            // openLastConversionToolStripMenuItem
+            // 
+            this.openLastConversionToolStripMenuItem.Name = "openLastConversionToolStripMenuItem";
+            this.openLastConversionToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.openLastConversionToolStripMenuItem.Text = "Open last conversion log";
+            this.openLastConversionToolStripMenuItem.Click += new System.EventHandler(this.openLastConversionToolStripMenuItem_Click);
+            // 
+            // launchTheGameToolStripMenuItem
+            // 
+            this.launchTheGameToolStripMenuItem.Name = "launchTheGameToolStripMenuItem";
+            this.launchTheGameToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.launchTheGameToolStripMenuItem.Text = "Launch the game";
+            this.launchTheGameToolStripMenuItem.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -177,27 +199,6 @@
             this.removeOldMP3FilesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.removeOldMP3FilesToolStripMenuItem.Text = "Remove old MP3 files after conversion";
             // 
-            // openLOGFolderToolStripMenuItem
-            // 
-            this.openLOGFolderToolStripMenuItem.Name = "openLOGFolderToolStripMenuItem";
-            this.openLOGFolderToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.openLOGFolderToolStripMenuItem.Text = "Open LOG folder";
-            this.openLOGFolderToolStripMenuItem.Click += new System.EventHandler(this.openLOGFolderToolStripMenuItem_Click);
-            // 
-            // openLastConversionToolStripMenuItem
-            // 
-            this.openLastConversionToolStripMenuItem.Name = "openLastConversionToolStripMenuItem";
-            this.openLastConversionToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.openLastConversionToolStripMenuItem.Text = "Open last conversion log";
-            this.openLastConversionToolStripMenuItem.Click += new System.EventHandler(this.openLastConversionToolStripMenuItem_Click);
-            // 
-            // launchTheGameToolStripMenuItem
-            // 
-            this.launchTheGameToolStripMenuItem.Name = "launchTheGameToolStripMenuItem";
-            this.launchTheGameToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
-            this.launchTheGameToolStripMenuItem.Text = "Launch the game";
-            this.launchTheGameToolStripMenuItem.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,6 +213,7 @@
             this.Controls.Add(this.txtboxPath);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Form1";
