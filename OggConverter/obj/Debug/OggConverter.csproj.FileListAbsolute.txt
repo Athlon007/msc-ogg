@@ -1,4 +1,3 @@
-C:\Users\aathl\source\repos\OggConverter\OggConverter\bin\Debug\NReco.VideoConverter.dll
 C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Debug\OggConverter.csprojResolveAssemblyReference.cache
 C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Debug\OggConverter.Form1.resources
 C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Debug\OggConverter.Properties.Resources.resources

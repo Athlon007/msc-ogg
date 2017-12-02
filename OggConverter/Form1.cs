@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using NReco.VideoConverter;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace OggConverter
 {
@@ -57,13 +58,19 @@ namespace OggConverter
         {
             log.Text += Environment.NewLine + "Initializing Radio folder convertion...";
 
+            Convert();
+        }
+
+        //Moved convertion to separated async void - it fixed UI freeze!
+        async void Convert()
+        {
             int i = 1; //Radio num
             int a = 1; //CD num
 
             int totalConvertionsRadio = 0;
             int totalConvertionsCD = 0;
-
             var cnv = new FFMpegConverter();
+
             //Converting Radio
             {
                 string path = txtboxPath.Text + @"\Radio\";
@@ -80,9 +87,9 @@ namespace OggConverter
                 {
                     log.Text += "Converting " + file.Name + Environment.NewLine;
                     string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
-                    cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg);
+                    await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
                     log.Text += file.Name + " as track" + i + ".ogg" + Environment.NewLine;
-                    File.Delete(file.Name);
+                    //File.Delete(file.Name);
                     i++;
                     totalConvertionsRadio++;
                 }
@@ -106,13 +113,13 @@ namespace OggConverter
                 {
                     log.Text += "Converting " + file.Name + Environment.NewLine;
                     string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
-                    cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg);
+                    await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
                     log.Text += file.Name + " as track" + a + ".ogg" + Environment.NewLine;
-                    File.Delete(file.Name);
+                    //File.Delete(file.Name);
                     a++;
                     totalConvertionsCD++;
                 }
-                log.Text += Environment.NewLine + "Converted " + totalConvertionsCD + " files in CD converted.";
+                log.Text += Environment.NewLine + "Converted " + totalConvertionsCD + " files in CD folder.";
             }
             else
             {
@@ -121,6 +128,7 @@ namespace OggConverter
 
             log.Text += Environment.NewLine + "Converted " + (totalConvertionsRadio + totalConvertionsCD) + " files total.";
             log.Text += Environment.NewLine + "Done";
+            System.Media.SystemSounds.Exclamation.Play();
         }
 
         private void log_TextChanged(object sender, EventArgs e)
