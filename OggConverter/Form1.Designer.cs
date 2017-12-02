@@ -43,6 +43,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeOldMP3FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLOGFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openLastConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,7 +132,8 @@
             this.infoToolStripMenuItem,
             this.lookForUpdateToolStripMenuItem,
             this.gitToolStripMenuItem,
-            this.openLOGFolderToolStripMenuItem});
+            this.openLOGFolderToolStripMenuItem,
+            this.openLastConversionToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.aboutToolStripMenuItem.Text = "Tool";
@@ -139,8 +141,8 @@
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.infoToolStripMenuItem.Text = "Info";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.infoToolStripMenuItem.Text = "About";
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // lookForUpdateToolStripMenuItem
@@ -153,23 +155,25 @@
             // gitToolStripMenuItem
             // 
             this.gitToolStripMenuItem.Name = "gitToolStripMenuItem";
-            this.gitToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.gitToolStripMenuItem.Text = "Check source code";
+            this.gitToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.gitToolStripMenuItem.Text = "Checkout project repo at GitLab";
             this.gitToolStripMenuItem.Click += new System.EventHandler(this.gitToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeOldMP3FilesToolStripMenuItem});
+            this.settingsToolStripMenuItem.Enabled = false;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Visible = false;
             // 
             // removeOldMP3FilesToolStripMenuItem
             // 
             this.removeOldMP3FilesToolStripMenuItem.Name = "removeOldMP3FilesToolStripMenuItem";
-            this.removeOldMP3FilesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.removeOldMP3FilesToolStripMenuItem.Text = "Remove old MP3 files";
+            this.removeOldMP3FilesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.removeOldMP3FilesToolStripMenuItem.Text = "Remove old MP3 files after conversion";
             // 
             // openLOGFolderToolStripMenuItem
             // 
@@ -177,6 +181,13 @@
             this.openLOGFolderToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.openLOGFolderToolStripMenuItem.Text = "Open LOG folder";
             this.openLOGFolderToolStripMenuItem.Click += new System.EventHandler(this.openLOGFolderToolStripMenuItem_Click);
+            // 
+            // openLastConversionToolStripMenuItem
+            // 
+            this.openLastConversionToolStripMenuItem.Name = "openLastConversionToolStripMenuItem";
+            this.openLastConversionToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.openLastConversionToolStripMenuItem.Text = "Open last conversion log";
+            this.openLastConversionToolStripMenuItem.Click += new System.EventHandler(this.openLastConversionToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -197,6 +208,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MSC OGG Converter";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -222,6 +234,7 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeOldMP3FilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLOGFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openLastConversionToolStripMenuItem;
     }
 }
 

@@ -17,6 +17,9 @@ namespace OggConverter
             InitializeComponent();
         }
 
+        bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
+        bool NoExit; //Prevents the program from closing if conversion is in progress
+
         private void Form1_Load(object sender, EventArgs e)
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -44,8 +47,6 @@ namespace OggConverter
             }
         }
 
-        bool skipCD;
-
         /*
             ####  ##### ####  #   # ##### #     #####
             #   # #     #   # #  #  #     #     #
@@ -58,11 +59,24 @@ namespace OggConverter
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (NoExit)
+            {
+                MessageBox.Show("Conversion is in progress...", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
+            if (txtboxPath.Text.Length == 0)
+            {
+                MessageBox.Show("Select game path first.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
+            NoExit = true;
             log.Text += l + "Initializing Async Void...";
             Convert();
         }
 
-        //Moved convertion to separated async void - it fixed UI freeze!
+        //Moved conversion to separated async void - it fixed UI freeze!
         async void Convert()
         {
             try
@@ -70,14 +84,14 @@ namespace OggConverter
                 int i = 1; //Radio num
                 int a = 1; //CD num
 
-                int totalConvertionsRadio = 0;
-                int totalConvertionsCD = 0;
+                int totalConversionsRadio = 0;
+                int totalConversionsCD = 0;
                 var cnv = new FFMpegConverter();
 
                 // Keeps conversion log which will be later saved into LastConversion.txt
                 string ConversionLog = "THIS FILE WILL BE WIPED AFTER NEXT CONVERSION:" + l + l;
                 
-                log.Text += l + "Initializing Radio folder convertion..." +l;
+                log.Text += l + "Initializing Radio folder conversion..." +l;
                 //Converting Radio
                 {
                     ConversionLog += "RADIO:" +l;
@@ -98,15 +112,15 @@ namespace OggConverter
                         await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + i + ".ogg" + l;
                         //File.Delete(file.Name);
-                        ConversionLog += "Converted " + file.Name + " as track" + i + ".ogg" + l;
+                        ConversionLog += "Converted " + file.Name + " to track" + i + ".ogg" + l;
                         i++;
-                        totalConvertionsRadio++;
+                        totalConversionsRadio++;
                     }
-                    log.Text += l + "Converted " + totalConvertionsRadio + " files in Radio converted.";
+                    log.Text += l + "Converted " + totalConversionsRadio + " files in Radio converted.";
                 }
                 ConversionLog += l + l;
                 //Converting CD
-                log.Text += l + "Initializing CD folder convertion..." +l;
+                log.Text += l + "Initializing CD folder conversion..." +l;
                 if (!skipCD)
                 {
                     ConversionLog += "CD:" + l;
@@ -126,20 +140,20 @@ namespace OggConverter
                         await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + a + ".ogg" + l;
                         //File.Delete(file.Name);
-                        ConversionLog += "Converted " + file.Name + " as track" + i + ".ogg" + l;
+                        ConversionLog += "Converted " + file.Name + " to track" + i + ".ogg" + l;
                         a++;
-                        totalConvertionsCD++;
+                        totalConversionsCD++;
                     }
-                    log.Text += l + "Converted " + totalConvertionsCD + " files in CD folder.";
+                    log.Text += l + "Converted " + totalConversionsCD + " files in CD folder.";
                 }
                 else
                 {
                     log.Text += l + "Skipping CD folder.";
                 }
-                ConversionLog += "This conversion was created in: " + DateTime.Now.ToLocalTime();
+                ConversionLog += l + l + "This conversion was created in: " + DateTime.Now.ToLocalTime();
                 File.WriteAllText(@"LastConversion.txt", ConversionLog);
                 Process.Start(@"LastConversion.txt");
-                log.Text += l + "Converted " + (totalConvertionsRadio + totalConvertionsCD) + " files total.";
+                log.Text += l + "Converted " + (totalConversionsRadio + totalConversionsCD) + " files total.";
                 log.Text += l + "Done";
                 System.Media.SystemSounds.Exclamation.Play();
             }
@@ -147,6 +161,7 @@ namespace OggConverter
             {
                 new Log(ex.ToString());
             }
+            NoExit = false;
         }
 
         private void log_TextChanged(object sender, EventArgs e)
@@ -175,6 +190,12 @@ namespace OggConverter
 
         private void button3_Click(object sender, EventArgs e)
         {
+            if (txtboxPath.Text.Length == 0)
+            {
+                MessageBox.Show("Select game path first.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Process.Start(txtboxPath.Text);
         }
 
@@ -203,6 +224,19 @@ namespace OggConverter
         {
             Directory.CreateDirectory(@"LOG");
             Process.Start(@"LOG");
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (NoExit)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void openLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("LastConversion.txt");
         }
     }
 }
