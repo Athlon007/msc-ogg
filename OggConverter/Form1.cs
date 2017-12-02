@@ -126,7 +126,7 @@ namespace OggConverter
                         i++;
                         totalConversionsRadio++;
                     }
-                    log.Text += l + "Converted " + totalConversionsRadio + " files in Radio converted.";
+                    log.Text += l + "Converted " + totalConversionsRadio + " files in Radio.";
                 }
                 ConversionLog += l + l;
                 //Converting CD
@@ -150,7 +150,7 @@ namespace OggConverter
                         await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + a + ".ogg" + l;
                         //File.Delete(file.Name);
-                        ConversionLog += "Converted " + file.Name + " to track" + i + ".ogg" + l;
+                        ConversionLog += "Converted " + file.Name + " to track" + a + ".ogg" + l;
                         a++;
                         totalConversionsCD++;
                     }
