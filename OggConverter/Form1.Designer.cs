@@ -42,6 +42,7 @@
             this.gitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeOldMP3FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openLOGFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -129,7 +130,8 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.infoToolStripMenuItem,
             this.lookForUpdateToolStripMenuItem,
-            this.gitToolStripMenuItem});
+            this.gitToolStripMenuItem,
+            this.openLOGFolderToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.aboutToolStripMenuItem.Text = "Tool";
@@ -168,6 +170,13 @@
             this.removeOldMP3FilesToolStripMenuItem.Name = "removeOldMP3FilesToolStripMenuItem";
             this.removeOldMP3FilesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.removeOldMP3FilesToolStripMenuItem.Text = "Remove old MP3 files";
+            // 
+            // openLOGFolderToolStripMenuItem
+            // 
+            this.openLOGFolderToolStripMenuItem.Name = "openLOGFolderToolStripMenuItem";
+            this.openLOGFolderToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.openLOGFolderToolStripMenuItem.Text = "Open LOG folder";
+            this.openLOGFolderToolStripMenuItem.Click += new System.EventHandler(this.openLOGFolderToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -212,6 +221,7 @@
         private System.Windows.Forms.ToolStripMenuItem gitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeOldMP3FilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openLOGFolderToolStripMenuItem;
     }
 }
 

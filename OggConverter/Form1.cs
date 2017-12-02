@@ -40,7 +40,7 @@ namespace OggConverter
             if (!Directory.Exists(txtboxPath.Text + @"\CD"))
             {
                 skipCD = true;
-                log.Text += Environment.NewLine + "CD folder is missing (you're propably using 24.10.2017 version of game or older), so it will be skipped.";
+                log.Text += l + "CD folder is missing (you're propably using 24.10.2017 version of game or older), so it will be skipped.";
             }
         }
 
@@ -54,81 +54,90 @@ namespace OggConverter
             #     ##### #   # #  ## ##### ##### #####
          */
 
+        string l = Environment.NewLine;
+
         private void button1_Click(object sender, EventArgs e)
         {
-            log.Text += Environment.NewLine + "Initializing Radio folder convertion...";
-
+            log.Text += l + "Initializing Async Void...";
             Convert();
         }
 
         //Moved convertion to separated async void - it fixed UI freeze!
         async void Convert()
         {
-            int i = 1; //Radio num
-            int a = 1; //CD num
-
-            int totalConvertionsRadio = 0;
-            int totalConvertionsCD = 0;
-            var cnv = new FFMpegConverter();
-
-            //Converting Radio
+            try
             {
-                string path = txtboxPath.Text + @"\Radio\";
-                DirectoryInfo d = new DirectoryInfo(path);
-                FileInfo[] Files = d.GetFiles("*.mp3");
+                int i = 1; //Radio num
+                int a = 1; //CD num
 
-                //Counting how many OGG files there are already
-                for (int c = 1; File.Exists(path + "track" + c + ".ogg"); c++)
+                int totalConvertionsRadio = 0;
+                int totalConvertionsCD = 0;
+                var cnv = new FFMpegConverter();
+
+                log.Text += l + "Initializing Radio folder convertion...";
+                //Converting Radio
                 {
-                    i++;
+                    string path = txtboxPath.Text + @"\Radio\";
+                    DirectoryInfo d = new DirectoryInfo(path);
+                    FileInfo[] Files = d.GetFiles("*.mp3");
+
+                    //Counting how many OGG files there are already
+                    for (int c = 1; File.Exists(path + "track" + c + ".ogg"); c++)
+                    {
+                        i++;
+                    }
+
+                    foreach (FileInfo file in Files)
+                    {
+                        log.Text += "Converting " + file.Name + l;
+                        string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
+                        await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
+                        log.Text += file.Name + " as track" + i + ".ogg" + l;
+                        //File.Delete(file.Name);
+                        i++;
+                        totalConvertionsRadio++;
+                    }
+                    log.Text += l + "Converted " + totalConvertionsRadio + " files in Radio converted.";
                 }
 
-                foreach (FileInfo file in Files)
+                //Converting CD
+                log.Text += l + "Initializing CD folder convertion...";
+                if (!skipCD)
                 {
-                    log.Text += "Converting " + file.Name + Environment.NewLine;
-                    string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
-                    await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
-                    log.Text += file.Name + " as track" + i + ".ogg" + Environment.NewLine;
-                    //File.Delete(file.Name);
-                    i++;
-                    totalConvertionsRadio++;
+                    string pathCD = txtboxPath.Text + @"\CD\";
+                    DirectoryInfo cd = new DirectoryInfo(pathCD);
+                    FileInfo[] FilesCD = cd.GetFiles("*.mp3");
+                    //Counting how many OGG files there are already
+                    for (int c = 1; File.Exists(pathCD + "track" + c + ".ogg"); c++)
+                    {
+                        a++;
+                    }
+
+                    foreach (FileInfo file in FilesCD)
+                    {
+                        log.Text += "Converting " + file.Name + l;
+                        string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
+                        await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
+                        log.Text += file.Name + " as track" + a + ".ogg" + l;
+                        //File.Delete(file.Name);
+                        a++;
+                        totalConvertionsCD++;
+                    }
+                    log.Text += l + "Converted " + totalConvertionsCD + " files in CD folder.";
                 }
-                log.Text += Environment.NewLine + "Converted " + totalConvertionsRadio + " files in Radio converted.";
+                else
+                {
+                    log.Text += l + "Skipping CD folder.";
+                }
+
+                log.Text += l + "Converted " + (totalConvertionsRadio + totalConvertionsCD) + " files total.";
+                log.Text += l + "Done";
+                System.Media.SystemSounds.Exclamation.Play();
             }
-
-            //Converting CD
-            log.Text += Environment.NewLine + "Initializing CD folder convertion...";
-            if (!skipCD)
+            catch (Exception ex)
             {
-                string pathCD = txtboxPath.Text + @"\CD\";
-                DirectoryInfo cd = new DirectoryInfo(pathCD);
-                FileInfo[] FilesCD = cd.GetFiles("*.mp3");
-                //Counting how many OGG files there are already
-                for (int c = 1; File.Exists(pathCD + "track" + c + ".ogg"); c++)
-                {
-                    a++;
-                }
-
-                foreach (FileInfo file in FilesCD)
-                {
-                    log.Text += "Converting " + file.Name + Environment.NewLine;
-                    string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
-                    await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
-                    log.Text += file.Name + " as track" + a + ".ogg" + Environment.NewLine;
-                    //File.Delete(file.Name);
-                    a++;
-                    totalConvertionsCD++;
-                }
-                log.Text += Environment.NewLine + "Converted " + totalConvertionsCD + " files in CD folder.";
+                new Log(ex.ToString());
             }
-            else
-            {
-                log.Text += Environment.NewLine + "Skipping CD folder.";
-            }
-
-            log.Text += Environment.NewLine + "Converted " + (totalConvertionsRadio + totalConvertionsCD) + " files total.";
-            log.Text += Environment.NewLine + "Done";
-            System.Media.SystemSounds.Exclamation.Play();
         }
 
         private void log_TextChanged(object sender, EventArgs e)
@@ -149,7 +158,7 @@ namespace OggConverter
                 }
                 else
                 {
-                    log.Text += Environment.NewLine + "Couldn't find mysummercar.exe";
+                    log.Text += l + "Couldn't find mysummercar.exe";
                 }
             }
 
@@ -162,7 +171,6 @@ namespace OggConverter
 
         private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string l = Environment.NewLine;
             MessageBox.Show(
                 "MSC OGG Converter " + version + l
                 + "by Athlon"+ l +
@@ -180,6 +188,12 @@ namespace OggConverter
         {
             Update upd = new Update();
             upd.LookForUpdate();
+        }
+
+        private void openLOGFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory(@"LOG");
+            Process.Start(@"LOG");
         }
     }
 }
