@@ -12,23 +12,30 @@ namespace OggConverter
 
         public void LookForUpdate()
         {
-            DownloadFile("http://athlon.kkmr.pl/download/mscogg/ver.txt", "ver.txt");
-
-            if (IsThereNewUpdate("ver.txt"))
+            try
             {
-                DialogResult res = MessageBox.Show("There's new update ready to download", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DownloadFile("http://athlon.kkmr.pl/download/mscogg/ver.txt", "ver.txt");
 
-                if (res == DialogResult.Yes)
+                if (IsThereNewUpdate("ver.txt"))
                 {
-                    Process.Start("https://gitlab.com/aathlon/msc-ogg");
-                }
-            }
-            else
-            {
-                File.Delete("ver.txt");
-            }
+                    DialogResult res = MessageBox.Show("There's new update ready to download", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-            LookedForUpdate = true;
+                    if (res == DialogResult.Yes)
+                    {
+                        Process.Start("https://gitlab.com/aathlon/msc-ogg");
+                    }
+                }
+                else
+                {
+                    File.Delete("ver.txt");
+                }
+
+                LookedForUpdate = true;
+            }
+            catch (Exception ex)
+            {
+                new Log(ex.ToString());
+            }
         }
 
         public void DownloadFile(string From, string To)

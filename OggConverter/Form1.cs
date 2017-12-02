@@ -74,9 +74,13 @@ namespace OggConverter
                 int totalConvertionsCD = 0;
                 var cnv = new FFMpegConverter();
 
-                log.Text += l + "Initializing Radio folder convertion...";
+                // Keeps conversion log which will be later saved into LastConversion.txt
+                string ConversionLog = "THIS FILE WILL BE WIPED AFTER NEXT CONVERSION:" + l + l;
+                
+                log.Text += l + "Initializing Radio folder convertion..." +l;
                 //Converting Radio
                 {
+                    ConversionLog += "RADIO:" +l;
                     string path = txtboxPath.Text + @"\Radio\";
                     DirectoryInfo d = new DirectoryInfo(path);
                     FileInfo[] Files = d.GetFiles("*.mp3");
@@ -94,16 +98,18 @@ namespace OggConverter
                         await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + i + ".ogg" + l;
                         //File.Delete(file.Name);
+                        ConversionLog += "Converted " + file.Name + " as track" + i + ".ogg" + l;
                         i++;
                         totalConvertionsRadio++;
                     }
                     log.Text += l + "Converted " + totalConvertionsRadio + " files in Radio converted.";
                 }
-
+                ConversionLog += l + l;
                 //Converting CD
-                log.Text += l + "Initializing CD folder convertion...";
+                log.Text += l + "Initializing CD folder convertion..." +l;
                 if (!skipCD)
                 {
+                    ConversionLog += "CD:" + l;
                     string pathCD = txtboxPath.Text + @"\CD\";
                     DirectoryInfo cd = new DirectoryInfo(pathCD);
                     FileInfo[] FilesCD = cd.GetFiles("*.mp3");
@@ -120,6 +126,7 @@ namespace OggConverter
                         await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + a + ".ogg" + l;
                         //File.Delete(file.Name);
+                        ConversionLog += "Converted " + file.Name + " as track" + i + ".ogg" + l;
                         a++;
                         totalConvertionsCD++;
                     }
@@ -129,7 +136,9 @@ namespace OggConverter
                 {
                     log.Text += l + "Skipping CD folder.";
                 }
-
+                ConversionLog += "This conversion was created in: " + DateTime.Now.ToLocalTime();
+                File.WriteAllText(@"LastConversion.txt", ConversionLog);
+                Process.Start(@"LastConversion.txt");
                 log.Text += l + "Converted " + (totalConvertionsRadio + totalConvertionsCD) + " files total.";
                 log.Text += l + "Done";
                 System.Media.SystemSounds.Exclamation.Play();

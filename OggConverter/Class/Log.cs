@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace OggConverter
 {
@@ -16,6 +18,12 @@ namespace OggConverter
                 l +
                 log
                 );
+
+            DialogResult dl = MessageBox.Show("Error has occured. Log has been saved into LOG directory. Would you like to open directory?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            if (dl == DialogResult.Yes)
+            {
+                Process.Start("LOG");
+            }
         }
 
 
