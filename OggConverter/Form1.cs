@@ -40,6 +40,17 @@ namespace OggConverter
                     if (Key != null)
                     {
                         txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+
+                        if (Key.GetValue("RemoveMP3").Equals("true"))
+                        {
+                            remMP3.Checked = true;
+                            RemoveMP3 = true;
+                        }
+                        else
+                        {
+                            remMP3.Checked = false;
+                            RemoveMP3 = false;
+                        }
                     }
                 }
 
@@ -49,7 +60,7 @@ namespace OggConverter
                     log.Text += l + "CD folder is missing (you're propably using 24.10.2017 version of game or older), so it will be skipped.";
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //new Log(ex.ToString());
                 //TODO
@@ -66,6 +77,7 @@ namespace OggConverter
          */
 
         string l = Environment.NewLine;
+        bool RemoveMP3;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -121,8 +133,11 @@ namespace OggConverter
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                         await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + i + ".ogg" + l;
-                        //File.Delete(file.Name);
-                        ConversionLog += "Converted " + file.Name + " to track" + i + ".ogg" + l;
+                        if (RemoveMP3)
+                        {
+                            File.Delete(path + file.Name);
+                        }
+                        ConversionLog += "\"" + file.Name + "\" as \"" + i + ".ogg\"" + l;
                         i++;
                         totalConversionsRadio++;
                     }
@@ -149,8 +164,11 @@ namespace OggConverter
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                         await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + a + ".ogg" + l;
-                        //File.Delete(file.Name);
-                        ConversionLog += "Converted " + file.Name + " to track" + a + ".ogg" + l;
+                        if (RemoveMP3)
+                        {
+                            File.Delete(pathCD + file.Name);
+                        }
+                        ConversionLog += "\"" + file.Name + "\" as \"" + i + ".ogg\"" + l;
                         a++;
                         totalConversionsCD++;
                     }
@@ -258,6 +276,33 @@ namespace OggConverter
                 return;
             }
             Process.Start(txtboxPath.Text + @"\mysummercar.exe");
+        }
+
+        private void removeOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG", true);
+
+            try
+            {
+                if (Key.GetValue("RemoveMP3").Equals("false"))
+                {
+                    Key.SetValue("RemoveMP3", "true");
+                    remMP3.Checked = true;
+                    RemoveMP3 = true;
+                }
+                else
+                {
+                    Key.SetValue("RemoveMP3", "false");
+                    remMP3.Checked = false;
+                    RemoveMP3 = false;
+                }
+            }
+            catch (Exception)
+            {
+                Key.SetValue("RemoveMP3", "true");
+                remMP3.Checked = true;
+                RemoveMP3 = true;
+            }
         }
     }
 }

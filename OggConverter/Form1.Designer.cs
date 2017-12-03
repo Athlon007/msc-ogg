@@ -45,7 +45,7 @@
             this.openLastConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launchTheGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeOldMP3FilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.remMP3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -186,18 +186,17 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeOldMP3FilesToolStripMenuItem});
-            this.settingsToolStripMenuItem.Enabled = false;
+            this.remMP3});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Visible = false;
             // 
-            // removeOldMP3FilesToolStripMenuItem
+            // remMP3
             // 
-            this.removeOldMP3FilesToolStripMenuItem.Name = "removeOldMP3FilesToolStripMenuItem";
-            this.removeOldMP3FilesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.removeOldMP3FilesToolStripMenuItem.Text = "Remove old MP3 files after conversion";
+            this.remMP3.Name = "remMP3";
+            this.remMP3.Size = new System.Drawing.Size(256, 22);
+            this.remMP3.Text = "Remove MP3 files after conversion";
+            this.remMP3.Click += new System.EventHandler(this.removeOldMP3FilesToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -243,7 +242,7 @@
         private System.Windows.Forms.ToolStripMenuItem lookForUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeOldMP3FilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem remMP3;
         private System.Windows.Forms.ToolStripMenuItem openLOGFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLastConversionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchTheGameToolStripMenuItem;
