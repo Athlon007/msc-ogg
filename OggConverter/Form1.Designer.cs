@@ -46,6 +46,9 @@
             this.launchTheGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.remMP3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.steamCommunityDiscussionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -121,8 +124,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem,
-            this.launchTheGameToolStripMenuItem,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.launchTheGameToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(336, 24);
@@ -132,11 +135,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.infoToolStripMenuItem,
-            this.lookForUpdateToolStripMenuItem,
-            this.gitToolStripMenuItem,
             this.openLOGFolderToolStripMenuItem,
-            this.openLastConversionToolStripMenuItem});
+            this.openLastConversionToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.gitToolStripMenuItem,
+            this.steamCommunityDiscussionToolStripMenuItem,
+            this.lookForUpdateToolStripMenuItem,
+            this.infoToolStripMenuItem,
+            this.quitToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.aboutToolStripMenuItem.Text = "Tool";
@@ -144,35 +150,35 @@
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.infoToolStripMenuItem.Text = "About";
             this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // lookForUpdateToolStripMenuItem
             // 
             this.lookForUpdateToolStripMenuItem.Name = "lookForUpdateToolStripMenuItem";
-            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.lookForUpdateToolStripMenuItem.Text = "Look for update";
             this.lookForUpdateToolStripMenuItem.Click += new System.EventHandler(this.lookForUpdateToolStripMenuItem_Click);
             // 
             // gitToolStripMenuItem
             // 
             this.gitToolStripMenuItem.Name = "gitToolStripMenuItem";
-            this.gitToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
-            this.gitToolStripMenuItem.Text = "Checkout project repo at GitLab";
+            this.gitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.gitToolStripMenuItem.Text = "Project\'s repository on GitLab";
             this.gitToolStripMenuItem.Click += new System.EventHandler(this.gitToolStripMenuItem_Click);
             // 
             // openLOGFolderToolStripMenuItem
             // 
             this.openLOGFolderToolStripMenuItem.Name = "openLOGFolderToolStripMenuItem";
-            this.openLOGFolderToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.openLOGFolderToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.openLOGFolderToolStripMenuItem.Text = "Open LOG folder";
             this.openLOGFolderToolStripMenuItem.Click += new System.EventHandler(this.openLOGFolderToolStripMenuItem_Click);
             // 
             // openLastConversionToolStripMenuItem
             // 
             this.openLastConversionToolStripMenuItem.Name = "openLastConversionToolStripMenuItem";
-            this.openLastConversionToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.openLastConversionToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.openLastConversionToolStripMenuItem.Text = "Open last conversion log";
             this.openLastConversionToolStripMenuItem.Click += new System.EventHandler(this.openLastConversionToolStripMenuItem_Click);
             // 
@@ -197,6 +203,25 @@
             this.remMP3.Size = new System.Drawing.Size(256, 22);
             this.remMP3.Text = "Remove MP3 files after conversion";
             this.remMP3.Click += new System.EventHandler(this.removeOldMP3FilesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
+            // 
+            // quitToolStripMenuItem
+            // 
+            this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.quitToolStripMenuItem.Text = "Quit";
+            this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+            // 
+            // steamCommunityDiscussionToolStripMenuItem
+            // 
+            this.steamCommunityDiscussionToolStripMenuItem.Name = "steamCommunityDiscussionToolStripMenuItem";
+            this.steamCommunityDiscussionToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.steamCommunityDiscussionToolStripMenuItem.Text = "Steam Community discussion";
+            this.steamCommunityDiscussionToolStripMenuItem.Click += new System.EventHandler(this.steamCommunityDiscussionToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -246,6 +271,9 @@
         private System.Windows.Forms.ToolStripMenuItem openLOGFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openLastConversionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchTheGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem steamCommunityDiscussionToolStripMenuItem;
     }
 }
 

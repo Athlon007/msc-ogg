@@ -27,7 +27,7 @@ namespace OggConverter
             version = fvi.FileVersion;
 
             log.Text += "MSC OGG Converter " + version;
-            log.Text += l +l + "You can check out log at Steam community discussion: http://steamcommunity.com/app/516750/discussions/2/1489992713697876617/";
+            log.Text += l +l + "You can checkout changelog on Steam community discussion, or on project's repository.";
 
             try
             {
@@ -303,6 +303,16 @@ namespace OggConverter
                 remMP3.Checked = true;
                 RemoveMP3 = true;
             }
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void steamCommunityDiscussionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://steamcommunity.com/app/516750/discussions/2/1489992713697876617/");
         }
     }
 }
