@@ -5,6 +5,7 @@ using NReco.VideoConverter;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace OggConverter
 {
@@ -121,7 +122,14 @@ namespace OggConverter
                     ConversionLog += "RADIO:" +l;
                     string path = txtboxPath.Text + @"\Radio\";
                     DirectoryInfo d = new DirectoryInfo(path);
-                    FileInfo[] Files = d.GetFiles("*.mp3");
+                    //FileInfo[] Files = d.GetFiles("*.mp3");
+
+                    //It should catch MP3 as well as WAV files
+                    string[] extensions = new[] { ".mp3", ".wav"};
+                    FileInfo[] Files 
+                        = d.GetFiles()
+                        .Where(f => extensions.Contains(f.Extension.ToLower()))
+                        .ToArray();
 
                     //Counting how many OGG files there are already
                     for (int c = 1; File.Exists(path + "track" + c + ".ogg"); c++)
@@ -139,7 +147,7 @@ namespace OggConverter
                         {
                             File.Delete(path + file.Name);
                         }
-                        ConversionLog += "\"" + file.Name + "\" as \"" + i + ".ogg\"" + l;
+                        ConversionLog += "\"" + file.Name + "\" as \"track" + i + ".ogg\"" + l;
                         i++;
                         totalConversionsRadio++;
                     }
@@ -170,7 +178,7 @@ namespace OggConverter
                         {
                             File.Delete(pathCD + file.Name);
                         }
-                        ConversionLog += "\"" + file.Name + "\" as \"" + i + ".ogg\"" + l;
+                        ConversionLog += "\"" + file.Name + "\" as \"track" + i + ".ogg\"" + l;
                         a++;
                         totalConversionsCD++;
                     }
