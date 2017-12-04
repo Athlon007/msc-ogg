@@ -1,4 +1,4 @@
-# 2017.12.x.xxxx
+# 2017.12.4.2228
 
 ### Added:
 - Manifest file
@@ -15,6 +15,7 @@
 ### Fixes:
 - Fixed typos
 - Fixed incorrect author in EXE info
+- Dialog box when update is available
 
 # 2017.12.3.1522
 

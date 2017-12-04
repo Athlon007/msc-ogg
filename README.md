@@ -12,7 +12,7 @@ Also remember this tool is free - if you payed for it, you were scammed!
 
 ## Download
 ###### [Download](https://gitlab.com/aathlon/msc-ogg/tree/master/mscogg.zip)
-###### [EXE only (for updates)](https://gitlab.com/aathlon/msc-ogg/tree/master/mscogg.zip)
+###### [EXE only (for updates)](https://gitlab.com/aathlon/msc-ogg/tree/master/mscoggexe.zip)
 
 ## Installation
 Simply unzip archive anywhere you want.

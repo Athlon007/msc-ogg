@@ -8,7 +8,7 @@ namespace OggConverter
 {
     class Update
     {
-        public static string VerUpd = "17492"; // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
+        public static string VerUpd = "17500"; // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
 
         public void LookForUpdate()
         {
@@ -18,7 +18,7 @@ namespace OggConverter
 
                 if (IsThereNewUpdate("ver.txt"))
                 {
-                    DialogResult res = MessageBox.Show("There's new update ready to download", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    DialogResult res = MessageBox.Show("There's new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
                     if (res == DialogResult.Yes)
                     {
