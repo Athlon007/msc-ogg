@@ -11,15 +11,15 @@ namespace OggConverter
 {
     public partial class Form1 : Form
     {
-        string version;
-
         public Form1()
         {
             InitializeComponent();
         }
 
+        string version; // Version of the program loaded at Form1_Load
         bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
         bool NoExit; //Prevents the program from closing if conversion is in progress
+        string l = Environment.NewLine; // Just lets me add new line with single character
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -43,16 +43,37 @@ namespace OggConverter
                         // Loading settings
                         new Settings();
 
+                        //Path in textbox
                         txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+
+                        //Remove MP3
                         if (Settings.RemoveMP3)
                         {
                             remMP3.Checked = true;
-                            RemoveMP3 = true;
                         }
                         else
                         {
                             remMP3.Checked = false;
-                            RemoveMP3 = false;
+                        }
+
+                        //No Steam
+                        if (Settings.NoSteam)
+                        {
+                            launchGameWithoutSteamToolStripMenuItem.Checked = true;
+                        }
+
+                        //Action after conversion
+                        if (Settings.LaunchAfterConversion)
+                        {
+                            launchTheGameToolStripMenuItem1.Checked = true;
+                        }
+                        if (Settings.CloseAfterConversion)
+                        {
+                            closeTheProgramToolStripMenuItem.Checked = true;
+                        }
+                        if (!Settings.CloseAfterConversion && !Settings.LaunchAfterConversion)
+                        {
+                            noneToolStripMenuItem.Checked = true;
                         }
                     }
                 }
@@ -78,9 +99,6 @@ namespace OggConverter
             #     #     #  #  # ##  #     #     #
             #     ##### #   # #  ## ##### ##### #####
          */
-
-        string l = Environment.NewLine;
-        bool RemoveMP3;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -123,9 +141,8 @@ namespace OggConverter
                     string path = txtboxPath.Text + @"\Radio\";
                     DirectoryInfo d = new DirectoryInfo(path);
                     //FileInfo[] Files = d.GetFiles("*.mp3");
-
-                    //It should catch MP3 as well as WAV files
-                    string[] extensions = new[] { ".mp3", ".wav"};
+                    //It should catch MP3 as well as other files. Technically video files should also work.
+                    string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma"};
                     FileInfo[] Files 
                         = d.GetFiles()
                         .Where(f => extensions.Contains(f.Extension.ToLower()))
@@ -143,7 +160,7 @@ namespace OggConverter
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                         await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + i + ".ogg" + l;
-                        if (RemoveMP3)
+                        if (Settings.RemoveMP3)
                         {
                             File.Delete(path + file.Name);
                         }
@@ -161,7 +178,13 @@ namespace OggConverter
                     ConversionLog += "CD:" + l;
                     string pathCD = txtboxPath.Text + @"\CD\";
                     DirectoryInfo cd = new DirectoryInfo(pathCD);
-                    FileInfo[] FilesCD = cd.GetFiles("*.mp3");
+                    //FileInfo[] Files = cd.GetFiles("*.mp3");
+                    //It should catch MP3 as well as other files. Technically video files should also work.
+                    string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma" };
+                    FileInfo[] FilesCD
+                        = cd.GetFiles()
+                        .Where(f => extensions.Contains(f.Extension.ToLower()))
+                        .ToArray();
                     //Counting how many OGG files there are already
                     for (int c = 1; File.Exists(pathCD + "track" + c + ".ogg"); c++)
                     {
@@ -174,7 +197,7 @@ namespace OggConverter
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                         await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
                         log.Text += file.Name + " as track" + a + ".ogg" + l;
-                        if (RemoveMP3)
+                        if (Settings.RemoveMP3)
                         {
                             File.Delete(pathCD + file.Name);
                         }
@@ -188,12 +211,22 @@ namespace OggConverter
                 {
                     log.Text += l + "Skipping CD folder.";
                 }
-                ConversionLog += l + l + "This conversion was created in: " + DateTime.Now.ToLocalTime();
+                ConversionLog += l + l + "This conversion was created at: " + DateTime.Now.ToLocalTime();
                 File.WriteAllText(@"LastConversion.txt", ConversionLog);
                 Process.Start(@"LastConversion.txt");
                 log.Text += l + "Converted " + (totalConversionsRadio + totalConversionsCD) + " files total.";
                 log.Text += l + "Done";
                 System.Media.SystemSounds.Exclamation.Play();
+                
+                //Action after conversion
+                if (Settings.LaunchAfterConversion)
+                {
+                    LaunchGame();
+                }
+                if (Settings.CloseAfterConversion)
+                {
+                    Application.Exit();
+                }
             }
             catch (Exception ex)
             {
@@ -280,17 +313,31 @@ namespace OggConverter
 
         private void launchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            LaunchGame();
+        }
+
+        void LaunchGame()
+        {
+            // Checks for correct path
             if (txtboxPath.Text.Length == 0)
             {
                 MessageBox.Show("Select game directory first.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
-            Process.Start(txtboxPath.Text + @"\mysummercar.exe");
+
+            if (Settings.NoSteam)
+            {
+                Process.Start(txtboxPath.Text + @"\mysummercar.exe");
+            }
+            else
+            {
+                Process.Start("steam://rungameid/516750");
+            }
         }
 
         private void removeOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ChangeSettings.ChangeBool("RemoveMP3");
+            ChangeSettings.Bool("RemoveMP3");
         }      
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -301,6 +348,31 @@ namespace OggConverter
         private void steamCommunityDiscussionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://steamcommunity.com/app/516750/discussions/2/1489992713697876617/");
+        }
+
+        private void noneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeSettings.BoolFalse("CloseAfterConversion");
+            ChangeSettings.BoolFalse("LaunchAfterConversion");
+            closeTheProgramToolStripMenuItem.Checked = false;
+            launchTheGameToolStripMenuItem1.Checked = false;
+        }
+
+        private void closeTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeSettings.Bool("CloseAfterConversion");
+            noneToolStripMenuItem.Checked = false;
+        }
+
+        private void launchTheGameToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ChangeSettings.Bool("LaunchAfterConversion");
+            noneToolStripMenuItem.Checked = false;
+        }
+
+        private void launchGameWithoutSteamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangeSettings.Bool("NoSteam");
         }
     }
 }

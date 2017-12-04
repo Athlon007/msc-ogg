@@ -3,6 +3,10 @@
 ### Added:
 - Manifest file
 - Added EXE only download in repository for updates
+- Support for WAV, AAC, M4A and WMA file types
+- The game now starts using Steam (you can change that in settings)
+- Added ability to perform action by program after finishing the conversion (you can change that in settings). Default is none 
+- Added more bugs to fix later
 
 ### Changes:
 - Changed links in repository
@@ -10,6 +14,7 @@
 
 ### Fixes:
 - Fixed typos
+- Fixed incorrect author in EXE info
 
 # 2017.12.3.1522
 

@@ -48,7 +48,14 @@
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.remMP3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.actionAfterConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.launchTheGameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeTheProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.launchGameWithoutSteamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launchTheGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -140,6 +147,7 @@
             this.toolStripSeparator1,
             this.gitToolStripMenuItem,
             this.steamCommunityDiscussionToolStripMenuItem,
+            this.toolStripSeparator3,
             this.lookForUpdateToolStripMenuItem,
             this.infoToolStripMenuItem,
             this.quitToolStripMenuItem});
@@ -204,7 +212,9 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.remMP3});
+            this.remMP3,
+            this.actionAfterConversionToolStripMenuItem,
+            this.launchGameWithoutSteamToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -217,12 +227,65 @@
             this.remMP3.Text = "Remove MP3 files after conversion";
             this.remMP3.Click += new System.EventHandler(this.removeOldMP3FilesToolStripMenuItem_Click);
             // 
+            // actionAfterConversionToolStripMenuItem
+            // 
+            this.actionAfterConversionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.launchTheGameToolStripMenuItem1,
+            this.closeTheProgramToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.noneToolStripMenuItem});
+            this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
+            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion";
+            // 
+            // launchTheGameToolStripMenuItem1
+            // 
+            this.launchTheGameToolStripMenuItem1.CheckOnClick = true;
+            this.launchTheGameToolStripMenuItem1.Name = "launchTheGameToolStripMenuItem1";
+            this.launchTheGameToolStripMenuItem1.Size = new System.Drawing.Size(172, 22);
+            this.launchTheGameToolStripMenuItem1.Text = "Launch the game";
+            this.launchTheGameToolStripMenuItem1.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem1_Click);
+            // 
+            // closeTheProgramToolStripMenuItem
+            // 
+            this.closeTheProgramToolStripMenuItem.CheckOnClick = true;
+            this.closeTheProgramToolStripMenuItem.Name = "closeTheProgramToolStripMenuItem";
+            this.closeTheProgramToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.closeTheProgramToolStripMenuItem.Text = "Close the program";
+            this.closeTheProgramToolStripMenuItem.Click += new System.EventHandler(this.closeTheProgramToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            // 
+            // noneToolStripMenuItem
+            // 
+            this.noneToolStripMenuItem.CheckOnClick = true;
+            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.noneToolStripMenuItem.Text = "None";
+            this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
+            // 
+            // launchGameWithoutSteamToolStripMenuItem
+            // 
+            this.launchGameWithoutSteamToolStripMenuItem.CheckOnClick = true;
+            this.launchGameWithoutSteamToolStripMenuItem.Name = "launchGameWithoutSteamToolStripMenuItem";
+            this.launchGameWithoutSteamToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.launchGameWithoutSteamToolStripMenuItem.Text = "Launch game without Steam";
+            this.launchGameWithoutSteamToolStripMenuItem.Click += new System.EventHandler(this.launchGameWithoutSteamToolStripMenuItem_Click);
+            // 
             // launchTheGameToolStripMenuItem
             // 
             this.launchTheGameToolStripMenuItem.Name = "launchTheGameToolStripMenuItem";
-            this.launchTheGameToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
-            this.launchTheGameToolStripMenuItem.Text = "Launch the game";
+            this.launchTheGameToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.launchTheGameToolStripMenuItem.Text = "Launch game";
             this.launchTheGameToolStripMenuItem.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
             // Form1
             // 
@@ -275,6 +338,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem steamCommunityDiscussionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem actionAfterConversionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem launchTheGameToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem closeTheProgramToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem launchGameWithoutSteamToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 

@@ -1,11 +1,12 @@
 THIS FILE WILL BE WIPED AFTER NEXT CONVERSION:
 
 RADIO:
-"mafmp3.mp3" as "31.ogg"
-"mafwav.wav" as "32.ogg"
+"aac.aac" as "track1.ogg"
+"m4a.m4a" as "track2.ogg"
+"wma.wma" as "track3.ogg"
 
 
 CD:
 
 
-This conversion was created in: 04.12.2017 19:05:36
+This conversion was created in: 04.12.2017 19:13:16

@@ -1,0 +1,10 @@
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\OggConverter.Form1.resources
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\OggConverter.Properties.Resources.resources
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\OggConverter.csproj.GenerateResource.Cache
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\OggConverter.csproj.CoreCompileInputs.cache
+C:\Users\aathl\source\repos\OggConverter\OggConverter\bin\Release\MSC OGG.exe.config
+C:\Users\aathl\source\repos\OggConverter\OggConverter\bin\Release\MSC OGG.exe
+C:\Users\aathl\source\repos\OggConverter\OggConverter\bin\Release\MSC OGG.pdb
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\OggConverter.csprojResolveAssemblyReference.cache
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\MSC OGG.exe
+C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Release\MSC OGG.pdb
