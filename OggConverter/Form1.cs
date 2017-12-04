@@ -39,9 +39,11 @@ namespace OggConverter
                 {
                     if (Key != null)
                     {
-                        txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+                        // Loading settings
+                        new Settings();
 
-                        if (Key.GetValue("RemoveMP3").Equals("true"))
+                        txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+                        if (Settings.RemoveMP3)
                         {
                             remMP3.Checked = true;
                             RemoveMP3 = true;
@@ -280,30 +282,8 @@ namespace OggConverter
 
         private void removeOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG", true);
-
-            try
-            {
-                if (Key.GetValue("RemoveMP3").Equals("false"))
-                {
-                    Key.SetValue("RemoveMP3", "true");
-                    remMP3.Checked = true;
-                    RemoveMP3 = true;
-                }
-                else
-                {
-                    Key.SetValue("RemoveMP3", "false");
-                    remMP3.Checked = false;
-                    RemoveMP3 = false;
-                }
-            }
-            catch (Exception)
-            {
-                Key.SetValue("RemoveMP3", "true");
-                remMP3.Checked = true;
-                RemoveMP3 = true;
-            }
-        }
+            ChangeSettings.ChangeBool("RemoveMP3");
+        }      
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {

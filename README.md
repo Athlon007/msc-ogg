@@ -11,7 +11,8 @@ Also remember this tool is free - if you payed for it, you were scammed!
 - .NET Framework 4.6
 
 ## Download
-###### [Download 1](https://gitlab.com/aathlon/msc-ogg/tree/master/OggConverter/mscogg.zip)
+###### [Download](https://gitlab.com/aathlon/msc-ogg/tree/master/mscogg.zip)
+###### [EXE only (for updates)](https://gitlab.com/aathlon/msc-ogg/tree/master/mscogg.zip)
 
 ## Installation
 Simply unzip archive anywhere you want.

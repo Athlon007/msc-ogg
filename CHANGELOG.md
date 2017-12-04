@@ -1,4 +1,17 @@
-# 2017.12.3.
+# 2017.12.x.xxxx
+
+### Added:
+- Manifest file
+- Added EXE only download in repository for updates
+
+### Changes:
+- Changed links in repository
+- Added Settings class which loads and saves settings from registry
+
+### Fixes:
+- Fixed typos
+
+# 2017.12.3.1522
 
 ### Added:
 - You can now remove MP3 files after conversion
