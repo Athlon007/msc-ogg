@@ -3,6 +3,7 @@
 ### Added:
 - You can now disable checking for updates
 - The tool now shows if it's updated or not in the log
+- If there's over 15 files in CDs folder, the tool will ask if you wish to continue conversion
 - Tiny touches
 
 ### Changes:

@@ -145,8 +145,8 @@ namespace OggConverter
         {
             try
             {
-                int i = 1; //Radio num
-                int a = 1; //CD num
+                int Radio = 1; //Radio num
+                int CDs = 1; //CD num
 
                 int totalConversionsRadio = 0;
                 int totalConversionsCD = 0;
@@ -172,21 +172,21 @@ namespace OggConverter
                     //Counting how many OGG files there are already
                     for (int c = 1; File.Exists(path + "track" + c + ".ogg"); c++)
                     {
-                        i++;
+                        Radio++;
                     }
 
                     foreach (FileInfo file in Files)
                     {
                         log.Text += "Converting " + file.Name + l;
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
-                        await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + i + ".ogg", Format.ogg));
-                        log.Text += file.Name + " as track" + i + ".ogg" + l;
+                        await Task.Run(() => cnv.ConvertMedia(path + file.Name, path + "track" + Radio + ".ogg", Format.ogg));
+                        log.Text += file.Name + " as track" + Radio + ".ogg" + l;
                         if (Settings.RemoveMP3)
                         {
                             File.Delete(path + file.Name);
                         }
-                        ConversionLog += "\"" + file.Name + "\" as \"track" + i + ".ogg\"" + l;
-                        i++;
+                        ConversionLog += "\"" + file.Name + "\" as \"track" + Radio + ".ogg\"" + l;
+                        Radio++;
                         totalConversionsRadio++;
                     }
                     log.Text += l + "Converted " + totalConversionsRadio + " files in Radio.";
@@ -209,21 +209,35 @@ namespace OggConverter
                     //Counting how many OGG files there are already
                     for (int c = 1; File.Exists(pathCD + "track" + c + ".ogg"); c++)
                     {
-                        a++;
+                        CDs++;
                     }
 
                     foreach (FileInfo file in FilesCD)
                     { 
+                        if (CDs > 15)
+                        {
+                            DialogResult res = MessageBox.Show("There's over 15 files in CDs already converted. My Summer Car allows max 15 files for CDs and any file above that will be ignored. Would you like to continue?", 
+                                "Stop", 
+                                MessageBoxButtons.YesNo, 
+                                MessageBoxIcon.Information);
+
+                            if (res == DialogResult.No)
+                            {
+                                log.Text += l + "Aborted CD conversion.";
+                                break;
+                            }
+                        }
+
                         log.Text += "Converting " + file.Name + l;
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
-                        await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
-                        log.Text += file.Name + " as track" + a + ".ogg" + l;
+                        await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + CDs + ".ogg", Format.ogg));
+                        log.Text += file.Name + " as track" + CDs + ".ogg" + l;
                         if (Settings.RemoveMP3)
                         {
                             File.Delete(pathCD + file.Name);
                         }
-                        ConversionLog += "\"" + file.Name + "\" as \"track" + i + ".ogg\"" + l;
-                        a++;
+                        ConversionLog += "\"" + file.Name + "\" as \"track" + CDs + ".ogg\"" + l;
+                        CDs++;
                         totalConversionsCD++;
                     }
                     log.Text += l + "Converted " + totalConversionsCD + " files in CD folder.";
