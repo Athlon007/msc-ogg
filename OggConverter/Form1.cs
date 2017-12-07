@@ -28,14 +28,9 @@ namespace OggConverter
             version = fvi.FileVersion;
 
             log.Text += "MSC OGG Converter " + version;
-            log.Text += l +l + "You can checkout changelog on Steam community discussion, or on project's repository.";
 
             try
             {
-                //Looking for updates
-                Update upd = new Update();
-                upd.LookForUpdate();
-
                 using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
                 {
                     if (Key != null)
@@ -45,6 +40,8 @@ namespace OggConverter
 
                         //Path in textbox
                         txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+                        txtboxPath.SelectionStart = 0;
+                        txtboxPath.ScrollToCaret();
 
                         //Remove MP3
                         if (Settings.RemoveMP3)
@@ -75,8 +72,32 @@ namespace OggConverter
                         {
                             noneToolStripMenuItem.Checked = true;
                         }
+
+                        if (!Settings.NoUpdates)
+                        {
+                            CheckBoxUpdates.Checked = true;
+
+                            //Looking for updates
+                            Update upd = new Update();
+                            upd.LookForUpdate();
+
+                            if (!OggConverter.Update.IsThereUpdate)
+                            {
+                                log.Text += l + l + "Tool is up-to-date";
+                            }
+                            else
+                            {
+                                log.Text += l + l + "There's update ready to download";
+                            }
+                        }
+                        else
+                        {
+                            log.Text += l + l + "Updates are disabled";
+                        }
                     }
                 }
+
+                log.Text += l + l + "You can checkout changelog on Steam community discussion, or on project's repository.";
 
                 if (!Directory.Exists(txtboxPath.Text + @"\CD"))
                 {
@@ -192,7 +213,7 @@ namespace OggConverter
                     }
 
                     foreach (FileInfo file in FilesCD)
-                    {
+                    { 
                         log.Text += "Converting " + file.Name + l;
                         string nameAfter = file.Name.Substring(0, file.Name.Length - 4);
                         await Task.Run(() => cnv.ConvertMedia(pathCD + file.Name, pathCD + "track" + a + ".ogg", Format.ogg));
@@ -250,6 +271,7 @@ namespace OggConverter
                     txtboxPath.Text = folderDialog.SelectedPath;
                     RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG", true);
                     Key.SetValue("MSC Path", folderDialog.SelectedPath);
+                    log.Text += l + "Loaded My Summer Car's directory successfully";
                 }
                 else
                 {
@@ -373,6 +395,11 @@ namespace OggConverter
         private void launchGameWithoutSteamToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeSettings.Bool("NoSteam");
+        }
+
+        private void CheckBoxUpdates_Click(object sender, EventArgs e)
+        {
+            ChangeSettings.Bool("NoUpdates");
         }
     }
 }

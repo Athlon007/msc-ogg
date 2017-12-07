@@ -8,6 +8,7 @@ namespace OggConverter
         public static bool CloseAfterConversion { get; set; }
         public static bool LaunchAfterConversion { get; set; }
         public static bool NoSteam { get; set; }
+        public static bool NoUpdates { get; set; }
 
         public Settings()
         {
@@ -15,6 +16,7 @@ namespace OggConverter
             CloseAfterConversion = Bool("CloseAfterConversion");
             LaunchAfterConversion = Bool("LaunchAfterConversion");
             NoSteam = Bool("NoSteam");
+            NoUpdates = Bool("NoUpdates");
         }
 
         bool Bool(string KeyName)

@@ -43,7 +43,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.gitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.steamCommunityDiscussionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lookForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,8 +54,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launchGameWithoutSteamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckBoxUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.launchTheGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +64,7 @@
             this.txtboxPath.Location = new System.Drawing.Point(12, 126);
             this.txtboxPath.Name = "txtboxPath";
             this.txtboxPath.ReadOnly = true;
-            this.txtboxPath.Size = new System.Drawing.Size(251, 20);
+            this.txtboxPath.Size = new System.Drawing.Size(282, 20);
             this.txtboxPath.TabIndex = 0;
             // 
             // button1
@@ -99,9 +99,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(269, 126);
+            this.button2.Location = new System.Drawing.Point(300, 126);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(55, 23);
+            this.button2.Size = new System.Drawing.Size(24, 23);
             this.button2.TabIndex = 4;
             this.button2.Text = "...";
             this.button2.UseVisualStyleBackColor = true;
@@ -148,7 +148,6 @@
             this.gitToolStripMenuItem,
             this.steamCommunityDiscussionToolStripMenuItem,
             this.toolStripSeparator3,
-            this.lookForUpdateToolStripMenuItem,
             this.infoToolStripMenuItem,
             this.quitToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -188,12 +187,10 @@
             this.steamCommunityDiscussionToolStripMenuItem.Text = "Steam Community discussion";
             this.steamCommunityDiscussionToolStripMenuItem.Click += new System.EventHandler(this.steamCommunityDiscussionToolStripMenuItem_Click);
             // 
-            // lookForUpdateToolStripMenuItem
+            // toolStripSeparator3
             // 
-            this.lookForUpdateToolStripMenuItem.Name = "lookForUpdateToolStripMenuItem";
-            this.lookForUpdateToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            this.lookForUpdateToolStripMenuItem.Text = "Look for update";
-            this.lookForUpdateToolStripMenuItem.Click += new System.EventHandler(this.lookForUpdateToolStripMenuItem_Click);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
             // infoToolStripMenuItem
             // 
@@ -214,7 +211,8 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.remMP3,
             this.actionAfterConversionToolStripMenuItem,
-            this.launchGameWithoutSteamToolStripMenuItem});
+            this.launchGameWithoutSteamToolStripMenuItem,
+            this.CheckBoxUpdates});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -275,17 +273,20 @@
             this.launchGameWithoutSteamToolStripMenuItem.Text = "Launch game without Steam";
             this.launchGameWithoutSteamToolStripMenuItem.Click += new System.EventHandler(this.launchGameWithoutSteamToolStripMenuItem_Click);
             // 
+            // CheckBoxUpdates
+            // 
+            this.CheckBoxUpdates.CheckOnClick = true;
+            this.CheckBoxUpdates.Name = "CheckBoxUpdates";
+            this.CheckBoxUpdates.Size = new System.Drawing.Size(256, 22);
+            this.CheckBoxUpdates.Text = "Check for updates";
+            this.CheckBoxUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
+            // 
             // launchTheGameToolStripMenuItem
             // 
             this.launchTheGameToolStripMenuItem.Name = "launchTheGameToolStripMenuItem";
             this.launchTheGameToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
             this.launchTheGameToolStripMenuItem.Text = "Launch game";
             this.launchTheGameToolStripMenuItem.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
             // Form1
             // 
@@ -328,7 +329,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lookForUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem remMP3;
@@ -345,6 +345,7 @@
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchGameWithoutSteamToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem CheckBoxUpdates;
     }
 }
 

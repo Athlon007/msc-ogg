@@ -1,3 +1,16 @@
+# 2017.12.x.xxxx
+
+### Added:
+- You can now disable checking for updates
+- The tool now shows if it's updated or not in the log
+- Tiny touches
+
+### Changes:
+- Small changes in the UI
+
+### Removed:
+- Removed "Check for update" button
+
 # 2017.12.4.2228
 
 ### Added:
