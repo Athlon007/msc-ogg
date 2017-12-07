@@ -4,13 +4,17 @@
 - You can now disable checking for updates
 - The tool now shows if it's updated or not in the log
 - If there's over 15 files in CDs folder, the tool will ask if you wish to continue conversion
-- Tiny touches
+- When the program is initialized for first time there's welcome message box appearing. Most of the controls are disabled
 
 ### Changes:
 - Small changes in the UI
+- Tiny touches
 
 ### Removed:
 - Removed "Check for update" button
+
+### Fixes:
+- Fully fixed "NullReferenceException" bug
 
 # 2017.12.4.2228
 

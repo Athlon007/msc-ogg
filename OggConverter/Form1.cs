@@ -20,6 +20,7 @@ namespace OggConverter
         bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
         bool NoExit; //Prevents the program from closing if conversion is in progress
         string l = Environment.NewLine; // Just lets me add new line with single character
+        bool FirstLoad = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -107,9 +108,13 @@ namespace OggConverter
             }
             catch (Exception)
             {
-                //new Log(ex.ToString());
-                //TODO
-                //This is temporary fix for NullReferenceException error while loading. It'll be fixed later                
+                MessageBox.Show("Hey there! Looks like you're new here. Select the game directory first :)", "Howdy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                log.Text += l + "Select the game directory first.";
+                button3.Enabled = false;
+                button1.Enabled = false;
+                settingsToolStripMenuItem.Enabled = false;
+                launchTheGameToolStripMenuItem.Enabled = false;
+                FirstLoad = true;
             }
         }
 
@@ -286,6 +291,14 @@ namespace OggConverter
                     RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG", true);
                     Key.SetValue("MSC Path", folderDialog.SelectedPath);
                     log.Text += l + "Loaded My Summer Car's directory successfully";
+
+                    if (FirstLoad)
+                    {
+                        Form1 f = new Form1();
+                        Hide();
+                        f.ShowDialog();
+                        Close();
+                    }
                 }
                 else
                 {
