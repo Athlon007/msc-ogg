@@ -3,8 +3,8 @@
 ### Added:
 - You can now disable checking for updates
 - The tool now shows if it's updated or not in the log
-- If there's over 15 files in CDs folder, the tool will ask if you wish to continue conversion
-- When the program is initialized for first time there's welcome message box appearing. Most of the controls are disabled
+- If there are over 15 files in CDs folder, the tool will ask if you wish to continue conversion
+- When the program is initialized for the first time there's welcome message box appearing. Most of the controls are disabled
 
 ### Changes:
 - Small changes and touches in the UI
