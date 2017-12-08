@@ -1,4 +1,4 @@
-# 2017.12.x.xxxx
+# 2017.12.8.1120
 
 ### Added:
 - You can now disable checking for updates
@@ -7,11 +7,12 @@
 - When the program is initialized for first time there's welcome message box appearing. Most of the controls are disabled
 
 ### Changes:
-- Small changes in the UI
-- Tiny touches
+- Small changes and touches in the UI
+- Optimized Log class
 
 ### Removed:
 - Removed "Check for update" button
+- Unused part of code
 
 ### Fixes:
 - Fully fixed "NullReferenceException" bug

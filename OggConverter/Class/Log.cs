@@ -3,6 +3,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Management;
+using Microsoft.Win32;
 
 namespace OggConverter
 {
@@ -14,7 +16,8 @@ namespace OggConverter
             string l = Environment.NewLine;
             Directory.CreateDirectory("LOG");
             File.WriteAllText(@"LOG\" + Date + ".txt",
-                "MSC OGG " + MajorVer + "." + MinorVer + "." + BuildVer + "." + RevVer + " (" + Update.VerUpd + ")" + l +
+                "MSC OGG " + ThisVersion + " (" + Update.VerUpd + ")" + l +
+                l + FriendlyName() + l +
                 l +
                 log
                 );
@@ -26,38 +29,35 @@ namespace OggConverter
             }
         }
 
+        string ThisVersion
+        {
+            get
+            {
+                return Application.ProductVersion;
+            }
+        }
 
-        // Major
-        string MajorVer
+        string HKLM_GetString(string path, string key)
         {
-            get
+            try
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.Major.ToString();
+                RegistryKey rk = Registry.LocalMachine.OpenSubKey(path);
+                if (rk == null) return "";
+                return (string)rk.GetValue(key);
             }
+            catch { return ""; }
         }
-        // Minor
-        string MinorVer
+
+        public string FriendlyName()
         {
-            get
+            string ProductName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
+            string CSDVersion = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CSDVersion");
+            if (ProductName != "")
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
+                return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName +
+                            (CSDVersion != "" ? " " + CSDVersion : "");
             }
-        }
-        // Build
-        string BuildVer
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
-            }
-        }
-        // RevVer
-        string RevVer
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.Revision.ToString();
-            }
+            return "";
         }
     }
 }

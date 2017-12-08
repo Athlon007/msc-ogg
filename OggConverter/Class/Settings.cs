@@ -44,21 +44,6 @@ namespace OggConverter
             }
             return false;
         } 
-
-        string Variable(string KeyName)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-            {
-                object Value = Key.GetValue(KeyName);
-
-                if (Value != null)
-                {
-                    return Value.ToString();
-                }
-                else
-                    return "None";
-            }
-        }
     }
 
     public class ChangeSettings
@@ -96,16 +81,6 @@ namespace OggConverter
             {
                 object Value = Key.GetValue(KeyName);
                 Key.SetValue(KeyName, "false");
-            }
-            new Settings();
-        }
-
-        public static void Variable(string KeyName, string val)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-            {
-                object Value = Key.GetValue(KeyName);
-                Key.SetValue(KeyName, val);
             }
             new Settings();
         }
