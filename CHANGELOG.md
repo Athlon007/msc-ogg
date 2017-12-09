@@ -1,3 +1,9 @@
+# 2017.12.x.xxxx
+
+### Changes:
+- Changed "How to use" note. It now shows all supported music formats
+- Renamed "Remove MP3 files after conversion" to "Remove files after conversion"
+
 # 2017.12.8.1120
 
 ### Added:

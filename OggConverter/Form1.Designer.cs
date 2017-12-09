@@ -122,10 +122,11 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(293, 52);
+            this.label2.Size = new System.Drawing.Size(238, 65);
             this.label2.TabIndex = 6;
-            this.label2.Text = "How to use:\r\n- Select My Summer Car directory\r\n- Put all your music (in MP3 forma" +
-    "t) into CD and Radio folders\r\n- Click Convert button";
+            this.label2.Text = "How to use:\r\n- Select My Summer Car directory\r\n- Put all your music into CD and R" +
+    "adio folders\r\n- Click Convert button\r\nSupported formats: .mp3, .wav, .aac, .m4a," +
+    " .wma";
             // 
             // menu
             // 
@@ -223,8 +224,8 @@
             // 
             this.remMP3.CheckOnClick = true;
             this.remMP3.Name = "remMP3";
-            this.remMP3.Size = new System.Drawing.Size(256, 22);
-            this.remMP3.Text = "Remove MP3 files after conversion";
+            this.remMP3.Size = new System.Drawing.Size(229, 22);
+            this.remMP3.Text = "Remove files after conversion";
             this.remMP3.Click += new System.EventHandler(this.removeOldMP3FilesToolStripMenuItem_Click);
             // 
             // actionAfterConversionToolStripMenuItem
@@ -235,7 +236,7 @@
             this.toolStripSeparator2,
             this.noneToolStripMenuItem});
             this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
-            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion";
             // 
             // launchTheGameToolStripMenuItem1
@@ -271,7 +272,7 @@
             // 
             this.launchGameWithoutSteamToolStripMenuItem.CheckOnClick = true;
             this.launchGameWithoutSteamToolStripMenuItem.Name = "launchGameWithoutSteamToolStripMenuItem";
-            this.launchGameWithoutSteamToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.launchGameWithoutSteamToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.launchGameWithoutSteamToolStripMenuItem.Text = "Launch game without Steam";
             this.launchGameWithoutSteamToolStripMenuItem.Click += new System.EventHandler(this.launchGameWithoutSteamToolStripMenuItem_Click);
             // 
@@ -279,7 +280,7 @@
             // 
             this.CheckBoxUpdates.CheckOnClick = true;
             this.CheckBoxUpdates.Name = "CheckBoxUpdates";
-            this.CheckBoxUpdates.Size = new System.Drawing.Size(256, 22);
+            this.CheckBoxUpdates.Size = new System.Drawing.Size(229, 22);
             this.CheckBoxUpdates.Text = "Check for updates";
             this.CheckBoxUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
             // 

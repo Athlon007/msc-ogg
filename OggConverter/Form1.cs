@@ -20,7 +20,7 @@ namespace OggConverter
         bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
         bool NoExit; //Prevents the program from closing if conversion is in progress
         string l = Environment.NewLine; // Just lets me add new line with single character
-        bool FirstLoad = false;
+        bool FirstLoad = false; //Detects if the program has been opened for the first time
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -166,8 +166,7 @@ namespace OggConverter
                     ConversionLog += "RADIO:" +l;
                     string path = txtboxPath.Text + @"\Radio\";
                     DirectoryInfo d = new DirectoryInfo(path);
-                    //FileInfo[] Files = d.GetFiles("*.mp3");
-                    //It should catch MP3 as well as other files. Technically video files should also work.
+                    //It should catch MP3 as well as other files. Technically video files should also work, but for now it's disabled.
                     string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma"};
                     FileInfo[] Files 
                         = d.GetFiles()
@@ -204,8 +203,6 @@ namespace OggConverter
                     ConversionLog += "CD:" + l;
                     string pathCD = txtboxPath.Text + @"\CD\";
                     DirectoryInfo cd = new DirectoryInfo(pathCD);
-                    //FileInfo[] Files = cd.GetFiles("*.mp3");
-                    //It should catch MP3 as well as other files. Technically video files should also work.
                     string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma" };
                     FileInfo[] FilesCD
                         = cd.GetFiles()
