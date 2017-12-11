@@ -43,15 +43,12 @@ namespace OggConverter
                         txtboxPath.Text = Key.GetValue("MSC Path").ToString();
                         txtboxPath.SelectionStart = 0;
                         txtboxPath.ScrollToCaret();
+                        this.ActiveControl = label2;
 
                         //Remove MP3
                         if (Settings.RemoveMP3)
                         {
                             remMP3.Checked = true;
-                        }
-                        else
-                        {
-                            remMP3.Checked = false;
                         }
 
                         //No Steam
@@ -61,17 +58,19 @@ namespace OggConverter
                         }
 
                         //Action after conversion
-                        if (Settings.LaunchAfterConversion)
                         {
-                            launchTheGameToolStripMenuItem1.Checked = true;
-                        }
-                        if (Settings.CloseAfterConversion)
-                        {
-                            closeTheProgramToolStripMenuItem.Checked = true;
-                        }
-                        if (!Settings.CloseAfterConversion && !Settings.LaunchAfterConversion)
-                        {
-                            noneToolStripMenuItem.Checked = true;
+                            if (Settings.LaunchAfterConversion)
+                            {
+                                launchTheGameToolStripMenuItem1.Checked = true;
+                            }
+                            if (Settings.CloseAfterConversion)
+                            {
+                                closeTheProgramToolStripMenuItem.Checked = true;
+                            }
+                            if (!Settings.CloseAfterConversion && !Settings.LaunchAfterConversion)
+                            {
+                                noneToolStripMenuItem.Checked = true;
+                            }
                         }
 
                         if (!Settings.NoUpdates)
@@ -98,7 +97,7 @@ namespace OggConverter
                     }
                 }
 
-                log.Text += l + l + "You can checkout changelog on Steam community discussion, or on project's repository.";
+                log.Text += l + l + "You can checkout changelog on Steam community discussion, on project's repository, or dev's website.";
 
                 if (!Directory.Exists(txtboxPath.Text + @"\CD"))
                 {
@@ -110,6 +109,8 @@ namespace OggConverter
             {
                 MessageBox.Show("Hey there! Looks like you're new here. Select the game directory first :)", "Howdy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 log.Text += l + "Select the game directory first.";
+
+                // Disables some items, to prevent bugs
                 button3.Enabled = false;
                 button1.Enabled = false;
                 settingsToolStripMenuItem.Enabled = false;
@@ -130,7 +131,7 @@ namespace OggConverter
         {
             if (NoExit)
             {
-                MessageBox.Show("Conversion is in progress...", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
 
@@ -145,28 +146,27 @@ namespace OggConverter
             Convert();
         }
 
-        //Moved conversion to separated async void - it fixed UI freeze!
+        // Moved conversion to separated async void - it fixed the UI freeze!
         async void Convert()
         {
             try
             {
-                int Radio = 1; //Radio num
-                int CDs = 1; //CD num
+                int Radio = 1; // Counts how many converted OGG files are there already in Radio folder (plus 1). It's also used to name the converted file properly.
+                int CDs = 1; // ditto, but for CDs
 
-                int totalConversionsRadio = 0;
-                int totalConversionsCD = 0;
+                int totalConversionsRadio = 0; // Counts total conversions in Radio folder which will be displayed later
+                int totalConversionsCD = 0; // ditto, but for CDs
+
                 var cnv = new FFMpegConverter();
+           
+                string ConversionLog = "THIS FILE WILL BE WIPED AFTER NEXT CONVERSION:" + l + l;// Keeps conversion log which will be later saved into LastConversion.txt
 
-                // Keeps conversion log which will be later saved into LastConversion.txt
-                string ConversionLog = "THIS FILE WILL BE WIPED AFTER NEXT CONVERSION:" + l + l;
-                
-                log.Text += l + "Initializing Radio folder conversion..." +l;
                 //Converting Radio
                 {
+                    log.Text += l + "Initializing Radio folder conversion..." + l;
                     ConversionLog += "RADIO:" +l;
                     string path = txtboxPath.Text + @"\Radio\";
                     DirectoryInfo d = new DirectoryInfo(path);
-                    //It should catch MP3 as well as other files. Technically video files should also work, but for now it's disabled.
                     string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma"};
                     FileInfo[] Files 
                         = d.GetFiles()
@@ -208,6 +208,7 @@ namespace OggConverter
                         = cd.GetFiles()
                         .Where(f => extensions.Contains(f.Extension.ToLower()))
                         .ToArray();
+
                     //Counting how many OGG files there are already
                     for (int c = 1; File.Exists(pathCD + "track" + c + ".ogg"); c++)
                     {
@@ -248,6 +249,7 @@ namespace OggConverter
                 {
                     log.Text += l + "Skipping CD folder.";
                 }
+
                 ConversionLog += l + l + "This conversion was created at: " + DateTime.Now.ToLocalTime();
                 File.WriteAllText(@"LastConversion.txt", ConversionLog);
                 Process.Start(@"LastConversion.txt");
@@ -269,6 +271,7 @@ namespace OggConverter
             {
                 new Log(ex.ToString());
             }
+
             NoExit = false;
         }
 
@@ -302,7 +305,6 @@ namespace OggConverter
                     log.Text += l + "Couldn't find mysummercar.exe";
                 }
             }
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -329,12 +331,6 @@ namespace OggConverter
         private void gitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://gitlab.com/aathlon/msc-ogg");
-        }
-
-        private void lookForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Update upd = new Update();
-            upd.LookForUpdate();
         }
 
         private void openLOGFolderToolStripMenuItem_Click(object sender, EventArgs e)

@@ -25,12 +25,8 @@ namespace OggConverter
                         Process.Start("https://gitlab.com/aathlon/msc-ogg");
                     }
                 }
-                else
-                {
-                    File.Delete("ver.txt");
-                }
 
-                LookedForUpdate = true;
+                File.Delete("ver.txt");
             }
             catch (Exception ex)
             {
@@ -48,14 +44,12 @@ namespace OggConverter
         }
 
         public static bool IsThereUpdate { get; set; }
-        public static bool LookedForUpdate { get; set; }
 
         public bool IsThereNewUpdate(string Check)
         {
             if (!File.ReadAllText(Check).Contains(VerUpd))
             {
                 IsThereUpdate = true;
-                LookedForUpdate = true;
                 return true;
             }
             else

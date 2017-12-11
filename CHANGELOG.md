@@ -3,6 +3,16 @@
 ### Changes:
 - Changed "How to use" note. It now shows all supported music formats
 - Renamed "Remove MP3 files after conversion" to "Remove files after conversion"
+- Code optimization
+- Made some code easier to read
+- Added missing comments in code
+
+### Bug fixes:
+- Version file is now deleted after detected update too
+- Small UI touches (the program isn't focused on path text box at start)
+
+### Removed:
+- Obsolete code
 
 # 2017.12.8.1120
 

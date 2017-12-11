@@ -13,7 +13,9 @@ namespace OggConverter
         public Log(string log)
         {
             string Date = DateTime.Now.Date.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString();
+            string ThisVersion = Application.ProductVersion;
             string l = Environment.NewLine;
+
             Directory.CreateDirectory("LOG");
             File.WriteAllText(@"LOG\" + Date + ".txt",
                 "MSC OGG " + ThisVersion + " (" + Update.VerUpd + ")" + l +
@@ -26,14 +28,6 @@ namespace OggConverter
             if (dl == DialogResult.Yes)
             {
                 Process.Start("LOG");
-            }
-        }
-
-        string ThisVersion
-        {
-            get
-            {
-                return Application.ProductVersion;
             }
         }
 
