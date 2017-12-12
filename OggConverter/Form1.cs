@@ -360,13 +360,6 @@ namespace OggConverter
 
         void LaunchGame()
         {
-            // Checks for correct path
-            if (txtboxPath.Text.Length == 0)
-            {
-                MessageBox.Show("Select game directory first.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-
             if (Settings.NoSteam)
             {
                 Process.Start(txtboxPath.Text + @"\mysummercar.exe");

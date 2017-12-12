@@ -1,4 +1,4 @@
-# 2017.12.x.xxxx
+# 2017.12.12.1224
 
 ### Changes:
 - Changed "How to use" note. It now shows all supported music formats
