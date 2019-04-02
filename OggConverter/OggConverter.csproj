@@ -62,7 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Converter.cs" />
+    <Compile Include="src\Music\Audio.cs" />
+    <Compile Include="src\Music\Converter.cs" />
     <Compile Include="src\Forms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +91,7 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

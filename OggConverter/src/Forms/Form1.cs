@@ -37,6 +37,8 @@ namespace OggConverter
 
             instance = this;
 
+            playerRadio.Checked = true;
+
             Log += "MSC OGG Converter " + Updates.realVersion + " BETA";
 
             try
@@ -66,6 +68,8 @@ namespace OggConverter
                             Log += Updates.IsThereUpdate() ? "\n\nThere's an update ready to download!" : "\n\nTool is up-to-date";
                         else
                             Log += "\n\nUpdates are disabled";
+
+                        UpdatePlayerList();
                     }
                 }
 
@@ -90,6 +94,15 @@ namespace OggConverter
                 menuSettings.Enabled = false;
                 btnLaunchGame.Enabled = false;
                 firstLoad = true;
+                this.AllowDrop = false;
+                btnPlaySong.Enabled = false;
+                btnStop.Enabled = false;
+                btnDel.Enabled = false;
+                btnUp.Enabled = false;
+                btnDown.Enabled = false;
+                btnSort.Enabled = false;
+                playerRadio.Enabled = false;
+                playerCD.Enabled = false;
             }
         }    
 
@@ -142,6 +155,8 @@ namespace OggConverter
                 new CrashLog(ex.ToString());
                 ignoreQuitting = false;
             }
+
+            UpdatePlayerList();
         }       
 
         private void Log_TextChanged(object sender, EventArgs e)
@@ -194,16 +209,12 @@ namespace OggConverter
             Process.Start("https://gitlab.com/aathlon/msc-ogg");
         }
 
-        private void openLogFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Directory.CreateDirectory(@"Log");
-            Process.Start(@"Log");
-        }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ignoreQuitting)
                 e.Cancel = true;
+
+            Audio.Stop();
         }
 
 
@@ -280,6 +291,132 @@ namespace OggConverter
         {
             MessageBox.Show($"MSC OGG Converter {Updates.realVersion}\nby Athlon\n\nAll info about third party libraries you can find on official GitLab repo.",
                 "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnPlay(object sender, EventArgs e)
+        {
+            Audio.Play($"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}");
+        }
+
+        private void BtnStop_Click(object sender, EventArgs e)
+        {
+            Audio.Stop();
+        }
+
+        private void BtnLogFolder_Click(object sender, EventArgs e)
+        {
+            Directory.CreateDirectory(@"Log");
+            Process.Start(@"Log");
+        }
+
+        void UpdatePlayerList()
+        {
+            if (firstLoad) return;
+
+            songList.Items.Clear();
+
+            string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
+
+            for (int i = 1; i < 99; i++)
+                if (File.Exists($"{path}\\track{i}.ogg"))
+                    songList.Items.Add($"track{i}.ogg");
+        }
+
+        private void BtnDel_Click(object sender, EventArgs e)
+        {
+            DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dl == DialogResult.Yes)
+            {                
+                File.Delete($"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}");
+                UpdatePlayerList();
+            }
+        }
+
+        private void PlayerCD_Click(object sender, EventArgs e)
+        {
+            UpdatePlayerList();
+        }
+
+        private void PlayerRadio_Click(object sender, EventArgs e)
+        {
+            Audio.Stop();
+            UpdatePlayerList();
+        }
+
+        private void BtnSort_Click(object sender, EventArgs e)
+        {
+            string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
+
+            int skipped = 0;
+
+            for (int i = 1; i < 99; i++)
+            {
+                if (!File.Exists($"{path}\\track{i}.ogg"))
+                    skipped++;
+                else
+                {
+                    File.Move($"{path}\\track{i}.ogg", $"{path}\\track{i - skipped}.ogg");
+                    if (skipped != 0)
+                        i -= skipped;
+                    skipped = 0;
+                }
+            }
+
+            UpdatePlayerList();
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            UpdatePlayerList();
+        }
+
+        private void BtnUp_Click(object sender, EventArgs e)
+        {
+            string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
+            int selectedIndex = songList.SelectedIndex;
+            if (selectedIndex == 0)  return;
+
+            string oldName = songList.SelectedItem.ToString();
+            string newName = "track" + selectedIndex + ".ogg";
+
+            File.Move($"{path}\\{newName}", $"{path}\\trackTemp.ogg");
+            File.Move($"{path}\\{oldName}", $"{path}\\{newName}");
+            File.Move($"{path}\\trackTemp.ogg", $"{path}\\{oldName}");
+
+            UpdatePlayerList();
+            songList.SelectedIndex = selectedIndex - 1;
+        }
+
+        private void BtnDown_Click(object sender, EventArgs e)
+        {
+            string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
+            var selectedIndex = songList.SelectedIndex;
+            if (selectedIndex == songList.Items.Count - 1) return;
+
+            string oldName = songList.SelectedItem.ToString();
+            string newName = "track" + (selectedIndex + 2) + ".ogg";
+
+            File.Move($"{path}\\{newName}", $"{path}\\trackTemp.ogg");
+            File.Move($"{path}\\{oldName}", $"{path}\\{newName}");
+            File.Move($"{path}\\trackTemp.ogg", $"{path}\\{oldName}");
+
+            UpdatePlayerList();
+            songList.SelectedIndex = selectedIndex + 1;
+        }
+
+        private async void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            int limit = playerCD.Checked ? 15 : 99;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+                await Converter.ConvertDragDrop(file, txtboxPath.Text, playerCD.Checked ? "CD" : "Radio", limit);
+
+            UpdatePlayerList();
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
     }
 }

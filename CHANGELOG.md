@@ -1,4 +1,18 @@
-# 2019.12.12.1130 BETA
+# 2019.04.02.1817 BETA
+
+### Added:
+- Added ffplay
+- Added converter songs player
+- You can now remove, sort and change order of songs in the tool
+- You can now drag and drop files to convert them quickly. To select the destination folder, set it "Radio" or "CD" radio buttons
+
+### Changes:
+- Updated ffmpeg to version 4.1.1
+
+### Known issues
+- Deleting song causes NullReferenceException
+
+# 2019.04.02.1130 BETA
 
 ### Added:
 - FFmpeg's license info
