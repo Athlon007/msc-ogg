@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
 [assembly: AssemblyTitle("My Summer Car OGG Converter")]
-[assembly: AssemblyDescription("The OGG converter for My Summer Car")]
+[assembly: AssemblyDescription("The music manager for My Summer Car")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Athlon")]
 [assembly: AssemblyProduct("My Summer Car OGG Converter")]
-[assembly: AssemblyCopyright("Copyright © Athlon 2017")]
+[assembly: AssemblyCopyright("Copyright © Athlon 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Możesz określić wszystkie wartości lub użyć domyślnych numerów kompilacji i poprawki
 // przy użyciu symbolu „*”, tak jak pokazano poniżej:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2017.12.12.1224")]
-[assembly: AssemblyFileVersion("2017.12.12.1224")]
+[assembly: AssemblyVersion("2019.04.02.1130")]
+[assembly: AssemblyFileVersion("2019.04.02.1130")]

@@ -1,3 +1,14 @@
+# 2019.12.12.1130 BETA
+
+### Added:
+- FFmpeg's license info
+
+### Changes:
+- Code refactoring
+- Improvements in settings loading
+- Moved conversion method to separate class
+- MSCOGG doesn't use NReco Video Converter anymore
+
 # 2017.12.12.1224
 
 ### Changes:

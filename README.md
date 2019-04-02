@@ -1,3 +1,4 @@
+# WARNING: THIS IS A DEVELOPMENT VERSION. IT MAY HAVE UNEXPECED BUGS AND GLITCHES.
 # My Summer Car OGG Converter
 This tool initially was created for me to help convert all of my MP3 music into the OGG format. But I realised other people may use it, so there it is.
 
@@ -6,7 +7,6 @@ If you downloaded this program from the other sides than this GitLab repo or my 
 Also remember this tool is free - if you payed for it, you were scammed!
 
 ## Used third party libraries:
-- NReco Video Converter for .NET
 - FFMpeg
 - .NET Framework 4.6
 
@@ -21,13 +21,13 @@ Simply unzip archive anywhere you want.
 Anyone who will can contribute into this project (when I'll figure out this Git thing...). It seriously needs some work, y'kno?
 
 ## Versioning
-We version this project by year, month, day and time (HHMMss). I personally use [Automatic Versions tool by Precision Infinity](https://marketplace.visualstudio.com/items?itemName=PrecisionInfinity.AutomaticVersions), which does that automaticly.
+We're version this project by year, month, day and time (HHMM). I personally use [Automatic Versions tool by Precision Infinity](https://marketplace.visualstudio.com/items?itemName=PrecisionInfinity.AutomaticVersions), which does that automaticly.
 
 ## Building the source code
-The program was build with Microsoft Visual Studio 2017 Community, so I think it's the best way to compile it.
+The program was build with Microsoft Visual Studio 2019 Community, so I think it's the best way to compile it.
 
 ## Author(s)
 - [Athlon](http://athlon.kkmr.pl/)
 
 ## License
-This program is distributed under GNU General Public License. Feel free to use its source code as long as you mention the author
+This program is distributed under GNU General Public License. Feel free to use its source code as long as you mention the author and state the changes.
