@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Music\Audio.cs" />
+    <Compile Include="src\Music\Music.cs" />
     <Compile Include="src\Music\Converter.cs" />
     <Compile Include="src\Forms\Form1.cs">
       <SubType>Form</SubType>

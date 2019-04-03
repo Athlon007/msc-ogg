@@ -12,6 +12,7 @@ namespace OggConverter
     {
         public CrashLog(string log)
         {
+            if (!Settings.Logs) return;
             string date = DateTime.Now.Date.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString();
             string thisVersion = Application.ProductVersion;
 

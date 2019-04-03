@@ -1,3 +1,19 @@
+# 2019.04.03.1715 BETA
+
+### Added:
+- You can now move songs between CD and Radio
+- You can now switch off the crash logs
+
+### Changes:
+- Small UI changes
+- Many changes under the hood
+- Convertion log won't be saved if no files were converted
+
+### Bug fixes:
+- Fixed bug in which the tool would crash if you used player buttons
+- Temporarily disabled question while removing file
+- Fixed bug in which song wouldn't pause if the plyare fodler has changed
+
 # 2019.04.02.1817 BETA
 
 ### Added:

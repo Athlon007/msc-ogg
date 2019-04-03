@@ -14,11 +14,11 @@ namespace OggConverter
         static int totalConversions;
         public static int TotalConversions { get => totalConversions; set => totalConversions = value; }
 
-        public static async Task ConvertFiles(string mscPath, string folder, int limit)
-        {
-            int inGame = 0;
+        public static int skipped;
 
-            Form1.instance.Log += $"\n\nInitializing {folder} conversion...\n";
+        public static async Task ConvertFolder(string mscPath, string folder, int limit)
+        {
+            Form1.instance.Log += $"\nInitializing {folder} conversion...\n";
             ConversionLog += $"{folder.ToUpper()}:\n";
             string path = $"{mscPath}\\{folder}";
             DirectoryInfo d = new DirectoryInfo(path + "\\");
@@ -27,6 +27,15 @@ namespace OggConverter
                 = d.GetFiles()
                 .Where(f => extensions.Contains(f.Extension.ToLower()))
                 .ToArray();
+
+            if (Files.Length == 0)
+            {
+                Form1.instance.Log += $"\nCouldn't find any file to convert in {folder}";
+                skipped++;
+                return;
+            }
+
+            int inGame = 1;
 
             //Counting how many OGG files there are already
             for (int c = 1; File.Exists($"{path}\\track{c}.ogg"); c++)
@@ -80,7 +89,7 @@ namespace OggConverter
             Form1.instance.Log += $"\nConverted {TotalConversions} files in {folder}.";
         }
 
-        public static async Task ConvertDragDrop(string filePath, string path, string folder, int limit)
+        public static async Task ConvertFile(string filePath, string path, string folder, int limit)
         {
             int inGame = 1;
             Form1.instance.Log += "\n\nConverting " + filePath + "\n";
