@@ -10,6 +10,12 @@ namespace OggConverter
 
         public static void Play(string path)
         {
+            if (!File.Exists("ffplay.exe"))
+            {
+                MessageBox.Show("FFplay.exe is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Stop();
 
             process = new Process();

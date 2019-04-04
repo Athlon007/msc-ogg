@@ -54,10 +54,7 @@ namespace OggConverter
         internal static int Int(string name, int defaultValue)
         {
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-            {
-                object value = Key.GetValue(name);
-                return value != null ? int.Parse(value.ToString()) : defaultValue;
-            }
+                return int.Parse(Key.GetValue(name, defaultValue).ToString());
         }
     }
 }

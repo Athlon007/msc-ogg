@@ -1,3 +1,9 @@
+# 2019.04.05.2349 BETA
+
+### Bug fixes:
+- "Get Update Now!" button now works
+- "Couldn't find My Summer Car path" message when using Quick Convert now appears correctly
+
 # 2019.04.04.2235 BETA
 
 ### Added:

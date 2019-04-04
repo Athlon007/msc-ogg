@@ -166,7 +166,7 @@ namespace OggConverter
 
             try
             {
-                Log += "\n\n--------------------------------------------------------------------------------------------------------";
+                Log += "\n\n-----------------------------------------------------------------------------------------------------------------------------------------";
                 Converter.ConversionLog += "THIS FILE WILL BE WIPED AFTER THE NEXT CONVERSION.\nMAKE SURE TO DO A BACKUP:\n\n";
                 await Converter.ConvertFolder(txtboxPath.Text, "Radio", 99);      
 
@@ -344,7 +344,7 @@ namespace OggConverter
 
         private void MSCOGGToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"MSC Music Manager {Application.ProductVersion}\nby Athlon\n\nAll info about third party libraries you can find on official GitLab repo.",
+            MessageBox.Show($"MSC Music Manager {Application.ProductVersion}\nby Athlon",
                 "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -502,6 +502,11 @@ namespace OggConverter
         private void BtnShowConversionLog_Click(object sender, EventArgs e)
         {
             Settings.ShowConversionLog ^= true;
+        }
+
+        private void BtnDownloadUpdate_Click(object sender, EventArgs e)
+        {
+            Updates.DownloadUpdate();
         }
     }
 }

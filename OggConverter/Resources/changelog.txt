@@ -10,3 +10,5 @@ What's new in this release?
 - Refactored whole code
 - Removed NReco Video Converter - now the tool uses only FFmpeg
 - Lots of bug fixes
+
+For more visit https://gitlab.com/aathlon/msc-ogg

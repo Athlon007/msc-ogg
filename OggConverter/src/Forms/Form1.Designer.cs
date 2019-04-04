@@ -445,6 +445,7 @@
             this.btnDownloadUpdate.Size = new System.Drawing.Size(117, 20);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
+            this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
             // 
             // downloadUpdateNowToolStripMenuItem
             // 

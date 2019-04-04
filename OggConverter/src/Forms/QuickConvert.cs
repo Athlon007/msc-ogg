@@ -25,14 +25,15 @@ namespace OggConverter
 
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
             {
-                if (Key != null)
-                    path = Key.GetValue("MSC Path").ToString();
-                else
+                if (Key.GetValue("MSC Path") == null)
                 {
                     MessageBox.Show("Couldn't find My Summer Car path. Set it up first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
+                    this.Close();
                     return;
                 }
+
+                path = Key.GetValue("MSC Path").ToString();
             }
 
             this.files = files;

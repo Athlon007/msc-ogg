@@ -18,6 +18,12 @@ namespace OggConverter
 
         public static async Task ConvertFolder(string mscPath, string folder, int limit)
         {
+            if (!File.Exists("ffmpeg.exe"))
+            {
+                MessageBox.Show("FFmpeg.exe is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Form1.instance.Log += $"\nInitializing {folder} conversion...\n";
             string path = $"{mscPath}\\{folder}";
 
