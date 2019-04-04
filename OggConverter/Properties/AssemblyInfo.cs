@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Ogólne informacje o zestawie są kontrolowane poprzez następujący 
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
-[assembly: AssemblyTitle("My Summer Car OGG Converter")]
+[assembly: AssemblyTitle("My Summer Car Music Manager")]
 [assembly: AssemblyDescription("The music manager for My Summer Car")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Athlon")]
-[assembly: AssemblyProduct("My Summer Car OGG Converter")]
+[assembly: AssemblyProduct("My Summer Car Music Manager")]
 [assembly: AssemblyCopyright("Copyright © Athlon 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Możesz określić wszystkie wartości lub użyć domyślnych numerów kompilacji i poprawki
 // przy użyciu symbolu „*”, tak jak pokazano poniżej:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2019.04.03.1715")]
-[assembly: AssemblyFileVersion("2019.04.03.1715")]
+[assembly: AssemblyVersion("2019.04.04.2235")]
+[assembly: AssemblyFileVersion("2019.04.04.2235")]

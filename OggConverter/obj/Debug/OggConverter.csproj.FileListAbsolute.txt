@@ -8,13 +8,14 @@ C:\Users\aathl\source\repos\OggConverter\OggConverter\bin\Debug\MSC OGG.exe
 C:\Users\aathl\source\repos\OggConverter\OggConverter\bin\Debug\MSC OGG.pdb
 C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Debug\MSC OGG.exe
 C:\Users\aathl\source\repos\OggConverter\OggConverter\obj\Debug\MSC OGG.pdb
-C:\Users\Athlon\repos\msc-ogg\OggConverter\bin\Debug\MSC OGG.exe.config
-C:\Users\Athlon\repos\msc-ogg\OggConverter\bin\Debug\MSC OGG.exe
-C:\Users\Athlon\repos\msc-ogg\OggConverter\bin\Debug\MSC OGG.pdb
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\OggConverter.csprojAssemblyReference.cache
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\OggConverter.Form1.resources
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\OggConverter.Properties.Resources.resources
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\OggConverter.csproj.GenerateResource.cache
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\OggConverter.csproj.CoreCompileInputs.cache
-C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\MSC OGG.exe
-C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\MSC OGG.pdb
+C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\OggConverter.QuickConvert.resources
+C:\Users\Athlon\repos\msc-ogg\OggConverter\bin\Debug\MSC Music Manager.exe.config
+C:\Users\Athlon\repos\msc-ogg\OggConverter\bin\Debug\MSC Music Manager.exe
+C:\Users\Athlon\repos\msc-ogg\OggConverter\bin\Debug\MSC Music Manager.pdb
+C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\MSC Music Manager.exe
+C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Debug\MSC Music Manager.pdb

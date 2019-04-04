@@ -29,26 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.txtboxPath = new System.Windows.Forms.TextBox();
-            this.btnConvert = new System.Windows.Forms.Button();
             this.logOutput = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnDirectory = new System.Windows.Forms.Button();
-            this.btnOpenGameDir = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.songList = new System.Windows.Forms.ListBox();
             this.btnPlaySong = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.playerRadio = new System.Windows.Forms.RadioButton();
             this.playerCD = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnMoveSong = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnSort = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnMoveSong = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
             this.menuTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLastLog = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +50,7 @@
             this.btnGitLab = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mSCOGGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFFmpegLicense = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +60,7 @@
             this.actionAfterConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAfterLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAfterClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnShowConversionLog = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAfterNone = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNoSteam = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,27 +68,20 @@
             this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
+            this.btnDownloadUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadUpdateNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnConvert = new System.Windows.Forms.Button();
+            this.txtboxPath = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnOpenGameDir = new System.Windows.Forms.Button();
+            this.btnDirectory = new System.Windows.Forms.Button();
+            this.labelConvert = new System.Windows.Forms.Label();
+            this.dragDropPanel = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
+            this.dragDropPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtboxPath
-            // 
-            this.txtboxPath.Location = new System.Drawing.Point(286, 44);
-            this.txtboxPath.Name = "txtboxPath";
-            this.txtboxPath.ReadOnly = true;
-            this.txtboxPath.Size = new System.Drawing.Size(322, 20);
-            this.txtboxPath.TabIndex = 0;
-            // 
-            // btnConvert
-            // 
-            this.btnConvert.Location = new System.Drawing.Point(466, 70);
-            this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(172, 24);
-            this.btnConvert.TabIndex = 1;
-            this.btnConvert.Text = "Convert";
-            this.btnConvert.UseVisualStyleBackColor = true;
-            this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
             // 
             // logOutput
             // 
@@ -101,48 +90,8 @@
             this.logOutput.Name = "logOutput";
             this.logOutput.ReadOnly = true;
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logOutput.Size = new System.Drawing.Size(473, 273);
+            this.logOutput.Size = new System.Drawing.Size(572, 273);
             this.logOutput.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(283, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "My Summer Car Path:";
-            // 
-            // btnDirectory
-            // 
-            this.btnDirectory.Location = new System.Drawing.Point(614, 43);
-            this.btnDirectory.Name = "btnDirectory";
-            this.btnDirectory.Size = new System.Drawing.Size(24, 22);
-            this.btnDirectory.TabIndex = 4;
-            this.btnDirectory.Text = "...";
-            this.btnDirectory.UseVisualStyleBackColor = true;
-            this.btnDirectory.Click += new System.EventHandler(this.btnDirectory_Click);
-            // 
-            // btnOpenGameDir
-            // 
-            this.btnOpenGameDir.Location = new System.Drawing.Point(286, 70);
-            this.btnOpenGameDir.Name = "btnOpenGameDir";
-            this.btnOpenGameDir.Size = new System.Drawing.Size(172, 23);
-            this.btnOpenGameDir.TabIndex = 5;
-            this.btnOpenGameDir.Text = "Open game directory";
-            this.btnOpenGameDir.UseVisualStyleBackColor = true;
-            this.btnOpenGameDir.Click += new System.EventHandler(this.btnOpenGameDir_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(238, 65);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "How to use:\r\n- Select My Summer Car directory\r\n- Put all your music into CD and R" +
-    "adio folders\r\n- Click Convert button\r\nSupported formats: .mp3, .wav, .aac, .m4a," +
-    " .wma";
             // 
             // songList
             // 
@@ -216,9 +165,37 @@
             this.panel1.Size = new System.Drawing.Size(174, 273);
             this.panel1.TabIndex = 13;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(122, 158);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Move:";
+            // 
+            // btnMoveSong
+            // 
+            this.btnMoveSong.Location = new System.Drawing.Point(118, 174);
+            this.btnMoveSong.Name = "btnMoveSong";
+            this.btnMoveSong.Size = new System.Drawing.Size(45, 23);
+            this.btnMoveSong.TabIndex = 17;
+            this.btnMoveSong.Text = ">";
+            this.btnMoveSong.UseVisualStyleBackColor = true;
+            this.btnMoveSong.Click += new System.EventHandler(this.BtnMoveSong_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(122, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Order:";
+            // 
             // btnDown
             // 
-            this.btnDown.Location = new System.Drawing.Point(114, 103);
+            this.btnDown.Location = new System.Drawing.Point(118, 103);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(45, 23);
             this.btnDown.TabIndex = 16;
@@ -228,7 +205,7 @@
             // 
             // btnUp
             // 
-            this.btnUp.Location = new System.Drawing.Point(114, 74);
+            this.btnUp.Location = new System.Drawing.Point(118, 74);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(45, 23);
             this.btnUp.TabIndex = 15;
@@ -238,7 +215,7 @@
             // 
             // btnSort
             // 
-            this.btnSort.Location = new System.Drawing.Point(114, 22);
+            this.btnSort.Location = new System.Drawing.Point(118, 22);
             this.btnSort.Name = "btnSort";
             this.btnSort.Size = new System.Drawing.Size(45, 23);
             this.btnSort.TabIndex = 14;
@@ -248,41 +225,13 @@
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(114, 241);
+            this.btnDel.Location = new System.Drawing.Point(118, 241);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(45, 23);
             this.btnDel.TabIndex = 13;
             this.btnDel.Text = "Del";
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.BtnDel_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(118, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Order:";
-            // 
-            // btnMoveSong
-            // 
-            this.btnMoveSong.Location = new System.Drawing.Point(114, 174);
-            this.btnMoveSong.Name = "btnMoveSong";
-            this.btnMoveSong.Size = new System.Drawing.Size(45, 23);
-            this.btnMoveSong.TabIndex = 17;
-            this.btnMoveSong.Text = ">";
-            this.btnMoveSong.UseVisualStyleBackColor = true;
-            this.btnMoveSong.Click += new System.EventHandler(this.BtnMoveSong_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(118, 158);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "Move:";
             // 
             // menuTool
             // 
@@ -294,6 +243,7 @@
             this.btnGitLab,
             this.btnSteam,
             this.toolStripSeparator3,
+            this.btnCheckUpdate,
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
@@ -338,6 +288,13 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(229, 6);
             // 
+            // btnCheckUpdate
+            // 
+            this.btnCheckUpdate.Name = "btnCheckUpdate";
+            this.btnCheckUpdate.Size = new System.Drawing.Size(232, 22);
+            this.btnCheckUpdate.Text = "Check for update";
+            this.btnCheckUpdate.Click += new System.EventHandler(this.BtnCheckUpdate_Click);
+            // 
             // btnAbout
             // 
             this.btnAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -350,14 +307,14 @@
             // mSCOGGToolStripMenuItem
             // 
             this.mSCOGGToolStripMenuItem.Name = "mSCOGGToolStripMenuItem";
-            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.mSCOGGToolStripMenuItem.Text = "MSC OGG";
             this.mSCOGGToolStripMenuItem.Click += new System.EventHandler(this.MSCOGGToolStripMenuItem_Click);
             // 
             // btnFFmpegLicense
             // 
             this.btnFFmpegLicense.Name = "btnFFmpegLicense";
-            this.btnFFmpegLicense.Size = new System.Drawing.Size(127, 22);
+            this.btnFFmpegLicense.Size = new System.Drawing.Size(180, 22);
             this.btnFFmpegLicense.Text = "FFmpeg";
             this.btnFFmpegLicense.Click += new System.EventHandler(this.BtnFFmpegLicense_Click);
             // 
@@ -393,6 +350,7 @@
             this.actionAfterConversionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnAfterLaunchGame,
             this.btnAfterClose,
+            this.btnShowConversionLog,
             this.toolStripSeparator2,
             this.btnAfterNone});
             this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
@@ -403,7 +361,7 @@
             // 
             this.btnAfterLaunchGame.CheckOnClick = true;
             this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
-            this.btnAfterLaunchGame.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterLaunchGame.Size = new System.Drawing.Size(184, 22);
             this.btnAfterLaunchGame.Text = "Launch the game";
             this.btnAfterLaunchGame.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem1_Click);
             // 
@@ -411,20 +369,28 @@
             // 
             this.btnAfterClose.CheckOnClick = true;
             this.btnAfterClose.Name = "btnAfterClose";
-            this.btnAfterClose.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterClose.Size = new System.Drawing.Size(184, 22);
             this.btnAfterClose.Text = "Close the program";
             this.btnAfterClose.Click += new System.EventHandler(this.closeTheProgramToolStripMenuItem_Click);
+            // 
+            // btnShowConversionLog
+            // 
+            this.btnShowConversionLog.CheckOnClick = true;
+            this.btnShowConversionLog.Name = "btnShowConversionLog";
+            this.btnShowConversionLog.Size = new System.Drawing.Size(184, 22);
+            this.btnShowConversionLog.Text = "Show conversion log";
+            this.btnShowConversionLog.Click += new System.EventHandler(this.BtnShowConversionLog_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
             // 
             // btnAfterNone
             // 
             this.btnAfterNone.CheckOnClick = true;
             this.btnAfterNone.Name = "btnAfterNone";
-            this.btnAfterNone.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterNone.Size = new System.Drawing.Size(184, 22);
             this.btnAfterNone.Text = "None";
             this.btnAfterNone.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
             // 
@@ -463,20 +429,114 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuTool,
             this.menuSettings,
-            this.btnLaunchGame});
+            this.btnLaunchGame,
+            this.btnDownloadUpdate});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(644, 24);
+            this.menu.Size = new System.Drawing.Size(743, 24);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
+            // 
+            // btnDownloadUpdate
+            // 
+            this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnDownloadUpdate.Name = "btnDownloadUpdate";
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(117, 20);
+            this.btnDownloadUpdate.Text = "Get Update Now!";
+            this.btnDownloadUpdate.Visible = false;
+            // 
+            // downloadUpdateNowToolStripMenuItem
+            // 
+            this.downloadUpdateNowToolStripMenuItem.Name = "downloadUpdateNowToolStripMenuItem";
+            this.downloadUpdateNowToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
+            this.downloadUpdateNowToolStripMenuItem.Text = "Download Update Now!";
+            // 
+            // btnConvert
+            // 
+            this.btnConvert.Location = new System.Drawing.Point(190, 70);
+            this.btnConvert.Name = "btnConvert";
+            this.btnConvert.Size = new System.Drawing.Size(172, 24);
+            this.btnConvert.TabIndex = 1;
+            this.btnConvert.Text = "Convert";
+            this.btnConvert.UseVisualStyleBackColor = true;
+            this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
+            // 
+            // txtboxPath
+            // 
+            this.txtboxPath.Location = new System.Drawing.Point(10, 44);
+            this.txtboxPath.Name = "txtboxPath";
+            this.txtboxPath.ReadOnly = true;
+            this.txtboxPath.Size = new System.Drawing.Size(322, 20);
+            this.txtboxPath.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "My Summer Car Path:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(367, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(369, 65);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "How to use:\r\n- Select My Summer Car directory\r\n- Put all your music into CD and R" +
+    "adio folders (or drag and drop the files here)\r\n- Click Convert button\r\nSupporte" +
+    "d formats: .mp3, .wav, .aac, .m4a, .wma";
+            // 
+            // btnOpenGameDir
+            // 
+            this.btnOpenGameDir.Location = new System.Drawing.Point(10, 70);
+            this.btnOpenGameDir.Name = "btnOpenGameDir";
+            this.btnOpenGameDir.Size = new System.Drawing.Size(172, 23);
+            this.btnOpenGameDir.TabIndex = 5;
+            this.btnOpenGameDir.Text = "Open game directory";
+            this.btnOpenGameDir.UseVisualStyleBackColor = true;
+            this.btnOpenGameDir.Click += new System.EventHandler(this.btnOpenGameDir_Click);
+            // 
+            // btnDirectory
+            // 
+            this.btnDirectory.Location = new System.Drawing.Point(338, 43);
+            this.btnDirectory.Name = "btnDirectory";
+            this.btnDirectory.Size = new System.Drawing.Size(24, 22);
+            this.btnDirectory.TabIndex = 4;
+            this.btnDirectory.Text = "...";
+            this.btnDirectory.UseVisualStyleBackColor = true;
+            this.btnDirectory.Click += new System.EventHandler(this.btnDirectory_Click);
+            // 
+            // labelConvert
+            // 
+            this.labelConvert.AutoSize = true;
+            this.labelConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.labelConvert.Location = new System.Drawing.Point(243, 151);
+            this.labelConvert.Name = "labelConvert";
+            this.labelConvert.Size = new System.Drawing.Size(136, 20);
+            this.labelConvert.TabIndex = 0;
+            this.labelConvert.Text = "Convert to {folder}";
+            // 
+            // dragDropPanel
+            // 
+            this.dragDropPanel.Controls.Add(this.labelConvert);
+            this.dragDropPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dragDropPanel.Location = new System.Drawing.Point(0, 24);
+            this.dragDropPanel.Name = "dragDropPanel";
+            this.dragDropPanel.Size = new System.Drawing.Size(743, 349);
+            this.dragDropPanel.TabIndex = 14;
+            this.dragDropPanel.Visible = false;
             // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 373);
+            this.ClientSize = new System.Drawing.Size(743, 373);
+            this.Controls.Add(this.dragDropPanel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnOpenGameDir);
@@ -498,24 +558,20 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
+            this.DragLeave += new System.EventHandler(this.Form1_DragLeave);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
+            this.dragDropPanel.ResumeLayout(false);
+            this.dragDropPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtboxPath;
-        private System.Windows.Forms.Button btnConvert;
         private System.Windows.Forms.TextBox logOutput;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnDirectory;
-        private System.Windows.Forms.Button btnOpenGameDir;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox songList;
         private System.Windows.Forms.Button btnPlaySong;
         private System.Windows.Forms.Button btnStop;
@@ -552,6 +608,18 @@
         private System.Windows.Forms.ToolStripMenuItem btnLogs;
         private System.Windows.Forms.ToolStripMenuItem btnLaunchGame;
         private System.Windows.Forms.MenuStrip menu;
+        private System.Windows.Forms.ToolStripMenuItem btnCheckUpdate;
+        private System.Windows.Forms.ToolStripMenuItem btnDownloadUpdate;
+        private System.Windows.Forms.ToolStripMenuItem downloadUpdateNowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnShowConversionLog;
+        private System.Windows.Forms.Button btnConvert;
+        private System.Windows.Forms.TextBox txtboxPath;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnOpenGameDir;
+        private System.Windows.Forms.Button btnDirectory;
+        private System.Windows.Forms.Label labelConvert;
+        private System.Windows.Forms.Panel dragDropPanel;
     }
 }
 

@@ -1,3 +1,27 @@
+# 2019.04.04.2235 BETA
+
+### Added:
+- Updates are now downloaded and installed automatically
+- Added "check for update" button
+- Added panel which tells how many files are drag & dropped
+- You can now drag & drop files on MSC OGG.exe, even if the program is not running
+- You can now press Shift + Check for update to force download latest version
+- You can also use Shift + Open LOG folder to remove all old log files
+- Same goes for Shift + Launch game - it lets you start the game with no Steam quicker
+
+### Changes:
+- Renamed "MSC OGG" to "MSC Music Manager"
+- Log text is now scrolling down automatically
+- If there wasn't any song in one directory, and there was in another, the empty one will not be mentioned in last conversion log
+- On drag & drop conversion, the file path will no longer be present
+
+### Bug fixes:
+- Fixed bug with song moving button
+- Non music files are now converted and ignored
+- Fixed potential bug, in which program could crash if the song was deleted while playing the song
+- Message box when deleting the file now works
+- Music now stops when you try to move or sort songs
+
 # 2019.04.03.1715 BETA
 
 ### Added:
