@@ -17,9 +17,9 @@ namespace OggConverter.Properties {
     /// </summary>
     // Ta klasa została automatycznie wygenerowana za pomocą klasy StronglyTypedResourceBuilder
     // przez narzędzie, takie jak ResGen lub Visual Studio.
-    // Aby dodać lub usunąć członka, edytuj plik .ResX, a następnie ponownie uruchom ResGen
+    // Aby dodać lub usunąć składową, edytuj plik ResX, a następnie ponownie uruchom narzędzie ResGen
     // z opcją /str lub ponownie utwórz projekt VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,24 @@ namespace OggConverter.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu What&apos;s new in this release?
+        ///
+        ///- The tool is now called &quot;My Summer Car Music Manager&quot;
+        ///- Added music manager - you can now play, sort, move and delete songs right in the program
+        ///- You can now drag &amp; drop music files to quickly convert - either on running app window, or on it&apos;s executable
+        ///- MSMM now can download and install updates automatically
+        ///- Refactored whole code
+        ///- Removed NReco Video Converter - now the tool uses only FFmpeg
+        ///- Lots of bug fixes
+        ///- Added some bugs to fix later.
+        /// </summary>
+        internal static string changelog {
+            get {
+                return ResourceManager.GetString("changelog", resourceCulture);
             }
         }
     }

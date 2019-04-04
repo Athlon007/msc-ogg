@@ -3,23 +3,25 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace OggConverter
 {
     class Updates
     {
-        public static string version = "17510"; // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public static string realVersion { get => Application.ProductVersion; }
+        public const int version = 17510; // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
         static bool newUpdateReady;
 
-        public static bool IsThereUpdate()
+        public static void IsThereUpdate()
         {
             if (newUpdateReady)
             {
                 DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                Form1.instance.Log += "\n\nThere's an update ready to download!";
                 if (res == DialogResult.Yes)
-                    Process.Start("https://gitlab.com/aathlon/msc-ogg");
-                return true;
+                    DownloadUpdate();
+
+                return;
             }
 
             try
@@ -36,20 +38,50 @@ namespace OggConverter
                 new CrashLog(ex.ToString());
             }
 
-            string content = File.ReadAllText("latest.txt");
+            int latest = int.Parse(File.ReadAllText("latest.txt"));
             File.Delete("latest.txt");
 
-            if (content != version)
+            if (latest > version)
             {
                 DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (res == DialogResult.Yes)
-                    Process.Start("https://gitlab.com/aathlon/msc-ogg");
+                    DownloadUpdate();
 
                 newUpdateReady = true;
-                return true;
+                Form1.instance.Log += "\n\nThere's an update ready to download!";
+                Form1.instance.btnGetUpdate.Visible = true;
+                return;
             }
 
-            return false;
+            Form1.instance.Log += "\n\nTool is up-to-date";
+        }
+
+        const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
+            "xcopy /s /y %cd%\\update %cd%\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
+
+        public static void DownloadUpdate()
+        {
+            Form1.instance.Log += "\n\nDownloading an update...";
+
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadFile(new Uri("https://gitlab.com/aathlon/msc-ogg/raw/master/mscmm.zip"), "mscmm.zip");
+                client.Dispose();
+            }
+
+            Form1.instance.Log += "\nUpdate downloaded! Extracting...";
+
+            Directory.CreateDirectory("update");
+            ZipFile.ExtractToDirectory("mscmm.zip", "update");
+
+            Form1.instance.Log += "\nRestarting...";
+            File.WriteAllText("updater.bat", updaterScript);
+
+            Process process = new Process();
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.FileName = "updater.bat";
+            process.Start();
+            Application.Exit();
         }
     }
 }
