@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Media;
+using System.Drawing;
 
 namespace OggConverter
 {
@@ -12,7 +13,7 @@ namespace OggConverter
         public static Form1 instance;
 
         bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
-        bool conversionInProgress; //Prevents the program from closing if conversion is in progress
+        bool ignoreQuitting; //Prevents the program from closing if conversion is in progress
         bool firstLoad = false; //Detects if the program has been opened for the first time
 
         public string Log
@@ -22,16 +23,13 @@ namespace OggConverter
             {
                 value = value.Replace("\n", Environment.NewLine);
                 if (logOutput.InvokeRequired)
+                {
                     logOutput.Invoke(new Action(() => logOutput.Text = value));
-                else
-                    logOutput.Text = value;
-
-                logOutput.SelectionStart = logOutput.TextLength;
-                logOutput.ScrollToCaret();
+                    return;
+                }
+                logOutput.Text = value;
             }
-        }
-
-        public ToolStripMenuItem btnGetUpdate;
+        }      
 
         public Form1()
         {
@@ -39,11 +37,7 @@ namespace OggConverter
 
             instance = this;
             playerRadio.Checked = true;
-            Log += $"MSC Music Manager {Application.ProductVersion} BETA";
-            btnGetUpdate = btnDownloadUpdate;
-            btnGetUpdate.Click += BtnCheckUpdate_Click;
-
-            Remove();
+            Log += $"MSC OGG Converter {Updates.realVersion} BETA";
 
             try
             {
@@ -63,25 +57,20 @@ namespace OggConverter
                         // Actions after conversion
                         btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
                         btnAfterClose.Checked = Settings.CloseAfterConversion;
-                        btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion && !Settings.ShowConversionLog;
-                        btnShowConversionLog.Checked = Settings.ShowConversionLog;
+                        btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion;
                         btnUpdates.Checked = !Settings.NoUpdates;
                         btnLogs.Checked = Settings.Logs;
-
-                        UpdateSongList();
 
                         if (Settings.NoUpdates)
                             Log += "\n\nUpdates are disabled";
                         else
-                            Updates.IsThereUpdate();
+                            Log += Updates.IsThereUpdate() ? "\n\nThere's an update ready to download!" : "\n\nTool is up-to-date";
+
+                        UpdateSongList();
                     }
                 }
 
-                if (Updates.version > Settings.LatestVersion)
-                {
-                    Log += "\n\n" + global::OggConverter.Properties.Resources.changelog;
-                    Settings.LatestVersion = Updates.version;
-                }
+                Log += "\n\nYou can check the changeLog on Steam community discussion, or project's repository.";
 
                 if (!Directory.Exists($"{txtboxPath.Text}\\CD"))
                 {
@@ -89,11 +78,12 @@ namespace OggConverter
                     Log += "\nCD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.";
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // There was some kind of problem while starting.
                 // Launching the first start sequention
 
+                MessageBox.Show(ex.ToString());
                 MessageBox.Show("Hey there! Looks like you're new here. Select the game directory first :)\n\n" +
                     "If you see that message second, or more times, please contact the developer.", "Howdy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Log += "\n\nSelect My Summer Car Directory\nEg. C:\\Steam\\steamapps\\common\\My Summer Car\\.";
@@ -117,36 +107,9 @@ namespace OggConverter
             }
         }    
 
-        void Remove()
-        {
-            // Removing unused files
-            if (File.Exists("NReco.VideoConverter.dll"))
-                File.Delete("NReco.VideoConverter.dll");
-
-            if (File.Exists("updater.bat"))
-                File.Delete("updater.bat");
-
-            if (File.Exists("mscmm.zip"))
-                File.Delete("mscmm.zip");
-
-            if (File.Exists("MSC OGG.exe"))
-                File.Delete("MSC OGG.exe");
-
-            if (Directory.Exists("update"))
-            {
-                DirectoryInfo dir = new DirectoryInfo("update");
-                FileInfo[] files = dir.GetFiles();
-
-                foreach (FileInfo file in files)
-                    file.Delete();
-
-                Directory.Delete("update");
-            }
-        }
-
         private async void btnConvert_Click(object sender, EventArgs e)
         {
-            if (conversionInProgress)
+            if (ignoreQuitting)
             {
                 MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
@@ -158,7 +121,7 @@ namespace OggConverter
                 return;
             }
 
-            conversionInProgress = true;
+            ignoreQuitting = true;
 
             Converter.ConversionLog = "";
             Converter.TotalConversions = 0;
@@ -167,30 +130,28 @@ namespace OggConverter
             try
             {
                 Log += "\n\n--------------------------------------------------------------------------------------------------------";
-                Converter.ConversionLog += "THIS FILE WILL BE WIPED AFTER THE NEXT CONVERSION.\nMAKE SURE TO DO A BACKUP:\n\n";
-                await Converter.ConvertFolder(txtboxPath.Text, "Radio", 99);      
+                Converter.ConversionLog += "THIS FILE WILL BE WIPED AFTER THE NEXT CONVERSION:\n\n";
+                await Converter.ConvertFolder(txtboxPath.Text, "Radio", 99);
+                Converter.ConversionLog += "\n\n";
 
                 if (!skipCD)
                     await Converter.ConvertFolder(txtboxPath.Text, "CD", 15);
 
                 if (Converter.skipped != 2)
                 {
-                    Converter.ConversionLog += DateTime.Now.ToLocalTime();
+                    Converter.ConversionLog += "\n\n" + DateTime.Now.ToLocalTime();
+                    File.WriteAllText(@"LastConversion.txt", Converter.ConversionLog);
+                    Process.Start(@"LastConversion.txt");
                     Log += $"\nConverted {Converter.TotalConversions} files in total";
-                    Log += "\n\nDone";
-                    if (Settings.ShowConversionLog)
-                    {
-                        File.WriteAllText(@"LastConversion.txt", Converter.ConversionLog);
-                        Process.Start(@"LastConversion.txt");
-                    }
-                    Log += "\nConversion log saved to LastConversion.txt";
+                    Log += "\nDone";
                 }
                 else
-                    Log += "\nConversion log will not be saved, because both Radio and CD were skipped";
-
+                {
+                    Log += "\nConverting log will not be saved, because both Radio and CD were skipped";
+                }
                 SystemSounds.Exclamation.Play();
 
-                conversionInProgress = false;
+                ignoreQuitting = false;
 
                 //Actions after conversion
                 if (Settings.LaunchAfterConversion)
@@ -202,7 +163,7 @@ namespace OggConverter
             catch (Exception ex)
             {
                 new CrashLog(ex.ToString());
-                conversionInProgress = false;
+                ignoreQuitting = false;
             }
 
             UpdateSongList();
@@ -260,7 +221,7 @@ namespace OggConverter
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (conversionInProgress)
+            if (ignoreQuitting)
                 e.Cancel = true;
 
             Music.Stop();
@@ -280,11 +241,6 @@ namespace OggConverter
 
         private void launchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                Process.Start($"{txtboxPath.Text}\\mysummercar.exe");
-                return;
-            }
             LaunchGame();
         }
 
@@ -311,8 +267,7 @@ namespace OggConverter
         private void noneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings.CloseAfterConversion = btnAfterClose.Checked = false;
-            Settings.LaunchAfterConversion = btnAfterLaunchGame.Checked = false;
-            Settings.ShowConversionLog = btnShowConversionLog.Checked = false;
+            Settings.LaunchAfterConversion = btnAfterLaunchGame.Checked =  false;
         }
 
         private void closeTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
@@ -344,7 +299,7 @@ namespace OggConverter
 
         private void MSCOGGToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"MSC Music Manager {Application.ProductVersion}\nby Athlon\n\nAll info about third party libraries you can find on official GitLab repo.",
+            MessageBox.Show($"MSC OGG Converter {Updates.realVersion}\nby Athlon\n\nAll info about third party libraries you can find on official GitLab repo.",
                 "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -361,15 +316,6 @@ namespace OggConverter
 
         private void BtnLogFolder_Click(object sender, EventArgs e)
         {
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                DialogResult dl = MessageBox.Show("Would you like to remove all logs?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dl == DialogResult.Yes)
-                    Directory.Delete("LOG", true);
-
-                return;
-            }
-
             if (!Settings.Logs)
             {
                 Log += "Logs are disabled";
@@ -394,16 +340,14 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            string file = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}";
-            DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dl == DialogResult.Yes)
-            {
-                Music.Stop();                
-                if (File.Exists(file))
-                    File.Delete(file);
-
-                UpdateSongList();
-            }
+            File.Delete($"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}");
+            UpdateSongList();
+            //DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (dl == DialogResult.Yes)
+            //{                
+            //File.Delete($"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}");
+            //UpdateSongList();
+            //}
         }
 
         private void PlayerCD_Click(object sender, EventArgs e)
@@ -445,22 +389,8 @@ namespace OggConverter
             Music.ChangeOrder(songList, path, false);
         }
 
-        private void Form1_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                dragDropPanel.Visible = true;
-                labelConvert.Text = $"Convert {((string[])e.Data.GetData(DataFormats.FileDrop)).Length} file(s) to {(playerCD.Checked ? "CD" : "Radio")}?";
-                labelConvert.Left = (this.ClientSize.Width - labelConvert.Size.Width) / 2;
-                labelConvert.Top = (this.ClientSize.Height - labelConvert.Size.Height) / 2;
-                e.Effect = DragDropEffects.Copy;
-            }
-        }
-
         private async void Form1_DragDrop(object sender, DragEventArgs e)
         {
-            dragDropPanel.Visible = false;
-
             int limit = playerCD.Checked ? 15 : 99;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             string dropTo = playerCD.Checked ? "CD" : "Radio";
@@ -470,38 +400,19 @@ namespace OggConverter
             UpdateSongList();
         }
 
-        private void Form1_DragLeave(object sender, EventArgs e)
+        private void Form1_DragEnter(object sender, DragEventArgs e)
         {
-            dragDropPanel.Visible = false;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
 
         private void BtnMoveSong_Click(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1) return;
             Music.MoveTo(txtboxPath.Text, songList.SelectedItem.ToString(), playerCD.Checked);
         }
 
         private void BtnLogs_Click(object sender, EventArgs e)
         {
             Settings.Logs ^= true;
-        }
-
-        private void BtnCheckUpdate_Click(object sender, EventArgs e)
-        {
-            // Force download and install update
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                Log += "\n\nForcing the update...";
-                Updates.DownloadUpdate();
-                return;
-            }
-
-            Updates.IsThereUpdate();
-        }
-
-        private void BtnShowConversionLog_Click(object sender, EventArgs e)
-        {
-            Settings.ShowConversionLog ^= true;
         }
     }
 }

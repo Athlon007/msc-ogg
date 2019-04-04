@@ -1,4 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -45,8 +50,6 @@ namespace OggConverter
 
         public static void Sort(string path)
         {
-            Music.Stop();
-
             int skipped = 0;
 
             for (int i = 1; i < 99; i++)
@@ -58,7 +61,6 @@ namespace OggConverter
                     File.Move($"{path}\\track{i}.ogg", $"{path}\\track{i - skipped}.ogg");
                     if (skipped != 0)
                         i -= skipped;
-
                     skipped = 0;
                 }
             }
@@ -69,9 +71,6 @@ namespace OggConverter
         public static void ChangeOrder(ListBox songList, string path, bool moveUp)
         {
             if (songList.SelectedIndex == -1) return;
-
-            Music.Stop();
-
             int selectedIndex = songList.SelectedIndex;
             if (selectedIndex == 0) return;
 
@@ -88,8 +87,6 @@ namespace OggConverter
 
         public static void MoveTo(string path, string selected, bool toCD)
         {
-            Music.Stop();
-
             string moveFrom = toCD ? "CD" : "Radio";
             string moveTo = moveFrom == "CD" ? "Radio" : "CD";
 

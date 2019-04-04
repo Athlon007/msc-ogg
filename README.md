@@ -1,28 +1,24 @@
 # WARNING: THIS IS A DEVELOPMENT VERSION. IT MAY HAVE UNEXPECED BUGS AND GLITCHES.
-# USE AT YOUR OWN RISK
-
-# My Summer Car Music Manager
-A simple tool which makes you life easier by automatically converting, naming and managing songs in Radio and CD folders of My Summer Car.
+# My Summer Car OGG Converter
+This tool initially was created for me to help convert all of my MP3 music into the OGG format. But I realised other people may use it, so there it is.
 
 If you downloaded this program from the other sides than this GitLab repo or my website, I don't guarantee its safety. 
 **YOU SHOULD ONLY DOWNLOAD IT FROM HERE!**
 Also remember this tool is free - if you payed for it, you were scammed!
 
-## Used third-party technologies:
+## Used third party libraries:
 - FFMpeg
 - .NET Framework 4.6
 
 ## Download
-###### [Download](https://gitlab.com/aathlon/msc-ogg/tree/master/mscmm.zip)
+###### [Download](https://gitlab.com/aathlon/msc-ogg/tree/master/mscogg.zip)
+###### [EXE only (for updates)](https://gitlab.com/aathlon/msc-ogg/tree/master/mscoggexe.zip)
 
 ## Installation
 Simply unzip archive anywhere you want.
 
-## Updating
-The program has automatic update function, although you can disable it.
-
 ## Contribution
-Anyone who will can contribute into this project.
+Anyone who will can contribute into this project (when I'll figure out this Git thing...). It seriously needs some work, y'kno?
 
 ## Versioning
 We're version this project by year, month, day and time (HHMM). I personally use [Automatic Versions tool by Precision Infinity](https://marketplace.visualstudio.com/items?itemName=PrecisionInfinity.AutomaticVersions), which does that automaticly.

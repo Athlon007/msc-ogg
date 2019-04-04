@@ -12,18 +12,15 @@ namespace OggConverter
     {
         public CrashLog(string log)
         {
-            // Logs disabled? Don't save it
             if (!Settings.Logs) return;
-
-            string date = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+            string date = DateTime.Now.Date.ToShortDateString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString();
             string thisVersion = Application.ProductVersion;
 
             Directory.CreateDirectory("LOG");
             File.WriteAllText(@"LOG\" + date + ".txt",
-                $"MSC Music Manager {thisVersion} ({Updates.version})\n\n{FriendlyName()}\n\n{log}");
+                $"MSC OGG {thisVersion} ({Updates.version})\n\n{FriendlyName()}\n\n{log}");
 
-            DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG directory. " +
-                "Would you like to open directory?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG directory. Would you like to open directory?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
             if (dl == DialogResult.Yes)
                 Process.Start("LOG");
         }
@@ -44,8 +41,10 @@ namespace OggConverter
             string ProductName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
             string CSDVersion = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CSDVersion");
             if (ProductName != "")
-                return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName + (CSDVersion != "" ? " " + CSDVersion : "");
-
+            {
+                return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName +
+                            (CSDVersion != "" ? " " + CSDVersion : "");
+            }
             return "";
         }
     }
