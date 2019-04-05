@@ -53,6 +53,13 @@ namespace OggConverter
                     {
                         //Path in textbox
                         txtboxPath.Text = Key.GetValue("MSC Path").ToString();
+                        if ((!Directory.Exists(txtboxPath.Text)) || (!File.Exists($"{txtboxPath.Text}\\mysummercar.exe")))
+                        {
+                            MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease select the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Log += "\n\nCouldn't find mysummercar.exe. Please select the correct game path.";
+                            SafeMode();
+                            return;
+                        }
                         txtboxPath.SelectionStart = 0;
                         txtboxPath.ScrollToCaret();
                         this.ActiveControl = label2;
@@ -79,7 +86,7 @@ namespace OggConverter
 
                 if (Updates.version > Settings.LatestVersion)
                 {
-                    Log += "\n\n" + global::OggConverter.Properties.Resources.changelog;
+                    Log += "\n\n" + Properties.Resources.changelog;
                     Settings.LatestVersion = Updates.version;
                 }
 
@@ -98,22 +105,7 @@ namespace OggConverter
                     "If you see that message second, or more times, please contact the developer.", "Howdy", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Log += "\n\nSelect My Summer Car Directory\nEg. C:\\Steam\\steamapps\\common\\My Summer Car\\.";
 
-                // Disables some items, to prevent bugs
-                btnOpenGameDir.Enabled = false;
-                btnConvert.Enabled = false;
-                menuSettings.Enabled = false;
-                btnLaunchGame.Enabled = false;
-                firstLoad = true;
-                this.AllowDrop = false;
-                btnPlaySong.Enabled = false;
-                btnStop.Enabled = false;
-                btnDel.Enabled = false;
-                btnUp.Enabled = false;
-                btnDown.Enabled = false;
-                btnSort.Enabled = false;
-                playerRadio.Enabled = false;
-                playerCD.Enabled = false;
-                btnMoveSong.Enabled = false;
+                SafeMode();
             }
         }    
 
@@ -142,6 +134,27 @@ namespace OggConverter
 
                 Directory.Delete("update");
             }
+        }
+
+        // Disabled most features to prevent crashes
+        void SafeMode()
+        {
+            txtboxPath.Text = "Select game folder ->";
+            btnOpenGameDir.Enabled = false;
+            btnConvert.Enabled = false;
+            menuSettings.Enabled = false;
+            btnLaunchGame.Enabled = false;
+            firstLoad = true;
+            this.AllowDrop = false;
+            btnPlaySong.Enabled = false;
+            btnStop.Enabled = false;
+            btnDel.Enabled = false;
+            btnUp.Enabled = false;
+            btnDown.Enabled = false;
+            btnSort.Enabled = false;
+            playerRadio.Enabled = false;
+            playerCD.Enabled = false;
+            btnMoveSong.Enabled = false;
         }
 
         private async void btnConvert_Click(object sender, EventArgs e)
@@ -372,10 +385,16 @@ namespace OggConverter
 
             if (!Settings.Logs)
             {
-                Log += "Logs are disabled";
+                Log += "\nLogs are disabled";
                 return;
             }
-            Directory.CreateDirectory(@"Log");
+
+            if (!Directory.Exists("Log"))
+            {
+                Log += "\nLog folder doesn't exist";
+                return;
+            }
+
             Process.Start(@"Log");
         }
 

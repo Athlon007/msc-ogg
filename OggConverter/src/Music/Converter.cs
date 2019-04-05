@@ -16,6 +16,8 @@ namespace OggConverter
 
         public static int skipped;
 
+        public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma" };
+
         public static async Task ConvertFolder(string mscPath, string folder, int limit)
         {
             if (!File.Exists("ffmpeg.exe"))
@@ -28,7 +30,6 @@ namespace OggConverter
             string path = $"{mscPath}\\{folder}";
 
             DirectoryInfo d = new DirectoryInfo(path);
-            string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma" };
             FileInfo[] Files
                 = d.GetFiles()
                 .Where(f => extensions.Contains(f.Extension.ToLower()))
@@ -102,7 +103,7 @@ namespace OggConverter
 
         public static async Task ConvertFile(string filePath, string path, string folder, int limit)
         {
-            if (!filePath.ContainsAny(".mp3", ".wav", ".aac", ".m4a", ".wma"))
+            if (!filePath.ContainsAny(extensions))
             {
                 if (Form1.instance != null)
                     Form1.instance.Log += $"\n\"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" is not a music file so it will be skipped.";

@@ -1,4 +1,10 @@
-# 2019.04.05.2349 BETA
+# 2019.04.05.1806 BETA
+
+### Bug fixes:
+- When Log folder doesn't exist, it won't be created if you pressed "Open LOG folder"
+- Tool now checks if game folder, or My Summer Car executable still exist on launch
+
+# 2019.04.04.2349 BETA
 
 ### Bug fixes:
 - "Get Update Now!" button now works
