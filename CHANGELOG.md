@@ -1,97 +1,29 @@
-# 2.0.0.5 BETA
+# 2.0 (08.04.2019)
 
 ### Added:
-- You can now put OGG files into the conversion - instead of converting them, the program will simply rename it accordingly
-- Double click on song to play it
-- If the tool detects that it crashed before while changing order of file, it will try to fix it on next start
-
-### Changes:
-- Switched to sequence-based identifiers versioning
-- Updated the icon
-- Code optimizations
-- Tool now checks for the new version on GitLab
-
-### Bug fixes:
-- Program won't crash now when you try to move the song after you played it
-
-# 2.0.0.4 BETA
-
-### Bug fixes:
-- When Log folder doesn't exist, it won't be created if you pressed "Open LOG folder"
-- Tool now checks if game folder, or My Summer Car executable still exist on launch
-
-# 2019.04.04.2349 BETA
-
-### Bug fixes:
-- "Get Update Now!" button now works
-- "Couldn't find My Summer Car path" message when using Quick Convert now appears correctly
-
-# 2.0.0.3 BETA
-
-### Added:
+- You can now drag and drop files to convert them quickly - either by dropping them on program's window, or it's executable
+- Added music player
+- You can now remove, sort and change order of songs in the tool
 - Updates are now downloaded and installed automatically
 - Added "check for update" button
-- Added panel which tells how many files are drag & dropped
-- You can now drag & drop files on MSC OGG.exe, even if the program is not running
+- Added ffplay
 - You can now press Shift + Check for update to force download latest version
 - You can also use Shift + Open LOG folder to remove all old log files
 - Same goes for Shift + Launch game - it lets you start the game with no Steam quicker
+- You can now put OGG files into the conversion - instead of converting them, the program will simply rename it accordingly
+- If the tool detects that it crashed before while changing order of file, it will try to fix it on next start
 
 ### Changes:
 - Renamed "MSC OGG" to "MSC Music Manager"
-- Log text is now scrolling down automatically
-- If there wasn't any song in one directory, and there was in another, the empty one will not be mentioned in last conversion log
-- On drag & drop conversion, the file path will no longer be present
-
-### Bug fixes:
-- Fixed bug with song moving button
-- Non music files are now converted and ignored
-- Fixed potential bug, in which program could crash if the song was deleted while playing the song
-- Message box when deleting the file now works
-- Music now stops when you try to move or sort songs
-
-# 2.0.0.2 BETA
-
-### Added:
-- You can now move songs between CD and Radio
-- You can now switch off the crash logs
-
-### Changes:
-- Small UI changes
-- Many changes under the hood
-- Convertion log won't be saved if no files were converted
-
-### Bug fixes:
-- Fixed bug in which the tool would crash if you used player buttons
-- Temporarily disabled question while removing file
-- Fixed bug in which song wouldn't pause if the plyare fodler has changed
-
-# 2.0.0.1 BETA
-
-### Added:
-- Added ffplay
-- Added converter songs player
-- You can now remove, sort and change order of songs in the tool
-- You can now drag and drop files to convert them quickly. To select the destination folder, set it "Radio" or "CD" radio buttons
-
-### Changes:
+- Huge UI changes
+- New icon
+- Log will no longer be created, if no files were found
+- Code has been refactored
+- Improvements in settings loading and saving
 - Updated ffmpeg to version 4.1.1
+- Lots and lots of small changes under the hood
 
-### Known issues
-- Deleting song causes NullReferenceException
-
-# 2.0.0.0 BETA
-
-### Added:
-- FFmpeg's license info
-
-### Changes:
-- Code refactoring
-- Improvements in settings loading
-- Moved conversion method to separate class
-- MSCOGG doesn't use NReco Video Converter anymore
-
-# 2017.12.12.1224
+# 1.2.1 (12.12.2017)
 
 ### Changes:
 - Changed "How to use" note. It now shows all supported music formats
@@ -107,7 +39,7 @@
 ### Removed:
 - Obsolete code
 
-# 2017.12.8.1120
+# 1.2 (08.12.2017)
 
 ### Added:
 - You can now disable checking for updates
@@ -126,7 +58,7 @@
 ### Fixes:
 - Fully fixed "NullReferenceException" bug
 
-# 2017.12.4.2228
+# 1.1 (04.12.2017)
 
 ### Added:
 - Manifest file
@@ -155,7 +87,7 @@
 - Small changes in ConversionLog
 - Changes in menu strip
 
-# 2017.12.2.1342
+# 1.0 (02.12.2017)
 
 ### Added:
 - LOG handler (they're now saved into LOG folder in program's directory)
