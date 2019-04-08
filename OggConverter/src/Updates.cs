@@ -9,10 +9,13 @@ namespace OggConverter
 {
     class Updates
     {
-        public const int version = 17510; // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
+        public const int version = 18150; // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
         static bool newUpdateReady;
 
-        public static void IsThereUpdate()
+        /// <summary>
+        /// Checks for the update on remote server by downloading the latest version info file.
+        /// </summary>
+        public static void LookForAnUpdate()
         {
             if (newUpdateReady)
             {
@@ -28,14 +31,16 @@ namespace OggConverter
             {
                 using (WebClient client = new WebClient())
                 {
-                    //client.DownloadFile(new Uri("https://gitlab.com/aathlon/msc-ogg/raw/master/latest.txt"), "latest.txt");
-                    client.DownloadFile(new Uri("http://athlon.kkmr.pl/download/mscogg/ver.txt"), "latest.txt");
+                    client.DownloadFile(new Uri("https://gitlab.com/aathlon/msc-ogg/raw/master/latest.txt"), "latest.txt");
                     client.Dispose();
                 }
             }
             catch (Exception ex)
             {
-                new CrashLog(ex.ToString());
+                new CrashLog(ex.ToString(), true);
+                Form1.instance.Log += "\n\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
+                    "In case the problem still occures, a new crash log has been created.";
+                return;
             }
 
             int latest = int.Parse(File.ReadAllText("latest.txt"));
@@ -59,6 +64,9 @@ namespace OggConverter
         const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
             "xcopy /s /y %cd%\\update %cd%\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
 
+        /// <summary>
+        /// Downloads and installs the latest update.
+        /// </summary>
         public static void DownloadUpdate()
         {
             Form1.instance.Log += "\n\nDownloading an update...";

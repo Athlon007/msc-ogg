@@ -1,4 +1,20 @@
-# 2019.04.05.1806 BETA
+# 2.0.0.5 BETA
+
+### Added:
+- You can now put OGG files into the conversion - instead of converting them, the program will simply rename it accordingly
+- Double click on song to play it
+- If the tool detects that it crashed before while changing order of file, it will try to fix it on next start
+
+### Changes:
+- Switched to sequence-based identifiers versioning
+- Updated the icon
+- Code optimizations
+- Tool now checks for the new version on GitLab
+
+### Bug fixes:
+- Program won't crash now when you try to move the song after you played it
+
+# 2.0.0.4 BETA
 
 ### Bug fixes:
 - When Log folder doesn't exist, it won't be created if you pressed "Open LOG folder"
@@ -10,7 +26,7 @@
 - "Get Update Now!" button now works
 - "Couldn't find My Summer Car path" message when using Quick Convert now appears correctly
 
-# 2019.04.04.2235 BETA
+# 2.0.0.3 BETA
 
 ### Added:
 - Updates are now downloaded and installed automatically
@@ -34,7 +50,7 @@
 - Message box when deleting the file now works
 - Music now stops when you try to move or sort songs
 
-# 2019.04.03.1715 BETA
+# 2.0.0.2 BETA
 
 ### Added:
 - You can now move songs between CD and Radio
@@ -50,7 +66,7 @@
 - Temporarily disabled question while removing file
 - Fixed bug in which song wouldn't pause if the plyare fodler has changed
 
-# 2019.04.02.1817 BETA
+# 2.0.0.1 BETA
 
 ### Added:
 - Added ffplay
@@ -64,7 +80,7 @@
 ### Known issues
 - Deleting song causes NullReferenceException
 
-# 2019.04.02.1130 BETA
+# 2.0.0.0 BETA
 
 ### Added:
 - FFmpeg's license info

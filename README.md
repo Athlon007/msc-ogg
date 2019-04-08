@@ -1,6 +1,3 @@
-# WARNING: THIS IS A DEVELOPMENT VERSION. IT MAY HAVE UNEXPECED BUGS AND GLITCHES.
-# USE AT YOUR OWN RISK
-
 # My Summer Car Music Manager
 A simple tool which makes you life easier by automatically converting, naming and managing songs in Radio and CD folders of My Summer Car.
 
@@ -25,7 +22,7 @@ The program has automatic update function, although you can disable it.
 Anyone who will can contribute into this project.
 
 ## Versioning
-We're version this project by year, month, day and time (HHMM). I personally use [Automatic Versions tool by Precision Infinity](https://marketplace.visualstudio.com/items?itemName=PrecisionInfinity.AutomaticVersions), which does that automaticly.
+We're version this project with sequence-based identifiers versioning (2.0.0, then 2.1...).
 
 ## Building the source code
 The program was build with Microsoft Visual Studio 2019 Community, so I think it's the best way to compile it.

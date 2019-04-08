@@ -16,8 +16,15 @@ namespace OggConverter
 
         public static int skipped;
 
-        public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma" };
+        public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma", ".ogg" };
 
+        /// <summary>
+        /// Converts all files found in the folder
+        /// </summary>
+        /// <param name="mscPath">My Summer Car path</param>
+        /// <param name="folder">Folder to convert (CD or Radio)</param>
+        /// <param name="limit">Limit of files - My Summer Car uses maximum of 15 files for CD and 99 for Radio</param>
+        /// <returns></returns>
         public static async Task ConvertFolder(string mscPath, string folder, int limit)
         {
             if (!File.Exists("ffmpeg.exe"))
@@ -76,16 +83,24 @@ namespace OggConverter
 
                 Form1.instance.Log += $"Converting {file.Name}\n";
 
-                Process process = new Process();
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                // Setup executable and parameters
-                process.StartInfo.FileName = "ffmpeg.exe";
-                process.StartInfo.Arguments = $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"";
+                // If the file is already in OGG format - skip conversion and just rename it accordingly.
+                if (file.Name.EndsWith(".ogg"))
+                {
+                    File.Move($"{path}\\{file.Name}", $"{path}\\track{inGame}.ogg");
+                }
+                else
+                {
+                    Process process = new Process();
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.CreateNoWindow = true;
+                    // Setup executable and parameters
+                    process.StartInfo.FileName = "ffmpeg.exe";
+                    process.StartInfo.Arguments = $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"";
 
-                process.Start();
-                await Task.Run(() => process.WaitForExit());
+                    process.Start();
+                    await Task.Run(() => process.WaitForExit());
+                }
 
                 Form1.instance.Log += $"Finished {file.Name} as track{inGame}.ogg\n";
 
@@ -101,7 +116,15 @@ namespace OggConverter
             Form1.instance.Log += $"\nConverted {TotalConversions} files in {folder}";
         }
 
-        public static async Task ConvertFile(string filePath, string path, string folder, int limit)
+        /// <summary>
+        /// Works like ConvertFolder, but instead it just converts single file.
+        /// </summary>
+        /// <param name="filePath">Path to the file.</param>
+        /// <param name="mscPath">My Summer Car path.</param>
+        /// <param name="folder">Folder to what we want to convert (CD or Radio)</param>
+        /// <param name="limit">Limit of files - My Summer Car uses maximum of 15 files for CD and 99 for Radio</param>
+        /// <returns></returns>
+        public static async Task ConvertFile(string filePath, string mscPath, string folder, int limit)
         {
             if (!filePath.ContainsAny(extensions))
             {
@@ -114,7 +137,7 @@ namespace OggConverter
             if (Form1.instance != null)
                 Form1.instance.Log += $"\n\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n";
             //Counting how many OGG files there are already
-            for (int c = 1; File.Exists($"{path}\\{folder}\\track{c}.ogg"); c++)
+            for (int c = 1; File.Exists($"{mscPath}\\{folder}\\track{c}.ogg"); c++)
                 inGame++;
 
             if ((limit != 0) && (inGame > limit))
@@ -133,16 +156,23 @@ namespace OggConverter
                 }
             }
 
-            Process process = new Process();
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            
-            // Setup executable and parameters
-            process.StartInfo.FileName = "ffmpeg.exe";
-            process.StartInfo.Arguments = $"-i \"{filePath}\" -acodec libvorbis \"{path}\\{folder}\\track{inGame}.ogg\"";
-            process.Start();
-            await Task.Run(() => process.WaitForExit());
+            if (filePath.EndsWith(".ogg"))
+            {
+                File.Move(filePath, $"{mscPath}\\{folder}\\track{inGame}.ogg");
+            }
+            else
+            {
+                Process process = new Process();
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                // Setup executable and parameters
+                process.StartInfo.FileName = "ffmpeg.exe";
+                process.StartInfo.Arguments = $"-i \"{filePath}\" -acodec libvorbis \"{mscPath}\\{folder}\\track{inGame}.ogg\"";
+                process.Start();
+                await Task.Run(() => process.WaitForExit());
+            }
 
             if (Form1.instance != null)
                 Form1.instance.Log += $"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"";

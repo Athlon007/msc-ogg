@@ -2,6 +2,7 @@ What's new in this release?
 
 - The tool is now called "My Summer Car Music Manager"
 - Added music manager - you can now play, sort, move and delete songs right in the program
+- .ogg files are now also supported!
 - You can now drag & drop music files to quickly convert - either on running app window, or on it's executable
 - MSMM now can download and install updates automatically
 - You can now press Shift + Check for update to force download latest version

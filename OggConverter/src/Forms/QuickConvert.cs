@@ -6,12 +6,11 @@ namespace OggConverter
 {
     public partial class QuickConvert : Form
     {
-        string[] files;
-        string path;
+        readonly string[] files;
+        readonly string path;
 
-        string Message
+        private string Message
         {
-            get => strMessage.Text;
             set
             {
                 strMessage.Text = value;

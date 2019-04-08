@@ -43,7 +43,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo_sUN_icon.ico</ApplicationIcon>
+    <ApplicationIcon>ico.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -71,7 +71,7 @@
       <DependentUpon>QuickConvert.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Functions.cs" />
-    <Compile Include="src\Music\Music.cs" />
+    <Compile Include="src\Music\Player.cs" />
     <Compile Include="src\Music\Converter.cs" />
     <Compile Include="src\Forms\Form1.cs">
       <SubType>Form</SubType>
@@ -79,7 +79,7 @@
     <Compile Include="src\Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Log.cs" />
+    <Compile Include="src\CrashLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Updates.cs" />
@@ -118,6 +118,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ico.ico" />
     <Content Include="logo_sUN_icon.ico" />
     <None Include="Resources\changelog.txt" />
   </ItemGroup>

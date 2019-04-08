@@ -1,16 +1,19 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Management;
 using Microsoft.Win32;
 
 namespace OggConverter
 {
     class CrashLog
     {
-        public CrashLog(string log)
+        /// <summary>
+        /// Dumps the crash log to the file.
+        /// </summary>
+        /// <param name="log">Crash log content.</param>
+        /// <param name="silent">If true, doesn't display crash dialog.</param>
+        public CrashLog(string log, bool silent = false)
         {
             // Logs disabled? Don't save it
             if (!Settings.Logs) return;
@@ -21,6 +24,8 @@ namespace OggConverter
             Directory.CreateDirectory("LOG");
             File.WriteAllText(@"LOG\" + date + ".txt",
                 $"MSC Music Manager {thisVersion} ({Updates.version})\n\n{FriendlyName()}\n\n{log}");
+
+            if (silent) return;
 
             DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG directory. " +
                 "Would you like to open directory?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);

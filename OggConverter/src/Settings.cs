@@ -11,6 +11,7 @@ namespace OggConverter
         public static bool NoUpdates { get => GetSettings.Bool("NoUpdates", false); set => SetSettings.Bool("NoUpdates", value); }  
         public static bool Logs { get => GetSettings.Bool("Logs", true); set => SetSettings.Bool("Logs", value); }
         public static bool ShowConversionLog { get => GetSettings.Bool("ShowConversionLog", true); set => SetSettings.Bool("ShowConversionLog", value); }
+        public static bool AutoSort { get => GetSettings.Bool("AutoSort", true); set => SetSettings.Bool("AutoSort", value); }
 
         public static int LatestVersion { get => GetSettings.Int("LatestVersion", 0); set => SetSettings.Int("LatestVersion", value); }
     }

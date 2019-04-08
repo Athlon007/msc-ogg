@@ -36,6 +36,7 @@
             this.playerRadio = new System.Windows.Forms.RadioButton();
             this.playerCD = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labNowPlaying = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnMoveSong = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -78,6 +79,7 @@
             this.btnDirectory = new System.Windows.Forms.Button();
             this.labelConvert = new System.Windows.Forms.Label();
             this.dragDropPanel = new System.Windows.Forms.Panel();
+            this.btnAutoSort = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -98,24 +100,24 @@
             this.songList.FormattingEnabled = true;
             this.songList.Location = new System.Drawing.Point(10, 23);
             this.songList.Name = "songList";
-            this.songList.Size = new System.Drawing.Size(98, 212);
+            this.songList.Size = new System.Drawing.Size(98, 199);
             this.songList.TabIndex = 8;
             // 
             // btnPlaySong
             // 
-            this.btnPlaySong.Location = new System.Drawing.Point(12, 241);
+            this.btnPlaySong.Location = new System.Drawing.Point(10, 241);
             this.btnPlaySong.Name = "btnPlaySong";
-            this.btnPlaySong.Size = new System.Drawing.Size(45, 23);
+            this.btnPlaySong.Size = new System.Drawing.Size(46, 23);
             this.btnPlaySong.TabIndex = 9;
             this.btnPlaySong.Text = "Play";
             this.btnPlaySong.UseVisualStyleBackColor = true;
-            this.btnPlaySong.Click += new System.EventHandler(this.btnPlay);
+            this.btnPlaySong.Click += new System.EventHandler(this.BtnPlay);
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(63, 241);
+            this.btnStop.Location = new System.Drawing.Point(62, 241);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(45, 23);
+            this.btnStop.Size = new System.Drawing.Size(46, 23);
             this.btnStop.TabIndex = 10;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -148,6 +150,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.labNowPlaying);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.btnMoveSong);
             this.panel1.Controls.Add(this.label3);
@@ -165,14 +168,24 @@
             this.panel1.Size = new System.Drawing.Size(174, 273);
             this.panel1.TabIndex = 13;
             // 
+            // labNowPlaying
+            // 
+            this.labNowPlaying.AutoSize = true;
+            this.labNowPlaying.Location = new System.Drawing.Point(12, 225);
+            this.labNowPlaying.Name = "labNowPlaying";
+            this.labNowPlaying.Size = new System.Drawing.Size(137, 13);
+            this.labNowPlaying.TabIndex = 19;
+            this.labNowPlaying.Text = "Playing: Radio\\track15.ogg";
+            this.labNowPlaying.Visible = false;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(122, 158);
+            this.label4.Location = new System.Drawing.Point(115, 158);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 18;
-            this.label4.Text = "Move:";
+            this.label4.Text = "Move To:";
             // 
             // btnMoveSong
             // 
@@ -180,7 +193,7 @@
             this.btnMoveSong.Name = "btnMoveSong";
             this.btnMoveSong.Size = new System.Drawing.Size(45, 23);
             this.btnMoveSong.TabIndex = 17;
-            this.btnMoveSong.Text = ">";
+            this.btnMoveSong.Text = "CD";
             this.btnMoveSong.UseVisualStyleBackColor = true;
             this.btnMoveSong.Click += new System.EventHandler(this.BtnMoveSong_Click);
             // 
@@ -227,9 +240,9 @@
             // 
             this.btnDel.Location = new System.Drawing.Point(118, 241);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(45, 23);
+            this.btnDel.Size = new System.Drawing.Size(46, 23);
             this.btnDel.TabIndex = 13;
-            this.btnDel.Text = "Del";
+            this.btnDel.Text = "Delete";
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.BtnDel_Click);
             // 
@@ -262,7 +275,7 @@
             this.btnLastLog.Name = "btnLastLog";
             this.btnLastLog.Size = new System.Drawing.Size(232, 22);
             this.btnLastLog.Text = "Open last conversion log";
-            this.btnLastLog.Click += new System.EventHandler(this.openLastConversionToolStripMenuItem_Click);
+            this.btnLastLog.Click += new System.EventHandler(this.OpenLastConversionToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -274,14 +287,14 @@
             this.btnGitLab.Name = "btnGitLab";
             this.btnGitLab.Size = new System.Drawing.Size(232, 22);
             this.btnGitLab.Text = "GitLab repository";
-            this.btnGitLab.Click += new System.EventHandler(this.gitToolStripMenuItem_Click);
+            this.btnGitLab.Click += new System.EventHandler(this.GitToolStripMenuItem_Click);
             // 
             // btnSteam
             // 
             this.btnSteam.Name = "btnSteam";
             this.btnSteam.Size = new System.Drawing.Size(232, 22);
             this.btnSteam.Text = "Steam Community discussion";
-            this.btnSteam.Click += new System.EventHandler(this.steamCommunityDiscussionToolStripMenuItem_Click);
+            this.btnSteam.Click += new System.EventHandler(this.SteamCommunityDiscussionToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -307,14 +320,14 @@
             // mSCOGGToolStripMenuItem
             // 
             this.mSCOGGToolStripMenuItem.Name = "mSCOGGToolStripMenuItem";
-            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.mSCOGGToolStripMenuItem.Text = "MSC OGG";
             this.mSCOGGToolStripMenuItem.Click += new System.EventHandler(this.MSCOGGToolStripMenuItem_Click);
             // 
             // btnFFmpegLicense
             // 
             this.btnFFmpegLicense.Name = "btnFFmpegLicense";
-            this.btnFFmpegLicense.Size = new System.Drawing.Size(180, 22);
+            this.btnFFmpegLicense.Size = new System.Drawing.Size(127, 22);
             this.btnFFmpegLicense.Text = "FFmpeg";
             this.btnFFmpegLicense.Click += new System.EventHandler(this.BtnFFmpegLicense_Click);
             // 
@@ -323,7 +336,7 @@
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(232, 22);
             this.btnQuit.Text = "Quit";
-            this.btnQuit.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+            this.btnQuit.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
             // 
             // menuSettings
             // 
@@ -331,6 +344,7 @@
             this.btnRemMP3,
             this.actionAfterConversionToolStripMenuItem,
             this.btnNoSteam,
+            this.btnAutoSort,
             this.btnUpdates,
             this.btnLogs});
             this.menuSettings.Name = "menuSettings";
@@ -343,7 +357,7 @@
             this.btnRemMP3.Name = "btnRemMP3";
             this.btnRemMP3.Size = new System.Drawing.Size(229, 22);
             this.btnRemMP3.Text = "Remove files after conversion";
-            this.btnRemMP3.Click += new System.EventHandler(this.removeOldMP3FilesToolStripMenuItem_Click);
+            this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
             // 
             // actionAfterConversionToolStripMenuItem
             // 
@@ -363,7 +377,7 @@
             this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
             this.btnAfterLaunchGame.Size = new System.Drawing.Size(184, 22);
             this.btnAfterLaunchGame.Text = "Launch the game";
-            this.btnAfterLaunchGame.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem1_Click);
+            this.btnAfterLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem1_Click);
             // 
             // btnAfterClose
             // 
@@ -371,7 +385,7 @@
             this.btnAfterClose.Name = "btnAfterClose";
             this.btnAfterClose.Size = new System.Drawing.Size(184, 22);
             this.btnAfterClose.Text = "Close the program";
-            this.btnAfterClose.Click += new System.EventHandler(this.closeTheProgramToolStripMenuItem_Click);
+            this.btnAfterClose.Click += new System.EventHandler(this.CloseTheProgramToolStripMenuItem_Click);
             // 
             // btnShowConversionLog
             // 
@@ -392,7 +406,7 @@
             this.btnAfterNone.Name = "btnAfterNone";
             this.btnAfterNone.Size = new System.Drawing.Size(184, 22);
             this.btnAfterNone.Text = "None";
-            this.btnAfterNone.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
+            this.btnAfterNone.Click += new System.EventHandler(this.NoneToolStripMenuItem_Click);
             // 
             // btnNoSteam
             // 
@@ -400,7 +414,7 @@
             this.btnNoSteam.Name = "btnNoSteam";
             this.btnNoSteam.Size = new System.Drawing.Size(229, 22);
             this.btnNoSteam.Text = "Launch game without Steam";
-            this.btnNoSteam.Click += new System.EventHandler(this.launchGameWithoutSteamToolStripMenuItem_Click);
+            this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
             // 
             // btnUpdates
             // 
@@ -422,10 +436,11 @@
             this.btnLaunchGame.Name = "btnLaunchGame";
             this.btnLaunchGame.Size = new System.Drawing.Size(91, 20);
             this.btnLaunchGame.Text = "Launch game";
-            this.btnLaunchGame.Click += new System.EventHandler(this.launchTheGameToolStripMenuItem_Click);
+            this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
             // menu
             // 
+            this.menu.BackColor = System.Drawing.Color.White;
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuTool,
             this.menuSettings,
@@ -461,7 +476,7 @@
             this.btnConvert.TabIndex = 1;
             this.btnConvert.Text = "Convert";
             this.btnConvert.UseVisualStyleBackColor = true;
-            this.btnConvert.Click += new System.EventHandler(this.btnConvert_Click);
+            this.btnConvert.Click += new System.EventHandler(this.BtnConvert_Click);
             // 
             // txtboxPath
             // 
@@ -487,9 +502,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(369, 65);
             this.label2.TabIndex = 6;
-            this.label2.Text = "How to use:\r\n- Select My Summer Car directory\r\n- Put all your music into CD and R" +
-    "adio folders (or drag and drop the files here)\r\n- Click Convert button\r\nSupporte" +
-    "d formats: .mp3, .wav, .aac, .m4a, .wma";
+            this.label2.Text = resources.GetString("label2.Text");
             // 
             // btnOpenGameDir
             // 
@@ -499,7 +512,7 @@
             this.btnOpenGameDir.TabIndex = 5;
             this.btnOpenGameDir.Text = "Open game directory";
             this.btnOpenGameDir.UseVisualStyleBackColor = true;
-            this.btnOpenGameDir.Click += new System.EventHandler(this.btnOpenGameDir_Click);
+            this.btnOpenGameDir.Click += new System.EventHandler(this.BtnOpenGameDir_Click);
             // 
             // btnDirectory
             // 
@@ -509,7 +522,7 @@
             this.btnDirectory.TabIndex = 4;
             this.btnDirectory.Text = "...";
             this.btnDirectory.UseVisualStyleBackColor = true;
-            this.btnDirectory.Click += new System.EventHandler(this.btnDirectory_Click);
+            this.btnDirectory.Click += new System.EventHandler(this.BtnDirectory_Click);
             // 
             // labelConvert
             // 
@@ -525,11 +538,19 @@
             // 
             this.dragDropPanel.Controls.Add(this.labelConvert);
             this.dragDropPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dragDropPanel.Location = new System.Drawing.Point(0, 24);
+            this.dragDropPanel.Location = new System.Drawing.Point(0, 0);
             this.dragDropPanel.Name = "dragDropPanel";
-            this.dragDropPanel.Size = new System.Drawing.Size(743, 349);
+            this.dragDropPanel.Size = new System.Drawing.Size(743, 373);
             this.dragDropPanel.TabIndex = 14;
             this.dragDropPanel.Visible = false;
+            // 
+            // btnAutoSort
+            // 
+            this.btnAutoSort.CheckOnClick = true;
+            this.btnAutoSort.Name = "btnAutoSort";
+            this.btnAutoSort.Size = new System.Drawing.Size(229, 22);
+            this.btnAutoSort.Text = "Auto Sort";
+            this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
             // Form1
             // 
@@ -537,7 +558,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 373);
-            this.Controls.Add(this.dragDropPanel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnOpenGameDir);
@@ -547,6 +567,7 @@
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.txtboxPath);
             this.Controls.Add(this.menu);
+            this.Controls.Add(this.dragDropPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
@@ -554,7 +575,7 @@
             this.MinimumSize = new System.Drawing.Size(660, 412);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MSC OGG Converter";
+            this.Text = "MSC Music Manager";
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
@@ -621,6 +642,8 @@
         private System.Windows.Forms.Button btnDirectory;
         private System.Windows.Forms.Label labelConvert;
         private System.Windows.Forms.Panel dragDropPanel;
+        private System.Windows.Forms.Label labNowPlaying;
+        private System.Windows.Forms.ToolStripMenuItem btnAutoSort;
     }
 }
 

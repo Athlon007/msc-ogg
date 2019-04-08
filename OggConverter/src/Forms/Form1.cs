@@ -11,7 +11,7 @@ namespace OggConverter
     {
         public static Form1 instance;
 
-        bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
+        readonly bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
         bool conversionInProgress; //Prevents the program from closing if conversion is in progress
         bool firstLoad = false; //Detects if the program has been opened for the first time
 
@@ -32,6 +32,7 @@ namespace OggConverter
         }
 
         public ToolStripMenuItem btnGetUpdate;
+        public Label LabNowPlaying;
 
         public Form1()
         {
@@ -39,9 +40,16 @@ namespace OggConverter
 
             instance = this;
             playerRadio.Checked = true;
-            Log += $"MSC Music Manager {Application.ProductVersion} BETA";
+            Log += $"MSC Music Manager {Functions.GetVersion()}";
             btnGetUpdate = btnDownloadUpdate;
             btnGetUpdate.Click += BtnCheckUpdate_Click;
+
+            songList.DoubleClick += BtnPlay;
+
+            LabNowPlaying = labNowPlaying;
+
+            btnUp.Text = char.ConvertFromUtf32(0x2191);
+            btnDown.Text = char.ConvertFromUtf32(0x2193);
 
             Remove();
 
@@ -74,13 +82,26 @@ namespace OggConverter
                         btnShowConversionLog.Checked = Settings.ShowConversionLog;
                         btnUpdates.Checked = !Settings.NoUpdates;
                         btnLogs.Checked = Settings.Logs;
+                        btnAutoSort.Checked = Settings.AutoSort;
 
                         UpdateSongList();
 
                         if (Settings.NoUpdates)
                             Log += "\n\nUpdates are disabled";
                         else
-                            Updates.IsThereUpdate();
+                            Updates.LookForAnUpdate();
+
+                        if (File.Exists($"{txtboxPath.Text}\\Radio\\trackTemp.ogg"))
+                        {
+                            Log += "\n\nFound temp song file in Radio, possibly caused by crash\nTrying to fix it...";
+                            Converter.ConvertFile($"{txtboxPath.Text}\\Radio\\trackTemp.ogg", txtboxPath.Text, "Radio", 99);
+                        }
+
+                        if (File.Exists($"{txtboxPath.Text}\\CD\\trackTemp.ogg"))
+                        {
+                            Log += "\n\nFound temp song file in CD, possibly caused by crash\nTrying to fix it...";
+                            Converter.ConvertFile($"{txtboxPath.Text}\\CD\\trackTemp.ogg", txtboxPath.Text, "CD", 99);
+                        }
                     }
                 }
 
@@ -103,12 +124,15 @@ namespace OggConverter
 
                 MessageBox.Show("Hey there! Looks like you're new here. Select the game directory first :)\n\n" +
                     "If you see that message second, or more times, please contact the developer.", "Howdy", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Log += "\n\nSelect My Summer Car Directory\nEg. C:\\Steam\\steamapps\\common\\My Summer Car\\.";
+                Log += "\n\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.";
 
                 SafeMode();
             }
         }    
 
+        /// <summary>
+        /// Used to remove temporary/unused files
+        /// </summary>
         void Remove()
         {
             // Removing unused files
@@ -125,18 +149,13 @@ namespace OggConverter
                 File.Delete("MSC OGG.exe");
 
             if (Directory.Exists("update"))
-            {
-                DirectoryInfo dir = new DirectoryInfo("update");
-                FileInfo[] files = dir.GetFiles();
-
-                foreach (FileInfo file in files)
-                    file.Delete();
-
-                Directory.Delete("update");
-            }
+                Directory.Delete("update", true);
         }
 
-        // Disabled most features to prevent crashes
+        /// <summary>
+        /// Disabled most features to prevent crashes.
+        /// Used for initial setup and if the My Summer Car directory or file no longer exists.
+        /// </summary>
         void SafeMode()
         {
             txtboxPath.Text = "Select game folder ->";
@@ -157,7 +176,7 @@ namespace OggConverter
             btnMoveSong.Enabled = false;
         }
 
-        private async void btnConvert_Click(object sender, EventArgs e)
+        private async void BtnConvert_Click(object sender, EventArgs e)
         {
             if (conversionInProgress)
             {
@@ -227,7 +246,7 @@ namespace OggConverter
             logOutput.ScrollToCaret();
         }
 
-        private void btnDirectory_Click(object sender, EventArgs e)
+        private void BtnDirectory_Click(object sender, EventArgs e)
         {
             using (var folderDialog = new FolderBrowserDialog())
             {
@@ -255,7 +274,7 @@ namespace OggConverter
             }
         }
 
-        private void btnOpenGameDir_Click(object sender, EventArgs e)
+        private void BtnOpenGameDir_Click(object sender, EventArgs e)
         {
             if (txtboxPath.Text.Length == 0)
             {
@@ -266,7 +285,7 @@ namespace OggConverter
             Process.Start(txtboxPath.Text);
         }
 
-        private void gitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://gitlab.com/aathlon/msc-ogg");
         }
@@ -276,22 +295,22 @@ namespace OggConverter
             if (conversionInProgress)
                 e.Cancel = true;
 
-            Music.Stop();
+            Player.Stop();
         }
 
 
-        private void openLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!File.Exists("LastConversion.txt"))
             {
-                Log += "\n\nNo last conversion log exists";
+                Log += "\nNo last conversion log exists";
                 return;
             }
 
             Process.Start("LastConversion.txt");
         }
 
-        private void launchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LaunchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
@@ -306,41 +325,41 @@ namespace OggConverter
             Process.Start(Settings.NoSteam ? $"{txtboxPath.Text}\\mysummercar.exe" : "steam://rungameid/516750");
         }
 
-        private void removeOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings.RemoveMP3 ^= true;
         }      
 
-        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void steamCommunityDiscussionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SteamCommunityDiscussionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://steamcommunity.com/app/516750/discussions/2/1489992713697876617/");
         }
 
-        private void noneToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings.CloseAfterConversion = btnAfterClose.Checked = false;
             Settings.LaunchAfterConversion = btnAfterLaunchGame.Checked = false;
             Settings.ShowConversionLog = btnShowConversionLog.Checked = false;
         }
 
-        private void closeTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CloseTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings.CloseAfterConversion ^= true;
             btnAfterNone.Checked = false;
         }
 
-        private void launchTheGameToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void LaunchTheGameToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Settings.LaunchAfterConversion ^= true;
             btnAfterNone.Checked = false;
         }
 
-        private void launchGameWithoutSteamToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LaunchGameWithoutSteamToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Settings.NoSteam ^= true;
         }
@@ -361,15 +380,20 @@ namespace OggConverter
                 "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private async void btnPlay(object sender, EventArgs e)
+        private void BtnPlay(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Music.Play($"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}");
+
+            Player.Play($"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}");
+
+            labNowPlaying.Text = $"Now Playing: {(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}";
+            LabNowPlaying.Left = (panel1.Width - LabNowPlaying.Width) / 2;
+            labNowPlaying.Visible = true;
         }
 
         private void BtnStop_Click(object sender, EventArgs e)
         {
-            Music.Stop();
+            Player.Stop();
         }
 
         private void BtnLogFolder_Click(object sender, EventArgs e)
@@ -398,6 +422,9 @@ namespace OggConverter
             Process.Start(@"Log");
         }
 
+        /// <summary>
+        /// Updates song list used for player
+        /// </summary>
         public void UpdateSongList()
         {
             if (firstLoad) return;
@@ -410,6 +437,9 @@ namespace OggConverter
                     songList.Items.Add($"track{i}.ogg");
         }
 
+        /// <summary>
+        /// Removes selected file on player
+        /// </summary>
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
@@ -417,32 +447,38 @@ namespace OggConverter
             DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dl == DialogResult.Yes)
             {
-                Music.Stop();                
+                Player.Stop();                
                 if (File.Exists(file))
                     File.Delete(file);
 
                 UpdateSongList();
             }
+
+            if (Settings.AutoSort)
+            {
+                string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
+                Player.Sort(path);
+            }
         }
 
         private void PlayerCD_Click(object sender, EventArgs e)
         {
-            Music.Stop();
+            Player.Stop();
             UpdateSongList();
-            btnMoveSong.Text = "<";
+            btnMoveSong.Text = "Radio";
         }
 
         private void PlayerRadio_Click(object sender, EventArgs e)
         {
-            Music.Stop();
+            Player.Stop();
             UpdateSongList();
-            btnMoveSong.Text = ">";
+            btnMoveSong.Text = "CD";
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
         {
             string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
-            Music.Sort(path);
+            Player.Sort(path);
         }
 
         private void Form1_Activated(object sender, EventArgs e)
@@ -454,14 +490,14 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
             string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
-            Music.ChangeOrder(songList, path, true);
+            Player.ChangeOrder(songList, path, true);
         }
 
         private void BtnDown_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
             string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
-            Music.ChangeOrder(songList, path, false);
+            Player.ChangeOrder(songList, path, false);
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -469,6 +505,7 @@ namespace OggConverter
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 dragDropPanel.Visible = true;
+                dragDropPanel.BringToFront();
                 labelConvert.Text = $"Convert {((string[])e.Data.GetData(DataFormats.FileDrop)).Length} file(s) to {(playerCD.Checked ? "CD" : "Radio")}?";
                 labelConvert.Left = (this.ClientSize.Width - labelConvert.Size.Width) / 2;
                 labelConvert.Top = (this.ClientSize.Height - labelConvert.Size.Height) / 2;
@@ -497,7 +534,7 @@ namespace OggConverter
         private void BtnMoveSong_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Music.MoveTo(txtboxPath.Text, songList.SelectedItem.ToString(), playerCD.Checked);
+            Player.MoveTo(txtboxPath.Text, songList.SelectedItem.ToString(), playerCD.Checked);
         }
 
         private void BtnLogs_Click(object sender, EventArgs e)
@@ -515,7 +552,7 @@ namespace OggConverter
                 return;
             }
 
-            Updates.IsThereUpdate();
+            Updates.LookForAnUpdate();
         }
 
         private void BtnShowConversionLog_Click(object sender, EventArgs e)
@@ -526,6 +563,11 @@ namespace OggConverter
         private void BtnDownloadUpdate_Click(object sender, EventArgs e)
         {
             Updates.DownloadUpdate();
+        }
+
+        private void BtnAutoSort_Click(object sender, EventArgs e)
+        {
+            Settings.AutoSort ^= true;
         }
     }
 }
