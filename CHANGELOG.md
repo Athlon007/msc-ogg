@@ -77,7 +77,7 @@
 - Fixed incorrect author in EXE info
 - Dialog box when update is available
 
-# 2017.12.3.1522
+# 1.0.1 (03.12.2017)
 
 ### Added:
 - You can now remove MP3 files after conversion
