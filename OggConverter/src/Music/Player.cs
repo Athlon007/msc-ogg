@@ -63,6 +63,18 @@ namespace OggConverter
         /// <param name="mscPath">My Summer Car path <B>WITH</B> Radio/CD</param>
         public static void Sort(string mscPath)
         {
+            if (Download.downloadingNow)
+            {
+                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Player.Stop();
 
             int skipped = 0;
@@ -102,6 +114,18 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
+            if (Download.downloadingNow)
+            {
+                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Player.Stop();
 
             int selectedIndex = songList.SelectedIndex;
@@ -139,6 +163,18 @@ namespace OggConverter
         /// <param name="toCD">Whenever we want to move to CD folder or not</param>
         public static void MoveTo(string mscPath, string selected, bool toCD)
         {
+            if (Download.downloadingNow)
+            {
+                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Player.Stop();
 
             string moveFrom = toCD ? "CD" : "Radio";

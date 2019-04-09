@@ -65,6 +65,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAfterNone = new System.Windows.Forms.ToolStripMenuItem();
             this.btnNoSteam = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAutoSort = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,20 +80,33 @@
             this.btnDirectory = new System.Windows.Forms.Button();
             this.labelConvert = new System.Windows.Forms.Label();
             this.dragDropPanel = new System.Windows.Forms.Panel();
-            this.btnAutoSort = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabLog = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnDownload = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtboxVideo = new System.Windows.Forms.TextBox();
+            this.btnDesktopShortcut = new System.Windows.Forms.ToolStripMenuItem();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabLog.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // logOutput
             // 
-            this.logOutput.Location = new System.Drawing.Point(172, 100);
+            this.logOutput.BackColor = System.Drawing.SystemColors.Control;
+            this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.logOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logOutput.Location = new System.Drawing.Point(3, 3);
             this.logOutput.Multiline = true;
             this.logOutput.Name = "logOutput";
             this.logOutput.ReadOnly = true;
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logOutput.Size = new System.Drawing.Size(572, 273);
+            this.logOutput.Size = new System.Drawing.Size(559, 242);
             this.logOutput.TabIndex = 2;
             // 
             // songList
@@ -257,6 +271,7 @@
             this.btnSteam,
             this.toolStripSeparator3,
             this.btnCheckUpdate,
+            this.btnDesktopShortcut,
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
@@ -305,7 +320,7 @@
             // 
             this.btnCheckUpdate.Name = "btnCheckUpdate";
             this.btnCheckUpdate.Size = new System.Drawing.Size(232, 22);
-            this.btnCheckUpdate.Text = "Check for update";
+            this.btnCheckUpdate.Text = "Check for Update";
             this.btnCheckUpdate.Click += new System.EventHandler(this.BtnCheckUpdate_Click);
             // 
             // btnAbout
@@ -415,6 +430,14 @@
             this.btnNoSteam.Size = new System.Drawing.Size(229, 22);
             this.btnNoSteam.Text = "Launch game without Steam";
             this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
+            // 
+            // btnAutoSort
+            // 
+            this.btnAutoSort.CheckOnClick = true;
+            this.btnAutoSort.Name = "btnAutoSort";
+            this.btnAutoSort.Size = new System.Drawing.Size(229, 22);
+            this.btnAutoSort.Text = "Auto Sort";
+            this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
             // btnUpdates
             // 
@@ -536,21 +559,93 @@
             // 
             // dragDropPanel
             // 
+            this.dragDropPanel.BackColor = System.Drawing.Color.White;
             this.dragDropPanel.Controls.Add(this.labelConvert);
-            this.dragDropPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dragDropPanel.Location = new System.Drawing.Point(0, 0);
+            this.dragDropPanel.Location = new System.Drawing.Point(579, 28);
             this.dragDropPanel.Name = "dragDropPanel";
-            this.dragDropPanel.Size = new System.Drawing.Size(743, 373);
+            this.dragDropPanel.Size = new System.Drawing.Size(184, 65);
             this.dragDropPanel.TabIndex = 14;
             this.dragDropPanel.Visible = false;
             // 
-            // btnAutoSort
+            // tabControl1
             // 
-            this.btnAutoSort.CheckOnClick = true;
-            this.btnAutoSort.Name = "btnAutoSort";
-            this.btnAutoSort.Size = new System.Drawing.Size(229, 22);
-            this.btnAutoSort.Text = "Auto Sort";
-            this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
+            this.tabControl1.Controls.Add(this.tabLog);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.HotTrack = true;
+            this.tabControl1.Location = new System.Drawing.Point(172, 100);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(573, 274);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabControl1.TabIndex = 1;
+            // 
+            // tabLog
+            // 
+            this.tabLog.Controls.Add(this.logOutput);
+            this.tabLog.Location = new System.Drawing.Point(4, 22);
+            this.tabLog.Name = "tabLog";
+            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLog.Size = new System.Drawing.Size(565, 248);
+            this.tabLog.TabIndex = 0;
+            this.tabLog.Text = "Log";
+            this.tabLog.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.btnDownload);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.txtboxVideo);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(565, 248);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Download";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnDownload
+            // 
+            this.btnDownload.Location = new System.Drawing.Point(14, 53);
+            this.btnDownload.Name = "btnDownload";
+            this.btnDownload.Size = new System.Drawing.Size(172, 24);
+            this.btnDownload.TabIndex = 15;
+            this.btnDownload.Text = "Download";
+            this.btnDownload.UseVisualStyleBackColor = true;
+            this.btnDownload.Click += new System.EventHandler(this.BtnDownload_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(107, 13);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "YouTube Video Link:";
+            // 
+            // txtboxVideo
+            // 
+            this.txtboxVideo.Location = new System.Drawing.Point(14, 27);
+            this.txtboxVideo.Name = "txtboxVideo";
+            this.txtboxVideo.Size = new System.Drawing.Size(530, 20);
+            this.txtboxVideo.TabIndex = 1;
+            // 
+            // btnDesktopShortcut
+            // 
+            this.btnDesktopShortcut.Name = "btnDesktopShortcut";
+            this.btnDesktopShortcut.Size = new System.Drawing.Size(232, 22);
+            this.btnDesktopShortcut.Text = "Create Destkop Shortcut";
+            this.btnDesktopShortcut.Click += new System.EventHandler(this.BtnDesktopShortcut_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 219);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(423, 26);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Note:\r\nThe author of this tool doesn\'t take any responsibility for the way of how" +
+    " that tool is used.";
             // 
             // Form1
             // 
@@ -559,11 +654,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 373);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnOpenGameDir);
             this.Controls.Add(this.btnDirectory);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.logOutput);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.txtboxPath);
             this.Controls.Add(this.menu);
@@ -587,6 +682,11 @@
             this.menu.PerformLayout();
             this.dragDropPanel.ResumeLayout(false);
             this.dragDropPanel.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabLog.ResumeLayout(false);
+            this.tabLog.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -644,6 +744,14 @@
         private System.Windows.Forms.Panel dragDropPanel;
         private System.Windows.Forms.Label labNowPlaying;
         private System.Windows.Forms.ToolStripMenuItem btnAutoSort;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabLog;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Button btnDownload;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtboxVideo;
+        private System.Windows.Forms.ToolStripMenuItem btnDesktopShortcut;
+        private System.Windows.Forms.Label label6;
     }
 }
 

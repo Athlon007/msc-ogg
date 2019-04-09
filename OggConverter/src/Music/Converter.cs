@@ -15,7 +15,11 @@ namespace OggConverter
         public static int TotalConversions { get => totalConversions; set => totalConversions = value; }
 
         public static int skipped;
+        public static bool conversionInProgress; //Prevents the program from closing if conversion is in progress
 
+        /// <summary>
+        /// List of supported extensions
+        /// </summary>
         public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma", ".ogg" };
 
         /// <summary>
@@ -126,6 +130,12 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task ConvertFile(string filePath, string mscPath, string folder, int limit)
         {
+            if (!File.Exists("ffmpeg.exe"))
+            {
+                MessageBox.Show("FFmpeg.exe is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (!filePath.ContainsAny(extensions))
             {
                 if (Form1.instance != null)

@@ -1,3 +1,15 @@
+# Preview 2.1.0.0 (09.04.2019)
+
+NOTE: On first YouTube download, the tool will ask you to download youtube-dl. Uppon pressing Yes it will download the latest version from developer's website.
+
+### Added:
+- You can now download the files directly from YouTube
+- Added preview auto updates. In order to enable them, press Shift + Updates
+- "Create Desktop Shortcut" button
+
+### Changes:
+- The tool now disables some functions if conversion is in progress to prevent errors
+
 # 2.0 (08.04.2019)
 
 ### Added:

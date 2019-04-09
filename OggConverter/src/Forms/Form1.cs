@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Media;
+using System.Drawing;
 
 namespace OggConverter
 {
@@ -12,7 +13,6 @@ namespace OggConverter
         public static Form1 instance;
 
         readonly bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
-        bool conversionInProgress; //Prevents the program from closing if conversion is in progress
         bool firstLoad = false; //Detects if the program has been opened for the first time
 
         public string Log
@@ -40,7 +40,7 @@ namespace OggConverter
 
             instance = this;
             playerRadio.Checked = true;
-            Log += $"MSC Music Manager {Functions.GetVersion()}";
+            Log += $"MSC Music Manager Preview {Functions.GetVersion()}";
             btnGetUpdate = btnDownloadUpdate;
             btnGetUpdate.Click += BtnCheckUpdate_Click;
 
@@ -50,6 +50,10 @@ namespace OggConverter
 
             btnUp.Text = char.ConvertFromUtf32(0x2191);
             btnDown.Text = char.ConvertFromUtf32(0x2193);
+
+            dragDropPanel.Dock = DockStyle.Fill;
+
+            tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 1, 0);
 
             Remove();
 
@@ -150,6 +154,9 @@ namespace OggConverter
 
             if (Directory.Exists("update"))
                 Directory.Delete("update", true);
+
+            if (File.Exists("download.aac"))
+                File.Delete("download.aac");
         }
 
         /// <summary>
@@ -174,13 +181,36 @@ namespace OggConverter
             playerRadio.Enabled = false;
             playerCD.Enabled = false;
             btnMoveSong.Enabled = false;
+            txtboxVideo.Enabled = false;
+            btnDownload.Enabled = false;
+        }
+
+        /// <summary>
+        /// Updates song list used for player
+        /// </summary>
+        public void UpdateSongList()
+        {
+            if (firstLoad) return;
+
+            songList.Items.Clear();
+            string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
+
+            for (int i = 1; i < 99; i++)
+                if (File.Exists($"{path}\\track{i}.ogg"))
+                    songList.Items.Add($"track{i}.ogg");
         }
 
         private async void BtnConvert_Click(object sender, EventArgs e)
         {
-            if (conversionInProgress)
+            if (Download.downloadingNow)
             {
-                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                Log += "Song is now being downloaded. You can't convert now";
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                Log += "Conversion is in progress. You can't start another conversion now";
                 return;
             }
 
@@ -190,7 +220,7 @@ namespace OggConverter
                 return;
             }
 
-            conversionInProgress = true;
+            Converter.conversionInProgress = true;
 
             Converter.ConversionLog = "";
             Converter.TotalConversions = 0;
@@ -222,7 +252,7 @@ namespace OggConverter
 
                 SystemSounds.Exclamation.Play();
 
-                conversionInProgress = false;
+                Converter.conversionInProgress = false;
 
                 //Actions after conversion
                 if (Settings.LaunchAfterConversion)
@@ -234,7 +264,7 @@ namespace OggConverter
             catch (Exception ex)
             {
                 new CrashLog(ex.ToString());
-                conversionInProgress = false;
+                Converter.conversionInProgress = false;
             }
 
             UpdateSongList();
@@ -248,6 +278,18 @@ namespace OggConverter
 
         private void BtnDirectory_Click(object sender, EventArgs e)
         {
+            if (Download.downloadingNow)
+            {
+                Log += "Song is now being downloaded.";
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                Log += "Conversion is in progress.";
+                return;
+            }
+
             using (var folderDialog = new FolderBrowserDialog())
             {
                 var dialog = folderDialog.ShowDialog();
@@ -292,7 +334,7 @@ namespace OggConverter
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (conversionInProgress)
+            if (Converter.conversionInProgress || Download.downloadingNow)
                 e.Cancel = true;
 
             Player.Stop();
@@ -366,6 +408,46 @@ namespace OggConverter
 
         private void CheckBoxUpdates_Click(object sender, EventArgs e)
         {
+            if (ModifierKeys.HasFlag(Keys.Shift))
+            {
+                if (!Settings.Preview)
+                {
+                    DialogResult dl = MessageBox.Show("Would you like to enable preview updates?\n\n" +
+                        "Warning: preview releases may be unstable and broken.",
+                        "Question",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (dl == DialogResult.Yes)
+                    {
+                        Settings.Preview = true;
+                        MessageBox.Show("In order to update, use 'Check for Update' button", 
+                            "Info", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Information);
+                    }
+
+                    btnUpdates.Checked ^= true;
+                }
+                else
+                {
+                    DialogResult dl = MessageBox.Show("Would you like to disable preview updates?",
+                        "Question",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (dl == DialogResult.Yes)
+                    {
+                        Settings.Preview = false;
+                        MessageBox.Show("In order to downgrade, use 'Check for Update' button.", 
+                            "Info", 
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                }
+
+                return;
+            }
             Settings.NoUpdates ^= true;
         }
 
@@ -421,28 +503,25 @@ namespace OggConverter
 
             Process.Start(@"Log");
         }
-
-        /// <summary>
-        /// Updates song list used for player
-        /// </summary>
-        public void UpdateSongList()
-        {
-            if (firstLoad) return;
-
-            songList.Items.Clear();
-            string path = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}";
-
-            for (int i = 1; i < 99; i++)
-                if (File.Exists($"{path}\\track{i}.ogg"))
-                    songList.Items.Add($"track{i}.ogg");
-        }
-
         /// <summary>
         /// Removes selected file on player
         /// </summary>
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
+
+            if (Download.downloadingNow)
+            {
+                Log += "\nSong is now being downloaded. You can't delete songs now.";
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                Log += "Conversion is in progress. You can't delete songs now.";
+                return;
+            }
+
             string file = $"{txtboxPath.Text}\\{(playerCD.Checked ? "CD" : "Radio")}\\{songList.SelectedItem.ToString()}";
             DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dl == DialogResult.Yes)
@@ -463,6 +542,18 @@ namespace OggConverter
 
         private void PlayerCD_Click(object sender, EventArgs e)
         {
+            if (Download.downloadingNow)
+            {
+                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Player.Stop();
             UpdateSongList();
             btnMoveSong.Text = "Radio";
@@ -470,6 +561,18 @@ namespace OggConverter
 
         private void PlayerRadio_Click(object sender, EventArgs e)
         {
+            if (Download.downloadingNow)
+            {
+                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            if (Converter.conversionInProgress)
+            {
+                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
             Player.Stop();
             UpdateSongList();
             btnMoveSong.Text = "CD";
@@ -502,6 +605,9 @@ namespace OggConverter
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
         {
+            if (Download.downloadingNow || Converter.conversionInProgress)
+                return;
+
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 dragDropPanel.Visible = true;
@@ -568,6 +674,26 @@ namespace OggConverter
         private void BtnAutoSort_Click(object sender, EventArgs e)
         {
             Settings.AutoSort ^= true;
+        }
+
+        private async void BtnDownload_Click(object sender, EventArgs e)
+        {
+            if (Download.downloadingNow)
+            {
+                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            btnDownload.Enabled = txtboxVideo.Enabled = false;
+            await Download.DownloadFile(txtboxVideo.Text, txtboxPath.Text, playerCD.Checked ? "CD" : "Radio", playerCD.Checked ? 15 : 99);
+            btnDownload.Enabled = txtboxVideo.Enabled = true;
+            txtboxVideo.Text = "";
+        }
+
+        private void BtnDesktopShortcut_Click(object sender, EventArgs e)
+        {
+            if (!DesktopShortcut.DoesShortcutExist())
+                DesktopShortcut.Create();
         }
     }
 }

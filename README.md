@@ -3,12 +3,16 @@ A simple tool which makes you life easier by automatically converting, naming an
 
 If you downloaded this program from the other sides than this GitLab, I don't guarantee its safety. 
 
+## System requirements:
+- Windows Vista SP2 or newer
+- .NET Framework 4.6 installed
+
 ## Used third-party technologies
 - FFMpeg
 - .NET Framework 4.6
 
 ## Download
-#### [Download](https://gitlab.com/aathlon/msc-ogg/tree/master/mscmm.zip)
+#### [Download](mscmm.zip)
 
 ## Installation
 Simply unzip archive anywhere you want.
