@@ -10,26 +10,26 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18151; 
+        public const int version = 18152; 
         static bool newUpdateReady;
         static bool downgrade;
 
         /// <summary>
         /// Checks for the update on remote server by downloading the latest version info file.
         /// </summary>
-        public static void LookForAnUpdate()
+        public static void LookForAnUpdate(bool getPreview)
         {
             if (newUpdateReady)
             {
                 DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 Form1.instance.Log += "\n\nThere's an update ready to download!";
                 if (res == DialogResult.Yes)
-                    DownloadUpdate();
+                    DownloadUpdate(getPreview);
 
                 return;
             }
 
-            string latestURL = Settings.Preview ? "https://gitlab.com/aathlon/msc-ogg/raw/development/latest.txt" : "https://gitlab.com/aathlon/msc-ogg/raw/master/latest.txt";
+            string latestURL = getPreview ? "https://gitlab.com/aathlon/msc-ogg/raw/development/latest.txt" : "https://gitlab.com/aathlon/msc-ogg/raw/master/latest.txt";
 
             try
             {
@@ -52,10 +52,12 @@ namespace OggConverter
 
             if (latest > version)
             {
+                string msg = Settings.Preview && getPreview ? "There's new a newer stable version available to download than yours Preview. Would you like to download the update?" :
+                    "There's a new update ready to download. Would you like to download it now?";
                 DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (res == DialogResult.Yes)
                 {
-                    DownloadUpdate();
+                    DownloadUpdate(getPreview);
                     return;
                 }
 
@@ -64,7 +66,7 @@ namespace OggConverter
                 Form1.instance.btnGetUpdate.Visible = true;
                 return;
             }
-            else if (latest < version)
+            else if ((latest < version) && (!Settings.Preview))
             {
                 downgrade = true;
 
@@ -75,9 +77,7 @@ namespace OggConverter
                     MessageBoxIcon.Question);
 
                 if (res == DialogResult.Yes)
-                {
-                    DownloadUpdate();
-                }
+                    DownloadUpdate(getPreview);
 
                 newUpdateReady = true;
                 Form1.instance.Log += "\n\nYou can downgrade now.";
@@ -85,6 +85,8 @@ namespace OggConverter
 
                 return;
             }
+
+            if (Settings.Preview && !getPreview) return;
 
             Form1.instance.Log += "\n\nTool is up-to-date";
         }
@@ -95,11 +97,11 @@ namespace OggConverter
         /// <summary>
         /// Downloads and installs the latest update.
         /// </summary>
-        public static void DownloadUpdate()
+        public static void DownloadUpdate(bool getPreview)
         {
             Form1.instance.Log += "\n\nDownloading an update...";
 
-            string zipURL = Settings.Preview ? "https://gitlab.com/aathlon/msc-ogg/raw/development/mscmm.zip" : "https://gitlab.com/aathlon/msc-ogg/raw/master/mscmm.zip";
+            string zipURL = getPreview ? "https://gitlab.com/aathlon/msc-ogg/raw/development/mscmm.zip" : "https://gitlab.com/aathlon/msc-ogg/raw/master/mscmm.zip";
 
             using (WebClient client = new WebClient())
             {

@@ -3,5 +3,7 @@ What's new in this release?
 - You can now download the files directly from YouTube
 - Added preview auto updates. In order to enable them, press Shift + Updates
 - "Create Desktop Shortcut" button
+- While using preview relase, if the new stable version is ready, the program will suggest updating to it
+- Fixed bug in which the program would convert already converted files uppon pressing Convert
 
 For more visit https://gitlab.com/aathlon/msc-ogg

@@ -41,13 +41,13 @@ namespace OggConverter
             string path = $"{mscPath}\\{folder}";
 
             DirectoryInfo d = new DirectoryInfo(path);
-            FileInfo[] Files
+            FileInfo[] files
                 = d.GetFiles()
-                .Where(f => extensions.Contains(f.Extension.ToLower()))
+                .Where(f => extensions.Contains(f.Extension.ToLower()) && !f.Name.StartsWith("track"))
                 .ToArray();
 
             // If no files have been found - aborts the conversion
-            if (Files.Length == 0)
+            if (files.Length == 0)
             {
                 Form1.instance.Log += $"\nCouldn't find any file to convert in {folder}";
                 skipped++;
@@ -63,7 +63,7 @@ namespace OggConverter
                 inGame++;
 
             // Starting the conversion of all found files
-            foreach (FileInfo file in Files)
+            foreach (FileInfo file in files)
             {
                 // Prevents overwriting existing files, if there's an gap between them
                 while (File.Exists($"{path}\\track{inGame}.ogg"))
@@ -109,7 +109,7 @@ namespace OggConverter
                 Form1.instance.Log += $"Finished {file.Name} as track{inGame}.ogg\n";
 
                 if (Settings.RemoveMP3)
-                    File.Delete(path + file.Name);
+                    File.Delete($"{path}\\{file.Name}");
 
                 ConversionLog += $"\"{file.Name}\" as \"track{inGame}.ogg\"\n";
                 inGame++;
@@ -130,7 +130,7 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task ConvertFile(string filePath, string mscPath, string folder, int limit)
         {
-            if (!File.Exists("ffmpeg.exe"))
+            if (!File.Exists($"{Directory.GetCurrentDirectory()}\\ffmpeg.exe"))
             {
                 MessageBox.Show("FFmpeg.exe is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

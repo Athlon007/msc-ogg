@@ -1,3 +1,13 @@
+# Preview 2.1.0.1 (10.04.2019)
+
+### Added:
+- While using preview relase, if the new stable version is ready, the program will suggest updating to it
+
+### Bug Fixes:
+- Fixed bug in which the program would convert already converted files uppon pressing Convert
+- Fixed bug with Quick Converter which would use wrong working directory and cause false "missing ffmpeg" error
+- Files are now being remover after conversion correctly
+
 # Preview 2.1.0.0 (09.04.2019)
 
 NOTE: On first YouTube download, the tool will ask you to download youtube-dl. Uppon pressing Yes it will download the latest version from developer's website.
@@ -9,6 +19,11 @@ NOTE: On first YouTube download, the tool will ask you to download youtube-dl. U
 
 ### Changes:
 - The tool now disables some functions if conversion is in progress to prevent errors
+
+# 2.0.1 (10.04.2019)
+
+### Bug Fixes:
+- Fixed bug in which the program would convert already converted files uppon pressing Convert
 
 # 2.0 (08.04.2019)
 

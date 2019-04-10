@@ -52,6 +52,7 @@
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDesktopShortcut = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mSCOGGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFFmpegLicense = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,18 +83,17 @@
             this.dragDropPanel = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabLog = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabDownload = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.txtboxVideo = new System.Windows.Forms.TextBox();
-            this.btnDesktopShortcut = new System.Windows.Forms.ToolStripMenuItem();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabLog.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabDownload.SuspendLayout();
             this.SuspendLayout();
             // 
             // logOutput
@@ -179,7 +179,7 @@
             this.panel1.Controls.Add(this.btnStop);
             this.panel1.Location = new System.Drawing.Point(-1, 100);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(174, 273);
+            this.panel1.Size = new System.Drawing.Size(174, 274);
             this.panel1.TabIndex = 13;
             // 
             // labNowPlaying
@@ -322,6 +322,13 @@
             this.btnCheckUpdate.Size = new System.Drawing.Size(232, 22);
             this.btnCheckUpdate.Text = "Check for Update";
             this.btnCheckUpdate.Click += new System.EventHandler(this.BtnCheckUpdate_Click);
+            // 
+            // btnDesktopShortcut
+            // 
+            this.btnDesktopShortcut.Name = "btnDesktopShortcut";
+            this.btnDesktopShortcut.Size = new System.Drawing.Size(232, 22);
+            this.btnDesktopShortcut.Text = "Create Destkop Shortcut";
+            this.btnDesktopShortcut.Click += new System.EventHandler(this.BtnDesktopShortcut_Click);
             // 
             // btnAbout
             // 
@@ -570,9 +577,9 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabLog);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabDownload);
             this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(172, 100);
+            this.tabControl1.Location = new System.Drawing.Point(173, 100);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(573, 274);
@@ -582,6 +589,8 @@
             // tabLog
             // 
             this.tabLog.Controls.Add(this.logOutput);
+            this.tabLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.tabLog.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabLog.Location = new System.Drawing.Point(4, 22);
             this.tabLog.Name = "tabLog";
             this.tabLog.Padding = new System.Windows.Forms.Padding(3);
@@ -590,19 +599,29 @@
             this.tabLog.Text = "Log";
             this.tabLog.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tabDownload
             // 
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.btnDownload);
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.txtboxVideo);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(565, 248);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Download";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabDownload.Controls.Add(this.label6);
+            this.tabDownload.Controls.Add(this.btnDownload);
+            this.tabDownload.Controls.Add(this.label5);
+            this.tabDownload.Controls.Add(this.txtboxVideo);
+            this.tabDownload.Location = new System.Drawing.Point(4, 22);
+            this.tabDownload.Name = "tabDownload";
+            this.tabDownload.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDownload.Size = new System.Drawing.Size(565, 248);
+            this.tabDownload.TabIndex = 1;
+            this.tabDownload.Text = "Download";
+            this.tabDownload.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 219);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(423, 26);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Note:\r\nThe author of this tool doesn\'t take any responsibility for the way of how" +
+    " that tool is used.";
             // 
             // btnDownload
             // 
@@ -629,23 +648,6 @@
             this.txtboxVideo.Name = "txtboxVideo";
             this.txtboxVideo.Size = new System.Drawing.Size(530, 20);
             this.txtboxVideo.TabIndex = 1;
-            // 
-            // btnDesktopShortcut
-            // 
-            this.btnDesktopShortcut.Name = "btnDesktopShortcut";
-            this.btnDesktopShortcut.Size = new System.Drawing.Size(232, 22);
-            this.btnDesktopShortcut.Text = "Create Destkop Shortcut";
-            this.btnDesktopShortcut.Click += new System.EventHandler(this.BtnDesktopShortcut_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 219);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(423, 26);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Note:\r\nThe author of this tool doesn\'t take any responsibility for the way of how" +
-    " that tool is used.";
             // 
             // Form1
             // 
@@ -685,8 +687,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabLog.ResumeLayout(false);
             this.tabLog.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabDownload.ResumeLayout(false);
+            this.tabDownload.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -746,7 +748,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnAutoSort;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabLog;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabDownload;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtboxVideo;

@@ -31,12 +31,21 @@ namespace OggConverter
                 if (dl == DialogResult.Yes)
                 {
                     Form1.instance.Log += "\n\nDownloading youtube-dl...";
-                    using (WebClient web = new WebClient())
+                    try
                     {
-                        await Task.Run(() =>web.DownloadFile(new Uri("https://yt-dl.org/latest/youtube-dl.exe"), "youtube-dl.exe"));
-                        web.Dispose();
+                        using (WebClient web = new WebClient())
+                        {
+                            await Task.Run(() => web.DownloadFile(new Uri("https://yt-dl.org/latest/youtube-dl.exe"), "youtube-dl.exe"));
+                            web.Dispose();
+                        }
+                        Form1.instance.Log += "\nDownloaded youtube-dl successfully!";
                     }
-                    Form1.instance.Log += "\nDownloaded youtube-dl successfully!";
+                    catch (Exception ex)
+                    {
+                        Form1.instance.Log += "\nCouldn't download youtube-dl. Crash log has been created";
+                        new CrashLog(ex.ToString());
+                        return;
+                    }
                 }
                 else
                 {
@@ -46,7 +55,7 @@ namespace OggConverter
 
             if (!url.ContainsAny("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v="))
             {
-                MessageBox.Show("Not a valid URL", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Not a valid URL.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -64,7 +73,7 @@ namespace OggConverter
 
             // Setup executable and parameters
             process.StartInfo.FileName = "youtube-dl.exe";
-            process.StartInfo.Arguments = $"-x --audio-format aac -o \"download.%(ext)s\" {url}";
+            process.StartInfo.Arguments = $"-x --audio-format aac -o+ \"download.%(ext)s\" {url}";
             process.Start();
             await Task.Run(() => process.WaitForExit());
 

@@ -48,8 +48,9 @@ namespace OggConverter
         {
             string ProductName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
             string CSDVersion = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CSDVersion");
+            string releaseID = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "BuildLab");
             if (ProductName != "")
-                return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName + (CSDVersion != "" ? " " + CSDVersion : "");
+                return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName + (CSDVersion != "" ? " " + CSDVersion : "") + "\n" + releaseID;
 
             return "";
         }

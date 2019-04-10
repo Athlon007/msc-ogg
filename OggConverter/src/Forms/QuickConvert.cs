@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.IO;
+using System.Reflection;
 
 namespace OggConverter
 {
@@ -22,6 +24,8 @@ namespace OggConverter
         {
             InitializeComponent();
 
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
             {
                 if (Key.GetValue("MSC Path") == null)
@@ -36,7 +40,7 @@ namespace OggConverter
             }
 
             this.files = files;
-            Message = $"Where do you want to convert {files.Length} file(s)?";
+            Message = $"Where do you want to convert {files.Length} file{(files.Length > 1 ? "s" : "")}?";
         }
 
         private void BtnRadio_Click(object sender, EventArgs e)
