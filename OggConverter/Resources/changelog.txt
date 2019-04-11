@@ -1,9 +1,11 @@
 What's new in this release?
 
-- You can now download the files directly from YouTube
+- You can now download the files directly from YouTube - either by pasting the URL, or searching the term!
 - Added preview auto updates. In order to enable them, press Shift + Updates
 - "Create Desktop Shortcut" button
 - While using preview relase, if the new stable version is ready, the program will suggest updating to it
-- Fixed bug in which the program would convert already converted files uppon pressing Convert
+- Fixed bug with Quick Converter which would use wrong working directory and cause false "missing ffmpeg" error
+- Files are now being remover after conversion correctly
+- Player can get song names from .OGG metadata. Pretty much nothing besides loading song names from metadata works. To enable it, go to Settings -> EXPERIMENTAL: Get Names From Metadata. YOU CANNOT CHANGE ORDER, SORT, MOVE, PLAY OR DELETE SONGS
 
 For more visit https://gitlab.com/aathlon/msc-ogg

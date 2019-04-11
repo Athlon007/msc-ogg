@@ -1,4 +1,20 @@
-﻿using Microsoft.Win32;
+﻿// MSC Music Manager
+// Copyright(C) 2019 Athlon
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.If not, see<http://www.gnu.org/licenses/>.
+
+using Microsoft.Win32;
 
 namespace OggConverter
 {
@@ -13,6 +29,9 @@ namespace OggConverter
         public static bool Logs { get => GetSettings.Bool("Logs", true); set => SetSettings.Bool("Logs", value); }
         public static bool ShowConversionLog { get => GetSettings.Bool("ShowConversionLog", true); set => SetSettings.Bool("ShowConversionLog", value); }
         public static bool AutoSort { get => GetSettings.Bool("AutoSort", true); set => SetSettings.Bool("AutoSort", value); }
+
+        //EXPERIMENTAL
+        public static bool UseNewNaming { get => GetSettings.Bool("UseNewNaming", false); set => SetSettings.Bool("UseNewNaming", value); }
 
         public static int LatestVersion { get => GetSettings.Int("LatestVersion", 0); set => SetSettings.Int("LatestVersion", value); }
 

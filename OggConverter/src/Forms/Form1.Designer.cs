@@ -69,6 +69,8 @@
             this.btnAutoSort = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnNewNaming = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.btnDownloadUpdate = new System.Windows.Forms.ToolStripMenuItem();
@@ -368,7 +370,9 @@
             this.btnNoSteam,
             this.btnAutoSort,
             this.btnUpdates,
-            this.btnLogs});
+            this.btnLogs,
+            this.toolStripSeparator4,
+            this.btnNewNaming});
             this.menuSettings.Name = "menuSettings";
             this.menuSettings.Size = new System.Drawing.Size(61, 20);
             this.menuSettings.Text = "Settings";
@@ -377,7 +381,7 @@
             // 
             this.btnRemMP3.CheckOnClick = true;
             this.btnRemMP3.Name = "btnRemMP3";
-            this.btnRemMP3.Size = new System.Drawing.Size(229, 22);
+            this.btnRemMP3.Size = new System.Drawing.Size(254, 22);
             this.btnRemMP3.Text = "Remove files after conversion";
             this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
             // 
@@ -390,7 +394,7 @@
             this.toolStripSeparator2,
             this.btnAfterNone});
             this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
-            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion";
             // 
             // btnAfterLaunchGame
@@ -434,7 +438,7 @@
             // 
             this.btnNoSteam.CheckOnClick = true;
             this.btnNoSteam.Name = "btnNoSteam";
-            this.btnNoSteam.Size = new System.Drawing.Size(229, 22);
+            this.btnNoSteam.Size = new System.Drawing.Size(254, 22);
             this.btnNoSteam.Text = "Launch game without Steam";
             this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
             // 
@@ -442,7 +446,7 @@
             // 
             this.btnAutoSort.CheckOnClick = true;
             this.btnAutoSort.Name = "btnAutoSort";
-            this.btnAutoSort.Size = new System.Drawing.Size(229, 22);
+            this.btnAutoSort.Size = new System.Drawing.Size(254, 22);
             this.btnAutoSort.Text = "Auto Sort";
             this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
@@ -450,16 +454,29 @@
             // 
             this.btnUpdates.CheckOnClick = true;
             this.btnUpdates.Name = "btnUpdates";
-            this.btnUpdates.Size = new System.Drawing.Size(229, 22);
+            this.btnUpdates.Size = new System.Drawing.Size(254, 22);
             this.btnUpdates.Text = "Updates";
             this.btnUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
             // 
             // btnLogs
             // 
             this.btnLogs.Name = "btnLogs";
-            this.btnLogs.Size = new System.Drawing.Size(229, 22);
+            this.btnLogs.Size = new System.Drawing.Size(254, 22);
             this.btnLogs.Text = "Crash Logs";
             this.btnLogs.Click += new System.EventHandler(this.BtnLogs_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(251, 6);
+            // 
+            // btnNewNaming
+            // 
+            this.btnNewNaming.CheckOnClick = true;
+            this.btnNewNaming.Name = "btnNewNaming";
+            this.btnNewNaming.Size = new System.Drawing.Size(304, 22);
+            this.btnNewNaming.Text = "EXPERIMENTAL: Get Names From Metadata";
+            this.btnNewNaming.Click += new System.EventHandler(this.BtnNewNaming_Click);
             // 
             // btnLaunchGame
             // 
@@ -638,9 +655,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(11, 11);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(107, 13);
+            this.label5.Size = new System.Drawing.Size(126, 13);
             this.label5.TabIndex = 15;
-            this.label5.Text = "YouTube Video Link:";
+            this.label5.Text = "Search Term/Video Link:";
             // 
             // txtboxVideo
             // 
@@ -648,6 +665,7 @@
             this.txtboxVideo.Name = "txtboxVideo";
             this.txtboxVideo.Size = new System.Drawing.Size(530, 20);
             this.txtboxVideo.TabIndex = 1;
+            this.txtboxVideo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtboxVideo_KeyDown);
             // 
             // Form1
             // 
@@ -754,6 +772,8 @@
         private System.Windows.Forms.TextBox txtboxVideo;
         private System.Windows.Forms.ToolStripMenuItem btnDesktopShortcut;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripMenuItem btnNewNaming;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

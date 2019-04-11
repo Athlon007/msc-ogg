@@ -1,3 +1,14 @@
+# Preview 2.1.0.2 (11.04.2019)
+
+### Added:
+- You can now download songs using search terms "ex. PewDiePie - Congratulations". The tool will download first result
+- Added legal notice uppon first start
+- Player can get song names from .OGG metadata. Pretty much nothing besides loading song names from metadata works. To enable it, go to Settings -> EXPERIMENTAL: Get Names From Metadata. YOU CANNOT CHANGE ORDER, SORT, MOVE, PLAY OR DELETE SONGS
+
+### Changes:
+- Safe Mode now also disables audio player list
+- Code optimization and improvements
+
 # Preview 2.1.0.1 (10.04.2019)
 
 ### Added:

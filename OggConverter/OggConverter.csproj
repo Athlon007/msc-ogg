@@ -72,7 +72,8 @@
       <DependentUpon>QuickConvert.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Misc\Functions.cs" />
-    <Compile Include="src\Music\Download.cs" />
+    <Compile Include="src\Music\Downloader.cs" />
+    <Compile Include="src\Music\MetaDatas.cs" />
     <Compile Include="src\Music\Player.cs" />
     <Compile Include="src\Music\Converter.cs" />
     <Compile Include="src\Forms\Form1.cs">
@@ -121,7 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
-    <Content Include="logo_sUN_icon.ico" />
     <None Include="Resources\changelog.txt" />
   </ItemGroup>
   <ItemGroup>

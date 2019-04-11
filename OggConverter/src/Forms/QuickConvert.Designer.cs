@@ -43,7 +43,6 @@
             this.btnRadio.TabIndex = 0;
             this.btnRadio.Text = "Radio";
             this.btnRadio.UseVisualStyleBackColor = true;
-            this.btnRadio.Click += new System.EventHandler(this.BtnRadio_Click);
             // 
             // btnCD
             // 
@@ -53,7 +52,6 @@
             this.btnCD.TabIndex = 1;
             this.btnCD.Text = "CD";
             this.btnCD.UseVisualStyleBackColor = true;
-            this.btnCD.Click += new System.EventHandler(this.BtnCD_Click);
             // 
             // strMessage
             // 
@@ -74,7 +72,6 @@
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Visible = false;
-            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // QuickConvert
             // 

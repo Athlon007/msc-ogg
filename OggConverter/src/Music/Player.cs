@@ -1,4 +1,20 @@
-﻿using System.IO;
+﻿// MSC Music Manager
+// Copyright(C) 2019 Athlon
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.If not, see<http://www.gnu.org/licenses/>.
+
+using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -63,13 +79,13 @@ namespace OggConverter
         /// <param name="mscPath">My Summer Car path <B>WITH</B> Radio/CD</param>
         public static void Sort(string mscPath)
         {
-            if (Download.downloadingNow)
+            if (Downloader.IsBusy)
             {
                 MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
-            if (Converter.conversionInProgress)
+            if (Converter.IsBusy)
             {
                 MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
@@ -87,7 +103,7 @@ namespace OggConverter
                 else
                 {
                     // Waiting for file to be free
-                    while (!IsFileReady($"{mscPath}\\track{i}.ogg")) { }
+                    while (!Functions.IsFileReady($"{mscPath}\\track{i}.ogg")) { }
 
                     // Moving the file
                     File.Move($"{mscPath}\\track{i}.ogg", $"{mscPath}\\track{i - skipped}.ogg");
@@ -114,13 +130,13 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
-            if (Download.downloadingNow)
+            if (Downloader.IsBusy)
             {
                 MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
-            if (Converter.conversionInProgress)
+            if (Converter.IsBusy)
             {
                 MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
@@ -135,7 +151,7 @@ namespace OggConverter
             string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}.ogg";
 
             // Waiting for file to be free
-            while (!IsFileReady($"{mscPath}\\{oldName}")) { }
+            while (!Functions.IsFileReady($"{mscPath}\\{oldName}")) { }
 
             // Moving file that now uses the current new name
             //
@@ -163,13 +179,13 @@ namespace OggConverter
         /// <param name="toCD">Whenever we want to move to CD folder or not</param>
         public static void MoveTo(string mscPath, string selected, bool toCD)
         {
-            if (Download.downloadingNow)
+            if (Downloader.IsBusy)
             {
                 MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
-            if (Converter.conversionInProgress)
+            if (Converter.IsBusy)
             {
                 MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
@@ -186,26 +202,11 @@ namespace OggConverter
                 newNumber++;
 
             // Waiting for file to be free
-            while (!IsFileReady($"{mscPath}\\{moveFrom}\\{selected}")) { }
+            while (!Functions.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}")) { }
 
             File.Move($"{mscPath}\\{moveFrom}\\{selected}", $"{mscPath}\\{moveTo}\\track{newNumber}.ogg");
 
             Form1.instance.UpdateSongList();
-        }
-
-        public static bool IsFileReady(string filename)
-        {
-            // If the file can be opened for exclusive access it means that the file
-            // is no longer locked by another process.
-            try
-            {
-                using (FileStream inputStream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.None))
-                    return inputStream.Length > 0;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

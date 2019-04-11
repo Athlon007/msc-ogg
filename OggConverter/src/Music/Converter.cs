@@ -1,4 +1,20 @@
-﻿using System.Linq;
+﻿// MSC Music Manager
+// Copyright(C) 2019 Athlon
+
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program.If not, see<http://www.gnu.org/licenses/>.
+
+using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
@@ -8,14 +24,24 @@ namespace OggConverter
 {
     class Converter
     {
-        static string conversionLog;
-        public static string ConversionLog { get => conversionLog; set => conversionLog = value; }
+        /// <summary>
+        /// Stores latest conversion log, which later is dumped into LastConversion.txt file
+        /// </summary>
+        public static string ConversionLog { get; set; }
+        /// <summary>
+        /// Counts how many conversions have been made
+        /// </summary>
+        public static int TotalConversions { get; set; }
 
-        static int totalConversions;
-        public static int TotalConversions { get => totalConversions; set => totalConversions = value; }
-
-        public static int skipped;
-        public static bool conversionInProgress; //Prevents the program from closing if conversion is in progress
+        /// <summary>
+        /// Stores how many files have been skipped while sorting
+        /// </summary>
+        public static int Skipped { get; set; }
+        
+        /// <summary>
+        /// Prevents the program from closing if conversion is in progress
+        /// </summary>
+        public static bool IsBusy { get; set; } 
 
         /// <summary>
         /// List of supported extensions
@@ -50,7 +76,7 @@ namespace OggConverter
             if (files.Length == 0)
             {
                 Form1.instance.Log += $"\nCouldn't find any file to convert in {folder}";
-                skipped++;
+                Skipped++;
                 return;
             }
 
@@ -166,6 +192,8 @@ namespace OggConverter
                 }
             }
 
+
+            // If it's just OGG file - instead of converting, simply rename it
             if (filePath.EndsWith(".ogg"))
             {
                 File.Move(filePath, $"{mscPath}\\{folder}\\track{inGame}.ogg");
