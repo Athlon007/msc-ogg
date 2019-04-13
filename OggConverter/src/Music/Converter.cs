@@ -117,9 +117,26 @@ namespace OggConverter
                 if (file.Name.EndsWith(".ogg"))
                 {
                     File.Move($"{path}\\{file.Name}", $"{path}\\track{inGame}.ogg");
+
+                    if (Settings.UseNewNaming)
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{path}\\track{inGame}.ogg\"")
+                        {
+                            UseShellExecute = false,
+                            RedirectStandardError = true,
+                            CreateNoWindow = true
+                        };
+
+                        var process = Process.Start(psi);
+
+                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                        string songName = MetaDatas.GetSongName(ffmpegOut);
+                        MetaDatas.CreateMetaFile($"{mscPath}\\{folder}\\track{inGame}.mscmm", songName);
+                    }
                 }
                 else
                 {
+                    /*
                     Process process = new Process();
                     process.StartInfo.RedirectStandardOutput = true;
                     process.StartInfo.UseShellExecute = false;
@@ -129,6 +146,28 @@ namespace OggConverter
                     process.StartInfo.Arguments = $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"";
 
                     process.Start();
+                    */
+
+                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"")
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardError = true,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true
+                    };
+
+                    //var process = Process.Start(psi);
+
+                    Process process = null;
+                    await Task.Run(() => process = Process.Start(psi));
+
+                    if (Settings.UseNewNaming)
+                    {
+                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                        string songName = MetaDatas.GetSongName(ffmpegOut);
+                        MetaDatas.CreateMetaFile($"{mscPath}\\{folder}\\track{inGame}.mscmm", songName);
+                    }
+
                     await Task.Run(() => process.WaitForExit());
                 }
 
@@ -153,8 +192,9 @@ namespace OggConverter
         /// <param name="mscPath">My Summer Car path.</param>
         /// <param name="folder">Folder to what we want to convert (CD or Radio)</param>
         /// <param name="limit">Limit of files - My Summer Car uses maximum of 15 files for CD and 99 for Radio</param>
+        /// <param name="forcedName">ONLY IF Settings.UseNewNaming IS ON. If set, instead of getting name from ffmpeg output, it will get it from forcedName.</param>
         /// <returns></returns>
-        public static async Task ConvertFile(string filePath, string mscPath, string folder, int limit)
+        public static async Task ConvertFile(string filePath, string mscPath, string folder, int limit, string forcedName = null)
         {
             if (!File.Exists($"{Directory.GetCurrentDirectory()}\\ffmpeg.exe"))
             {
@@ -172,6 +212,7 @@ namespace OggConverter
             int inGame = 1;
             if (Form1.instance != null)
                 Form1.instance.Log += $"\n\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n";
+            
             //Counting how many OGG files there are already
             for (int c = 1; File.Exists($"{mscPath}\\{folder}\\track{c}.ogg"); c++)
                 inGame++;
@@ -192,23 +233,54 @@ namespace OggConverter
                 }
             }
 
-
             // If it's just OGG file - instead of converting, simply rename it
             if (filePath.EndsWith(".ogg"))
             {
                 File.Move(filePath, $"{mscPath}\\{folder}\\track{inGame}.ogg");
+
+                if (Settings.UseNewNaming)
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{mscPath}\\{folder}\\track{inGame}.ogg\"")
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+
+                    var process = Process.Start(psi);
+
+                    string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                    string songName = MetaDatas.GetSongName(ffmpegOut);
+                    MetaDatas.CreateMetaFile($"{mscPath}\\{folder}\\track{inGame}.mscmm", songName);
+                }
             }
             else
             {
-                Process process = new Process();
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
+                ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{filePath}\" -acodec libvorbis \"{mscPath}\\{folder}\\track{inGame}.ogg\"")
+                {
+                    UseShellExecute = false,
+                    RedirectStandardError = true,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                };
 
-                // Setup executable and parameters
-                process.StartInfo.FileName = "ffmpeg.exe";
-                process.StartInfo.Arguments = $"-i \"{filePath}\" -acodec libvorbis \"{mscPath}\\{folder}\\track{inGame}.ogg\"";
-                process.Start();
+                Process process = null;
+                await Task.Run(() => process = Process.Start(psi));
+
+                if (Settings.UseNewNaming)
+                {
+                    string songName = null;
+
+                    if (forcedName != null)
+                        songName = forcedName;
+                    else
+                    {
+                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                        songName = MetaDatas.GetSongName(ffmpegOut);
+                    }
+                    MetaDatas.CreateMetaFile($"{mscPath}\\{folder}\\track{inGame}.mscmm", songName);
+                }
+
                 await Task.Run(() => process.WaitForExit());
             }
 

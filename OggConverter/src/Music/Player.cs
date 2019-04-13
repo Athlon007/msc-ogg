@@ -17,12 +17,15 @@
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace OggConverter
 {
     class Player
     {
         static Process process;
+
+        public static List<string> WorkingSongList = new List<string>();
 
         /// <summary>
         /// Plays selected song using ffplay.exe
@@ -108,6 +111,10 @@ namespace OggConverter
                     // Moving the file
                     File.Move($"{mscPath}\\track{i}.ogg", $"{mscPath}\\track{i - skipped}.ogg");
 
+                    // Moving metadata (if new naming system is used)
+                    if (File.Exists($"{mscPath}\\track{i}.mscmm"))
+                        File.Move($"{mscPath}\\track{i}.mscmm", $"{mscPath}\\track{i - skipped}.mscmm");
+
                     // Adjusting the i value by skipped
                     if (skipped != 0)
                         i -= skipped;
@@ -146,6 +153,43 @@ namespace OggConverter
 
             int selectedIndex = songList.SelectedIndex;
             if (selectedIndex == 0) return;
+
+            if (Settings.UseNewNaming)
+            {
+                string oldFile = Player.WorkingSongList[selectedIndex];
+                string newFile = $"track{selectedIndex + (moveUp ? 0 : 2)}";
+
+                // Waiting for file to be free
+                while (!Functions.IsFileReady($"{mscPath}\\{oldFile}.ogg")) { }
+
+                // Moving file that now uses the current new name
+                //
+                // For instance: we're moving track2 to track1.
+                // So we first move track1 out of the place and renaming it to trackTemp IF track1 EXISTS
+                if (File.Exists($"{mscPath}\\{newFile}.ogg"))
+                {
+                    File.Move($"{mscPath}\\{newFile}.ogg", $"{mscPath}\\trackTemp.ogg");
+                    if (File.Exists($"{mscPath}\\{newFile}.mscmm"))
+                        File.Move($"{mscPath}\\{newFile}.mscmm", $"{mscPath}\\trackTemp.mscmm");
+                }
+
+                // Now we're moving the file that we want to actually move
+                File.Move($"{mscPath}\\{oldFile}.ogg", $"{mscPath}\\{newFile}.ogg");
+                if (File.Exists($"{mscPath}\\{oldFile}.mscmm"))
+                    File.Move($"{mscPath}\\{oldFile}.mscmm", $"{mscPath}\\{newFile}.mscmm");
+
+                // Finally we move the file that we set as temp (if it exists)
+                if (File.Exists($"{mscPath}\\trackTemp.ogg"))
+                    File.Move($"{mscPath}\\trackTemp.ogg", $"{mscPath}\\{oldFile}.ogg");
+
+                if (File.Exists($"{mscPath}\\trackTemp.mscmm"))
+                    File.Move($"{mscPath}\\trackTemp.mscmm", $"{mscPath}\\{oldFile}.mscmm");
+
+                Form1.instance.UpdateSongList();
+                songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
+
+                return;
+            }
 
             string oldName = songList.SelectedItem.ToString();
             string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}.ogg";
@@ -201,9 +245,20 @@ namespace OggConverter
             for (int i = 1; File.Exists($"{mscPath}\\{moveTo}\\track{i}.ogg"); i++)
                 newNumber++;
 
+            if (Settings.UseNewNaming)
+            {
+                // Waiting for file to be free
+                while (!Functions.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}.ogg")) { }
+                File.Move($"{mscPath}\\{moveFrom}\\{selected}.ogg", $"{mscPath}\\{moveTo}\\track{newNumber}.ogg");
+                if (File.Exists($"{mscPath}\\{moveFrom}\\{selected}.mscmm"))
+                    File.Move($"{mscPath}\\{moveFrom}\\{selected}.mscmm", $"{mscPath}\\{moveTo}\\track{newNumber}.mscmm");
+
+                Form1.instance.UpdateSongList();
+                return;
+            }
+
             // Waiting for file to be free
             while (!Functions.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}")) { }
-
             File.Move($"{mscPath}\\{moveFrom}\\{selected}", $"{mscPath}\\{moveTo}\\track{newNumber}.ogg");
 
             Form1.instance.UpdateSongList();

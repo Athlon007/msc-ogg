@@ -114,6 +114,7 @@
             // songList
             // 
             this.songList.FormattingEnabled = true;
+            this.songList.HorizontalScrollbar = true;
             this.songList.Location = new System.Drawing.Point(10, 23);
             this.songList.Name = "songList";
             this.songList.Size = new System.Drawing.Size(98, 199);
@@ -344,8 +345,8 @@
             // mSCOGGToolStripMenuItem
             // 
             this.mSCOGGToolStripMenuItem.Name = "mSCOGGToolStripMenuItem";
-            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-            this.mSCOGGToolStripMenuItem.Text = "MSC OGG";
+            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.mSCOGGToolStripMenuItem.Text = "MSC Music Manager";
             this.mSCOGGToolStripMenuItem.Click += new System.EventHandler(this.MSCOGGToolStripMenuItem_Click);
             // 
             // btnFFmpegLicense
@@ -381,7 +382,7 @@
             // 
             this.btnRemMP3.CheckOnClick = true;
             this.btnRemMP3.Name = "btnRemMP3";
-            this.btnRemMP3.Size = new System.Drawing.Size(254, 22);
+            this.btnRemMP3.Size = new System.Drawing.Size(304, 22);
             this.btnRemMP3.Text = "Remove files after conversion";
             this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
             // 
@@ -394,7 +395,7 @@
             this.toolStripSeparator2,
             this.btnAfterNone});
             this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
-            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
             this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion";
             // 
             // btnAfterLaunchGame
@@ -438,7 +439,7 @@
             // 
             this.btnNoSteam.CheckOnClick = true;
             this.btnNoSteam.Name = "btnNoSteam";
-            this.btnNoSteam.Size = new System.Drawing.Size(254, 22);
+            this.btnNoSteam.Size = new System.Drawing.Size(304, 22);
             this.btnNoSteam.Text = "Launch game without Steam";
             this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
             // 
@@ -446,7 +447,7 @@
             // 
             this.btnAutoSort.CheckOnClick = true;
             this.btnAutoSort.Name = "btnAutoSort";
-            this.btnAutoSort.Size = new System.Drawing.Size(254, 22);
+            this.btnAutoSort.Size = new System.Drawing.Size(304, 22);
             this.btnAutoSort.Text = "Auto Sort";
             this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
@@ -454,21 +455,21 @@
             // 
             this.btnUpdates.CheckOnClick = true;
             this.btnUpdates.Name = "btnUpdates";
-            this.btnUpdates.Size = new System.Drawing.Size(254, 22);
+            this.btnUpdates.Size = new System.Drawing.Size(304, 22);
             this.btnUpdates.Text = "Updates";
             this.btnUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
             // 
             // btnLogs
             // 
             this.btnLogs.Name = "btnLogs";
-            this.btnLogs.Size = new System.Drawing.Size(254, 22);
+            this.btnLogs.Size = new System.Drawing.Size(304, 22);
             this.btnLogs.Text = "Crash Logs";
             this.btnLogs.Click += new System.EventHandler(this.BtnLogs_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(251, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(301, 6);
             // 
             // btnNewNaming
             // 

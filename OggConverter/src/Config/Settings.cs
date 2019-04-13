@@ -30,7 +30,7 @@ namespace OggConverter
         public static bool ShowConversionLog { get => GetSettings.Bool("ShowConversionLog", true); set => SetSettings.Bool("ShowConversionLog", value); }
         public static bool AutoSort { get => GetSettings.Bool("AutoSort", true); set => SetSettings.Bool("AutoSort", value); }
 
-        //EXPERIMENTAL
+        // EXPERIMENTAL
         public static bool UseNewNaming { get => GetSettings.Bool("UseNewNaming", false); set => SetSettings.Bool("UseNewNaming", value); }
 
         public static int LatestVersion { get => GetSettings.Int("LatestVersion", 0); set => SetSettings.Int("LatestVersion", value); }

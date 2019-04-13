@@ -97,5 +97,11 @@ namespace OggConverter
             if (File.Exists("download.aac"))
                 File.Delete("download.aac");
         }
+
+        /// <summary>
+        /// Checks if any 'long taking' operations are busy.
+        /// </summary>
+        /// <returns></returns>
+        public static bool AreAllBusy() { return Downloader.IsBusy || Converter.IsBusy; }
     }
 }

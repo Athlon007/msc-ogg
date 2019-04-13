@@ -36,17 +36,17 @@ namespace OggConverter
 
             string date = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
             string thisVersion = Application.ProductVersion;
+            string fileName = @"LOG\" + date + ".txt";
 
             Directory.CreateDirectory("LOG");
-            File.WriteAllText(@"LOG\" + date + ".txt",
+            File.WriteAllText(fileName,
                 $"MSC Music Manager {thisVersion} ({Updates.version})\n\n{FriendlyName()}\n\n{log}");
 
             if (silent) return;
 
-            DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG directory. " +
-                "Would you like to open directory?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            if (dl == DialogResult.Yes)
-                Process.Start("LOG");
+            DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG folder. " +
+                "Would you like to open it now?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            if (dl == DialogResult.Yes) Process.Start(fileName);
         }
 
         string HKLM_GetString(string path, string key)

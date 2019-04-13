@@ -14,36 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
 
-using System.Diagnostics;
+using System.IO;
 
 namespace OggConverter
 {
     class MetaDatas
     {
-        public static string GetSongName(string filePath)
+        /// <summary>
+        /// Retrieves song name from ffmpeg output
+        /// </summary>
+        /// <param name="metadata"></param>
+        /// <returns></returns>
+        public static string GetSongName(string[] ffmpegOut)
         {
-            ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{filePath}\"")
-            {
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
-            var proc = Process.Start(psi);
-
-            string[] metadata = proc.StandardError.ReadToEnd().Split('\n');
-
             string artist = null;
             string title = null;
 
-            foreach (string s in metadata)
+            foreach (string s in ffmpegOut)
             {
-                if (s.Contains("ARTIST"))
-                    artist = s.Split(':')[1].Trim();
-                else if (s.Contains("TITLE"))
-                    title = s.Split(':')[1].Trim();
+                if (s.ToLower().Contains("artist") && artist == null) artist = s.Split(':')[1].Trim();
+                else if (s.ToLower().Contains("title") && title == null) title = s.Split(':')[1].Trim();
+
+                if (artist != null && title != null) break;
             }
 
             return ((artist != null) && (title != null)) ? $"{artist} - {title}" : null;
+        }
+
+        public static void CreateMetaFile(string name, string value)
+        {
+            File.WriteAllText(name, value);
+            File.SetAttributes(name, FileAttributes.Hidden);
         }
     }
 }

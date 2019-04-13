@@ -70,6 +70,10 @@ namespace OggConverter
             btnUp.Text = char.ConvertFromUtf32(0x2191);
             btnDown.Text = char.ConvertFromUtf32(0x2193);
 
+            btnPlaySong.Text = char.ConvertFromUtf32(0x25B6);
+            btnStop.Text = char.ConvertFromUtf32(0x25A0);
+            btnDel.Text = char.ConvertFromUtf32(0x232B);
+
             dragDropPanel.Dock = DockStyle.Fill;
 
             tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 1, 0);
@@ -199,7 +203,7 @@ namespace OggConverter
         /// <summary>
         /// Updates song list used for player
         /// </summary>
-        public async void UpdateSongList()
+        public void UpdateSongList()
         {
             if (firstLoad) return;
 
@@ -207,14 +211,17 @@ namespace OggConverter
             string path = $"{txtboxPath.Text}\\{(CurrentFolder)}";
 
             if (Settings.UseNewNaming)
+                Player.WorkingSongList.Clear();
+
+            if (Settings.UseNewNaming)
             {
                 for (int i = 1; i < 99; i++)
                     if (File.Exists($"{path}\\track{i}.ogg"))
                     {
-                        string s = null;
-                        await Task.Run(() => s = MetaDatas.GetSongName($"{path}\\track{i}.ogg"));
-                        s = s ?? $"track{i}.ogg";
+                        string s = File.Exists($"{path}\\track{i}.mscmm") ? File.ReadAllText($"{path}\\track{i}.mscmm") : $"track{i}";
+                        if (s == "") s = $"track{i}";
                         songList.Items.Add(s);
+                        Player.WorkingSongList.Add($"track{i}");
                     }
                 return;
             }
@@ -226,15 +233,9 @@ namespace OggConverter
 
         private async void BtnConvert_Click(object sender, EventArgs e)
         {
-            if (Downloader.IsBusy)
+            if (Functions.AreAllBusy())
             {
-                Log += "\nSong is now being downloaded. You can't convert now";
-                return;
-            }
-
-            if (Converter.IsBusy)
-            {
-                Log += "\nConversion is in progress. You can't start another conversion now";
+                Log += "\nProgram is busy.";
                 return;
             }
 
@@ -307,15 +308,9 @@ namespace OggConverter
 
         private void BtnDirectory_Click(object sender, EventArgs e)
         {
-            if (Downloader.IsBusy)
+            if (Functions.AreAllBusy())
             {
-                Log += "Song is now being downloaded.";
-                return;
-            }
-
-            if (Converter.IsBusy)
-            {
-                Log += "Conversion is in progress.";
+                Log += "\nProgram is busy.";
                 return;
             }
 
@@ -363,8 +358,12 @@ namespace OggConverter
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Converter.IsBusy || Downloader.IsBusy)
+            if (Functions.AreAllBusy())
+            {
                 e.Cancel = true;
+                Log += "\nProgram is busy.";
+                return;
+            }
 
             Player.Stop();
         }
@@ -492,11 +491,14 @@ namespace OggConverter
 
         private void BtnPlay(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || Settings.UseNewNaming) return;
+            if (songList.SelectedIndex == -1) return;
 
-            Player.Play($"{txtboxPath.Text}\\{(CurrentFolder)}\\{songList.SelectedItem.ToString()}");
+            if (Settings.UseNewNaming)
+                Player.Play($"{txtboxPath.Text}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
+            else
+                Player.Play($"{txtboxPath.Text}\\{CurrentFolder}\\{songList.SelectedItem.ToString()}");
 
-            labNowPlaying.Text = $"Now Playing: {songList.SelectedItem.ToString()}";
+            labNowPlaying.Text = Settings.UseNewNaming ? songList.SelectedItem.ToString() : $"Now Playing: {songList.SelectedItem.ToString()}";
             LabNowPlaying.Left = (panel1.Width - LabNowPlaying.Width) / 2;
             labNowPlaying.Visible = true;
         }
@@ -536,21 +538,19 @@ namespace OggConverter
         /// </summary>
         private void BtnDel_Click(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || Settings.UseNewNaming) return;
+            if (songList.SelectedIndex == -1) return;
 
-            if (Downloader.IsBusy)
+            if (Functions.AreAllBusy())
             {
-                Log += "\nSong is now being downloaded. You can't delete songs now.";
+                Log += "\nProgram is busy.";
                 return;
             }
 
-            if (Converter.IsBusy)
-            {
-                Log += "Conversion is in progress. You can't delete songs now.";
-                return;
-            }
+            string file = Settings.UseNewNaming ? $"{txtboxPath.Text}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg" : 
+                $"{txtboxPath.Text}\\{CurrentFolder}\\{songList.SelectedItem.ToString()}";
 
-            string file = $"{txtboxPath.Text}\\{(CurrentFolder)}\\{songList.SelectedItem.ToString()}";
+            string meta = Settings.UseNewNaming ? $"{txtboxPath.Text}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm" : null;
+
             DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dl == DialogResult.Yes)
             {
@@ -560,6 +560,12 @@ namespace OggConverter
 
                 if (File.Exists(file))
                     File.Delete(file);
+
+                if (Settings.UseNewNaming)
+                {
+                    if (File.Exists(meta))
+                        File.Delete(meta);
+                }
 
                 UpdateSongList();
             }
@@ -573,15 +579,9 @@ namespace OggConverter
 
         private void PlayerCD_Click(object sender, EventArgs e)
         {
-            if (Downloader.IsBusy)
+            if (Functions.AreAllBusy())
             {
-                Log += "\nSong is now being downloaded.";
-                return;
-            }
-
-            if (Converter.IsBusy)
-            {
-                Log += "\nConversion is in progress.";
+                Log += "\nProgram is busy.";
                 return;
             }
 
@@ -592,15 +592,9 @@ namespace OggConverter
 
         private void PlayerRadio_Click(object sender, EventArgs e)
         {
-            if (Downloader.IsBusy)
+            if (Functions.AreAllBusy())
             {
-                Log += "\nSong is now being downloaded.";
-                return;
-            }
-
-            if (Converter.IsBusy)
-            {
-                Log += "\nConversion is in progress.";
+                Log += "\nProgram is busy.";
                 return;
             }
 
@@ -622,21 +616,21 @@ namespace OggConverter
 
         private void BtnUp_Click(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || Settings.UseNewNaming) return;
+            if (songList.SelectedIndex == -1) return;
             string path = $"{txtboxPath.Text}\\{(CurrentFolder)}";
             Player.ChangeOrder(songList, path, true);
         }
 
         private void BtnDown_Click(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || Settings.UseNewNaming) return;
+            if (songList.SelectedIndex == -1) return;
             string path = $"{txtboxPath.Text}\\{(CurrentFolder)}";
             Player.ChangeOrder(songList, path, false);
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
         {
-            if (Downloader.IsBusy || Converter.IsBusy)
+            if (Functions.AreAllBusy())
                 return;
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -673,7 +667,13 @@ namespace OggConverter
 
         private void BtnMoveSong_Click(object sender, EventArgs e)
         {
-            if ((songList.SelectedIndex == -1) || (Settings.UseNewNaming)) return;
+            if (songList.SelectedIndex == -1) return;
+
+            if (Settings.UseNewNaming)
+            {
+                Player.MoveTo(txtboxPath.Text, Player.WorkingSongList[songList.SelectedIndex], playerCD.Checked);
+                return;
+            }
             Player.MoveTo(txtboxPath.Text, songList.SelectedItem.ToString(), playerCD.Checked);
         }
 
@@ -712,9 +712,9 @@ namespace OggConverter
 
         private async void BtnDownload_Click(object sender, EventArgs e)
         {
-            if (Downloader.IsBusy)
+            if (Functions.AreAllBusy())
             {
-                Log += "\nSong is now being downloaded.";
+                Log += "\nProgram is busy.";
                 return;
             }
 
@@ -722,11 +722,17 @@ namespace OggConverter
             btnDownload.Enabled = txtboxVideo.Enabled = false;
 
             string url = txtboxVideo.Text;
+            string forcedName = null;
 
             if (!url.Contains("https://"))
-                url = "ytsearch:\"" + txtboxVideo.Text + "\"";
+            {
+                txtboxVideo.Text = txtboxVideo.Text.Replace('"', '\0');
+                url = $"ytsearch:\"{txtboxVideo.Text}\"";
+                if (Settings.UseNewNaming)
+                    forcedName = txtboxVideo.Text;
+            }
 
-            await Downloader.DownloadFile(url, txtboxPath.Text, CurrentFolder, playerCD.Checked ? 15 : 99);
+            await Downloader.DownloadFile(url, txtboxPath.Text, CurrentFolder, playerCD.Checked ? 15 : 99, forcedName);
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
             SafeMode(false);
@@ -748,7 +754,12 @@ namespace OggConverter
         {
             if (!Settings.UseNewNaming)
             {
-                DialogResult dl = MessageBox.Show("Getting Names from Metadata is very, very slow", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+                DialogResult dl = MessageBox.Show("This feature is still in development. " +
+                    "Some features may or may not work, or be bugged. Are you sure you want to contine?", 
+                    "Question", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Stop);
+
                 if (dl != DialogResult.Yes)
                     return;
             }

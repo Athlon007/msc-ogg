@@ -1,3 +1,10 @@
+# Preview 2.1.0.3 (13.04.2019)
+
+### Added:
+- 'Get Names From Metadata' now fully works. You can now do all the operations that you can do without that mode. WARNING: In order to get song names, you have to reconvert all your songs. Also during the conversion, the track{number}.mscmm file will be created, which stores song name
+- If you download song by name, it will set it's name by the text you put in text box
+- youtube-dl is now included in .zip
+
 # Preview 2.1.0.2 (11.04.2019)
 
 ### Added:
