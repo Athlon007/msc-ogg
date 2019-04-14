@@ -1,51 +1,74 @@
-# Preview 2.1.0.3 (13.04.2019)
+# Changelog
 
-### Added:
+## Preview 2.1.0.4 (14.04.2019)
+
+### Added
+
+- When enabling 'Get Names from Metadata', it will ask you if you want to get the names from already existing files
+- Play, Pause and Delete buttons now have a neat icons
+
+### Bug fixes
+
+- If 'Search Term/Video Link:' textbox is empty, the downloading will be aborted
+- If song was deleted manually, but the meta file not, it will be deleted automatically
+
+## Preview 2.1.0.3 (13.04.2019)
+
+### Added
+
 - 'Get Names From Metadata' now fully works. You can now do all the operations that you can do without that mode. WARNING: In order to get song names, you have to reconvert all your songs. Also during the conversion, the track{number}.mscmm file will be created, which stores song name
 - If you download song by name, it will set it's name by the text you put in text box
 - youtube-dl is now included in .zip
 
-# Preview 2.1.0.2 (11.04.2019)
+## Preview 2.1.0.2 (11.04.2019)
 
-### Added:
+### Added
+
 - You can now download songs using search terms "ex. PewDiePie - Congratulations". The tool will download first result
 - Added legal notice uppon first start
 - Player can get song names from .OGG metadata. Pretty much nothing besides loading song names from metadata works. To enable it, go to Settings -> EXPERIMENTAL: Get Names From Metadata. YOU CANNOT CHANGE ORDER, SORT, MOVE, PLAY OR DELETE SONGS
 
-### Changes:
+### Changes
+
 - Safe Mode now also disables audio player list
 - Code optimization and improvements
 
-# Preview 2.1.0.1 (10.04.2019)
+## Preview 2.1.0.1 (10.04.2019)
 
-### Added:
+### Added
+
 - While using preview relase, if the new stable version is ready, the program will suggest updating to it
 
-### Bug Fixes:
+### Bug Fixes
+
 - Fixed bug in which the program would convert already converted files uppon pressing Convert
 - Fixed bug with Quick Converter which would use wrong working directory and cause false "missing ffmpeg" error
 - Files are now being remover after conversion correctly
 
-# Preview 2.1.0.0 (09.04.2019)
+## Preview 2.1.0.0 (09.04.2019)
 
 NOTE: On first YouTube download, the tool will ask you to download youtube-dl. Uppon pressing Yes it will download the latest version from developer's website.
 
-### Added:
+### Added
+
 - You can now download the files directly from YouTube
 - Added preview auto updates. In order to enable them, press Shift + Updates
 - "Create Desktop Shortcut" button
 
-### Changes:
+### Changes
+
 - The tool now disables some functions if conversion is in progress to prevent errors
 
-# 2.0.1 (10.04.2019)
+## 2.0.1 (10.04.2019)
 
-### Bug Fixes:
+### Bug Fixes
+
 - Fixed bug in which the program would convert already converted files uppon pressing Convert
 
-# 2.0 (08.04.2019)
+## 2.0 (08.04.2019)
 
-### Added:
+### Added
+
 - You can now drag and drop files to convert them quickly - either by dropping them on program's window, or it's executable
 - Added music player
 - You can now remove, sort and change order of songs in the tool
@@ -58,7 +81,8 @@ NOTE: On first YouTube download, the tool will ask you to download youtube-dl. U
 - You can now put OGG files into the conversion - instead of converting them, the program will simply rename it accordingly
 - If the tool detects that it crashed before while changing order of file, it will try to fix it on next start
 
-### Changes:
+### Changes
+
 - Renamed "MSC OGG" to "MSC Music Manager"
 - Huge UI changes
 - New icon
@@ -68,44 +92,52 @@ NOTE: On first YouTube download, the tool will ask you to download youtube-dl. U
 - Updated ffmpeg to version 4.1.1
 - Lots and lots of small changes under the hood
 
-# 1.2.1 (12.12.2017)
+## 1.2.1 (12.12.2017)
 
-### Changes:
+### Changes
+
 - Changed "How to use" note. It now shows all supported music formats
 - Renamed "Remove MP3 files after conversion" to "Remove files after conversion"
 - Code optimization
 - Made some code easier to read
 - Added missing comments in code
 
-### Bug fixes:
+### Bug fixes
+
 - Version file is now deleted after detected update too
 - Small UI touches (the program isn't focused on path text box at start)
 
-### Removed:
+### Removed
+
 - Obsolete code
 
-# 1.2 (08.12.2017)
+## 1.2 (08.12.2017)
 
-### Added:
+### Added
+
 - You can now disable checking for updates
 - The tool now shows if it's updated or not in the log
 - If there are over 15 files in CDs folder, the tool will ask if you wish to continue conversion
 - When the program is initialized for the first time there's welcome message box appearing. Most of the controls are disabled
 
-### Changes:
+### Changes
+
 - Small changes and touches in the UI
 - Optimized Log class
 
-### Removed:
+### Removed
+
 - Removed "Check for update" button
 - Unused part of code
 
-### Fixes:
+### Fixes
+
 - Fully fixed "NullReferenceException" bug
 
-# 1.1 (04.12.2017)
+## 1.1 (04.12.2017)
 
-### Added:
+### Added
+
 - Manifest file
 - Added EXE only download in repository for updates
 - Support for WAV, AAC, M4A and WMA file types
@@ -113,28 +145,33 @@ NOTE: On first YouTube download, the tool will ask you to download youtube-dl. U
 - Added ability to perform action by program after finishing the conversion (you can change that in settings). Default is none 
 - Added more bugs to fix later
 
-### Changes:
+### Changes
+
 - Changed links in repository
 - Added Settings class which loads and saves settings from registry
 
-### Fixes:
+### Fixes
+
 - Fixed typos
 - Fixed incorrect author in EXE info
 - Dialog box when update is available
 
-# 1.0.1 (03.12.2017)
+## 1.0.1 (03.12.2017)
 
-### Added:
+### Added
+
 - You can now remove MP3 files after conversion
 - Icon
 
-### Changes:
+### Changes
+
 - Small changes in ConversionLog
 - Changes in menu strip
 
-# 1.0 (02.12.2017)
+## 1.0 (02.12.2017)
 
-### Added:
+### Added
+
 - LOG handler (they're now saved into LOG folder in program's directory)
 - Conversion output as TXT file as for request of Crazysteve190
 - "Open LOG folder" button into Tool menu strip
@@ -142,11 +179,13 @@ NOTE: On first YouTube download, the tool will ask you to download youtube-dl. U
 - After finished conversion, Windows sound now plays
 - "Launch the game" button
 
-### Changes:
+### Changes
+
 - Moved conversion void to async void
 - You cannot close program if you've started one conversion
 
-### Bug fixes:
+### Bug fixes
+
 - Fixed bug that would allow start second conversion if one is running already
 - You can now move window freely when conversion is in progress
 - Fixed typos

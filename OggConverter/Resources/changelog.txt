@@ -5,7 +5,8 @@ What's new in this release?
 - "Create Desktop Shortcut" button
 - While using preview relase, if the new stable version is ready, the program will suggest updating to it
 - Fixed bug with Quick Converter which would use wrong working directory and cause false "missing ffmpeg" error
-- Files are now being remover after conversion correctly
+- Files are now being removed after conversion correctly
+- Play, Pause and Delete buttons now have a neat icons
 - Player can get song names from .OGG metadata. Pretty much nothing besides loading song names from metadata works. To enable it, go to Settings -> EXPERIMENTAL: Get Names From Metadata.
 - If you download song by name, it will set it's name by the text you put in text box (if you use Get Names From Metadata);
 

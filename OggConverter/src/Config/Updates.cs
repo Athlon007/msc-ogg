@@ -26,9 +26,13 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18154; 
+        public const int version = 18155; 
         static bool newUpdateReady;
         static bool downgrade;
+
+        // Download sources
+        const string stable = "https://gitlab.com/aathlon/msc-ogg/raw/master/";
+        const string preview = "https://gitlab.com/aathlon/msc-ogg/raw/development/";
 
         /// <summary>
         /// Checks for the update on remote server by downloading the latest version info file.
@@ -45,7 +49,8 @@ namespace OggConverter
                 return;
             }
 
-            string latestURL = getPreview ? "https://gitlab.com/aathlon/msc-ogg/raw/development/latest.txt" : "https://gitlab.com/aathlon/msc-ogg/raw/master/latest.txt";
+            string latestURL = getPreview ? preview : stable;
+            latestURL += "latest.txt";
 
             try
             {
@@ -117,7 +122,9 @@ namespace OggConverter
         {
             Form1.instance.Log += "\n\nDownloading an update...";
 
-            string zipURL = getPreview ? "https://gitlab.com/aathlon/msc-ogg/raw/development/mscmm.zip" : "https://gitlab.com/aathlon/msc-ogg/raw/master/mscmm.zip";
+            string zipURL = getPreview ? preview : stable;
+            zipURL += "mscmm.zip";
+
 
             using (WebClient client = new WebClient())
             {

@@ -35,7 +35,7 @@ namespace OggConverter
         {
             if (!File.Exists("ffplay.exe"))
             {
-                MessageBox.Show("FFplay.exe is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("FFplay is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -79,8 +79,8 @@ namespace OggConverter
         /// <summary>
         /// Sorts songs to remove gaps 
         /// </summary>
-        /// <param name="mscPath">My Summer Car path <B>WITH</B> Radio/CD</param>
-        public static void Sort(string mscPath)
+        /// <param name="folder">Radio or CD folder/param>
+        public static void Sort(string folder)
         {
             if (Downloader.IsBusy)
             {
@@ -101,19 +101,30 @@ namespace OggConverter
             for (int i = 1; i < 99; i++)
             {
                 // File doesn't exist? Skipping the value
-                if (!File.Exists($"{mscPath}\\track{i}.ogg"))
+                if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
+                {
                     skipped++;
+                }
                 else
                 {
+                    // If nothing was skipped, there is no point of moving file
+                    if (skipped == 0) continue;
+
                     // Waiting for file to be free
-                    while (!Functions.IsFileReady($"{mscPath}\\track{i}.ogg")) { }
+                    while (!Functions.IsFileReady($"{Settings.GamePath}\\{folder}\\track{i}.ogg")) { }
 
                     // Moving the file
-                    File.Move($"{mscPath}\\track{i}.ogg", $"{mscPath}\\track{i - skipped}.ogg");
+                    File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
 
                     // Moving metadata (if new naming system is used)
-                    if (File.Exists($"{mscPath}\\track{i}.mscmm"))
-                        File.Move($"{mscPath}\\track{i}.mscmm", $"{mscPath}\\track{i - skipped}.mscmm");
+                    if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
+                    {
+                        // If the song was deleted, but not the meta file
+                        if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm"))
+                            File.Delete($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
+
+                        File.Move($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
+                    }
 
                     // Adjusting the i value by skipped
                     if (skipped != 0)

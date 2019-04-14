@@ -35,6 +35,8 @@ namespace OggConverter
 
         public static int LatestVersion { get => GetSettings.Int("LatestVersion", 0); set => SetSettings.Int("LatestVersion", value); }
 
+        public static string GamePath { get => GetSettings.String("MSC Path", null); set => SetSettings.String("MSC Path", value); }
+
         /// <summary>
         /// Removes all settings.
         /// </summary>
@@ -53,6 +55,15 @@ namespace OggConverter
         }
 
         internal static void Int(string name, int value)
+        {
+            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
+            {
+                Key.SetValue(name, value);
+                Key.Close();
+            }
+        }
+
+        internal static void String(string name, string value)
         {
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
             {
@@ -81,6 +92,12 @@ namespace OggConverter
         {
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
                 return int.Parse(Key.GetValue(name, defaultValue).ToString());
+        }
+
+        internal static string String(string name, string defaultValue)
+        {
+            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
+                return Key.GetValue(name, defaultValue).ToString();
         }
     }
 }

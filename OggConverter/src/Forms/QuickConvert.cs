@@ -24,7 +24,6 @@ namespace OggConverter
     public partial class QuickConvert : Form
     {
         readonly string[] files;
-        readonly string path;
 
         private string Message
         {
@@ -50,8 +49,6 @@ namespace OggConverter
                     this.Close();
                     return;
                 }
-
-                path = Key.GetValue("MSC Path").ToString();
             }
 
             this.files = files;
@@ -71,7 +68,7 @@ namespace OggConverter
             foreach (string file in files)
             {
                 Message = "Converting\n" + file.Substring(file.LastIndexOf('\\') + 1);
-                await Converter.ConvertFile(file, path, to, limit);
+                await Converter.ConvertFile(file, to, limit);
             }
 
             Message = "Done!";

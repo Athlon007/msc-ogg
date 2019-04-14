@@ -31,11 +31,10 @@ namespace OggConverter
         /// Downloads the song as .ACC file
         /// </summary>
         /// <param name="url">URL link to video</param>
-        /// <param name="mscPath">My Summer Car directory</param>
         /// <param name="folder">Radio or CD</param>
         /// <param name="limit">Radio = 99. CD = 15</param>
         /// <returns></returns>
-        public static async Task DownloadFile(string url, string mscPath, string folder, int limit, string forcedName = null)
+        public static async Task DownloadFile(string url, string folder, int limit, string forcedName = null)
         {
             if (!File.Exists("youtube-dl.exe"))
             {
@@ -94,7 +93,7 @@ namespace OggConverter
             await Task.Run(() => process.WaitForExit());
 
             Form1.instance.Log += "\nConverting...";
-            await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.aac", mscPath, folder, limit, forcedName);
+            await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.aac", folder, limit, forcedName);
 
             File.Delete("download.aac");
             IsBusy = false;
