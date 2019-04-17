@@ -18,6 +18,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace OggConverter
 {
@@ -26,9 +27,9 @@ namespace OggConverter
         /// <summary>
         /// Retrieves song name from ffmpeg output
         /// </summary>
-        /// <param name="metadata"></param>
+        /// <param name="ffmpegOut"></param>
         /// <returns></returns>
-        public static string GetSongName(string[] ffmpegOut)
+        public static string GetFromOutput(string[] ffmpegOut)
         {
             string artist = null;
             string title = null;
@@ -45,12 +46,30 @@ namespace OggConverter
         }
 
         /// <summary>
+        /// Retrieves song name from .mscmm meta file
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static string GetFromMeta(string folder, string file)
+        {
+            string output  = File.Exists($"{Settings.GamePath}\\{folder}\\{file}.mscmm") ? File.ReadAllText($"{Settings.GamePath}\\{folder}\\{file}.mscmm") : file;
+            if (output.Trim() == "")
+                output = file;
+
+            return output;
+        }
+
+        /// <summary>
         /// Creates and writes meta file for song.
         /// </summary>
         /// <param name="path">Full path to the file</param>
         /// <param name="value">Value which will be written into it</param>
         public static void CreateMetaFile(string path, string value)
         {
+            if (File.Exists(path))
+                File.Delete(path);
+
             File.WriteAllText(path, value);
             File.SetAttributes(path, FileAttributes.Hidden);
         }
@@ -78,7 +97,7 @@ namespace OggConverter
                     await Task.Run(() => process = Process.Start(psi));
 
                     string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                    string songName = GetSongName(ffmpegOut);
+                    string songName = GetFromOutput(ffmpegOut);
 
                     CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", songName);
                 }
@@ -86,7 +105,7 @@ namespace OggConverter
         }
 
         /// <summary>
-        /// Removes all meta files.
+        /// Removes all meta files from folder
         /// </summary>
         public static void RemoveAll(string folder)
         {

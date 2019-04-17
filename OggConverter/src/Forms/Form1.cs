@@ -19,9 +19,7 @@ using System.IO;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Diagnostics;
-using System.Media;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace OggConverter
 {
@@ -29,7 +27,6 @@ namespace OggConverter
     {
         public static Form1 instance;
 
-        readonly bool skipCD; //Tells the program to skip CD folder, if the game is older than 24.10.2017 update
         readonly bool firstLoad = false; //Detects if the program has been opened for the first time
 
         public string Log
@@ -59,7 +56,7 @@ namespace OggConverter
 
             instance = this;
             playerRadio.Checked = true;
-            Log += $"MSC Music Manager Preview {Functions.GetVersion()}";
+            Log += $"MSC Music Manager {Functions.GetVersion()} ({Updates.version})";
             btnGetUpdate = btnDownloadUpdate;
             btnGetUpdate.Click += BtnCheckUpdate_Click;
 
@@ -76,98 +73,115 @@ namespace OggConverter
 
             dragDropPanel.Dock = DockStyle.Fill;
 
-            tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 1, 0);
+            tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 2, 0);
+            btnPlaySong.Left = Functions.Center(panel1, btnPlaySong) - btnPlaySong.Width / 2 - 2;
+            btnStop.Left = Functions.Center(panel1, btnStop) + btnStop.Width / 2 + 2;
+
+            playerRadio.Left = Functions.Center(panel1, playerRadio) - playerRadio.Width / 2 - 2;
+            playerCD.Left = Functions.Center(panel1, playerRadio) + playerRadio.Width / 2 + 6;
 
             Functions.RemoveOldFiles();
-
-            try
+            
+            if (Settings.SettingsAreValid())
             {
-                using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
+                //Path in textbox
+                if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
                 {
-                    if (Key != null)
-                    {
-                        //Path in textbox
-                        txtboxPath.Text = Settings.GamePath;
-                        if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
-                        {
-                            MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease select the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Log += "\n\nCouldn't find mysummercar.exe. Please select the correct game path.";
-                            txtboxPath.Text = "Select game folder ->";
-                            firstLoad = true;
-                            SafeMode(true);
-                            return;
-                        }
-                        txtboxPath.SelectionStart = 0;
-                        txtboxPath.ScrollToCaret();
-                        this.ActiveControl = label2;
+                    MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Log += "\n\nCouldn't find mysummercar.exe. Please set the correct game path.";
+                    firstLoad = true;
+                    SafeMode(true);
+                    return;
+                }
 
-                        // SETTINGS CHECKS
-                        btnRemMP3.Checked = Settings.RemoveMP3;
-                        btnNoSteam.Checked = Settings.NoSteam;
-                        // Actions after conversion
-                        btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
-                        btnAfterClose.Checked = Settings.CloseAfterConversion;
-                        btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion && !Settings.ShowConversionLog;
-                        btnShowConversionLog.Checked = Settings.ShowConversionLog;
-                        btnUpdates.Checked = !Settings.NoUpdates;
-                        btnLogs.Checked = Settings.Logs;
-                        btnAutoSort.Checked = Settings.AutoSort;
-                        btnNewNaming.Checked = Settings.UseNewNaming;
+                Log += $"\nGame Folder: {Settings.GamePath}";
 
-                        if (Settings.NoUpdates)
-                            Log += "\n\nUpdates are disabled";
-                        else
-                        {
-                            if (Settings.Preview)
-                                Updates.LookForAnUpdate(true);
+                // SETTINGS CHECKS
+                btnRemMP3.Checked = Settings.RemoveMP3;
+                btnNoSteam.Checked = Settings.NoSteam;
+                // Actions after conversion
+                btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
+                btnAfterClose.Checked = Settings.CloseAfterConversion;
+                btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion && !Settings.ShowConversionLog;
+                btnShowConversionLog.Checked = Settings.ShowConversionLog;
+                btnUpdates.Checked = !Settings.NoUpdates;
+                btnLogs.Checked = Settings.Logs;
+                btnAutoSort.Checked = Settings.AutoSort;
+                btnNewNaming.Checked = Settings.DisableMetaFiles;
 
-                            Updates.LookForAnUpdate(false);
-                            Log += Settings.Preview ? "\nYOU ARE USING PREVIEW UPDATE CHANNEL" : "";
-                        }
+                if (Settings.NoUpdates)
+                    Log += "\n\nUpdates are disabled";
+                else
+                {
+                    if (Settings.Preview)
+                        Updates.LookForAnUpdate(true);
 
-                        if (Settings.Preview)
-                        {
-                            btnUpdates.ForeColor = Color.Red;
-                            btnUpdates.Text = "Updates (Preview)";
-                        }
+                    Updates.LookForAnUpdate(false);
+                    Log += Settings.Preview && !Settings.DemoMode ? "\nYOU ARE USING PREVIEW UPDATE CHANNEL" : "";
+                }
 
-                        if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
-                        {
-                            Log += "\n\nFound temp song file in Radio, possibly caused by crash\nTrying to fix it...";
-                            _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
-                        }
+                if (Settings.Preview)
+                {
+                    btnUpdates.ForeColor = Color.Red;
+                    btnUpdates.Text = "Updates (Preview)";
+                }
 
-                        if (File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
-                        {
-                            Log += "\n\nFound temp song file in CD, possibly caused by crash\nTrying to fix it...";
-                            _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
-                        }
-                    }
+                if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
+                {
+                    Log += "\n\nFound temp song file in Radio, possibly caused by crash\nTrying to fix it...";
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
+                }
+
+                if (File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
+                {
+                    Log += "\n\nFound temp song file in CD, possibly caused by crash\nTrying to fix it...";
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
                 }
 
                 if (Updates.version > Settings.LatestVersion)
                 {
                     Log += "\n\n" + Properties.Resources.changelog;
+
+                    if (Settings.LatestVersion <= 18151)
+                    {
+                        DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
+                            "(It may take a while, depending on how many songs you have)",
+                            "Question",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question);
+
+                        if (dl == DialogResult.Yes)
+                        {
+                            SafeMode(true);
+                            MetaData.GetSongsFromAll("Radio");
+                            MetaData.GetSongsFromAll("CD");
+                            UpdateSongList();
+                            SafeMode(false);
+                        }
+                    }
+
                     Settings.LatestVersion = Updates.version;
                 }
 
                 if (!Directory.Exists($"{Settings.GamePath}\\CD"))
                 {
-                    skipCD = true;
+                    Converter.SkipCD = true;
                     Log += "\nCD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.";
                 }
+
+                if (Settings.DemoMode)
+                    mSCOGGToolStripMenuItem.Text += " (DEMO MODE)";
             }
-            catch
+            else
             {
                 // There was some kind of problem while starting.
                 // Launching the first start sequence
 
                 MessageBox.Show("Hey there! Looks like you're new here. Select the game directory first :)\n\n" +
-                    "If you see that message second, or more times, please contact the developer.", "Howdy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "If you see that message second, or more times, please contact the developer.", "Terve", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Log += "\n\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.";
                 Log += "\n\n" + Functions.AboutNotice;
-                txtboxPath.Text = "Select game folder ->";
                 firstLoad = true;
                 SafeMode(true);
             }
@@ -177,12 +191,11 @@ namespace OggConverter
         /// Disabled most features to prevent crashes and bugs.
         /// Used for initial setup and if the My Summer Car directory or file no longer exists.
         /// </summary>
-        void SafeMode(bool state)
+        public void SafeMode(bool state)
         {
             state ^= true;
 
             btnOpenGameDir.Enabled = state;
-            btnConvert.Enabled = state;
             menuSettings.Enabled = state;
             btnLaunchGame.Enabled = state;
             this.AllowDrop = state;
@@ -210,95 +223,28 @@ namespace OggConverter
             songList.Items.Clear();
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
 
-            if (Settings.UseNewNaming)
-                Player.WorkingSongList.Clear();
-
-            if (Settings.UseNewNaming)
+            // Old name reading
+            if (Settings.DisableMetaFiles)
             {
                 for (int i = 1; i < 99; i++)
                     if (File.Exists($"{path}\\track{i}.ogg"))
-                    {
-                        string s = File.Exists($"{path}\\track{i}.mscmm") ? File.ReadAllText($"{path}\\track{i}.mscmm") : $"track{i}";
-                        if (s == "") s = $"track{i}";
-                        songList.Items.Add(s);
-                        Player.WorkingSongList.Add($"track{i}");
-                    }
+                        songList.Items.Add($"track{i}.ogg");
+
                 return;
             }
+            
+            Player.WorkingSongList.Clear();
 
             for (int i = 1; i < 99; i++)
                 if (File.Exists($"{path}\\track{i}.ogg"))
-                    songList.Items.Add($"track{i}.ogg");
-        }
-
-        private async void BtnConvert_Click(object sender, EventArgs e)
-        {
-            if (Functions.AreAllBusy())
-            {
-                Log += "\nProgram is busy.";
-                return;
-            }
-
-            if (Settings.GamePath.Length == 0)
-            {
-                Log += "\nSelect game path first.";
-                return;
-            }
-
-            Converter.IsBusy = true;
-
-            Converter.ConversionLog = "";
-            Converter.TotalConversions = 0;
-            Converter.Skipped = 0;
-
-            try
-            {
-                SafeMode(true);
-                Log += "\n\n-----------------------------------------------------------------------------------------------------------------------------------------";
-                Converter.ConversionLog += "THIS FILE WILL BE WIPED AFTER THE NEXT CONVERSION.\nMAKE SURE TO DO A BACKUP:\n\n";
-                await Converter.ConvertFolder("Radio", 99);
-
-                if (!skipCD)
-                    await Converter.ConvertFolder("CD", 15);
-
-                if (Converter.Skipped != 2)
                 {
-                    Converter.ConversionLog += DateTime.Now.ToLocalTime();
-                    Log += $"\nConverted {Converter.TotalConversions} files in total";
-                    Log += "\n\nDone";
-                    if (Settings.ShowConversionLog)
-                    {
-                        File.WriteAllText(@"LastConversion.txt", Converter.ConversionLog);
-                        Process.Start(@"LastConversion.txt");
-                    }
-                    Log += "\nConversion log was saved to LastConversion.txt";
+                    string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
+                    songList.Items.Add(s);
+                    Player.WorkingSongList.Add($"track{i}");
                 }
-                else
-                    Log += "\nConversion log will not be saved, because both Radio and CD were skipped";
 
-                SystemSounds.Exclamation.Play();
-
-                Converter.IsBusy = false;
-
-                //Actions after conversion
-                if (Settings.LaunchAfterConversion)
-                    LaunchGame();
-
-                if (Settings.CloseAfterConversion)
-                    Application.Exit();
-            }
-            catch (Exception ex)
-            {
-                new CrashLog(ex.ToString());
-            }
-            finally
-            {
-                Converter.IsBusy = false;
-                SafeMode(false);
-            }
-
-            UpdateSongList();
-        }
+            return;
+        }        
 
         private void Log_TextChanged(object sender, EventArgs e)
         {
@@ -320,7 +266,6 @@ namespace OggConverter
 
                 if (dialog == DialogResult.OK && Directory.GetFiles(folderDialog.SelectedPath, "mysummercar.exe").Length != 0)
                 {
-                    txtboxPath.Text = folderDialog.SelectedPath;
                     RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG", true);
                     Key.SetValue("MSC Path", folderDialog.SelectedPath);
                     Log += "\nMy Summer Car directory detected";
@@ -387,12 +332,7 @@ namespace OggConverter
                 Process.Start($"{Settings.GamePath}\\mysummercar.exe");
                 return;
             }
-            LaunchGame();
-        }
-
-        void LaunchGame()
-        {
-            Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750");
+            Functions.LaunchGame();
         }
 
         private void RemoveOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -481,7 +421,7 @@ namespace OggConverter
 
         private void BtnFFmpegLicense_Click(object sender, EventArgs e)
         {
-            Process.Start("http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html");
+            Process.Start("https://www.ffmpeg.org/about.html");
         }
 
         private void MSCOGGToolStripMenuItem_Click(object sender, EventArgs e)
@@ -493,12 +433,25 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
-            if (Settings.UseNewNaming)
-                Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
-            else
+            if (Settings.DisableMetaFiles)
                 Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{songList.SelectedItem.ToString()}");
+            else
+                Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
 
-            labNowPlaying.Text = Settings.UseNewNaming ? songList.SelectedItem.ToString() : $"Now Playing: {songList.SelectedItem.ToString()}";
+            string song = Settings.DisableMetaFiles ? $"Now Playing: {songList.SelectedItem.ToString()}" : songList.SelectedItem.ToString();
+            string[] songSplit = song.Split(' ');
+            song = "";
+            for (int i = 0; i < songSplit.Length; i++)
+            {
+                string temp = song + " " + songSplit[i];
+                if (temp.Length > 51)
+                {
+                    song += "...";
+                    break;
+                }
+                song = temp;
+            }
+            labNowPlaying.Text = song;
             LabNowPlaying.Left = (panel1.Width - LabNowPlaying.Width) / 2;
             labNowPlaying.Visible = true;
         }
@@ -546,12 +499,12 @@ namespace OggConverter
                 return;
             }
 
-            string file = Settings.UseNewNaming ? $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg" : 
-                $"{Settings.GamePath}\\{CurrentFolder}\\{songList.SelectedItem.ToString()}";
+            string file = Settings.DisableMetaFiles ? $"{Settings.GamePath}\\{CurrentFolder}\\{songList.SelectedItem.ToString()}" :
+                $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg";
 
-            string meta = Settings.UseNewNaming ? $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm" : null;
+            string meta = Settings.DisableMetaFiles ? null : $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm";
 
-            DialogResult dl = MessageBox.Show($"Are you sure you want to delete {songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dl == DialogResult.Yes)
             {
                 Player.Stop();
@@ -561,7 +514,7 @@ namespace OggConverter
                 if (File.Exists(file))
                     File.Delete(file);
 
-                if (Settings.UseNewNaming)
+                if (!Settings.DisableMetaFiles)
                 {
                     if (File.Exists(meta))
                         File.Delete(meta);
@@ -582,7 +535,6 @@ namespace OggConverter
                 return;
             }
 
-            Player.Stop();
             UpdateSongList();
             btnMoveSong.Text = "Radio";
         }
@@ -595,7 +547,6 @@ namespace OggConverter
                 return;
             }
 
-            Player.Stop();
             UpdateSongList();
             btnMoveSong.Text = "CD";
         }
@@ -607,7 +558,12 @@ namespace OggConverter
 
         private void Form1_Activated(object sender, EventArgs e)
         {
+            if (firstLoad) return;
+
             UpdateSongList();
+
+            if (Converter.FilesWaitingForConversion("Radio") || Converter.FilesWaitingForConversion("CD"))
+                Converter.StartConversion();
         }
 
         private void BtnUp_Click(object sender, EventArgs e)
@@ -634,7 +590,7 @@ namespace OggConverter
                 dragDropPanel.Visible = true;
                 dragDropPanel.BringToFront();
                 int filesLength = ((string[])e.Data.GetData(DataFormats.FileDrop)).Length;
-                labelConvert.Text = $"Convert {filesLength} file{(filesLength > 1 ? "s" : "")} to {(CurrentFolder)}?";
+                labelConvert.Text = $"Convert {filesLength} file{(filesLength > 1 ? "s" : "")} to {(CurrentFolder)}?\n\n(Drop to Confirm)";
                 labelConvert.Left = (this.ClientSize.Width - labelConvert.Size.Width) / 2;
                 labelConvert.Top = (this.ClientSize.Height - labelConvert.Size.Height) / 2;
                 e.Effect = DragDropEffects.Copy;
@@ -665,12 +621,12 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
-            if (Settings.UseNewNaming)
+            if (Settings.DisableMetaFiles)
             {
-                Player.MoveTo(Settings.GamePath, Player.WorkingSongList[songList.SelectedIndex], playerCD.Checked);
+                Player.MoveTo(Settings.GamePath, songList.SelectedItem.ToString(), playerCD.Checked);
                 return;
             }
-            Player.MoveTo(Settings.GamePath, songList.SelectedItem.ToString(), playerCD.Checked);
+            Player.MoveTo(Settings.GamePath, Player.WorkingSongList[songList.SelectedIndex], playerCD.Checked);
         }
 
         private void BtnLogs_Click(object sender, EventArgs e)
@@ -730,7 +686,7 @@ namespace OggConverter
 
                 txtboxVideo.Text = txtboxVideo.Text.Replace('"', '\0');
                 url = $"ytsearch:\"{txtboxVideo.Text}\"";
-                if (Settings.UseNewNaming)
+                if (!Settings.DisableMetaFiles)
                     forcedName = txtboxVideo.Text;
             }
 
@@ -754,27 +710,41 @@ namespace OggConverter
 
         private void BtnNewNaming_Click(object sender, EventArgs e)
         {
-            if (!Settings.UseNewNaming)
+            if (!Settings.DisableMetaFiles)
             {
-                DialogResult dl = MessageBox.Show("This feature is still in development. " +
-                                                "Some features may or may not work, or be bugged. Are you sure you want to contine?", 
-                                                "Question", 
-                                                MessageBoxButtons.YesNo, 
-                                                MessageBoxIcon.Stop);
+                DialogResult dl = MessageBox.Show("Disabling metafiles will result in MSC Music Manager using file names, instead of real song names.\n" +
+                    "Are you sure you want to continue?", 
+                    "Question",
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Stop);
 
                 if (dl != DialogResult.Yes)
                     return;
             }
 
             Player.Stop();
-            Settings.UseNewNaming ^= true;
+            Settings.DisableMetaFiles ^= true;
 
-            if (Settings.UseNewNaming)
+            if (Settings.DisableMetaFiles)
             {
-                DialogResult getMeta = MessageBox.Show("Would you like the MSCMM to get meta datas from files now? (It may take some time)",
-                    "Question",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                DialogResult removeMeta = MessageBox.Show("Would you like to remove ALL meta files?",
+                "Question",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+                if (removeMeta == DialogResult.Yes)
+                {
+                    MetaData.RemoveAll($"Radio");
+                    MetaData.RemoveAll($"CD");
+                }
+            }
+            else
+            {
+                DialogResult getMeta = MessageBox.Show("Would you like the MSCMM to get song names directly from files now? " +
+                    "(It may take some time, depending on how many songs you have)",
+                "Question",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
                 if (getMeta == DialogResult.Yes)
                 {
@@ -784,21 +754,17 @@ namespace OggConverter
                     SafeMode(false);
                 }
             }
-            else
-            {
-                DialogResult removeMeta = MessageBox.Show("Would you like to remove meta files?",
-                                                          "Question",
-                                                          MessageBoxButtons.YesNo,
-                                                          MessageBoxIcon.Question);
-
-                if (removeMeta == DialogResult.Yes)
-                {
-                    MetaData.RemoveAll($"Radio");
-                    MetaData.RemoveAll($"CD");
-                }
-            }
-
             UpdateSongList();
+        }
+
+        private void BtnHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("How to use:\n\n- Drag and drop music files on the program's window or executable to quickly convert one or more songs\n" +
+                "- Paste songs into Radio or CD folder in My Summer Car folder\n" +
+                "- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term", 
+                "Help", 
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information);
         }
     }
 }

@@ -1,63 +1,26 @@
 # Changelog
 
-## Preview 2.1.0.4 (14.04.2019)
+## 2.1 (17.04.2019)
 
-### Added
-
-- When enabling 'Get Names from Metadata', it will ask you if you want to get the names from already existing files
-- Play, Pause and Delete buttons now have a neat icons
-
-### Bug fixes
-
-- If 'Search Term/Video Link:' textbox is empty, the downloading will be aborted
-- If song was deleted manually, but the meta file not, it will be deleted automatically
-
-## Preview 2.1.0.3 (13.04.2019)
-
-### Added
-
-- 'Get Names From Metadata' now fully works. You can now do all the operations that you can do without that mode. WARNING: In order to get song names, you have to reconvert all your songs. Also during the conversion, the track{number}.mscmm file will be created, which stores song name
-- If you download song by name, it will set it's name by the text you put in text box
-- youtube-dl is now included in .zip
-
-## Preview 2.1.0.2 (11.04.2019)
-
-### Added
-
-- You can now download songs using search terms "ex. PewDiePie - Congratulations". The tool will download first result
+- You can now download the files directly from YouTube - either with search term, or URL
+- Added preview auto updates. In order to enable them, press Shift + Updates
+- "Create Desktop Shortcut" button
 - Added legal notice uppon first start
-- Player can get song names from .OGG metadata. Pretty much nothing besides loading song names from metadata works. To enable it, go to Settings -> EXPERIMENTAL: Get Names From Metadata. YOU CANNOT CHANGE ORDER, SORT, MOVE, PLAY OR DELETE SONGS
+- Player can get song names from .OGG metadata
+- Play, Pause and Delete buttons now have a neat icons
+- The tool now automatically converts songs if it detects them in CD or Radio folder
 
 ### Changes
 
-- Safe Mode now also disables audio player list
+- Massive UI changes
+- The tool now disables some functions if conversion is in progress to prevent errors
 - Code optimization and improvements
-
-## Preview 2.1.0.1 (10.04.2019)
-
-### Added
-
-- While using preview relase, if the new stable version is ready, the program will suggest updating to it
+- Player doesn't stop if you switch between Radio or CD
 
 ### Bug Fixes
 
-- Fixed bug in which the program would convert already converted files uppon pressing Convert
 - Fixed bug with Quick Converter which would use wrong working directory and cause false "missing ffmpeg" error
-- Files are now being remover after conversion correctly
-
-## Preview 2.1.0.0 (09.04.2019)
-
-NOTE: On first YouTube download, the tool will ask you to download youtube-dl. Uppon pressing Yes it will download the latest version from developer's website.
-
-### Added
-
-- You can now download the files directly from YouTube
-- Added preview auto updates. In order to enable them, press Shift + Updates
-- "Create Desktop Shortcut" button
-
-### Changes
-
-- The tool now disables some functions if conversion is in progress to prevent errors
+- Fixed bug in which files wouldn't be deleted after conversion
 
 ## 2.0.1 (10.04.2019)
 

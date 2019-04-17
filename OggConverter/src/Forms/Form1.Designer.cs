@@ -39,7 +39,6 @@
             this.labNowPlaying = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnMoveSong = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnSort = new System.Windows.Forms.Button();
@@ -69,16 +68,12 @@
             this.btnAutoSort = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnNewNaming = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
+            this.btnHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDownloadUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnConvert = new System.Windows.Forms.Button();
-            this.txtboxPath = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnOpenGameDir = new System.Windows.Forms.Button();
             this.btnDirectory = new System.Windows.Forms.Button();
             this.labelConvert = new System.Windows.Forms.Label();
@@ -108,23 +103,23 @@
             this.logOutput.Name = "logOutput";
             this.logOutput.ReadOnly = true;
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logOutput.Size = new System.Drawing.Size(559, 242);
+            this.logOutput.Size = new System.Drawing.Size(476, 321);
             this.logOutput.TabIndex = 2;
             // 
             // songList
             // 
             this.songList.FormattingEnabled = true;
             this.songList.HorizontalScrollbar = true;
-            this.songList.Location = new System.Drawing.Point(10, 23);
+            this.songList.Location = new System.Drawing.Point(5, 23);
             this.songList.Name = "songList";
-            this.songList.Size = new System.Drawing.Size(98, 199);
+            this.songList.Size = new System.Drawing.Size(197, 264);
             this.songList.TabIndex = 8;
             // 
             // btnPlaySong
             // 
-            this.btnPlaySong.Location = new System.Drawing.Point(10, 241);
+            this.btnPlaySong.Location = new System.Drawing.Point(74, 307);
             this.btnPlaySong.Name = "btnPlaySong";
-            this.btnPlaySong.Size = new System.Drawing.Size(46, 23);
+            this.btnPlaySong.Size = new System.Drawing.Size(43, 23);
             this.btnPlaySong.TabIndex = 9;
             this.btnPlaySong.Text = "Play";
             this.btnPlaySong.UseVisualStyleBackColor = true;
@@ -132,9 +127,9 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(62, 241);
+            this.btnStop.Location = new System.Drawing.Point(126, 307);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(46, 23);
+            this.btnStop.Size = new System.Drawing.Size(43, 23);
             this.btnStop.TabIndex = 10;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -142,8 +137,9 @@
             // 
             // playerRadio
             // 
+            this.playerRadio.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.playerRadio.AutoSize = true;
-            this.playerRadio.Location = new System.Drawing.Point(30, 3);
+            this.playerRadio.Location = new System.Drawing.Point(72, 3);
             this.playerRadio.Name = "playerRadio";
             this.playerRadio.Size = new System.Drawing.Size(53, 17);
             this.playerRadio.TabIndex = 11;
@@ -154,8 +150,9 @@
             // 
             // playerCD
             // 
+            this.playerCD.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.playerCD.AutoSize = true;
-            this.playerCD.Location = new System.Drawing.Point(89, 3);
+            this.playerCD.Location = new System.Drawing.Point(131, 3);
             this.playerCD.Name = "playerCD";
             this.playerCD.Size = new System.Drawing.Size(40, 17);
             this.playerCD.TabIndex = 12;
@@ -170,7 +167,6 @@
             this.panel1.Controls.Add(this.labNowPlaying);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.btnMoveSong);
-            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.btnDown);
             this.panel1.Controls.Add(this.btnUp);
             this.panel1.Controls.Add(this.btnSort);
@@ -180,15 +176,15 @@
             this.panel1.Controls.Add(this.btnPlaySong);
             this.panel1.Controls.Add(this.playerRadio);
             this.panel1.Controls.Add(this.btnStop);
-            this.panel1.Location = new System.Drawing.Point(-1, 100);
+            this.panel1.Location = new System.Drawing.Point(-1, 47);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(174, 274);
+            this.panel1.Size = new System.Drawing.Size(256, 333);
             this.panel1.TabIndex = 13;
             // 
             // labNowPlaying
             // 
             this.labNowPlaying.AutoSize = true;
-            this.labNowPlaying.Location = new System.Drawing.Point(12, 225);
+            this.labNowPlaying.Location = new System.Drawing.Point(35, 289);
             this.labNowPlaying.Name = "labNowPlaying";
             this.labNowPlaying.Size = new System.Drawing.Size(137, 13);
             this.labNowPlaying.TabIndex = 19;
@@ -198,7 +194,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(115, 158);
+            this.label4.Location = new System.Drawing.Point(204, 169);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 18;
@@ -206,28 +202,19 @@
             // 
             // btnMoveSong
             // 
-            this.btnMoveSong.Location = new System.Drawing.Point(118, 174);
+            this.btnMoveSong.Location = new System.Drawing.Point(208, 185);
             this.btnMoveSong.Name = "btnMoveSong";
-            this.btnMoveSong.Size = new System.Drawing.Size(45, 23);
+            this.btnMoveSong.Size = new System.Drawing.Size(43, 23);
             this.btnMoveSong.TabIndex = 17;
             this.btnMoveSong.Text = "CD";
             this.btnMoveSong.UseVisualStyleBackColor = true;
             this.btnMoveSong.Click += new System.EventHandler(this.BtnMoveSong_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(122, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Order:";
-            // 
             // btnDown
             // 
-            this.btnDown.Location = new System.Drawing.Point(118, 103);
+            this.btnDown.Location = new System.Drawing.Point(208, 52);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(45, 23);
+            this.btnDown.Size = new System.Drawing.Size(43, 23);
             this.btnDown.TabIndex = 16;
             this.btnDown.Text = "v";
             this.btnDown.UseVisualStyleBackColor = true;
@@ -235,9 +222,9 @@
             // 
             // btnUp
             // 
-            this.btnUp.Location = new System.Drawing.Point(118, 74);
+            this.btnUp.Location = new System.Drawing.Point(208, 23);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(45, 23);
+            this.btnUp.Size = new System.Drawing.Size(43, 23);
             this.btnUp.TabIndex = 15;
             this.btnUp.Text = "^";
             this.btnUp.UseVisualStyleBackColor = true;
@@ -245,9 +232,9 @@
             // 
             // btnSort
             // 
-            this.btnSort.Location = new System.Drawing.Point(118, 22);
+            this.btnSort.Location = new System.Drawing.Point(208, 105);
             this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(45, 23);
+            this.btnSort.Size = new System.Drawing.Size(43, 23);
             this.btnSort.TabIndex = 14;
             this.btnSort.Text = "Sort";
             this.btnSort.UseVisualStyleBackColor = true;
@@ -255,9 +242,9 @@
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(118, 241);
+            this.btnDel.Location = new System.Drawing.Point(206, 260);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(46, 23);
+            this.btnDel.Size = new System.Drawing.Size(43, 23);
             this.btnDel.TabIndex = 13;
             this.btnDel.Text = "Delete";
             this.btnDel.UseVisualStyleBackColor = true;
@@ -352,7 +339,7 @@
             // btnFFmpegLicense
             // 
             this.btnFFmpegLicense.Name = "btnFFmpegLicense";
-            this.btnFFmpegLicense.Size = new System.Drawing.Size(127, 22);
+            this.btnFFmpegLicense.Size = new System.Drawing.Size(184, 22);
             this.btnFFmpegLicense.Text = "FFmpeg";
             this.btnFFmpegLicense.Click += new System.EventHandler(this.BtnFFmpegLicense_Click);
             // 
@@ -372,7 +359,6 @@
             this.btnAutoSort,
             this.btnUpdates,
             this.btnLogs,
-            this.toolStripSeparator4,
             this.btnNewNaming});
             this.menuSettings.Name = "menuSettings";
             this.menuSettings.Size = new System.Drawing.Size(61, 20);
@@ -382,7 +368,7 @@
             // 
             this.btnRemMP3.CheckOnClick = true;
             this.btnRemMP3.Name = "btnRemMP3";
-            this.btnRemMP3.Size = new System.Drawing.Size(304, 22);
+            this.btnRemMP3.Size = new System.Drawing.Size(229, 22);
             this.btnRemMP3.Text = "Remove files after conversion";
             this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
             // 
@@ -395,7 +381,7 @@
             this.toolStripSeparator2,
             this.btnAfterNone});
             this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
-            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(304, 22);
+            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion";
             // 
             // btnAfterLaunchGame
@@ -439,7 +425,7 @@
             // 
             this.btnNoSteam.CheckOnClick = true;
             this.btnNoSteam.Name = "btnNoSteam";
-            this.btnNoSteam.Size = new System.Drawing.Size(304, 22);
+            this.btnNoSteam.Size = new System.Drawing.Size(229, 22);
             this.btnNoSteam.Text = "Launch game without Steam";
             this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
             // 
@@ -447,7 +433,7 @@
             // 
             this.btnAutoSort.CheckOnClick = true;
             this.btnAutoSort.Name = "btnAutoSort";
-            this.btnAutoSort.Size = new System.Drawing.Size(304, 22);
+            this.btnAutoSort.Size = new System.Drawing.Size(229, 22);
             this.btnAutoSort.Text = "Auto Sort";
             this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
@@ -455,28 +441,23 @@
             // 
             this.btnUpdates.CheckOnClick = true;
             this.btnUpdates.Name = "btnUpdates";
-            this.btnUpdates.Size = new System.Drawing.Size(304, 22);
+            this.btnUpdates.Size = new System.Drawing.Size(229, 22);
             this.btnUpdates.Text = "Updates";
             this.btnUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
             // 
             // btnLogs
             // 
             this.btnLogs.Name = "btnLogs";
-            this.btnLogs.Size = new System.Drawing.Size(304, 22);
+            this.btnLogs.Size = new System.Drawing.Size(229, 22);
             this.btnLogs.Text = "Crash Logs";
             this.btnLogs.Click += new System.EventHandler(this.BtnLogs_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(301, 6);
             // 
             // btnNewNaming
             // 
             this.btnNewNaming.CheckOnClick = true;
             this.btnNewNaming.Name = "btnNewNaming";
-            this.btnNewNaming.Size = new System.Drawing.Size(304, 22);
-            this.btnNewNaming.Text = "EXPERIMENTAL: Get Names From Metadata";
+            this.btnNewNaming.Size = new System.Drawing.Size(229, 22);
+            this.btnNewNaming.Text = "Disable Metafiles";
             this.btnNewNaming.Click += new System.EventHandler(this.BtnNewNaming_Click);
             // 
             // btnLaunchGame
@@ -493,6 +474,7 @@
             this.menuTool,
             this.menuSettings,
             this.btnLaunchGame,
+            this.btnHelp,
             this.btnDownloadUpdate});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
@@ -500,6 +482,13 @@
             this.menu.Size = new System.Drawing.Size(743, 24);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(44, 20);
+            this.btnHelp.Text = "Help";
+            this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // btnDownloadUpdate
             // 
@@ -516,59 +505,23 @@
             this.downloadUpdateNowToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             this.downloadUpdateNowToolStripMenuItem.Text = "Download Update Now!";
             // 
-            // btnConvert
-            // 
-            this.btnConvert.Location = new System.Drawing.Point(190, 70);
-            this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(172, 24);
-            this.btnConvert.TabIndex = 1;
-            this.btnConvert.Text = "Convert";
-            this.btnConvert.UseVisualStyleBackColor = true;
-            this.btnConvert.Click += new System.EventHandler(this.BtnConvert_Click);
-            // 
-            // txtboxPath
-            // 
-            this.txtboxPath.Location = new System.Drawing.Point(10, 44);
-            this.txtboxPath.Name = "txtboxPath";
-            this.txtboxPath.ReadOnly = true;
-            this.txtboxPath.Size = new System.Drawing.Size(322, 20);
-            this.txtboxPath.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "My Summer Car Path:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(367, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(369, 65);
-            this.label2.TabIndex = 6;
-            this.label2.Text = resources.GetString("label2.Text");
-            // 
             // btnOpenGameDir
             // 
-            this.btnOpenGameDir.Location = new System.Drawing.Point(10, 70);
+            this.btnOpenGameDir.Location = new System.Drawing.Point(126, 26);
             this.btnOpenGameDir.Name = "btnOpenGameDir";
-            this.btnOpenGameDir.Size = new System.Drawing.Size(172, 23);
+            this.btnOpenGameDir.Size = new System.Drawing.Size(130, 23);
             this.btnOpenGameDir.TabIndex = 5;
-            this.btnOpenGameDir.Text = "Open game directory";
+            this.btnOpenGameDir.Text = "Open in Explorer";
             this.btnOpenGameDir.UseVisualStyleBackColor = true;
             this.btnOpenGameDir.Click += new System.EventHandler(this.BtnOpenGameDir_Click);
             // 
             // btnDirectory
             // 
-            this.btnDirectory.Location = new System.Drawing.Point(338, 43);
+            this.btnDirectory.Location = new System.Drawing.Point(-1, 26);
             this.btnDirectory.Name = "btnDirectory";
-            this.btnDirectory.Size = new System.Drawing.Size(24, 22);
+            this.btnDirectory.Size = new System.Drawing.Size(129, 23);
             this.btnDirectory.TabIndex = 4;
-            this.btnDirectory.Text = "...";
+            this.btnDirectory.Text = "Set Game Folder";
             this.btnDirectory.UseVisualStyleBackColor = true;
             this.btnDirectory.Click += new System.EventHandler(this.BtnDirectory_Click);
             // 
@@ -581,6 +534,7 @@
             this.labelConvert.Size = new System.Drawing.Size(136, 20);
             this.labelConvert.TabIndex = 0;
             this.labelConvert.Text = "Convert to {folder}";
+            this.labelConvert.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // dragDropPanel
             // 
@@ -597,28 +551,29 @@
             this.tabControl1.Controls.Add(this.tabLog);
             this.tabControl1.Controls.Add(this.tabDownload);
             this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(173, 100);
+            this.tabControl1.Location = new System.Drawing.Point(255, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(573, 274);
+            this.tabControl1.Size = new System.Drawing.Size(490, 353);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 1;
             // 
             // tabLog
             // 
+            this.tabLog.BackColor = System.Drawing.Color.Transparent;
             this.tabLog.Controls.Add(this.logOutput);
             this.tabLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tabLog.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tabLog.Location = new System.Drawing.Point(4, 22);
             this.tabLog.Name = "tabLog";
             this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(565, 248);
+            this.tabLog.Size = new System.Drawing.Size(482, 327);
             this.tabLog.TabIndex = 0;
             this.tabLog.Text = "Log";
-            this.tabLog.UseVisualStyleBackColor = true;
             // 
             // tabDownload
             // 
+            this.tabDownload.BackColor = System.Drawing.Color.White;
             this.tabDownload.Controls.Add(this.label6);
             this.tabDownload.Controls.Add(this.btnDownload);
             this.tabDownload.Controls.Add(this.label5);
@@ -626,24 +581,23 @@
             this.tabDownload.Location = new System.Drawing.Point(4, 22);
             this.tabDownload.Name = "tabDownload";
             this.tabDownload.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDownload.Size = new System.Drawing.Size(565, 248);
+            this.tabDownload.Size = new System.Drawing.Size(482, 327);
             this.tabDownload.TabIndex = 1;
             this.tabDownload.Text = "Download";
-            this.tabDownload.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 219);
+            this.label6.Location = new System.Drawing.Point(3, 301);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(423, 26);
+            this.label6.Size = new System.Drawing.Size(408, 26);
             this.label6.TabIndex = 15;
-            this.label6.Text = "Note:\r\nThe author of this tool doesn\'t take any responsibility for the way of how" +
-    " that tool is used.";
+            this.label6.Text = "Note:\r\nThe author of this tool doesn\'t take any responsibility of the way how tha" +
+    "t tool is used.";
             // 
             // btnDownload
             // 
-            this.btnDownload.Location = new System.Drawing.Point(14, 53);
+            this.btnDownload.Location = new System.Drawing.Point(6, 53);
             this.btnDownload.Name = "btnDownload";
             this.btnDownload.Size = new System.Drawing.Size(172, 24);
             this.btnDownload.TabIndex = 15;
@@ -654,7 +608,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 11);
+            this.label5.Location = new System.Drawing.Point(6, 11);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 13);
             this.label5.TabIndex = 15;
@@ -662,9 +616,9 @@
             // 
             // txtboxVideo
             // 
-            this.txtboxVideo.Location = new System.Drawing.Point(14, 27);
+            this.txtboxVideo.Location = new System.Drawing.Point(6, 27);
             this.txtboxVideo.Name = "txtboxVideo";
-            this.txtboxVideo.Size = new System.Drawing.Size(530, 20);
+            this.txtboxVideo.Size = new System.Drawing.Size(469, 20);
             this.txtboxVideo.TabIndex = 1;
             this.txtboxVideo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtboxVideo_KeyDown);
             // 
@@ -673,15 +627,11 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 373);
+            this.ClientSize = new System.Drawing.Size(743, 379);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnOpenGameDir);
             this.Controls.Add(this.btnDirectory);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnConvert);
-            this.Controls.Add(this.txtboxPath);
             this.Controls.Add(this.menu);
             this.Controls.Add(this.dragDropPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -726,7 +676,6 @@
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Button btnSort;
         private System.Windows.Forms.Button btnMoveSong;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem menuTool;
         private System.Windows.Forms.ToolStripMenuItem btnLogFolder;
@@ -755,10 +704,6 @@
         private System.Windows.Forms.ToolStripMenuItem btnDownloadUpdate;
         private System.Windows.Forms.ToolStripMenuItem downloadUpdateNowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnShowConversionLog;
-        private System.Windows.Forms.Button btnConvert;
-        private System.Windows.Forms.TextBox txtboxPath;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnOpenGameDir;
         private System.Windows.Forms.Button btnDirectory;
         private System.Windows.Forms.Label labelConvert;
@@ -774,7 +719,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnDesktopShortcut;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem btnNewNaming;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem btnHelp;
     }
 }
 

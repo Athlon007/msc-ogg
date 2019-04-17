@@ -27,20 +27,40 @@ namespace OggConverter
         public static bool NoUpdates { get => GetSettings.Bool("NoUpdates", false); set => SetSettings.Bool("NoUpdates", value); }
         public static bool Preview { get => GetSettings.Bool("Preview", false); set => SetSettings.Bool("Preview", value); }
         public static bool Logs { get => GetSettings.Bool("Logs", true); set => SetSettings.Bool("Logs", value); }
-        public static bool ShowConversionLog { get => GetSettings.Bool("ShowConversionLog", true); set => SetSettings.Bool("ShowConversionLog", value); }
+        public static bool ShowConversionLog { get => GetSettings.Bool("ShowConversionLog", false); set => SetSettings.Bool("ShowConversionLog", value); }
         public static bool AutoSort { get => GetSettings.Bool("AutoSort", true); set => SetSettings.Bool("AutoSort", value); }
 
-        // EXPERIMENTAL
-        public static bool UseNewNaming { get => GetSettings.Bool("UseNewNaming", false); set => SetSettings.Bool("UseNewNaming", value); }
+        /// <summary>
+        /// Forces MSCMM to use older song name reading, instead of one using metafiles
+        /// </summary>
+        public static bool DisableMetaFiles { get => GetSettings.Bool("DisableMetaFiles", false); set => SetSettings.Bool("DisableMetaFiles", value); }
 
         public static int LatestVersion { get => GetSettings.Int("LatestVersion", 0); set => SetSettings.Int("LatestVersion", value); }
 
-        public static string GamePath { get => GetSettings.String("MSC Path", null); set => SetSettings.String("MSC Path", value); }
+        public static string GamePath { get => GetSettings.String("MSC Path", "invalid"); set => SetSettings.String("MSC Path", value); }
+
+        public static bool DemoMode { get => GetSettings.Bool("DemoMode", false); set => SetSettings.Bool("DemoMode", value); }
 
         /// <summary>
         /// Removes all settings.
         /// </summary>
         public static void WipeAll() { Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\MSCOGG"); LatestVersion = Updates.version;  }
+
+        /// <summary>
+        /// Checks whenever MSCMM registry key exists and if game path is valid
+        /// </summary>
+        /// <returns></returns>
+        public static bool SettingsAreValid()
+        {           
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG");
+            if (key == null)
+                return false;            
+
+            if (GamePath == "invalid")
+                return false;
+
+            return true;
+        }
     }
 
     class SetSettings

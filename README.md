@@ -30,6 +30,12 @@ Simply unzip archive anywhere you want.
 
 The program has automatic update function, although you can disable it in settings.
 
+## Images
+
+![img1](https://i.imgur.com/0JV3HNZ.png)
+![img2](https://i.imgur.com/9hcJCti.png)
+![img3](https://i.imgur.com/Sl3WNQZ.png)
+
 ## Contribution
 
 Anyone who will can contribute into this project.

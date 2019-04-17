@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Media;
 
 namespace OggConverter
 {
@@ -47,6 +49,81 @@ namespace OggConverter
         /// List of supported extensions
         /// </summary>
         public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma", ".ogg" };
+
+        /// <summary>
+        /// Tells the program to skip CD folder, if the game is older than 24.10.2017 update
+        /// </summary>
+        public static bool SkipCD;
+
+        /// <summary>
+        /// Starts the conversion of every found file in Radio or CD
+        /// </summary>
+        public static async void StartConversion()
+        {
+            if (Functions.AreAllBusy())
+            {
+                Form1.instance.Log += "\nProgram is busy.";
+                return;
+            }
+
+            if (Settings.GamePath.Length == 0)
+            {
+                Form1.instance.Log += "\nSelect game path first.";
+                return;
+            }
+
+            Converter.IsBusy = true;
+
+            Converter.ConversionLog = "";
+            Converter.TotalConversions = 0;
+            Converter.Skipped = 0;
+
+            try
+            {
+                Form1.instance.SafeMode(true);
+                Form1.instance.Log += "\n\n-----------------------------------------------------------------------------------------------------------------------------------------";
+                Converter.ConversionLog += "THIS FILE WILL BE WIPED AFTER THE NEXT CONVERSION.\nMAKE SURE TO DO A BACKUP:\n\n";
+                await Converter.ConvertFolder("Radio", 99);
+
+                if (!SkipCD)
+                    await Converter.ConvertFolder("CD", 15);
+
+                if (Converter.Skipped != 2)
+                {
+                    Converter.ConversionLog += DateTime.Now.ToLocalTime();
+                    Form1.instance.Log += $"\nConverted {Converter.TotalConversions} files in total";
+                    Form1.instance.Log += "\n\nDone";
+                    if (Settings.ShowConversionLog)
+                    {
+                        File.WriteAllText(@"LastConversion.txt", Converter.ConversionLog);
+                        Process.Start(@"LastConversion.txt");
+                    }
+                    Form1.instance.Log += "\nConversion log was saved to LastConversion.txt";
+                }
+                else
+                    Form1.instance.Log += "\nConversion log will not be saved, because both Radio and CD were skipped";
+
+                SystemSounds.Exclamation.Play();
+
+                //Actions after conversion
+                if (Settings.LaunchAfterConversion)
+                    Functions.LaunchGame();
+
+                if (Settings.CloseAfterConversion)
+                    Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                new CrashLog(ex.ToString());
+            }
+            finally
+            {
+                Converter.IsBusy = false;
+                Form1.instance.SafeMode(false);
+            }
+
+            Form1.instance.UpdateSongList();
+        }
 
         /// <summary>
         /// Converts all files found in the folder
@@ -117,7 +194,7 @@ namespace OggConverter
                 {
                     File.Move($"{path}\\{file.Name}", $"{path}\\track{inGame}.ogg");
 
-                    if (Settings.UseNewNaming)
+                    if (!Settings.DisableMetaFiles)
                     {
                         ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{path}\\track{inGame}.ogg\"")
                         {
@@ -129,7 +206,7 @@ namespace OggConverter
                         var process = Process.Start(psi);
 
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        string songName = MetaData.GetSongName(ffmpegOut);
+                        string songName = MetaData.GetFromOutput(ffmpegOut);
                         MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                     }
                 }
@@ -146,10 +223,10 @@ namespace OggConverter
                     Process process = null;
                     await Task.Run(() => process = Process.Start(psi));
 
-                    if (Settings.UseNewNaming)
+                    if (!Settings.DisableMetaFiles)
                     {
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        string songName = MetaData.GetSongName(ffmpegOut);
+                        string songName = MetaData.GetFromOutput(ffmpegOut);
                         MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                     }
 
@@ -222,7 +299,7 @@ namespace OggConverter
             {
                 File.Move(filePath, $"{Settings.GamePath}\\{folder}\\track{inGame}.ogg");
 
-                if (Settings.UseNewNaming)
+                if (!Settings.DisableMetaFiles)
                 {
                     ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"")
                     {
@@ -234,7 +311,7 @@ namespace OggConverter
                     var process = Process.Start(psi);
 
                     string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                    string songName = MetaData.GetSongName(ffmpegOut);
+                    string songName = MetaData.GetFromOutput(ffmpegOut);
                     MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                 }
             }
@@ -251,7 +328,7 @@ namespace OggConverter
                 Process process = null;
                 await Task.Run(() => process = Process.Start(psi));
 
-                if (Settings.UseNewNaming)
+                if (!Settings.DisableMetaFiles)
                 {
                     string songName = null;
 
@@ -260,7 +337,7 @@ namespace OggConverter
                     else
                     {
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        songName = MetaData.GetSongName(ffmpegOut);
+                        songName = MetaData.GetFromOutput(ffmpegOut);
                     }
                     MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                 }
@@ -271,5 +348,21 @@ namespace OggConverter
             if (Form1.instance != null)
                 Form1.instance.Log += $"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"";
         }
+
+        /// <summary>
+        /// Checks if there are any files waiting for conversion in folder
+        /// </summary>
+        /// <param name="folder">Rado or CD</param>
+        /// <returns></returns>
+        public static bool FilesWaitingForConversion(string folder)
+        {
+            DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+            FileInfo[] files
+                = di.GetFiles()
+                .Where(f => extensions.Contains(f.Extension.ToLower()) && !f.Name.StartsWith("track"))
+                .ToArray();
+
+            return files.Length > 0 ? true : false;
+        }        
     }
 }

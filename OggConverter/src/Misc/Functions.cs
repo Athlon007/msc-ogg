@@ -18,6 +18,7 @@ using System.Reflection;
 using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace OggConverter
 {
@@ -48,7 +49,7 @@ namespace OggConverter
             return version.Build == 0 ? $"{version.Major}.{version.Minor}" : $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
-        public static string AboutNotice = $"MSC Music Manager {Application.ProductVersion}\nCopyright (C) 2019 Athlon\n\n" +
+        public static string AboutNotice = $"MSC Music Manager {Application.ProductVersion} ({Updates.version})\nCopyright (C) 2019 Athlon\n\n" +
                 $"This program comes with ABSOLUTELY NO WARRANTY.\n" +
                 $"This is free software, and you are welcome to redistribute it, as long as you include original copyright, state changes and include license.\n\n" +
                 $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.";
@@ -103,5 +104,12 @@ namespace OggConverter
         /// </summary>
         /// <returns></returns>
         public static bool AreAllBusy() { return Downloader.IsBusy || Converter.IsBusy; }
+
+        public static int Center(Control reference, Control sender)
+        {
+            return (reference.Width- sender.Width) / 2;
+        }
+
+        public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
     }
 }

@@ -26,7 +26,7 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18155; 
+        public const int version = 18160; 
         static bool newUpdateReady;
         static bool downgrade;
 
