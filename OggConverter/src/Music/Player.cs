@@ -98,7 +98,7 @@ namespace OggConverter
 
             int skipped = 0;
 
-            for (int i = 1; i < 99; i++)
+            for (int i = 1; i <= 99; i++)
             {
                 // File doesn't exist? Skipping the value
                 if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
@@ -115,6 +115,9 @@ namespace OggConverter
 
                     // Moving the file
                     File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
+
+                    Logs.History($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
+                    Form1.instance.Log($"\nSorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
 
                     // Moving metadata (if new naming system is used)
                     if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
@@ -221,6 +224,9 @@ namespace OggConverter
             if (File.Exists($"{mscPath}\\trackTemp.mscmm"))
                 File.Move($"{mscPath}\\trackTemp.mscmm", $"{mscPath}\\{oldFile}.mscmm");
 
+            Logs.History($"Changing Order: moved \"{newFile}\" to \"{oldFile}\", and \"{oldFile}\" to \"{newFile}\"");
+            Form1.instance.Log($"Changing Order: moved \"{newFile}\" to \"{oldFile}\", and \"{oldFile}\" to \"{newFile}\"");
+
             Form1.instance.UpdateSongList();
             songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
         }
@@ -271,7 +277,39 @@ namespace OggConverter
             if (File.Exists($"{mscPath}\\{moveFrom}\\{selected}.mscmm"))
                 File.Move($"{mscPath}\\{moveFrom}\\{selected}.mscmm", $"{mscPath}\\{moveTo}\\track{newNumber}.mscmm");
 
+            Logs.History($"File Moving: moved \"{selected}\" from \"{moveFrom}\" to \"{moveTo}\" as \"track{newNumber}\"");
+            Form1.instance.Log($"File Moving: moved \"{selected}\" from \"{moveFrom}\" to \"{moveTo}\" as \"track{newNumber}\"");
+
+            if (Settings.AutoSort)
+                Player.Sort(moveFrom);
+
             Form1.instance.UpdateSongList();
+        }
+
+        /// <summary>
+        /// Clones song and gives it correct name
+        /// </summary>
+        /// <param name="folder">Current folder (radio or cd)</param>
+        /// <param name="fileName">File name</param>
+        public static void Clone(string folder, string fileName)
+        {
+            string newName = null;
+
+            for (int i = 1; i <= 99; i++)
+            {
+                if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
+                {
+                    newName = $"track{i}";
+                    break;
+                }
+            }
+
+            File.Copy($"{Settings.GamePath}\\{folder}\\{fileName}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
+            if (File.Exists($"{Settings.GamePath}\\{folder}\\{fileName}.mscmm"))
+                File.Copy($"{Settings.GamePath}\\{folder}\\{fileName}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
+
+            Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
+            Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
         }
     }
 }

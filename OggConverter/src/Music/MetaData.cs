@@ -82,7 +82,7 @@ namespace OggConverter
         /// <returns></returns>
         public static async void GetSongsFromAll(string folder)
         {
-            for (int i = 1; i < 99; i++)
+            for (int i = 1; i <= 99; i++)
             {
                 if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg") && !File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
                 {

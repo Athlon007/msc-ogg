@@ -1,6 +1,28 @@
 # Changelog
 
+## 2.2.0.0 Preview (20.04.2019)
+
+### Added
+
+- Added history - all operations on he files will be saved to history.txt
+- Added counter which tells you how many songs you got in selected folder
+- You can edit song names directly in Music Manager (note: removing name will reset name back to default)
+- Added "Clone" button which let's you quickly clone songs
+- When moving the song from CD to Radio and vice-versa, the tool will sort the folder as expected
+
+### Bug Fixes
+
+- If you're using preview, and the new stable release appears, the correct message appears
+- Small UI fixes
+- Fixed bugs when system is offline
+
+### Removed
+
+- LastConversion - replaced with history
+
 ## 2.1 (17.04.2019)
+
+### Added
 
 - You can now download the files directly from YouTube - either with search term, or URL
 - Added preview auto updates. In order to enable them, press Shift + Updates

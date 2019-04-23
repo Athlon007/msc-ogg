@@ -95,8 +95,12 @@ namespace OggConverter
             if (Directory.Exists("update"))
                 Directory.Delete("update", true);
 
-            if (File.Exists("download.aac"))
-                File.Delete("download.aac");
+            string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "download*.*");
+            foreach (string file in files)
+                File.Delete(file);
+
+            if (File.Exists("LastConversion.txt"))
+                File.Delete("LastConversion.txt");
         }
 
         /// <summary>
@@ -105,10 +109,7 @@ namespace OggConverter
         /// <returns></returns>
         public static bool AreAllBusy() { return Downloader.IsBusy || Converter.IsBusy; }
 
-        public static int Center(Control reference, Control sender)
-        {
-            return (reference.Width- sender.Width) / 2;
-        }
+        public static int Center(Control reference, Control sender) { return (reference.Width - sender.Width) / 2; }
 
         public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
     }

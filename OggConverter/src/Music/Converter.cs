@@ -27,10 +27,6 @@ namespace OggConverter
     class Converter
     {
         /// <summary>
-        /// Stores latest conversion log, which later is dumped into LastConversion.txt file
-        /// </summary>
-        public static string ConversionLog { get; set; }
-        /// <summary>
         /// Counts how many conversions have been made
         /// </summary>
         public static int TotalConversions { get; set; }
@@ -62,27 +58,25 @@ namespace OggConverter
         {
             if (Functions.AreAllBusy())
             {
-                Form1.instance.Log += "\nProgram is busy.";
+                Form1.instance.Log("Program is busy.");
                 return;
             }
 
             if (Settings.GamePath.Length == 0)
             {
-                Form1.instance.Log += "\nSelect game path first.";
+                Form1.instance.Log("Select game path first.");
                 return;
             }
 
             Converter.IsBusy = true;
 
-            Converter.ConversionLog = "";
             Converter.TotalConversions = 0;
             Converter.Skipped = 0;
 
             try
             {
                 Form1.instance.SafeMode(true);
-                Form1.instance.Log += "\n\n-----------------------------------------------------------------------------------------------------------------------------------------";
-                Converter.ConversionLog += "THIS FILE WILL BE WIPED AFTER THE NEXT CONVERSION.\nMAKE SURE TO DO A BACKUP:\n\n";
+                Form1.instance.Log("\n-----------------------------------------------------------------------------------------------------------------------------------------");
                 await Converter.ConvertFolder("Radio", 99);
 
                 if (!SkipCD)
@@ -90,18 +84,14 @@ namespace OggConverter
 
                 if (Converter.Skipped != 2)
                 {
-                    Converter.ConversionLog += DateTime.Now.ToLocalTime();
-                    Form1.instance.Log += $"\nConverted {Converter.TotalConversions} files in total";
-                    Form1.instance.Log += "\n\nDone";
-                    if (Settings.ShowConversionLog)
-                    {
-                        File.WriteAllText(@"LastConversion.txt", Converter.ConversionLog);
-                        Process.Start(@"LastConversion.txt");
-                    }
-                    Form1.instance.Log += "\nConversion log was saved to LastConversion.txt";
+                    Form1.instance.Log($"Converted {Converter.TotalConversions} files in total");
+                    Form1.instance.Log("\nDone");
+                    Form1.instance.Log("Conversion log was saved to LastConversion.txt");
                 }
                 else
-                    Form1.instance.Log += "\nConversion log will not be saved, because both Radio and CD were skipped";
+                {
+                    Form1.instance.Log("Conversion log will not be saved, because both Radio and CD were skipped");
+                }
 
                 SystemSounds.Exclamation.Play();
 
@@ -114,7 +104,7 @@ namespace OggConverter
             }
             catch (Exception ex)
             {
-                new CrashLog(ex.ToString());
+                Logs.CrashLog(ex.ToString());
             }
             finally
             {
@@ -139,7 +129,7 @@ namespace OggConverter
                 return;
             }
 
-            Form1.instance.Log += $"\nInitializing {folder} conversion...\n";
+            Form1.instance.Log($"Initializing {folder} conversion...\n");
             string path = $"{Settings.GamePath}\\{folder}";
 
             DirectoryInfo d = new DirectoryInfo(path);
@@ -151,12 +141,10 @@ namespace OggConverter
             // If no files have been found - aborts the conversion
             if (files.Length == 0)
             {
-                Form1.instance.Log += $"\nCouldn't find any file to convert in {folder}";
+                Form1.instance.Log($"Couldn't find any file to convert in {folder}");
                 Skipped++;
                 return;
             }
-
-            ConversionLog += $"{folder.ToUpper()}:\n";
 
             int inGame = 1; // Counts how many files there are in game + after that variable new files are named
 
@@ -182,12 +170,14 @@ namespace OggConverter
 
                     if (res == DialogResult.No)
                     {
-                        Form1.instance.Log += $"\nAborted {folder} conversion.";
+                        Form1.instance.Log($"Aborted {folder} conversion.");
                         break;
                     }
                 }
 
-                Form1.instance.Log += $"Converting {file.Name}\n";
+                Form1.instance.Log($"Converting {file.Name}");
+
+                string songName = null;
 
                 // If the file is already in OGG format - skip conversion and just rename it accordingly.
                 if (file.Name.EndsWith(".ogg"))
@@ -206,7 +196,7 @@ namespace OggConverter
                         var process = Process.Start(psi);
 
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        string songName = MetaData.GetFromOutput(ffmpegOut);
+                        songName = MetaData.GetFromOutput(ffmpegOut);
                         MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                     }
                 }
@@ -226,25 +216,24 @@ namespace OggConverter
                     if (!Settings.DisableMetaFiles)
                     {
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        string songName = MetaData.GetFromOutput(ffmpegOut);
+                        songName = MetaData.GetFromOutput(ffmpegOut);
                         MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                     }
 
                     await Task.Run(() => process.WaitForExit());
                 }
 
-                Form1.instance.Log += $"Finished {file.Name} as track{inGame}.ogg\n";
+                Form1.instance.Log($"Finished {file.Name} as track{inGame}.ogg");
 
                 if (Settings.RemoveMP3)
                     File.Delete($"{path}\\{file.Name}");
 
-                ConversionLog += $"\"{file.Name}\" as \"track{inGame}.ogg\"\n";
+                Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
                 inGame++;
                 TotalConversions++;
             }
 
-            ConversionLog += "\n\n";
-            Form1.instance.Log += $"\nConverted {TotalConversions} files in {folder}";
+            Form1.instance.Log($"Converted {TotalConversions} files in {folder}");
         }
 
         /// <summary>
@@ -266,13 +255,13 @@ namespace OggConverter
             if (!filePath.ContainsAny(extensions))
             {
                 if (Form1.instance != null)
-                    Form1.instance.Log += $"\n\"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" is not a music file so it will be skipped.";
+                    Form1.instance.Log($"\"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" is not a music file so it will be skipped.");
                 return;
             }
 
             int inGame = 1;
             if (Form1.instance != null)
-                Form1.instance.Log += $"\n\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n";
+                Form1.instance.Log($"\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n");
             
             //Counting how many OGG files there are already
             for (int c = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{c}.ogg"); c++)
@@ -289,10 +278,12 @@ namespace OggConverter
                 if (res == DialogResult.No)
                 {
                     if (Form1.instance != null)
-                        Form1.instance.Log += $"\nAborted {folder} conversion.";
+                        Form1.instance.Log($"Aborted {folder} conversion.");
                     return;
                 }
             }
+
+            string songName = "";
 
             // If it's just OGG file - instead of converting, simply rename it
             if (filePath.EndsWith(".ogg"))
@@ -311,7 +302,7 @@ namespace OggConverter
                     var process = Process.Start(psi);
 
                     string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                    string songName = MetaData.GetFromOutput(ffmpegOut);
+                    songName = MetaData.GetFromOutput(ffmpegOut);
                     MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                 }
             }
@@ -330,23 +321,26 @@ namespace OggConverter
 
                 if (!Settings.DisableMetaFiles)
                 {
-                    string songName = null;
-
-                    if (forcedName != null)
-                        songName = forcedName;
-                    else
+                    if (forcedName == null)
                     {
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         songName = MetaData.GetFromOutput(ffmpegOut);
                     }
+                    else
+                    {
+                        songName = forcedName;
+                    }
+
                     MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
                 }
 
                 await Task.Run(() => process.WaitForExit());
             }
 
+            Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+
             if (Form1.instance != null)
-                Form1.instance.Log += $"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"";
+                Form1.instance.Log($"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"");
         }
 
         /// <summary>

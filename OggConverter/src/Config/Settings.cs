@@ -27,8 +27,8 @@ namespace OggConverter
         public static bool NoUpdates { get => GetSettings.Bool("NoUpdates", false); set => SetSettings.Bool("NoUpdates", value); }
         public static bool Preview { get => GetSettings.Bool("Preview", false); set => SetSettings.Bool("Preview", value); }
         public static bool Logs { get => GetSettings.Bool("Logs", true); set => SetSettings.Bool("Logs", value); }
-        public static bool ShowConversionLog { get => GetSettings.Bool("ShowConversionLog", false); set => SetSettings.Bool("ShowConversionLog", value); }
         public static bool AutoSort { get => GetSettings.Bool("AutoSort", true); set => SetSettings.Bool("AutoSort", value); }
+        public static bool History { get => GetSettings.Bool("History", true); set => SetSettings.Bool("History", value); }
 
         /// <summary>
         /// Forces MSCMM to use older song name reading, instead of one using metafiles
@@ -53,11 +53,9 @@ namespace OggConverter
         public static bool SettingsAreValid()
         {           
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG");
-            if (key == null)
-                return false;            
 
-            if (GamePath == "invalid")
-                return false;
+            if ((key == null) || (GamePath == "invalid"))
+                return false;            
 
             return true;
         }

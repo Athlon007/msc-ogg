@@ -22,14 +22,19 @@ using Microsoft.Win32;
 
 namespace OggConverter
 {
-    class CrashLog
+    class Logs
     {
+        /// <summary>
+        /// Dumps operations on the file to history.txt
+        /// </summary>
+        public static void History(string value) { if (!Settings.History) return; File.AppendAllText("history.txt", $"({DateTime.Now.ToString()}) {value}\n"); }
+
         /// <summary>
         /// Dumps the crash log to the file.
         /// </summary>
         /// <param name="log">Crash log content.</param>
         /// <param name="silent">If true, doesn't display crash dialog.</param>
-        public CrashLog(string log, bool silent = false)
+        public static void CrashLog(string log, bool silent = false)
         {
             // Logs disabled? Don't save it
             if (!Settings.Logs) return;
@@ -40,7 +45,7 @@ namespace OggConverter
 
             Directory.CreateDirectory("LOG");
             File.WriteAllText(fileName,
-                $"MSC Music Manager {thisVersion} ({Updates.version})\n\n{FriendlyName()}\n\n{log}");
+                $"MSC Music Manager {thisVersion} ({Updates.version})\n\n{GetSystemInfo()}\n\n{Directory.GetCurrentDirectory()}\n\n{log}");
 
             if (silent) return;
 
@@ -49,26 +54,16 @@ namespace OggConverter
             if (dl == DialogResult.Yes) Process.Start(fileName);
         }
 
-        string HKLM_GetString(string path, string key)
+
+        static string GetSystemInfo()
         {
-            try
+            string productName, releaseID = null;
+            using (RegistryKey Key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
             {
-                RegistryKey rk = Registry.LocalMachine.OpenSubKey(path);
-                if (rk == null) return "";
-                return (string)rk.GetValue(key);
+                productName = Key.GetValue("ProductName").ToString();
+                releaseID = Key.GetValue("BuildLab").ToString();
             }
-            catch { return ""; }
-        }
-
-        public string FriendlyName()
-        {
-            string ProductName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
-            string CSDVersion = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CSDVersion");
-            string releaseID = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "BuildLab");
-            if (ProductName != "")
-                return (ProductName.StartsWith("Microsoft") ? "" : "Microsoft ") + ProductName + (CSDVersion != "" ? " " + CSDVersion : "") + "\n" + releaseID;
-
-            return "";
+            return (productName.StartsWith("Microsoft") ? "" : "Microsoft ") + productName + " \n" + releaseID;
         }
     }
 }

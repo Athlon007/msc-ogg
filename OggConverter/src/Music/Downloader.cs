@@ -45,7 +45,7 @@ namespace OggConverter
 
                 if (dl == DialogResult.Yes)
                 {
-                    Form1.instance.Log += "\n\nDownloading youtube-dl...";
+                    Form1.instance.Log("\nDownloading youtube-dl...");
                     try
                     {
                         using (WebClient web = new WebClient())
@@ -53,12 +53,12 @@ namespace OggConverter
                             await Task.Run(() => web.DownloadFile(new Uri("https://yt-dl.org/latest/youtube-dl.exe"), "youtube-dl.exe"));
                             web.Dispose();
                         }
-                        Form1.instance.Log += "\nDownloaded youtube-dl successfully!";
+                        Form1.instance.Log("Downloaded youtube-dl successfully!");
                     }
                     catch (Exception ex)
                     {
-                        Form1.instance.Log += "\nCouldn't download youtube-dl. Crash log has been created";
-                        new CrashLog(ex.ToString());
+                        Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created");
+                        Logs.CrashLog(ex.ToString());
                         return;
                     }
                 }
@@ -79,7 +79,8 @@ namespace OggConverter
             if (File.Exists("download.aac"))
                 File.Delete("download.aac");
 
-            Form1.instance.Log += "\n\nDownloading song...";
+            Form1.instance.Log("\nDownloading song...");
+            Logs.History($"Downloader: Downloading song from \"{url}\"");
 
             Process process = new Process();
             process.StartInfo.RedirectStandardOutput = true;
@@ -88,12 +89,12 @@ namespace OggConverter
 
             // Setup executable and parameters
             process.StartInfo.FileName = "youtube-dl.exe";
-            process.StartInfo.Arguments = $"-x --audio-format aac -o \"download.%(ext)s\" {url}";
+            process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality 0 -o \"download.%(ext)s\" {url}";
             process.Start();
             await Task.Run(() => process.WaitForExit());
 
-            Form1.instance.Log += "\nConverting...";
-            await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.aac", folder, limit, forcedName);
+            Form1.instance.Log("Converting...");
+            await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName);
 
             File.Delete("download.aac");
             IsBusy = false;

@@ -29,22 +29,6 @@ namespace OggConverter
 
         readonly bool firstLoad = false; //Detects if the program has been opened for the first time
 
-        public string Log
-        {
-            get => logOutput.Text;
-            set
-            {
-                value = value.Replace("\n", Environment.NewLine);
-                if (logOutput.InvokeRequired)
-                    logOutput.Invoke(new Action(() => logOutput.Text = value));
-                else
-                    logOutput.Text = value;
-
-                logOutput.SelectionStart = logOutput.TextLength;
-                logOutput.ScrollToCaret();
-            }
-        }
-
         public ToolStripMenuItem btnGetUpdate;
         public Label LabNowPlaying;
 
@@ -56,7 +40,7 @@ namespace OggConverter
 
             instance = this;
             playerRadio.Checked = true;
-            Log += $"MSC Music Manager {Functions.GetVersion()} ({Updates.version})";
+            Log($"MSC Music Manager Preview {Functions.GetVersion()} ({Updates.version})");
             btnGetUpdate = btnDownloadUpdate;
             btnGetUpdate.Click += BtnCheckUpdate_Click;
 
@@ -88,13 +72,13 @@ namespace OggConverter
                 if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
                 {
                     MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Log += "\n\nCouldn't find mysummercar.exe. Please set the correct game path.";
+                    Log("\nCouldn't find mysummercar.exe. Please set the correct game path.");
                     firstLoad = true;
                     SafeMode(true);
                     return;
                 }
 
-                Log += $"\nGame Folder: {Settings.GamePath}";
+                Log($"Game Folder: {Settings.GamePath}");
 
                 // SETTINGS CHECKS
                 btnRemMP3.Checked = Settings.RemoveMP3;
@@ -102,22 +86,22 @@ namespace OggConverter
                 // Actions after conversion
                 btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
                 btnAfterClose.Checked = Settings.CloseAfterConversion;
-                btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion && !Settings.ShowConversionLog;
-                btnShowConversionLog.Checked = Settings.ShowConversionLog;
+                btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion;
                 btnUpdates.Checked = !Settings.NoUpdates;
                 btnLogs.Checked = Settings.Logs;
                 btnAutoSort.Checked = Settings.AutoSort;
                 btnNewNaming.Checked = Settings.DisableMetaFiles;
+                btnHistory.Checked = Settings.History;
 
                 if (Settings.NoUpdates)
-                    Log += "\n\nUpdates are disabled";
+                    Log("\nUpdates are disabled");
                 else
                 {
                     if (Settings.Preview)
                         Updates.LookForAnUpdate(true);
 
                     Updates.LookForAnUpdate(false);
-                    Log += Settings.Preview && !Settings.DemoMode ? "\nYOU ARE USING PREVIEW UPDATE CHANNEL" : "";
+                    Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
                 }
 
                 if (Settings.Preview)
@@ -128,19 +112,19 @@ namespace OggConverter
 
                 if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
                 {
-                    Log += "\n\nFound temp song file in Radio, possibly caused by crash\nTrying to fix it...";
+                    Log("\nFound temp song file in Radio, possibly caused by crash\nTrying to fix it...");
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
                 }
 
                 if (File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
                 {
-                    Log += "\n\nFound temp song file in CD, possibly caused by crash\nTrying to fix it...";
+                    Log("\nFound temp song file in CD, possibly caused by crash\nTrying to fix it...");
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
                 }
 
                 if (Updates.version > Settings.LatestVersion)
                 {
-                    Log += "\n\n" + Properties.Resources.changelog;
+                    Log("\n" + Properties.Resources.changelog);
 
                     if (Settings.LatestVersion <= 18151)
                     {
@@ -166,7 +150,7 @@ namespace OggConverter
                 if (!Directory.Exists($"{Settings.GamePath}\\CD"))
                 {
                     Converter.SkipCD = true;
-                    Log += "\nCD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.";
+                    Log("CD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.");
                 }
 
                 if (Settings.DemoMode)
@@ -180,8 +164,8 @@ namespace OggConverter
                 MessageBox.Show("Hey there! Looks like you're new here. Select the game directory first :)\n\n" +
                     "If you see that message second, or more times, please contact the developer.", "Terve", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                Log += "\n\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.";
-                Log += "\n\n" + Functions.AboutNotice;
+                Log("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.");
+                Log("\n" + Functions.AboutNotice);
                 firstLoad = true;
                 SafeMode(true);
             }
@@ -211,6 +195,30 @@ namespace OggConverter
             txtboxVideo.Enabled = state;
             btnDownload.Enabled = state;
             songList.Enabled = state;
+            btnSetName.Enabled = state;
+            txtSongName.Enabled = state;
+            btnCloneSong.Enabled = state;
+        }
+
+        /// <summary>
+        /// Writes value to log output
+        /// </summary>
+        /// <param name="value">Value to output</param>
+        public void Log(string value)
+        {
+            if (value == "")
+                return;
+
+            value = value.Replace("\n", Environment.NewLine);
+            value += Environment.NewLine;
+
+            if (logOutput.InvokeRequired)
+                logOutput.Invoke(new Action(() => logOutput.Text += value));
+            else
+                logOutput.Text += value;
+
+            logOutput.SelectionStart = logOutput.TextLength;
+            logOutput.ScrollToCaret();
         }
 
         /// <summary>
@@ -222,11 +230,12 @@ namespace OggConverter
 
             songList.Items.Clear();
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
+            int howManySongs = 0;
 
             // Old name reading
             if (Settings.DisableMetaFiles)
             {
-                for (int i = 1; i < 99; i++)
+                for (int i = 1; i <= 99; i++)
                     if (File.Exists($"{path}\\track{i}.ogg"))
                         songList.Items.Add($"track{i}.ogg");
 
@@ -235,20 +244,23 @@ namespace OggConverter
             
             Player.WorkingSongList.Clear();
 
-            for (int i = 1; i < 99; i++)
+            for (int i = 1; i <= 99; i++)
                 if (File.Exists($"{path}\\track{i}.ogg"))
                 {
                     string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
                     songList.Items.Add(s);
                     Player.WorkingSongList.Add($"track{i}");
+                    howManySongs++;
                 }
 
+            labCounter.Text = $"Songs: {howManySongs}";
+            labCounter.ForeColor = ((CurrentFolder == "CD") && (howManySongs > 15)) ? Color.Red : Color.Black;
             return;
         }        
 
         private void Log_TextChanged(object sender, EventArgs e)
         {
-            logOutput.SelectionStart = Log.Length;
+            logOutput.SelectionStart = logOutput.Text.Length;
             logOutput.ScrollToCaret();
         }
 
@@ -256,7 +268,7 @@ namespace OggConverter
         {
             if (Functions.AreAllBusy())
             {
-                Log += "\nProgram is busy.";
+                Log("Program is busy.");
                 return;
             }
 
@@ -268,7 +280,7 @@ namespace OggConverter
                 {
                     RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG", true);
                     Key.SetValue("MSC Path", folderDialog.SelectedPath);
-                    Log += "\nMy Summer Car directory detected";
+                    Log("My Summer Car directory detected");
 
                     if (firstLoad)
                     {
@@ -279,9 +291,9 @@ namespace OggConverter
                     }
                 }
                 else if (dialog == DialogResult.Cancel)
-                    Log += "\n\nCanceled";
+                    Log("\nCanceled");
                 else
-                    Log += "\n\nCouldn't find mysummercar.exe";
+                    Log("\nCouldn't find mysummercar.exe");
             }
         }
 
@@ -289,7 +301,7 @@ namespace OggConverter
         {
             if (Settings.GamePath.Length == 0)
             {
-                Log += "\nSelect game path first.";
+                Log("Select game path first.");
                 return;
             }
 
@@ -306,7 +318,7 @@ namespace OggConverter
             if (Functions.AreAllBusy())
             {
                 e.Cancel = true;
-                Log += "\nProgram is busy.";
+                Log("Program is busy.");
                 return;
             }
 
@@ -316,13 +328,22 @@ namespace OggConverter
 
         private void OpenLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!File.Exists("LastConversion.txt"))
+            if (!File.Exists("history.txt"))
             {
-                Log += "\nNo last conversion log exists";
+                Log("History file doesn't exist");
                 return;
             }
 
-            Process.Start("LastConversion.txt");
+            if (ModifierKeys.HasFlag(Keys.Shift))
+            {
+                DialogResult dl = MessageBox.Show("Would you like to remove history file?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dl == DialogResult.Yes)
+                    File.Delete("history.txt");
+
+                return;
+            }
+
+            Process.Start("history.txt");
         }
 
         private void LaunchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -354,7 +375,6 @@ namespace OggConverter
         {
             Settings.CloseAfterConversion = btnAfterClose.Checked = false;
             Settings.LaunchAfterConversion = btnAfterLaunchGame.Checked = false;
-            Settings.ShowConversionLog = btnShowConversionLog.Checked = false;
         }
 
         private void CloseTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
@@ -474,13 +494,13 @@ namespace OggConverter
 
             if (!Settings.Logs)
             {
-                Log += "\nLogs are disabled";
+                Log("Logs are disabled");
                 return;
             }
 
             if (!Directory.Exists("Log"))
             {
-                Log += "\nLog folder doesn't exist";
+                Log("Log folder doesn't exist");
                 return;
             }
 
@@ -495,16 +515,19 @@ namespace OggConverter
 
             if (Functions.AreAllBusy())
             {
-                Log += "\nProgram is busy.";
+                Log("Program is busy.");
                 return;
             }
 
+            string songName = songList.SelectedItem.ToString();
+            string fileName = $"{Player.WorkingSongList[songList.SelectedIndex]}.ogg";
+
             string file = Settings.DisableMetaFiles ? $"{Settings.GamePath}\\{CurrentFolder}\\{songList.SelectedItem.ToString()}" :
-                $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg";
+                $"{Settings.GamePath}\\{CurrentFolder}\\{fileName}";
 
             string meta = Settings.DisableMetaFiles ? null : $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm";
 
-            DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songList.SelectedItem.ToString()}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songName}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dl == DialogResult.Yes)
             {
                 Player.Stop();
@@ -520,6 +543,8 @@ namespace OggConverter
                         File.Delete(meta);
                 }
 
+                Logs.History($"Removed \"{songName}\" ({fileName}) from {CurrentFolder}");
+
                 UpdateSongList();
             }
 
@@ -531,7 +556,7 @@ namespace OggConverter
         {
             if (Functions.AreAllBusy())
             {
-                Log += "\nProgram is busy.";
+                Log("Program is busy.");
                 return;
             }
 
@@ -543,7 +568,7 @@ namespace OggConverter
         {
             if (Functions.AreAllBusy())
             {
-                Log += "\nProgram is busy.";
+                Log("Program is busy.");
                 return;
             }
 
@@ -639,17 +664,12 @@ namespace OggConverter
             // Force download and install update
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                Log += "\n\nForcing the update...";
+                Log("\nForcing the update...");
                 Updates.DownloadUpdate(Settings.Preview);
                 return;
             }
 
             Updates.LookForAnUpdate(Settings.Preview);
-        }
-
-        private void BtnShowConversionLog_Click(object sender, EventArgs e)
-        {
-            Settings.ShowConversionLog ^= true;
         }
 
         private void BtnDownloadUpdate_Click(object sender, EventArgs e)
@@ -666,7 +686,7 @@ namespace OggConverter
         {
             if (Functions.AreAllBusy())
             {
-                Log += "\nProgram is busy.";
+                Log("Program is busy.");
                 return;
             }
 
@@ -719,7 +739,10 @@ namespace OggConverter
                     MessageBoxIcon.Stop);
 
                 if (dl != DialogResult.Yes)
+                {
+                    btnNewNaming.Checked ^= true;
                     return;
+                }
             }
 
             Player.Stop();
@@ -765,6 +788,48 @@ namespace OggConverter
                 "Help", 
                 MessageBoxButtons.OK, 
                 MessageBoxIcon.Information);
+        }
+
+        private void BtnHistory_Click(object sender, EventArgs e)
+        {
+            Settings.History ^= true;
+        }
+
+        private void SongList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex != 2 || songList.SelectedIndex == -1)
+                return;
+
+            txtSongName.Text = songList.SelectedItem.ToString();
+        }
+
+        private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (songList.SelectedIndex == -1)
+                return;
+
+            if (tabControl1.SelectedIndex == 2)
+                txtSongName.Text = songList.SelectedItem.ToString();
+        }
+
+        private void BtnSetName_Click(object sender, EventArgs e)
+        {
+            if (songList.SelectedIndex == -1)
+                return;
+
+            int selected = songList.SelectedIndex;
+            MetaData.CreateMetaFile($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm", txtSongName.Text);
+            UpdateSongList();
+            songList.SelectedIndex = selected;
+        }
+
+        private void BtnCloneSong_Click(object sender, EventArgs e)
+        {
+            if (songList.SelectedIndex == -1)
+                return;
+
+            Player.Clone(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex]);
+            UpdateSongList();
         }
     }
 }

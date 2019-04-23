@@ -26,9 +26,11 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18160; 
+        public const int version = 18170; 
         static bool newUpdateReady;
         static bool downgrade;
+
+        public static bool IsOffline { get; set; }
 
         // Download sources
         const string stable = "https://gitlab.com/aathlon/msc-ogg/raw/master/";
@@ -39,10 +41,12 @@ namespace OggConverter
         /// </summary>
         public static void LookForAnUpdate(bool getPreview)
         {
+            if (IsOffline) return;
+
             if (newUpdateReady)
             {
                 DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                Form1.instance.Log += "\n\nThere's an update ready to download!";
+                Form1.instance.Log("\nThere's an update ready to download!");
                 if (res == DialogResult.Yes)
                     DownloadUpdate(getPreview);
 
@@ -62,9 +66,10 @@ namespace OggConverter
             }
             catch (Exception ex)
             {
-                new CrashLog(ex.ToString(), true);
-                Form1.instance.Log += "\n\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
-                    "In case the problem still occures, a new crash log has been created.";
+                Logs.CrashLog(ex.ToString(), true);
+                Form1.instance.Log("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
+                    "In case the problem still occures, a new crash log has been created.\n");
+                IsOffline = true;
                 return;
             }
 
@@ -75,7 +80,7 @@ namespace OggConverter
             {
                 string msg = Settings.Preview && getPreview ? "There's new a newer stable version available to download than yours Preview. Would you like to download the update?" :
                     "There's a new update ready to download. Would you like to download it now?";
-                DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (res == DialogResult.Yes)
                 {
                     DownloadUpdate(getPreview);
@@ -83,7 +88,7 @@ namespace OggConverter
                 }
 
                 newUpdateReady = true;
-                Form1.instance.Log += "\n\nThere's an update ready to download!";
+                Form1.instance.Log("\nThere's an update ready to download!");
                 Form1.instance.btnGetUpdate.Visible = true;
                 return;
             }
@@ -101,7 +106,7 @@ namespace OggConverter
                     DownloadUpdate(getPreview);
 
                 newUpdateReady = true;
-                Form1.instance.Log += "\n\nYou can downgrade now.";
+                Form1.instance.Log("\nYou can downgrade now.");
                 Form1.instance.btnGetUpdate.Visible = true;
 
                 return;
@@ -109,7 +114,7 @@ namespace OggConverter
 
             if (Settings.Preview && !getPreview) return;
 
-            Form1.instance.Log += "\n\nTool is up-to-date";
+            Form1.instance.Log("\nTool is up-to-date");
         }
 
         const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
@@ -120,7 +125,7 @@ namespace OggConverter
         /// </summary>
         public static void DownloadUpdate(bool getPreview)
         {
-            Form1.instance.Log += "\n\nDownloading an update...";
+            Form1.instance.Log("\nDownloading an update...");
 
             string zipURL = getPreview ? preview : stable;
             zipURL += "mscmm.zip";
@@ -132,12 +137,12 @@ namespace OggConverter
                 client.Dispose();
             }
 
-            Form1.instance.Log += "\nUpdate downloaded! Extracting...";
+            Form1.instance.Log("Update downloaded! Extracting...");
 
             Directory.CreateDirectory("update");
             ZipFile.ExtractToDirectory("mscmm.zip", "update");
 
-            Form1.instance.Log += "\nRestarting...";
+            Form1.instance.Log("Restarting...");
             File.WriteAllText("updater.bat", updaterScript);
 
             if (downgrade)
