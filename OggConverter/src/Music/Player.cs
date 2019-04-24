@@ -18,6 +18,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace OggConverter
 {
@@ -117,7 +119,7 @@ namespace OggConverter
                     File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
 
                     Logs.History($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
-                    Form1.instance.Log($"\nSorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
+                    Form1.instance.Log($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
 
                     // Moving metadata (if new naming system is used)
                     if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
@@ -310,6 +312,36 @@ namespace OggConverter
 
             Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
             Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
+        }
+
+        /// <summary>
+        /// Randomizes songs order in folder.
+        /// </summary>
+        /// <param name="folder">Folder in which files will be shuffled</param>
+        public static void Shuffle(string folder)
+        {
+            Player.Stop();
+
+            DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+            List<FileInfo> files= new List<FileInfo>(di.GetFiles("track*.ogg"));
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
+                File.Move($"{file}.ogg", $"{file}.ogg.temp");
+                if (File.Exists($"{file}.mscmm"))
+                    File.Move($"{file}.mscmm", $"{file}.mscmm.temp");
+            }
+
+            files = files.OrderBy(a => Guid.NewGuid()).ToList();
+
+            for (int i = 0; i < files.Count; i++)
+            {
+                string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
+                File.Move($"{file}.ogg.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.ogg");
+                if (File.Exists($"{file}.mscmm.temp"))
+                    File.Move($"{file}.mscmm.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.mscmm");
+            }
         }
     }
 }

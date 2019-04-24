@@ -1,6 +1,16 @@
 # Changelog
 
-## 2.2.0.0 Preview (20.04.2019)
+## 2.2.0.1 Preview (24.04.2019)
+
+### Added
+
+- Give a chance a chance! You can now shuffle your music to always have random songs order
+
+### Edit
+
+- Edit tab changes
+
+## 2.2.0.0 Preview (23.04.2019)
 
 ### Added
 

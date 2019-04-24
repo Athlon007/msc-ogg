@@ -36,6 +36,7 @@
             this.playerRadio = new System.Windows.Forms.RadioButton();
             this.playerCD = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnShuffle = new System.Windows.Forms.Button();
             this.btnCloneSong = new System.Windows.Forms.Button();
             this.labCounter = new System.Windows.Forms.Label();
             this.labNowPlaying = new System.Windows.Forms.Label();
@@ -91,6 +92,7 @@
             this.btnSetName = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -172,6 +174,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnShuffle);
             this.panel1.Controls.Add(this.btnCloneSong);
             this.panel1.Controls.Add(this.labCounter);
             this.panel1.Controls.Add(this.labNowPlaying);
@@ -191,9 +194,19 @@
             this.panel1.Size = new System.Drawing.Size(256, 333);
             this.panel1.TabIndex = 13;
             // 
+            // btnShuffle
+            // 
+            this.btnShuffle.Location = new System.Drawing.Point(205, 307);
+            this.btnShuffle.Name = "btnShuffle";
+            this.btnShuffle.Size = new System.Drawing.Size(48, 23);
+            this.btnShuffle.TabIndex = 22;
+            this.btnShuffle.Text = "Shuffle";
+            this.btnShuffle.UseVisualStyleBackColor = true;
+            this.btnShuffle.Click += new System.EventHandler(this.BtnShuffle_Click);
+            // 
             // btnCloneSong
             // 
-            this.btnCloneSong.Location = new System.Drawing.Point(208, 231);
+            this.btnCloneSong.Location = new System.Drawing.Point(208, 228);
             this.btnCloneSong.Name = "btnCloneSong";
             this.btnCloneSong.Size = new System.Drawing.Size(43, 23);
             this.btnCloneSong.TabIndex = 21;
@@ -225,7 +238,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(204, 169);
+            this.label4.Location = new System.Drawing.Point(204, 154);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 18;
@@ -233,7 +246,7 @@
             // 
             // btnMoveSong
             // 
-            this.btnMoveSong.Location = new System.Drawing.Point(208, 185);
+            this.btnMoveSong.Location = new System.Drawing.Point(208, 170);
             this.btnMoveSong.Name = "btnMoveSong";
             this.btnMoveSong.Size = new System.Drawing.Size(43, 23);
             this.btnMoveSong.TabIndex = 17;
@@ -656,6 +669,7 @@
             // 
             // tabMeta
             // 
+            this.tabMeta.Controls.Add(this.label2);
             this.tabMeta.Controls.Add(this.btnSetName);
             this.tabMeta.Controls.Add(this.label1);
             this.tabMeta.Controls.Add(this.txtSongName);
@@ -668,7 +682,7 @@
             // 
             // btnSetName
             // 
-            this.btnSetName.Location = new System.Drawing.Point(6, 53);
+            this.btnSetName.Location = new System.Drawing.Point(6, 74);
             this.btnSetName.Name = "btnSetName";
             this.btnSetName.Size = new System.Drawing.Size(172, 24);
             this.btnSetName.TabIndex = 17;
@@ -679,7 +693,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 11);
+            this.label1.Location = new System.Drawing.Point(6, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 16;
@@ -687,10 +701,19 @@
             // 
             // txtSongName
             // 
-            this.txtSongName.Location = new System.Drawing.Point(6, 27);
+            this.txtSongName.Location = new System.Drawing.Point(6, 48);
             this.txtSongName.Name = "txtSongName";
             this.txtSongName.Size = new System.Drawing.Size(469, 20);
             this.txtSongName.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(301, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Select song from the list to the left and edit it\'s displayed name.";
             // 
             // Form1
             // 
@@ -798,6 +821,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtSongName;
         private System.Windows.Forms.Button btnCloneSong;
+        private System.Windows.Forms.Button btnShuffle;
+        private System.Windows.Forms.Label label2;
     }
 }
 

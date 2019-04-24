@@ -831,5 +831,11 @@ namespace OggConverter
             Player.Clone(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex]);
             UpdateSongList();
         }
+
+        private void BtnShuffle_Click(object sender, EventArgs e)
+        {
+            Player.Shuffle(CurrentFolder);
+            UpdateSongList();
+        }
     }
 }

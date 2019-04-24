@@ -26,7 +26,7 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18170; 
+        public const int version = 18171; 
         static bool newUpdateReady;
         static bool downgrade;
 
@@ -45,7 +45,10 @@ namespace OggConverter
 
             if (newUpdateReady)
             {
-                DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", 
+                    "Update", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Information);
                 Form1.instance.Log("\nThere's an update ready to download!");
                 if (res == DialogResult.Yes)
                     DownloadUpdate(getPreview);
@@ -79,7 +82,8 @@ namespace OggConverter
             if (latest > version)
             {
                 string msg = Settings.Preview && getPreview ? "There's new a newer stable version available to download than yours Preview. Would you like to download the update?" :
-                    "There's a new update ready to download. Would you like to download it now?";
+                    "There's a new update ready to download. Would you like to download it now?" +
+                    $"\n\nYour version: {version}\nNewest version: {latest}";
                 DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (res == DialogResult.Yes)
                 {
@@ -97,7 +101,8 @@ namespace OggConverter
                 downgrade = true;
 
                 DialogResult res = MessageBox.Show("Looks like you want to downgrade from preview build to stable?\n\n" +
-                    "WARNING: In order to keep things still working, all settings will be reset.",
+                    "WARNING: In order to keep things still working, all settings will be reset." +
+                    $"\n\nYour version: {version}\nNewest version: {latest}",
                     "Question",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -137,12 +142,12 @@ namespace OggConverter
                 client.Dispose();
             }
 
-            Form1.instance.Log("Update downloaded! Extracting...");
+            Form1.instance.Log("Extracting...");
 
             Directory.CreateDirectory("update");
             ZipFile.ExtractToDirectory("mscmm.zip", "update");
 
-            Form1.instance.Log("Restarting...");
+            Form1.instance.Log("Installing...");
             File.WriteAllText("updater.bat", updaterScript);
 
             if (downgrade)
