@@ -1,20 +1,33 @@
 # Changelog
 
+## 2.2.0.2 Preview (25.04.2019)
+
+### Added
+
+- The tool will try to automatically find My Summer Car installation path
+- Last selected song list item will still be selected even after list updates
+
+### Changes
+
+- Lots of code optimizations and improvements
+
+### Bug Fixes
+
+- MSCMM will load much faster if you're offline and updates are enabled
+- History and Crash Log buttons in Settings should check and uncheck correctly
+
 ## 2.2.0.1 Preview (24.04.2019)
 
 ### Added
 
 - Give a chance a chance! You can now shuffle your music to always have random songs order
-
-### Edit
-
-- Edit tab changes
+- Added a help note into tutorial
 
 ## 2.2.0.0 Preview (23.04.2019)
 
 ### Added
 
-- Added history - all operations on he files will be saved to history.txt
+- Added history - all operations on the files will be saved to history.txt
 - Added counter which tells you how many songs you got in selected folder
 - You can edit song names directly in Music Manager (note: removing name will reset name back to default)
 - Added "Clone" button which let's you quickly clone songs

@@ -45,7 +45,7 @@ namespace OggConverter
             var shortcut = shell.CreateShortcut(link) as IWshShortcut;
             shortcut.TargetPath = Application.ExecutablePath;
             shortcut.WorkingDirectory = Application.StartupPath;
-            shortcut.Description = "The music manager for My Summer Car";
+            shortcut.Description = "Add, Remove and Download Songs!";
             shortcut.Save();
         }
     }

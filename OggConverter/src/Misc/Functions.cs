@@ -75,11 +75,10 @@ namespace OggConverter
         }
 
         /// <summary>
-        /// Used to remove temporary/unused files
+        /// Removes temporary/unused files
         /// </summary>
-        public static void RemoveOldFiles()
+        public static void Cleanup()
         {
-            // Removing unused files
             if (File.Exists("NReco.VideoConverter.dll"))
                 File.Delete("NReco.VideoConverter.dll");
 
@@ -107,10 +106,19 @@ namespace OggConverter
         /// Checks if any 'long taking' operations are busy.
         /// </summary>
         /// <returns></returns>
-        public static bool AreAllBusy() { return Downloader.IsBusy || Converter.IsBusy; }
+        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy; }
 
-        public static int Center(Control reference, Control sender) { return (reference.Width - sender.Width) / 2; }
+        /// <summary>
+        /// Centers the sender according to reference control
+        /// </summary>
+        /// <param name="sender">Object to center</param>
+        /// <param name="reference">Reference (ex.: parental panel)</param>
+        /// <returns></returns>
+        public static int CenterTo(this Control sender, Control reference) { return (reference.Width - sender.Width) / 2; }
 
+        /// <summary>
+        /// Launchec the game - either with Steam or directly from mysummercar.exe
+        /// </summary>
         public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
     }
 }

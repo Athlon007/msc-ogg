@@ -15,107 +15,160 @@
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace OggConverter
 {
     class Settings
     {
-        public static bool RemoveMP3 { get => GetSettings.Bool("RemoveMP3", true); set => SetSettings.Bool("RemoveMP3", value); }
-        public static bool CloseAfterConversion { get => GetSettings.Bool("CloseAfterConversion", false); set => SetSettings.Bool("CloseAfterConversion", value); }
-        public static bool LaunchAfterConversion { get => GetSettings.Bool("LaunchAfterConversion", true); set => SetSettings.Bool("LaunchAfterConversion", value); }
-        public static bool NoSteam { get => GetSettings.Bool("NoSteam", false); set => SetSettings.Bool("NoSteam", value); }
-        public static bool NoUpdates { get => GetSettings.Bool("NoUpdates", false); set => SetSettings.Bool("NoUpdates", value); }
-        public static bool Preview { get => GetSettings.Bool("Preview", false); set => SetSettings.Bool("Preview", value); }
-        public static bool Logs { get => GetSettings.Bool("Logs", true); set => SetSettings.Bool("Logs", value); }
-        public static bool AutoSort { get => GetSettings.Bool("AutoSort", true); set => SetSettings.Bool("AutoSort", value); }
-        public static bool History { get => GetSettings.Bool("History", true); set => SetSettings.Bool("History", value); }
+        // Default MSCMM registry key
+        const string key = "SOFTWARE\\MSCOGG";
+
+        // Should MSCMM remove source song files after conversion?
+        public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }
+
+        // Should the program close after conversion?
+        public static bool CloseAfterConversion { get => Get("CloseAfterConversion", false); set => Set("CloseAfterConversion", value); }
+
+        // Should the game be launched after conversion?
+        public static bool LaunchAfterConversion { get => Get("LaunchAfterConversion", true); set => Set("LaunchAfterConversion", value); }
+        
+        // Should the game be started without steam?
+        public static bool NoSteam { get => Get("NoSteam", false); set => Set("NoSteam", value); }
+
+        // Should the tool NOT check for update?
+        public static bool NoUpdates { get => Get("NoUpdates", false); set => Set("NoUpdates", value); }
+
+        // Should the tool also check preview update channel?
+        public static bool Preview { get => Get("Preview", false); set => Set("Preview", value); }
+
+        // Should the tool dump the crash logs to LOG folder?
+        public static bool Logs { get => Get("Logs", true); set => Set("Logs", value); }
+
+        // Should the tool automatically sort songs after moving/removing song?
+        public static bool AutoSort { get => Get("AutoSort", true); set => Set("AutoSort", value); }
+
+        // Should the tool save all files operations to history.txt?
+        public static bool History { get => Get("History", true); set => Set("History", value); }
+
+        /// Forces MSCMM to use old song name reading, instead of one using metafiles (planned to be removed in future updates)
+        public static bool DisableMetaFiles { get => Get("DisableMetaFiles", false); set => Set("DisableMetaFiles", value); }
+
+        // My Summer Car directory path
+        public static string GamePath { get => Get("MSC Path", GetMSCPath()); set => Set("MSC Path", value); }
+
+
+        ///////////////////////////
+        // CAN'T BE SET BY USER! //
+        ///////////////////////////
+        
+        // Stores last build used.
+        public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }                
+
+        // Disables or hides features (used for screenshots mostly)
+        public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
+
+
 
         /// <summary>
-        /// Forces MSCMM to use older song name reading, instead of one using metafiles
+        /// Gets the value of setting from registry
         /// </summary>
-        public static bool DisableMetaFiles { get => GetSettings.Bool("DisableMetaFiles", false); set => SetSettings.Bool("DisableMetaFiles", value); }
+        /// <param name="name">Name of value</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <returns>Returns the value (either as string, int or bool)</returns>
+        static dynamic Get<Object>(string name, Object defaultValue)
+        {
+            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))
+                return Convert.ChangeType(Key.GetValue(name, defaultValue), typeof(Object));
+        }
 
-        public static int LatestVersion { get => GetSettings.Int("LatestVersion", 0); set => SetSettings.Int("LatestVersion", value); }
-
-        public static string GamePath { get => GetSettings.String("MSC Path", "invalid"); set => SetSettings.String("MSC Path", value); }
-
-        public static bool DemoMode { get => GetSettings.Bool("DemoMode", false); set => SetSettings.Bool("DemoMode", value); }
+        /// <summary>
+        /// Saves value into the registry
+        /// </summary>
+        /// <param name="name">Name of value</param>
+        /// <param name="value">Value to set</param>
+        static void Set<T>(string name, T value)
+        {
+            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))
+                Key.SetValue(name, value);
+        }
 
         /// <summary>
         /// Removes all settings.
         /// </summary>
-        public static void WipeAll() { Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\MSCOGG"); LatestVersion = Updates.version;  }
+        public static void WipeAll() { Registry.CurrentUser.DeleteSubKeyTree(key); LatestVersion = Updates.version;  }
 
         /// <summary>
-        /// Checks whenever MSCMM registry key exists and if game path is valid
+        /// Checks registry key validity - if it exists and if the game path is correct.
         /// </summary>
         /// <returns></returns>
-        public static bool SettingsAreValid()
+        public static bool AreSettingsValid()
         {           
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MSCOGG");
-
-            if ((key == null) || (GamePath == "invalid"))
+            GamePath = GetMSCPath();
+            if (GamePath == "invalid")
                 return false;            
 
             return true;
         }
-    }
 
-    class SetSettings
-    {
-        internal static void Bool(string name, bool value)
+        /// <summary>
+        /// Tries to find My Summer Car folder.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetMSCPath()
         {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
+            // We're checking MSCMM registry key, if it's already set
+            using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(key, true))
             {
-                Key.SetValue(name, value);
-                Key.Close();
-            }
-        }
-
-        internal static void Int(string name, int value)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-            {
-                Key.SetValue(name, value);
-                Key.Close();
-            }
-        }
-
-        internal static void String(string name, string value)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-            {
-                Key.SetValue(name, value);
-                Key.Close();
-            }
-        }
-    }
-
-    class GetSettings
-    {
-        internal static bool Bool(string name, bool defaultValue)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-            {
-                object value = Key.GetValue(name);
-
-                if (value != null)
-                    return value.Equals("True") ? true : false;
+                if (Key != null && Key.GetValue("MSC Path") != null)
+                    return Key.GetValue("MSC Path", "invalid").ToString();
             }
 
-            return defaultValue;
-        }
+            // My Summer Car path is not saved. Now we're trying to find it in Steam root folder
+            string steamFolder = "";
+            using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
+            {
+                steamFolder = Key.GetValue("SteamPath").ToString();
+                steamFolder = steamFolder.Replace("/", "\\");
+            }
 
-        internal static int Int(string name, int defaultValue)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-                return int.Parse(Key.GetValue(name, defaultValue).ToString());
-        }
+            // MSC is installed in root Steam folder
+            if (File.Exists($"{steamFolder}\\steamapps\\common\\My Summer Car\\mysummercar.exe"))
+            {
+                GamePath = $"{steamFolder}\\steamapps\\common\\My Summer Car";
+                return $"{steamFolder}\\steamapps\\common\\My Summer Car";
+            }
+            // MSC not found - gotta open config.vdf file and browse all libraries for MSC folder...
+            else
+            {
+                // Dumping config.vdf to string array
+                string[] config = File.ReadAllText($"{steamFolder}\\config\\config.vdf").Split('\n');
+                // Creating list in which all BaseInstallFolder values will be stored
+                List<string> baseInstallFolders = new List<string>();
+                foreach (string line in config)
+                {
+                    if (line.Contains("BaseInstallFolder"))
+                    {
+                        string l = line.Substring(line.LastIndexOf('\t')).Replace("\"", "").Replace("\\\\", "\\").Trim();
+                        baseInstallFolders.Add(l);
+                    }
+                }
 
-        internal static string String(string name, string defaultValue)
-        {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
-                return Key.GetValue(name, defaultValue).ToString();
+                // Now we're checking if any library has My Summer Car in it
+                foreach (string library in baseInstallFolders)
+                {
+                    if (File.Exists($"{library}\\steamapps\\common\\My Summer Car\\mysummercar.exe"))
+                    {
+                        GamePath = $"{library}\\steamapps\\common\\My Summer Car\\mysummercar.exe";
+                        return $"{library}\\steamapps\\common\\My Summer Car\\mysummercar.exe";
+                    }
+                }
+            }
+
+            // Still haven't found? User will be asked to select it manually. Returning 'invalid' value.
+            return "invalid";
         }
     }
 }

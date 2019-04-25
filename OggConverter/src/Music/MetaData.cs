@@ -18,7 +18,6 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace OggConverter
 {
@@ -39,6 +38,7 @@ namespace OggConverter
                 if (s.ToLower().Contains("artist") && artist == null) artist = s.Split(':')[1].Trim();
                 else if (s.ToLower().Contains("title") && title == null) title = s.Split(':')[1].Trim();
 
+                // Artist and title found? Break out of the loop
                 if (artist != null && title != null) break;
             }
 
@@ -67,6 +67,8 @@ namespace OggConverter
         /// <param name="value">Value which will be written into it</param>
         public static void CreateMetaFile(string path, string value)
         {
+            if (Settings.DisableMetaFiles) return; // meta files won't be saved if user disabled them
+
             if (File.Exists(path))
                 File.Delete(path);
 
@@ -80,7 +82,7 @@ namespace OggConverter
         /// </summary>
         /// <param name="folder">Folder directory</param>
         /// <returns></returns>
-        public static async void GetSongsFromAll(string folder)
+        public static async void GetMetaFromAllSongs(string folder)
         {
             for (int i = 1; i <= 99; i++)
             {

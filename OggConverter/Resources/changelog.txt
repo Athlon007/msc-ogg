@@ -1,11 +1,11 @@
 What's new in this release?
 
 - Give a chance a chance! You can now shuffle your music to always have random songs order
-- Added history - all operations on he files will be saved to history.txt
+- Added history - all operations on the files will be saved to history.txt
 - Added counter which tells you how many songs you got in selected folder
 - You can edit song names directly in Music Manager (note: removing name will reset name back to default)
 - Added "Clone" button which let's you quickly clone songs
-- If you're using preview, and the new stable release appears, the correct message appears
-- Small UI fixes
+- The tool will try to automatically find My Summer Car installation path
+- Lots, and I mean LOTS of bug fixes, improvements and enhancements
 
 For more visit https://gitlab.com/aathlon/msc-ogg

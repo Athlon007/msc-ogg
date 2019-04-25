@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
 [assembly: AssemblyTitle("My Summer Car Music Manager")]
-[assembly: AssemblyDescription("The music manager for My Summer Car")]
+[assembly: AssemblyDescription("Add, Remove and Download Songs!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Athlon")]
 [assembly: AssemblyProduct("My Summer Car Music Manager")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Możesz określić wszystkie wartości lub użyć domyślnych numerów kompilacji i poprawki
 // przy użyciu symbolu „*”, tak jak pokazano poniżej:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.0.1")]
-[assembly: AssemblyFileVersion("2.2.0.1")]
+[assembly: AssemblyVersion("2.2.0.2")]
+[assembly: AssemblyFileVersion("2.2.0.2")]

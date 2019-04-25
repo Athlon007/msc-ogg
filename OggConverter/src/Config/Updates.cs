@@ -26,22 +26,23 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18171; 
+        public const int version = 18172; 
         static bool newUpdateReady;
         static bool downgrade;
-
-        public static bool IsOffline { get; set; }
 
         // Download sources
         const string stable = "https://gitlab.com/aathlon/msc-ogg/raw/master/";
         const string preview = "https://gitlab.com/aathlon/msc-ogg/raw/development/";
+
+        // Prevents 'Looks like you're offline.' message from appearing twice if user's using Preview update channel
+        static bool isOffline;
 
         /// <summary>
         /// Checks for the update on remote server by downloading the latest version info file.
         /// </summary>
         public static void LookForAnUpdate(bool getPreview)
         {
-            if (IsOffline) return;
+            if (!IsComputerOnline()) return;
 
             if (newUpdateReady)
             {
@@ -72,7 +73,7 @@ namespace OggConverter
                 Logs.CrashLog(ex.ToString(), true);
                 Form1.instance.Log("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
                     "In case the problem still occures, a new crash log has been created.\n");
-                IsOffline = true;
+                //IsOffline = true;
                 return;
             }
 
@@ -93,7 +94,7 @@ namespace OggConverter
 
                 newUpdateReady = true;
                 Form1.instance.Log("\nThere's an update ready to download!");
-                Form1.instance.btnGetUpdate.Visible = true;
+                Form1.instance.ButtonGetUpdate.Visible = true;
                 return;
             }
             else if ((latest < version) && (!Settings.Preview))
@@ -112,14 +113,14 @@ namespace OggConverter
 
                 newUpdateReady = true;
                 Form1.instance.Log("\nYou can downgrade now.");
-                Form1.instance.btnGetUpdate.Visible = true;
+                Form1.instance.ButtonGetUpdate.Visible = true;
 
                 return;
             }
 
             if (Settings.Preview && !getPreview) return;
 
-            Form1.instance.Log("\nTool is up-to-date");
+            Form1.instance.Log("\nTool is up-to-date\n");
         }
 
         const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
@@ -134,7 +135,6 @@ namespace OggConverter
 
             string zipURL = getPreview ? preview : stable;
             zipURL += "mscmm.zip";
-
 
             using (WebClient client = new WebClient())
             {
@@ -158,6 +158,29 @@ namespace OggConverter
             process.StartInfo.FileName = "updater.bat";
             process.Start();
             Application.Exit();
+        }
+
+        static bool IsComputerOnline()
+        {
+            if (isOffline)
+                return false;
+
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    using (client.OpenRead("https://gitlab.com"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                Form1.instance.Log("Looks like you're offline. Can't check for the update availability");
+                isOffline = true;
+                return false;
+            }
         }
     }
 }

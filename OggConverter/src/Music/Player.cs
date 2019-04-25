@@ -60,8 +60,6 @@ namespace OggConverter
         /// </summary>
         public static void Stop()
         {
-            Form1.instance.LabNowPlaying.Visible = false;
-
             try
             {
                 if (process != null)
@@ -84,19 +82,13 @@ namespace OggConverter
         /// <param name="folder">Radio or CD folder/param>
         public static void Sort(string folder)
         {
-            if (Downloader.IsBusy)
+            if (Functions.IsToolBusy())
             {
-                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
-            if (Converter.IsBusy)
-            {
-                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-
-            Player.Stop();
+            Stop();
 
             int skipped = 0;
 
@@ -153,49 +145,16 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
-            if (Downloader.IsBusy)
+            if (Functions.IsToolBusy())
             {
-                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
-            if (Converter.IsBusy)
-            {
-                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-
-            Player.Stop();
+            Stop();
 
             int selectedIndex = songList.SelectedIndex;
             if (selectedIndex == 0) return;
-
-            if (Settings.DisableMetaFiles)
-            {
-                string oldName = songList.SelectedItem.ToString();
-                string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}.ogg";
-
-                // Waiting for file to be free
-                while (!Functions.IsFileReady($"{mscPath}\\{oldName}")) { }
-
-                // Moving file that now uses the current new name
-                //
-                // For instance: we're moving track2 to track1.
-                // So we first move track1 out of the place and renaming it to trackTemp IF track1 EXISTS
-                if (File.Exists($"{mscPath}\\{newName}"))
-                    File.Move($"{mscPath}\\{newName}", $"{mscPath}\\trackTemp.ogg");
-
-                // Now we're moving the file that we want to actually move
-                File.Move($"{mscPath}\\{oldName}", $"{mscPath}\\{newName}");
-
-                // Finally we move the file that we set as temp (if it exists)
-                if (File.Exists($"{mscPath}\\trackTemp.ogg"))
-                    File.Move($"{mscPath}\\trackTemp.ogg", $"{mscPath}\\{oldName}");
-
-                Form1.instance.UpdateSongList();
-                songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
-                return;
-            }     
 
             string oldFile = Player.WorkingSongList[selectedIndex];
             string newFile = $"track{selectedIndex + (moveUp ? 0 : 2)}";
@@ -241,19 +200,13 @@ namespace OggConverter
         /// <param name="toCD">Whenever we want to move to CD folder or not</param>
         public static void MoveTo(string mscPath, string selected, bool toCD)
         {
-            if (Downloader.IsBusy)
+            if (Functions.IsToolBusy())
             {
-                MessageBox.Show("Song is now being downloaded.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
-            if (Converter.IsBusy)
-            {
-                MessageBox.Show("Conversion is in progress.", "Prohibited", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-
-            Player.Stop();
+            Stop();
 
             string moveFrom = toCD ? "CD" : "Radio";
             string moveTo = moveFrom == "CD" ? "Radio" : "CD";
@@ -262,16 +215,6 @@ namespace OggConverter
 
             for (int i = 1; File.Exists($"{mscPath}\\{moveTo}\\track{i}.ogg"); i++)
                 newNumber++;
-
-            if (Settings.DisableMetaFiles)
-            {
-                // Waiting for file to be free
-                while (!Functions.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}")) { }
-                File.Move($"{mscPath}\\{moveFrom}\\{selected}", $"{mscPath}\\{moveTo}\\track{newNumber}.ogg");
-
-                Form1.instance.UpdateSongList();
-                return;
-            }
 
             // Waiting for file to be free
             while (!Functions.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}.ogg")) { }
@@ -295,6 +238,12 @@ namespace OggConverter
         /// <param name="fileName">File name</param>
         public static void Clone(string folder, string fileName)
         {
+            if (Functions.IsToolBusy())
+            {
+                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
             string newName = null;
 
             for (int i = 1; i <= 99; i++)
@@ -320,7 +269,13 @@ namespace OggConverter
         /// <param name="folder">Folder in which files will be shuffled</param>
         public static void Shuffle(string folder)
         {
-            Player.Stop();
+            if (Functions.IsToolBusy())
+            {
+                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            Stop();
 
             DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
             List<FileInfo> files= new List<FileInfo>(di.GetFiles("track*.ogg"));

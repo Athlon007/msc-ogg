@@ -71,7 +71,6 @@
             this.btnUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
             this.btnHistory = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnNewNaming = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.btnHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,10 +88,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtboxVideo = new System.Windows.Forms.TextBox();
             this.tabMeta = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnSetName = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnDisableMetafiles = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -221,18 +221,18 @@
             this.labCounter.ForeColor = System.Drawing.Color.Black;
             this.labCounter.Location = new System.Drawing.Point(2, 315);
             this.labCounter.Name = "labCounter";
-            this.labCounter.Size = new System.Drawing.Size(55, 13);
+            this.labCounter.Size = new System.Drawing.Size(48, 13);
             this.labCounter.TabIndex = 20;
-            this.labCounter.Text = "Songs: 15";
+            this.labCounter.Text = "Songs: x";
             // 
             // labNowPlaying
             // 
             this.labNowPlaying.AutoSize = true;
-            this.labNowPlaying.Location = new System.Drawing.Point(35, 289);
+            this.labNowPlaying.Location = new System.Drawing.Point(81, 290);
             this.labNowPlaying.Name = "labNowPlaying";
-            this.labNowPlaying.Size = new System.Drawing.Size(137, 13);
+            this.labNowPlaying.Size = new System.Drawing.Size(77, 13);
             this.labNowPlaying.TabIndex = 19;
-            this.labNowPlaying.Text = "Playing: Radio\\track15.ogg";
+            this.labNowPlaying.Text = "labNowPlaying";
             this.labNowPlaying.Visible = false;
             // 
             // label4
@@ -404,7 +404,7 @@
             this.btnUpdates,
             this.btnLogs,
             this.btnHistory,
-            this.btnNewNaming});
+            this.btnDisableMetafiles});
             this.menuSettings.Name = "menuSettings";
             this.menuSettings.Size = new System.Drawing.Size(61, 20);
             this.menuSettings.Text = "Settings";
@@ -483,6 +483,7 @@
             // 
             // btnLogs
             // 
+            this.btnLogs.CheckOnClick = true;
             this.btnLogs.Name = "btnLogs";
             this.btnLogs.Size = new System.Drawing.Size(229, 22);
             this.btnLogs.Text = "Crash Logs";
@@ -490,18 +491,11 @@
             // 
             // btnHistory
             // 
+            this.btnHistory.CheckOnClick = true;
             this.btnHistory.Name = "btnHistory";
             this.btnHistory.Size = new System.Drawing.Size(229, 22);
             this.btnHistory.Text = "History";
             this.btnHistory.Click += new System.EventHandler(this.BtnHistory_Click);
-            // 
-            // btnNewNaming
-            // 
-            this.btnNewNaming.CheckOnClick = true;
-            this.btnNewNaming.Name = "btnNewNaming";
-            this.btnNewNaming.Size = new System.Drawing.Size(229, 22);
-            this.btnNewNaming.Text = "Disable Metafiles";
-            this.btnNewNaming.Click += new System.EventHandler(this.BtnNewNaming_Click);
             // 
             // btnLaunchGame
             // 
@@ -680,6 +674,15 @@
             this.tabMeta.Text = "Edit";
             this.tabMeta.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(301, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Select song from the list to the left and edit it\'s displayed name.";
+            // 
             // btnSetName
             // 
             this.btnSetName.Location = new System.Drawing.Point(6, 74);
@@ -706,14 +709,13 @@
             this.txtSongName.Size = new System.Drawing.Size(469, 20);
             this.txtSongName.TabIndex = 2;
             // 
-            // label2
+            // btnDisableMetafiles
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(301, 13);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "Select song from the list to the left and edit it\'s displayed name.";
+            this.btnDisableMetafiles.CheckOnClick = true;
+            this.btnDisableMetafiles.Name = "btnDisableMetafiles";
+            this.btnDisableMetafiles.Size = new System.Drawing.Size(229, 22);
+            this.btnDisableMetafiles.Text = "Disable Metafiles";
+            this.btnDisableMetafiles.Click += new System.EventHandler(this.BtnDisableMetafiles_Click);
             // 
             // Form1
             // 
@@ -812,7 +814,6 @@
         private System.Windows.Forms.TextBox txtboxVideo;
         private System.Windows.Forms.ToolStripMenuItem btnDesktopShortcut;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ToolStripMenuItem btnNewNaming;
         private System.Windows.Forms.ToolStripMenuItem btnHelp;
         private System.Windows.Forms.ToolStripMenuItem btnHistory;
         private System.Windows.Forms.Label labCounter;
@@ -823,6 +824,7 @@
         private System.Windows.Forms.Button btnCloneSong;
         private System.Windows.Forms.Button btnShuffle;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem btnDisableMetafiles;
     }
 }
 
