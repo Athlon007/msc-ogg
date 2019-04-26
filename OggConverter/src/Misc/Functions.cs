@@ -19,6 +19,7 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
 
 namespace OggConverter
 {
@@ -106,7 +107,7 @@ namespace OggConverter
         /// Checks if any 'long taking' operations are busy.
         /// </summary>
         /// <returns></returns>
-        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy; }
+        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating; }
 
         /// <summary>
         /// Centers the sender according to reference control
@@ -120,5 +121,34 @@ namespace OggConverter
         /// Launchec the game - either with Steam or directly from mysummercar.exe
         /// </summary>
         public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
+
+        // Prevents 'Looks like you're offline.' message from appearing twice if user's using Preview update channel (and useless network traffic)
+        static bool isOffline;
+
+        /// <summary>
+        /// Connects to GitLab and checks if it's (or computer) is online
+        /// </summary>
+        public static bool IsOnline()
+        {
+            if (isOffline)
+                return false;
+
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    using (client.OpenRead("https://gitlab.com"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                Form1.instance.Log("Looks like you're offline. Can't check for the update availability");
+                isOffline = true;
+                return false;
+            }
+        }
     }
 }

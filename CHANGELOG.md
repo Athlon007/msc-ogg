@@ -1,11 +1,12 @@
 # Changelog
 
-## 2.2.0.2 Preview (25.04.2019)
+## 2.2.0.2 Preview (26.04.2019)
 
 ### Added
 
 - The tool will try to automatically find My Summer Car installation path
 - Last selected song list item will still be selected even after list updates
+- youtube-dl will now automatically check for updates on start
 
 ### Changes
 
@@ -42,6 +43,16 @@
 ### Removed
 
 - LastConversion - replaced with history
+
+## 2.1.1 (26.04.2019)
+
+### Added
+
+- Updated youtube-dl to version 2019.04.24
+
+### Bug fixes
+
+- Fixed bug in which the program would throw "Object reference not set to an instance of an object." error while trying to set game path
 
 ## 2.1 (17.04.2019)
 

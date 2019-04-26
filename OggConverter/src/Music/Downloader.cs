@@ -36,6 +36,14 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task DownloadFile(string url, string folder, int limit, string forcedName = null)
         {
+            if (Functions.IsOnline()) return;
+
+            if (Updates.IsYoutubeDlUpdating)
+            {
+                MessageBox.Show("youtube-dl is now updating or looking for the update. Try again in a few seconds.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
             if (!File.Exists("youtube-dl.exe"))
             {
                 DialogResult dl = MessageBox.Show("In order to download the song, the tool requires youtube-dl to be downloaded. Press 'Yes' to download it now", 

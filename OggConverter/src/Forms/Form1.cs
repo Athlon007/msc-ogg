@@ -19,6 +19,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace OggConverter
 {
@@ -75,105 +76,9 @@ namespace OggConverter
 
             // Removing temporary or unused files
             Functions.Cleanup();
-            
-            if (Settings.AreSettingsValid())
-            {
-                //Path in textbox
-                if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
-                {
-                    MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Log("\nCouldn't find mysummercar.exe. Please set the correct game path.");
-                    firstLoad = true;
-                    SafeMode(true);
-                    return;
-                }
 
-                Log($"Game Folder: {Settings.GamePath}");
-
-                // Setting Settings settings (hehe)
-                btnRemMP3.Checked = Settings.RemoveMP3;
-                btnNoSteam.Checked = Settings.NoSteam;
-                btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
-                btnAfterClose.Checked = Settings.CloseAfterConversion;
-                btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion;
-                btnUpdates.Checked = !Settings.NoUpdates;
-                btnLogs.Checked = Settings.Logs;
-                btnAutoSort.Checked = Settings.AutoSort;
-                btnHistory.Checked = Settings.History;
-                btnDisableMetafiles.Checked = Settings.DisableMetaFiles;
-
-                if (Settings.NoUpdates)
-                    Log("\nUpdates are disabled");
-                else
-                {
-                    if (Settings.Preview)
-                        Updates.LookForAnUpdate(true);
-
-                    Updates.LookForAnUpdate(false);
-                    Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
-                }
-
-                if (Settings.Preview)
-                {
-                    btnUpdates.ForeColor = Color.Red;
-                    btnUpdates.Text = "Updates (Preview)";
-                }
-
-                // Checking if some trackTemp files exist. They may be caused by crash
-                if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
-                {
-                    Log("Found temp song file in Radio, possibly due to the crash\nTrying to fix it...");
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
-                }
-
-                if (File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
-                {
-                    Log("Found temp song file in CD, possibly due to the crash\nTrying to fix it...");
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
-                }
-
-                // Showing legal notice if the tool is used for the first time
-                if (Settings.LatestVersion == 0)
-                    Log("\n" + Functions.AboutNotice);
-
-                // User is using this release for first time
-                if (Updates.version > Settings.LatestVersion)
-                {
-                    // Displaying the changelog
-                    Log("\n" + Properties.Resources.changelog);
-
-                    // If the version is older than 2.1 (18151)
-                    if (Settings.LatestVersion <= 18151)
-                    {
-                        DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
-                            "(It may take a while, depending on how many songs you have)",
-                            "Question",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question);
-
-                        if (dl == DialogResult.Yes)
-                        {
-                            SafeMode(true);
-                            MetaData.GetMetaFromAllSongs("Radio");
-                            MetaData.GetMetaFromAllSongs("CD");
-                            UpdateSongList();
-                            SafeMode(false);
-                        }
-                    }
-
-                    Settings.LatestVersion = Updates.version;
-                }
-
-                if (!Directory.Exists($"{Settings.GamePath}\\CD"))
-                {
-                    Converter.SkipCD = true;
-                    Log("CD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.");
-                }
-
-                if (Settings.DemoMode)
-                    mSCOGGToolStripMenuItem.Text += " (DEMO MODE)";
-            }
-            else
+            // Checking file validity   
+            if (!Settings.AreSettingsValid())
             {
                 // There was some kind of problem while starting.
                 // Launching the first start sequence
@@ -184,7 +89,108 @@ namespace OggConverter
                 Log("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.");
                 firstLoad = true;
                 SafeMode(true);
+                return;
             }
+            
+            //Path in textbox
+            if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
+            {
+                MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log("\nCouldn't find mysummercar.exe. Please set the correct game path.");
+                firstLoad = true;
+                SafeMode(true);
+                return;
+            }
+
+            Log($"Game Folder: {Settings.GamePath}");
+
+            // Setting Settings settings (hehe)
+            btnRemMP3.Checked = Settings.RemoveMP3;
+            btnNoSteam.Checked = Settings.NoSteam;
+            btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
+            btnAfterClose.Checked = Settings.CloseAfterConversion;
+            btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion;
+            btnUpdates.Checked = !Settings.NoUpdates;
+            btnLogs.Checked = Settings.Logs;
+            btnAutoSort.Checked = Settings.AutoSort;
+            btnHistory.Checked = Settings.History;
+            btnDisableMetafiles.Checked = Settings.DisableMetaFiles;
+
+            // Checking if some trackTemp files exist. They may be caused by crash
+            if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
+            {
+                Log("Found temp song file in Radio, possibly due to the crash\nTrying to fix it...");
+                _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
+            }
+
+            if (File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
+            {
+                Log("Found temp song file in CD, possibly due to the crash\nTrying to fix it...");
+                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
+            }
+
+            // Showing legal notice if the tool is used for the first time
+            if (Settings.LatestVersion == 0)
+                Log("\n" + Functions.AboutNotice);
+
+            // User is using this release for first time
+            if (Updates.version > Settings.LatestVersion)
+            {
+                // Displaying the changelog
+                Log("\n" + Properties.Resources.changelog);
+
+                // If the version is older than 2.1 (18151)
+                if (Settings.LatestVersion <= 18151)
+                {
+                    DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
+                        "(It may take a while, depending on how many songs you have)",
+                        "Question",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (dl == DialogResult.Yes)
+                    {
+                        SafeMode(true);
+                        MetaData.GetMetaFromAllSongs("Radio");
+                        MetaData.GetMetaFromAllSongs("CD");
+                        UpdateSongList();
+                        SafeMode(false);
+                    }
+                }
+
+                Settings.LatestVersion = Updates.version;
+            }
+
+            if (!Directory.Exists($"{Settings.GamePath}\\CD"))
+            {
+                Converter.SkipCD = true;
+                Log("CD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.");
+            }
+
+            Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
+
+            if (Settings.NoUpdates)
+            {
+                Log("\nUpdates are disabled");
+            }
+            else
+            {
+                if (Settings.Preview)
+                    Updates.LookForAnUpdate(true);
+
+                Updates.LookForAnUpdate(false);
+
+                Updates.LookForYoutubeDlUpdate();
+            }
+
+            if (Settings.Preview)
+            {
+                btnUpdates.ForeColor = Color.Red;
+                btnUpdates.Text = "Updates (Preview)";
+            }
+
+            if (Settings.DemoMode)
+                mSCOGGToolStripMenuItem.Text += " (DEMO MODE)";        
         }
 
         /// <summary>
@@ -662,6 +668,15 @@ namespace OggConverter
 
         private async void BtnDownload_Click(object sender, EventArgs e)
         {
+            if (Updates.IsYoutubeDlUpdating)
+            {
+                MessageBox.Show("youtube-dl is now updating or looking for the update. You'll be notified on Log panel when it's done :)",
+                    "Stop",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Stop);
+                return;
+            }
+
             if (Functions.IsToolBusy())
             {
                 Log("Program is busy.");

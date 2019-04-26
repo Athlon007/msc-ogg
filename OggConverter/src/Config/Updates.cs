@@ -20,13 +20,14 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Threading.Tasks;
 
 namespace OggConverter
 {
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18172; 
+        public const int version = 18173; 
         static bool newUpdateReady;
         static bool downgrade;
 
@@ -34,15 +35,14 @@ namespace OggConverter
         const string stable = "https://gitlab.com/aathlon/msc-ogg/raw/master/";
         const string preview = "https://gitlab.com/aathlon/msc-ogg/raw/development/";
 
-        // Prevents 'Looks like you're offline.' message from appearing twice if user's using Preview update channel
-        static bool isOffline;
+        public static bool IsYoutubeDlUpdating { get; set; }
 
         /// <summary>
         /// Checks for the update on remote server by downloading the latest version info file.
         /// </summary>
         public static void LookForAnUpdate(bool getPreview)
         {
-            if (!IsComputerOnline()) return;
+            if (Settings.DemoMode || !Functions.IsOnline()) return;
 
             if (newUpdateReady)
             {
@@ -57,15 +57,14 @@ namespace OggConverter
                 return;
             }
 
-            string latestURL = getPreview ? preview : stable;
-            latestURL += "latest.txt";
+            string latestURL = (getPreview ? preview : stable) + "latest.txt";
+            string latestContent = "";
 
             try
             {
                 using (WebClient client = new WebClient())
                 {
-                    client.DownloadFile(new Uri(latestURL), "latest.txt");
-                    client.Dispose();
+                    latestContent = client.DownloadString(new Uri(latestURL));
                 }
             }
             catch (Exception ex)
@@ -73,12 +72,10 @@ namespace OggConverter
                 Logs.CrashLog(ex.ToString(), true);
                 Form1.instance.Log("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
                     "In case the problem still occures, a new crash log has been created.\n");
-                //IsOffline = true;
                 return;
             }
 
-            int latest = int.Parse(File.ReadAllText("latest.txt"));
-            File.Delete("latest.txt");
+            int latest = int.Parse(latestContent);
 
             if (latest > version)
             {
@@ -114,13 +111,11 @@ namespace OggConverter
                 newUpdateReady = true;
                 Form1.instance.Log("\nYou can downgrade now.");
                 Form1.instance.ButtonGetUpdate.Visible = true;
-
-                return;
             }
 
             if (Settings.Preview && !getPreview) return;
 
-            Form1.instance.Log("\nTool is up-to-date\n");
+            Form1.instance.Log("\nTool is up-to-date");
         }
 
         const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
@@ -160,27 +155,24 @@ namespace OggConverter
             Application.Exit();
         }
 
-        static bool IsComputerOnline()
+        public static async void LookForYoutubeDlUpdate()
         {
-            if (isOffline)
-                return false;
+            if (Settings.DemoMode || !Functions.IsOnline()) return;
+            await GetYoutubeDlUpdate();
+        }
 
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-                    using (client.OpenRead("https://gitlab.com"))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch
-            {
-                Form1.instance.Log("Looks like you're offline. Can't check for the update availability");
-                isOffline = true;
-                return false;
-            }
+        public static async Task GetYoutubeDlUpdate()
+        {
+            IsYoutubeDlUpdating = true;
+            Form1.instance.Log("Looking for youtube-dl updates...");
+            Process process = new Process();
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.FileName = "youtube-dl.exe";
+            process.StartInfo.Arguments = "-U";
+            process.Start();
+            await Task.Run(() => process.WaitForExit());
+            Form1.instance.Log("youtube-dl is up-to-date!\n");
+            IsYoutubeDlUpdating = false;
         }
     }
 }

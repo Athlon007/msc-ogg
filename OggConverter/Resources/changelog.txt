@@ -6,6 +6,7 @@ What's new in this release?
 - You can edit song names directly in Music Manager (note: removing name will reset name back to default)
 - Added "Clone" button which let's you quickly clone songs
 - The tool will try to automatically find My Summer Car installation path
+- youtube-dl will now automatically check for updates on start
 - Lots, and I mean LOTS of bug fixes, improvements and enhancements
 
 For more visit https://gitlab.com/aathlon/msc-ogg
