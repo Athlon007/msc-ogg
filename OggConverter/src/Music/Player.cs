@@ -82,7 +82,7 @@ namespace OggConverter
         /// <param name="folder">Radio or CD folder/param>
         public static void Sort(string folder)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
@@ -105,7 +105,7 @@ namespace OggConverter
                     if (skipped == 0) continue;
 
                     // Waiting for file to be free
-                    while (!Functions.IsFileReady($"{Settings.GamePath}\\{folder}\\track{i}.ogg")) { }
+                    while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\track{i}.ogg")) { }
 
                     // Moving the file
                     File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
@@ -145,7 +145,7 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
@@ -160,7 +160,7 @@ namespace OggConverter
             string newFile = $"track{selectedIndex + (moveUp ? 0 : 2)}";
 
             // Waiting for file to be free
-            while (!Functions.IsFileReady($"{mscPath}\\{oldFile}.ogg")) { }
+            while (!Utilities.IsFileReady($"{mscPath}\\{oldFile}.ogg")) { }
 
             // Moving file that now uses the current new name
             //
@@ -200,7 +200,7 @@ namespace OggConverter
         /// <param name="toCD">Whenever we want to move to CD folder or not</param>
         public static void MoveTo(string mscPath, string selected, bool toCD)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
@@ -217,7 +217,7 @@ namespace OggConverter
                 newNumber++;
 
             // Waiting for file to be free
-            while (!Functions.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}.ogg")) { }
+            while (!Utilities.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}.ogg")) { }
             File.Move($"{mscPath}\\{moveFrom}\\{selected}.ogg", $"{mscPath}\\{moveTo}\\track{newNumber}.ogg");
             if (File.Exists($"{mscPath}\\{moveFrom}\\{selected}.mscmm"))
                 File.Move($"{mscPath}\\{moveFrom}\\{selected}.mscmm", $"{mscPath}\\{moveTo}\\track{newNumber}.mscmm");
@@ -238,7 +238,7 @@ namespace OggConverter
         /// <param name="fileName">File name</param>
         public static void Clone(string folder, string fileName)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
@@ -269,7 +269,7 @@ namespace OggConverter
         /// <param name="folder">Folder in which files will be shuffled</param>
         public static void Shuffle(string folder)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;

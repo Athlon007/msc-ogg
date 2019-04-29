@@ -36,7 +36,7 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task DownloadFile(string url, string folder, int limit, string forcedName = null)
         {
-            if (Functions.IsOnline()) return;
+            if (Utilities.IsOnline()) return;
 
             if (Updates.IsYoutubeDlUpdating)
             {
@@ -100,6 +100,12 @@ namespace OggConverter
             process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality 0 -o \"download.%(ext)s\" {url}";
             process.Start();
             await Task.Run(() => process.WaitForExit());
+
+            if (!File.Exists("download.aac"))
+            {
+                Form1.instance.Log("Couldn't donwnload the song. Check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.");
+                return;
+            }
 
             Form1.instance.Log("Converting...");
             await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName);

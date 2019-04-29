@@ -71,6 +71,7 @@
             this.btnUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
             this.btnHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDisableMetafiles = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.btnHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -92,7 +93,8 @@
             this.btnSetName = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
-            this.btnDisableMetafiles = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnYoutubeDlUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -305,6 +307,8 @@
             this.btnSteam,
             this.toolStripSeparator3,
             this.btnCheckUpdate,
+            this.btnYoutubeDlUpdate,
+            this.toolStripSeparator4,
             this.btnDesktopShortcut,
             this.btnAbout,
             this.btnQuit});
@@ -496,6 +500,14 @@
             this.btnHistory.Size = new System.Drawing.Size(229, 22);
             this.btnHistory.Text = "History";
             this.btnHistory.Click += new System.EventHandler(this.BtnHistory_Click);
+            // 
+            // btnDisableMetafiles
+            // 
+            this.btnDisableMetafiles.CheckOnClick = true;
+            this.btnDisableMetafiles.Name = "btnDisableMetafiles";
+            this.btnDisableMetafiles.Size = new System.Drawing.Size(229, 22);
+            this.btnDisableMetafiles.Text = "Disable Metafiles";
+            this.btnDisableMetafiles.Click += new System.EventHandler(this.BtnDisableMetafiles_Click);
             // 
             // btnLaunchGame
             // 
@@ -709,13 +721,17 @@
             this.txtSongName.Size = new System.Drawing.Size(469, 20);
             this.txtSongName.TabIndex = 2;
             // 
-            // btnDisableMetafiles
+            // btnYoutubeDlUpdate
             // 
-            this.btnDisableMetafiles.CheckOnClick = true;
-            this.btnDisableMetafiles.Name = "btnDisableMetafiles";
-            this.btnDisableMetafiles.Size = new System.Drawing.Size(229, 22);
-            this.btnDisableMetafiles.Text = "Disable Metafiles";
-            this.btnDisableMetafiles.Click += new System.EventHandler(this.BtnDisableMetafiles_Click);
+            this.btnYoutubeDlUpdate.Name = "btnYoutubeDlUpdate";
+            this.btnYoutubeDlUpdate.Size = new System.Drawing.Size(232, 22);
+            this.btnYoutubeDlUpdate.Text = "Check for youtube-dl update";
+            this.btnYoutubeDlUpdate.Click += new System.EventHandler(this.BtnYoutubeDlUpdate_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
             // 
             // Form1
             // 
@@ -825,6 +841,8 @@
         private System.Windows.Forms.Button btnShuffle;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ToolStripMenuItem btnDisableMetafiles;
+        private System.Windows.Forms.ToolStripMenuItem btnYoutubeDlUpdate;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

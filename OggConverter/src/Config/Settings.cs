@@ -70,6 +70,9 @@ namespace OggConverter
         // Disables or hides features (used for screenshots mostly)
         public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
 
+        // Stores the last update check day for youtube-dl
+        public static int YouTubeDlLastUpdateCheckDay { get => Get("YouTubeDlLastUpdateCheckDay", 1); set => Set("YouTubeDlLastUpdateCheckDay", value); }
+
 
 
         /// <summary>

@@ -1,44 +1,31 @@
 # Changelog
 
-## 2.2.0.2 Preview (26.04.2019)
-
-### Added
-
-- The tool will try to automatically find My Summer Car installation path
-- Last selected song list item will still be selected even after list updates
-- youtube-dl will now automatically check for updates on start
-
-### Changes
-
-- Lots of code optimizations and improvements
-
-### Bug Fixes
-
-- MSCMM will load much faster if you're offline and updates are enabled
-- History and Crash Log buttons in Settings should check and uncheck correctly
-
-## 2.2.0.1 Preview (24.04.2019)
+## 2.2 (29.04.2019)
 
 ### Added
 
 - Give a chance a chance! You can now shuffle your music to always have random songs order
-- Added a help note into tutorial
-
-## 2.2.0.0 Preview (23.04.2019)
-
-### Added
-
 - Added history - all operations on the files will be saved to history.txt
-- Added counter which tells you how many songs you got in selected folder
+- The tool will try to automatically find My Summer Car installation path - no more manual selecting it!
+- Added counter which tells you how many songs you got in selected folder. If you're over the in-game limit, the counter will turn red
 - You can edit song names directly in Music Manager (note: removing name will reset name back to default)
 - Added "Clone" button which let's you quickly clone songs
-- When moving the song from CD to Radio and vice-versa, the tool will sort the folder as expected
+- Last selected song list item will still be selected even after list updates
+- youtube-dl will now automatically check for updates on start
+- Added Help button with some truly helpful notes
+
+### Changes
+
+- Tiny-itty-bitty UI changes
+- Lots of code optimizations and improvements
 
 ### Bug Fixes
 
+- When moving the song from CD to Radio and vice-versa, the tool will sort the folder as expected
 - If you're using preview, and the new stable release appears, the correct message appears
 - Small UI fixes
-- Fixed bugs when system is offline
+- The program should load much faster when your computer is offline
+- Crash Log button in Settings should check and uncheck correctly
 
 ### Removed
 

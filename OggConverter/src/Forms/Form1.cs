@@ -40,7 +40,7 @@ namespace OggConverter
             InitializeComponent();
             instance = this;
             
-            Log($"MSC Music Manager Preview {Functions.GetVersion()} ({Updates.version})");
+            Log($"MSC Music Manager {Utilities.GetVersion()} ({Updates.version})");
 
             if (File.Exists("mysummercar.exe") || File.Exists("steam_api.dll") || File.Exists("steam_api64.dll"))
             {
@@ -75,7 +75,7 @@ namespace OggConverter
             playerCD.Left = playerRadio.CenterTo(panel1) + playerRadio.Width / 2 + 6;
 
             // Removing temporary or unused files
-            Functions.Cleanup();
+            Utilities.Cleanup();
 
             // Checking file validity   
             if (!Settings.AreSettingsValid())
@@ -131,7 +131,7 @@ namespace OggConverter
 
             // Showing legal notice if the tool is used for the first time
             if (Settings.LatestVersion == 0)
-                Log("\n" + Functions.AboutNotice);
+                Log("\n" + Utilities.AboutNotice);
 
             // User is using this release for first time
             if (Updates.version > Settings.LatestVersion)
@@ -179,7 +179,6 @@ namespace OggConverter
                     Updates.LookForAnUpdate(true);
 
                 Updates.LookForAnUpdate(false);
-
                 Updates.LookForYoutubeDlUpdate();
             }
 
@@ -189,8 +188,7 @@ namespace OggConverter
                 btnUpdates.Text = "Updates (Preview)";
             }
 
-            if (Settings.DemoMode)
-                mSCOGGToolStripMenuItem.Text += " (DEMO MODE)";        
+            mSCOGGToolStripMenuItem.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
         }
 
         /// <summary>
@@ -267,7 +265,7 @@ namespace OggConverter
                 }
 
             labCounter.Text = $"Songs: {howManySongs}";
-            labCounter.ForeColor = ((CurrentFolder == "CD") && (howManySongs > 15)) ? Color.Red : Color.Black;
+            labCounter.ForeColor = ((CurrentFolder == "CD") && (howManySongs > 15)) || ((CurrentFolder == "Radio") && (howManySongs > 99)) ? Color.Red : Color.Black;
 
             if (songList.Items.Count > lastSelected)
                 songList.SelectedIndex = lastSelected;
@@ -281,7 +279,7 @@ namespace OggConverter
 
         private void BtnDirectory_Click(object sender, EventArgs e)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 Log("Program is busy.");
                 return;
@@ -294,7 +292,7 @@ namespace OggConverter
                 if (dialog == DialogResult.OK && Directory.GetFiles(folderDialog.SelectedPath, "mysummercar.exe").Length != 0)
                 {
                     Settings.GamePath = folderDialog.SelectedPath;
-                    Log("My Summer Car detected!");
+                    Log("My Summer Car folder loaded successfully!");
 
                     if (firstLoad)
                     {
@@ -307,7 +305,8 @@ namespace OggConverter
                 else if (dialog == DialogResult.Cancel)
                     Log("Operation canceled");
                 else
-                    Log("Couldn't find mysummercar.exe");
+                    Log("Couldn't find mysummercar.exe. " +
+                        "Make sure you've selected the game's ROOT folder (ex. C:\\Steam\\steamapps\\common\\My Summer Car) and NOT Radio or CD!");
             }
         }
 
@@ -329,7 +328,7 @@ namespace OggConverter
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 e.Cancel = true;
                 Log("Program is busy.");
@@ -367,7 +366,7 @@ namespace OggConverter
                 Process.Start($"{Settings.GamePath}\\mysummercar.exe");
                 return;
             }
-            Functions.LaunchGame();
+            Utilities.LaunchGame();
         }
 
         private void RemoveOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -441,7 +440,7 @@ namespace OggConverter
 
         private void MSCOGGToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Functions.AboutNotice, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Utilities.AboutNotice, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnPlay(object sender, EventArgs e)
@@ -506,7 +505,7 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 Log("Program is busy.");
                 return;
@@ -523,7 +522,7 @@ namespace OggConverter
             {
                 Player.Stop();
 
-                while (!Functions.IsFileReady(file)) { }
+                while (!Utilities.IsFileReady(file)) { }
 
                 if (File.Exists(file))
                     File.Delete(file);
@@ -542,7 +541,7 @@ namespace OggConverter
 
         private void PlayerCD_Click(object sender, EventArgs e)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 Log("Program is busy.");
                 return;
@@ -554,7 +553,7 @@ namespace OggConverter
 
         private void PlayerRadio_Click(object sender, EventArgs e)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 Log("Program is busy.");
                 return;
@@ -596,7 +595,7 @@ namespace OggConverter
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
                 return;
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -677,7 +676,7 @@ namespace OggConverter
                 return;
             }
 
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 Log("Program is busy.");
                 return;
@@ -689,7 +688,7 @@ namespace OggConverter
             string url = txtboxVideo.Text;
             string forcedName = null;
 
-            if (!url.Contains("https://"))
+            if (!url.StartsWith("https://"))
             {
                 if (url == "")
                 {
@@ -700,6 +699,10 @@ namespace OggConverter
                 txtboxVideo.Text = txtboxVideo.Text.Replace('"', '\0');
                 url = $"ytsearch:\"{txtboxVideo.Text}\"";
                 forcedName = txtboxVideo.Text;
+            }
+            else
+            {
+                url = url.Trim();
             }
 
             await Downloader.DownloadFile(url, CurrentFolder, playerCD.Checked ? 15 : 99, forcedName);
@@ -722,9 +725,12 @@ namespace OggConverter
 
         private void BtnHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("How to use:\n\n- Drag and drop music files on the program's window or executable to quickly convert one or more songs\n" +
-                "- Paste songs into Radio or CD folder in My Summer Car folder and click on the program's window\n" +
-                "- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term", 
+            MessageBox.Show("How to use:\n\n" +
+                "- Drag and drop music files on the program's window or executable to quickly convert one or more songs\n" +
+                "- Paste songs into Radio or CD folder in My Summer Car folder and click on the program's window - the program will detect new songs automatically\n" +
+                "- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term\n\n" +
+                "Use Shuffle to randomize songs order.\n" +
+                "In Edit tab you can change song's displayed name.", 
                 "Help", 
                 MessageBoxButtons.OK, 
                 MessageBoxIcon.Information);
@@ -785,7 +791,7 @@ namespace OggConverter
         {
             if (!Settings.DisableMetaFiles)
             {
-                DialogResult dl = MessageBox.Show("Disabling metafiles will result in MSC Music Manager using file names, instead of real song names.\n" +
+                DialogResult dl = MessageBox.Show("Disabling metafiles will result in MSC Music Manager using file names, instead of saved song names.\n" +
                     "Are you sure you want to continue?",
                     "Question",
                     MessageBoxButtons.YesNo,
@@ -831,6 +837,11 @@ namespace OggConverter
                 }
             }
             UpdateSongList();
+        }
+
+        private void BtnYoutubeDlUpdate_Click(object sender, EventArgs e)
+        {
+            Updates.LookForYoutubeDlUpdate(true);
         }
     }
 }

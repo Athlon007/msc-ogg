@@ -71,7 +71,7 @@
     <Compile Include="src\Forms\QuickConvert.Designer.cs">
       <DependentUpon>QuickConvert.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Misc\Functions.cs" />
+    <Compile Include="src\Misc\Utilities.cs" />
     <Compile Include="src\Music\Downloader.cs" />
     <Compile Include="src\Music\MetaData.cs" />
     <Compile Include="src\Music\Player.cs" />

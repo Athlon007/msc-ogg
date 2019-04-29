@@ -23,7 +23,7 @@ using System.Net;
 
 namespace OggConverter
 {
-    static class Functions
+    static class Utilities
     {
         /// <summary>
         /// Checks if string contains any extension in the file name.
@@ -122,7 +122,7 @@ namespace OggConverter
         /// </summary>
         public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
 
-        // Prevents 'Looks like you're offline.' message from appearing twice if user's using Preview update channel (and useless network traffic)
+        // Prevents 'Looks like you're offline.' message from appearing twice if user's using Preview update channel (and prevents useless network traffic)
         static bool isOffline;
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace OggConverter
             {
                 using (WebClient client = new WebClient())
                 {
-                    using (client.OpenRead("https://gitlab.com"))
+                    using (client.OpenRead("https://gitlab.com/aathlon/msc-ogg"))
                     {
                         return true;
                     }

@@ -27,7 +27,7 @@ namespace OggConverter
     class Updates
     {
         // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18173; 
+        public const int version = 18180; 
         static bool newUpdateReady;
         static bool downgrade;
 
@@ -42,7 +42,7 @@ namespace OggConverter
         /// </summary>
         public static void LookForAnUpdate(bool getPreview)
         {
-            if (Settings.DemoMode || !Functions.IsOnline()) return;
+            if (Settings.DemoMode || !Utilities.IsOnline()) return;
 
             if (newUpdateReady)
             {
@@ -98,7 +98,7 @@ namespace OggConverter
             {
                 downgrade = true;
 
-                DialogResult res = MessageBox.Show("Looks like you want to downgrade from preview build to stable?\n\n" +
+                DialogResult res = MessageBox.Show("Looks like you use a preview release and you disable preview update channel. Do you want to downgrade now?\n\n" +
                     "WARNING: In order to keep things still working, all settings will be reset." +
                     $"\n\nYour version: {version}\nNewest version: {latest}",
                     "Question",
@@ -155,13 +155,28 @@ namespace OggConverter
             Application.Exit();
         }
 
-        public static async void LookForYoutubeDlUpdate()
+        /// <summary>
+        /// Starts the GetYoutubeDlUpdate void
+        /// </summary>
+        /// <param name="force">Skips the same date test.</param>
+        public static async void LookForYoutubeDlUpdate(bool force = false)
         {
-            if (Settings.DemoMode || !Functions.IsOnline()) return;
+            if (!force)
+            {
+                if (Settings.DemoMode || Settings.YouTubeDlLastUpdateCheckDay == DateTime.Now.Day)
+                    return;
+            }
+            if (!Utilities.IsOnline())
+                return;
+
             await GetYoutubeDlUpdate();
         }
 
-        public static async Task GetYoutubeDlUpdate()
+        /// <summary>
+        /// Starts youtube-dl with -U parameter which makes it check for new updates directly from youtube-dl server
+        /// </summary>
+        /// <returns></returns>
+        static async Task GetYoutubeDlUpdate()
         {
             IsYoutubeDlUpdating = true;
             Form1.instance.Log("Looking for youtube-dl updates...");
@@ -171,8 +186,9 @@ namespace OggConverter
             process.StartInfo.Arguments = "-U";
             process.Start();
             await Task.Run(() => process.WaitForExit());
-            Form1.instance.Log("youtube-dl is up-to-date!\n");
+            Form1.instance.Log("youtube-dl is up-to-date!");
             IsYoutubeDlUpdating = false;
+            Settings.YouTubeDlLastUpdateCheckDay = DateTime.Now.Day;
         }
     }
 }

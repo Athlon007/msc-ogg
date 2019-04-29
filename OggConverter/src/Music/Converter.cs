@@ -56,7 +56,7 @@ namespace OggConverter
         /// </summary>
         public static async void StartConversion()
         {
-            if (Functions.IsToolBusy())
+            if (Utilities.IsToolBusy())
             {
                 Form1.instance.Log("Program is busy.");
                 return;
@@ -97,7 +97,7 @@ namespace OggConverter
 
                 //Actions after conversion
                 if (Settings.LaunchAfterConversion)
-                    Functions.LaunchGame();
+                    Utilities.LaunchGame();
 
                 if (Settings.CloseAfterConversion)
                     Application.Exit();
