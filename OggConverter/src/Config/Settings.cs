@@ -16,7 +16,6 @@
 
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace OggConverter
@@ -59,10 +58,9 @@ namespace OggConverter
         // My Summer Car directory path
         public static string GamePath { get => Get("MSC Path", GetMSCPath()); set => Set("MSC Path", value); }
 
-
-        ///////////////////////////
-        // CAN'T BE SET BY USER! //
-        ///////////////////////////
+        //////////////////////////////////////////////
+        // THESE SETTINGS CAN'T BE CHANGED BY USER! //
+        //////////////////////////////////////////////  
         
         // Stores last build used.
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }                
@@ -72,7 +70,6 @@ namespace OggConverter
 
         // Stores the last update check day for youtube-dl
         public static int YouTubeDlLastUpdateCheckDay { get => Get("YouTubeDlLastUpdateCheckDay", 1); set => Set("YouTubeDlLastUpdateCheckDay", value); }
-
 
 
         /// <summary>
@@ -110,10 +107,7 @@ namespace OggConverter
         public static bool AreSettingsValid()
         {           
             GamePath = GetMSCPath();
-            if (GamePath == "invalid")
-                return false;            
-
-            return true;
+            return !String.IsNullOrEmpty(GamePath);           
         }
 
         /// <summary>
@@ -143,35 +137,27 @@ namespace OggConverter
                 GamePath = $"{steamFolder}\\steamapps\\common\\My Summer Car";
                 return $"{steamFolder}\\steamapps\\common\\My Summer Car";
             }
+
             // MSC not found - gotta open config.vdf file and browse all libraries for MSC folder...
-            else
+            // Dumping config.vdf to string array
+            string[] config = File.ReadAllText($"{steamFolder}\\config\\config.vdf").Split('\n');
+            // Creating list in which all BaseInstallFolder values will be stored
+            foreach (string line in config)
             {
-                // Dumping config.vdf to string array
-                string[] config = File.ReadAllText($"{steamFolder}\\config\\config.vdf").Split('\n');
-                // Creating list in which all BaseInstallFolder values will be stored
-                List<string> baseInstallFolders = new List<string>();
-                foreach (string line in config)
+                if (line.Contains("BaseInstallFolder"))
                 {
-                    if (line.Contains("BaseInstallFolder"))
+                    string path = line.Substring(line.LastIndexOf('\t')).Replace("\"", "").Replace("\\\\", "\\").Trim();
+                    path += "\\steamapps\\common\\My Summer Car\\mysummercar.exe";
+                    if (File.Exists(path))
                     {
-                        string l = line.Substring(line.LastIndexOf('\t')).Replace("\"", "").Replace("\\\\", "\\").Trim();
-                        baseInstallFolders.Add(l);
+                        GamePath = path;
+                        return path;
                     }
                 }
+            }   
 
-                // Now we're checking if any library has My Summer Car in it
-                foreach (string library in baseInstallFolders)
-                {
-                    if (File.Exists($"{library}\\steamapps\\common\\My Summer Car\\mysummercar.exe"))
-                    {
-                        GamePath = $"{library}\\steamapps\\common\\My Summer Car\\mysummercar.exe";
-                        return $"{library}\\steamapps\\common\\My Summer Car\\mysummercar.exe";
-                    }
-                }
-            }
-
-            // Still haven't found? User will be asked to select it manually. Returning 'invalid' value.
-            return "invalid";
+            // Still haven't found? User will be asked to select it manually. Return null
+            return null;
         }
     }
 }

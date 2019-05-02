@@ -15,9 +15,10 @@
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using System.Windows.Forms;
-using Microsoft.Win32;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OggConverter
 {
@@ -40,11 +41,20 @@ namespace OggConverter
 
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\MSCOGG", true))
+            if (!Settings.AreSettingsValid())
             {
-                if (Key.GetValue("MSC Path") == null)
+                MessageBox.Show("Couldn't find My Summer Car path. Set it up first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                this.Close();
+                return;
+            }
+
+            // Checking for files validity
+            foreach (string file in files)
+            {
+                if (!file.ContainsAny(Converter.extensions))
                 {
-                    MessageBox.Show("Couldn't find My Summer Car path. Set it up first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("One or more files are not supported music file formats. Exiting now.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                     this.Close();
                     return;
@@ -54,6 +64,7 @@ namespace OggConverter
             this.files = files;
             Message = $"Where do you want to convert {files.Length} file{(files.Length > 1 ? "s" : "")}?";
 
+            // Setting up the buttons
             btnRadio.Click += (s, e) => Convert("Radio", 99);
             btnCD.Click += (s, e) => Convert("CD", 15);
             btnExit.Click += (s, e) => Application.Exit();
@@ -73,6 +84,9 @@ namespace OggConverter
 
             Message = "Done!";
             btnExit.Visible = true;
+
+            await Task.Run(() => Thread.Sleep(3000));
+            Application.Exit();
         }
     }
 }

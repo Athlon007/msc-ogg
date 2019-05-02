@@ -51,7 +51,6 @@ namespace OggConverter
             // Setup executable and parameters
             process.StartInfo.FileName = "ffplay.exe";
             process.StartInfo.Arguments = $"-nodisp \"{path}\"";
-
             process.Start();
         }
 
@@ -156,37 +155,37 @@ namespace OggConverter
             int selectedIndex = songList.SelectedIndex;
             if (selectedIndex == 0) return;
 
-            string oldFile = Player.WorkingSongList[selectedIndex];
-            string newFile = $"track{selectedIndex + (moveUp ? 0 : 2)}";
+            string oldName = Player.WorkingSongList[selectedIndex];
+            string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
 
             // Waiting for file to be free
-            while (!Utilities.IsFileReady($"{mscPath}\\{oldFile}.ogg")) { }
+            while (!Utilities.IsFileReady($"{mscPath}\\{oldName}.ogg")) { }
 
             // Moving file that now uses the current new name
             //
             // For instance: we're moving track2 to track1.
             // So we first move track1 out of the place and renaming it to trackTemp IF track1 EXISTS
-            if (File.Exists($"{mscPath}\\{newFile}.ogg"))
+            if (File.Exists($"{mscPath}\\{newName}.ogg"))
             {
-                File.Move($"{mscPath}\\{newFile}.ogg", $"{mscPath}\\trackTemp.ogg");
-                if (File.Exists($"{mscPath}\\{newFile}.mscmm"))
-                    File.Move($"{mscPath}\\{newFile}.mscmm", $"{mscPath}\\trackTemp.mscmm");
+                File.Move($"{mscPath}\\{newName}.ogg", $"{mscPath}\\trackTemp.ogg");
+                if (File.Exists($"{mscPath}\\{newName}.mscmm"))
+                    File.Move($"{mscPath}\\{newName}.mscmm", $"{mscPath}\\trackTemp.mscmm");
             }
 
             // Now we're moving the file that we want to actually move
-            File.Move($"{mscPath}\\{oldFile}.ogg", $"{mscPath}\\{newFile}.ogg");
-            if (File.Exists($"{mscPath}\\{oldFile}.mscmm"))
-                File.Move($"{mscPath}\\{oldFile}.mscmm", $"{mscPath}\\{newFile}.mscmm");
+            File.Move($"{mscPath}\\{oldName}.ogg", $"{mscPath}\\{newName}.ogg");
+            if (File.Exists($"{mscPath}\\{oldName}.mscmm"))
+                File.Move($"{mscPath}\\{oldName}.mscmm", $"{mscPath}\\{newName}.mscmm");
 
             // Finally we move the file that we set as temp (if it exists)
             if (File.Exists($"{mscPath}\\trackTemp.ogg"))
-                File.Move($"{mscPath}\\trackTemp.ogg", $"{mscPath}\\{oldFile}.ogg");
+                File.Move($"{mscPath}\\trackTemp.ogg", $"{mscPath}\\{oldName}.ogg");
 
             if (File.Exists($"{mscPath}\\trackTemp.mscmm"))
-                File.Move($"{mscPath}\\trackTemp.mscmm", $"{mscPath}\\{oldFile}.mscmm");
+                File.Move($"{mscPath}\\trackTemp.mscmm", $"{mscPath}\\{oldName}.mscmm");
 
-            Logs.History($"Changing Order: moved \"{newFile}\" to \"{oldFile}\", and \"{oldFile}\" to \"{newFile}\"");
-            Form1.instance.Log($"Changing Order: moved \"{newFile}\" to \"{oldFile}\", and \"{oldFile}\" to \"{newFile}\"");
+            Logs.History($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
+            Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
 
             Form1.instance.UpdateSongList();
             songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
@@ -246,6 +245,7 @@ namespace OggConverter
 
             string newName = null;
 
+            // Getting a new name for cloned song
             for (int i = 1; i <= 99; i++)
             {
                 if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
@@ -255,9 +255,11 @@ namespace OggConverter
                 }
             }
 
-            File.Copy($"{Settings.GamePath}\\{folder}\\{fileName}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
-            if (File.Exists($"{Settings.GamePath}\\{folder}\\{fileName}.mscmm"))
-                File.Copy($"{Settings.GamePath}\\{folder}\\{fileName}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
+            string pathToFile = $"{Settings.GamePath}\\{folder}\\{fileName}"; // Path to file to be cloned with it's name
+
+            File.Copy($"{pathToFile}.ogg", $"{pathToFile}.ogg");
+            if (File.Exists($"{pathToFile}.mscmm"))
+                File.Copy($"{pathToFile}.mscmm", $"{pathToFile}.mscmm");
 
             Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
             Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
@@ -277,9 +279,11 @@ namespace OggConverter
 
             Stop();
 
+            // Collecting all files into FileInfo list
             DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
             List<FileInfo> files= new List<FileInfo>(di.GetFiles("track*.ogg"));
 
+            // Renaming files to temporary name
             for (int i = 0; i < files.Count; i++)
             {
                 string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
@@ -288,8 +292,10 @@ namespace OggConverter
                     File.Move($"{file}.mscmm", $"{file}.mscmm.temp");
             }
 
+            // Randomizing order of files list
             files = files.OrderBy(a => Guid.NewGuid()).ToList();
 
+            // Now moving the files with temporary names to new name
             for (int i = 0; i < files.Count; i++)
             {
                 string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;

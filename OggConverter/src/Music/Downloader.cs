@@ -36,7 +36,7 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task DownloadFile(string url, string folder, int limit, string forcedName = null)
         {
-            if (Utilities.IsOnline()) return;
+            if (!Utilities.IsOnline()) return;
 
             if (Updates.IsYoutubeDlUpdating)
             {

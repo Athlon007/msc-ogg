@@ -27,13 +27,7 @@ namespace OggConverter
         /// Checks if desktop shortcut exists.
         /// </summary>
         /// <returns></returns>
-        public static bool ShortcutExist()
-        {
-            if (System.IO.File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\My Summer Car Music Manager.lnk"))
-                return true;
-
-            return false;
-        }
+        public static bool ShortcutExist() { return System.IO.File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\My Summer Car Music Manager.lnk"); }
 
         /// <summary>
         /// Creates a new desktop shortcut.

@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.2.1 (02.05.2019)
+
+### Added
+
+- When using Quick Convert, the tool will now check for file validity
+- The tool will automatically close after using Quick Convert
+- Updated youtube-dl to version 2019.04.30
+
+### Changes
+
+- Code optimization and improvements
+
+### Bug Fixes
+
+- Fixed a bug in which downloading the song from Youtube wouldn't work at all
+
 ## 2.2 (29.04.2019)
 
 ### Added

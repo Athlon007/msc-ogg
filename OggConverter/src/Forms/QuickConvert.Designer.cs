@@ -88,7 +88,7 @@
             this.MinimizeBox = false;
             this.Name = "QuickConvert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MSCMM - Quick Convert";
+            this.Text = "Quick Convert";
             this.ResumeLayout(false);
             this.PerformLayout();
 

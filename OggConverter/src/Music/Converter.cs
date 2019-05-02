@@ -49,7 +49,7 @@ namespace OggConverter
         /// <summary>
         /// Tells the program to skip CD folder, if the game is older than 24.10.2017 update
         /// </summary>
-        public static bool SkipCD;
+        public static bool SkipCD { get; set; }
 
         /// <summary>
         /// Starts the conversion of every found file in Radio or CD
@@ -69,7 +69,6 @@ namespace OggConverter
             }
 
             Converter.IsBusy = true;
-
             Converter.TotalConversions = 0;
             Converter.Skipped = 0;
 

@@ -110,15 +110,15 @@ namespace OggConverter
         public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating; }
 
         /// <summary>
-        /// Centers the sender according to reference control
+        /// Centers horizontally the sender according to reference control
         /// </summary>
         /// <param name="sender">Object to center</param>
         /// <param name="reference">Reference (ex.: parental panel)</param>
         /// <returns></returns>
-        public static int CenterTo(this Control sender, Control reference) { return (reference.Width - sender.Width) / 2; }
+        public static int CenterHorizontally(this Control sender, Control reference) { return (reference.Width - sender.Width) / 2; }
 
         /// <summary>
-        /// Launchec the game - either with Steam or directly from mysummercar.exe
+        /// Launches the game - either with Steam or directly from mysummercar.exe
         /// </summary>
         public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
 

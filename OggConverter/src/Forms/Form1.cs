@@ -19,7 +19,6 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace OggConverter
 {
@@ -31,9 +30,13 @@ namespace OggConverter
 
         public ToolStripMenuItem ButtonGetUpdate;
 
+        /// <summary>
+        /// Checks what radio button is selected and decides what's the current folder
+        /// </summary>
         private string CurrentFolder { get => playerCD.Checked ? "CD" : "Radio"; }
 
-        int lastSelected = -1; // Stores last selected item on songList. Set to -1 by default so nothing's checked
+        // Stores last selected item on songList. Set to -1 by default so nothing's checked
+        int lastSelected = -1;
 
         public Form1()
         {
@@ -69,10 +72,10 @@ namespace OggConverter
             // Positioning UI elemenmts
             dragDropPanel.Dock = DockStyle.Fill;
             tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 2, 0);
-            btnPlaySong.Left = btnPlaySong.CenterTo(panel1) - btnPlaySong.Width / 2 - 2;
-            btnStop.Left = btnStop.CenterTo(panel1) + btnStop.Width / 2 + 2;
-            playerRadio.Left = playerRadio.CenterTo(panel1) - playerRadio.Width / 2 - 2;
-            playerCD.Left = playerRadio.CenterTo(panel1) + playerRadio.Width / 2 + 6;
+            btnPlaySong.Left = btnPlaySong.CenterHorizontally(panel1) - btnPlaySong.Width / 2 - 2;
+            btnStop.Left = btnStop.CenterHorizontally(panel1) + btnStop.Width / 2 + 2;
+            playerRadio.Left = playerRadio.CenterHorizontally(panel1) - playerRadio.Width / 2 - 2;
+            playerCD.Left = playerRadio.CenterHorizontally(panel1) + playerRadio.Width / 2 + 6;
 
             // Removing temporary or unused files
             Utilities.Cleanup();
@@ -156,6 +159,13 @@ namespace OggConverter
                         UpdateSongList();
                         SafeMode(false);
                     }
+                }
+
+                if (Settings.LatestVersion == 0 && !DesktopShortcut.ShortcutExist())
+                {
+                    DialogResult dl = MessageBox.Show("Do you want to create desktop shortcut?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dl == DialogResult.Yes)
+                        DesktopShortcut.Create();
                 }
 
                 Settings.LatestVersion = Updates.version;
@@ -338,7 +348,6 @@ namespace OggConverter
             Player.Stop();
         }
 
-
         private void OpenLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!File.Exists("history.txt"))
@@ -463,7 +472,7 @@ namespace OggConverter
                 song = temp;
             }
             labNowPlaying.Text = song;
-            labNowPlaying.Left = labNowPlaying.CenterTo(panel1);
+            labNowPlaying.Left = labNowPlaying.CenterHorizontally(panel1);
             labNowPlaying.Visible = true;
         }
 
@@ -604,7 +613,7 @@ namespace OggConverter
                 dragDropPanel.BringToFront();
                 int filesLength = ((string[])e.Data.GetData(DataFormats.FileDrop)).Length;
                 labelConvert.Text = $"Convert {filesLength} file{(filesLength > 1 ? "s" : "")} to {(CurrentFolder)}?\n\n(Drop to Confirm)";
-                labelConvert.Left = labelConvert.CenterTo(dragDropPanel);
+                labelConvert.Left = labelConvert.CenterHorizontally(dragDropPanel);
                 labelConvert.Top = (this.ClientSize.Height - labelConvert.Size.Height) / 2;
                 e.Effect = DragDropEffects.Copy;
             }
