@@ -36,6 +36,7 @@ namespace OggConverter
         /// </summary>
         public const int version = 18183; 
         static bool newUpdateReady;
+        static bool newPreviewReady;
         static bool downgrade;
 
         // Download sources
@@ -69,6 +70,7 @@ namespace OggConverter
         static async Task LookForAnUpdate(bool getPreview)
         {
             if (Settings.DemoMode || !Utilities.IsOnline()) return;
+            if (!getPreview && newPreviewReady) return;
 
             if (newUpdateReady)
             {
@@ -96,7 +98,8 @@ namespace OggConverter
 
                         if (latest > version)
                         {
-                            string msg = Settings.Preview && getPreview ? "There's new a newer stable version available to download than yours Preview. Would you like to download the update?" :
+                            newPreviewReady = true;
+                            string msg = Settings.Preview && getPreview ? "There's a newer stable version available to download than yours Preview. Would you like to download the update?" :
                                 "There's a new update ready to download. Would you like to download it now?";
                             msg += $"\n\nYour version: {version}\nNewest version: {latest}";
                             DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -152,8 +155,7 @@ namespace OggConverter
             IsBusy = true;
             Form1.instance.Log("\nDownloading an update...");
 
-            string zipURL = getPreview ? preview : stable;
-            zipURL += "mscmm.zip";
+            string zipURL = (getPreview ? preview : stable) + "mscmm.zip";
 
             using (WebClient client = new WebClient())
             {
