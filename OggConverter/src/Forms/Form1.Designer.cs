@@ -54,6 +54,8 @@
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnYoutubeDlUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnDesktopShortcut = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mSCOGGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,8 +95,7 @@
             this.btnSetName = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
-            this.btnYoutubeDlUpdate = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.downloadProgress = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -360,6 +361,18 @@
             this.btnCheckUpdate.Size = new System.Drawing.Size(232, 22);
             this.btnCheckUpdate.Text = "Check for Update";
             this.btnCheckUpdate.Click += new System.EventHandler(this.BtnCheckUpdate_Click);
+            // 
+            // btnYoutubeDlUpdate
+            // 
+            this.btnYoutubeDlUpdate.Name = "btnYoutubeDlUpdate";
+            this.btnYoutubeDlUpdate.Size = new System.Drawing.Size(232, 22);
+            this.btnYoutubeDlUpdate.Text = "Check for youtube-dl update";
+            this.btnYoutubeDlUpdate.Click += new System.EventHandler(this.BtnYoutubeDlUpdate_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
             // 
             // btnDesktopShortcut
             // 
@@ -721,17 +734,13 @@
             this.txtSongName.Size = new System.Drawing.Size(469, 20);
             this.txtSongName.TabIndex = 2;
             // 
-            // btnYoutubeDlUpdate
+            // downloadProgress
             // 
-            this.btnYoutubeDlUpdate.Name = "btnYoutubeDlUpdate";
-            this.btnYoutubeDlUpdate.Size = new System.Drawing.Size(232, 22);
-            this.btnYoutubeDlUpdate.Text = "Check for youtube-dl update";
-            this.btnYoutubeDlUpdate.Click += new System.EventHandler(this.BtnYoutubeDlUpdate_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
+            this.downloadProgress.Location = new System.Drawing.Point(386, 1);
+            this.downloadProgress.Name = "downloadProgress";
+            this.downloadProgress.Size = new System.Drawing.Size(356, 23);
+            this.downloadProgress.TabIndex = 19;
+            this.downloadProgress.Visible = false;
             // 
             // Form1
             // 
@@ -739,6 +748,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(743, 379);
+            this.Controls.Add(this.downloadProgress);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnOpenGameDir);
@@ -843,6 +853,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnDisableMetafiles;
         private System.Windows.Forms.ToolStripMenuItem btnYoutubeDlUpdate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ProgressBar downloadProgress;
     }
 }
 

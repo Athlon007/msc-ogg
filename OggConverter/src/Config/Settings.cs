@@ -23,7 +23,11 @@ namespace OggConverter
     class Settings
     {
         // Default MSCMM registry key
+#if DEBUG
+        const string key = "SOFTWARE\\MSCOGG_DEBUG";
+#else
         const string key = "SOFTWARE\\MSCOGG";
+#endif
 
         // Should MSCMM remove source song files after conversion?
         public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }

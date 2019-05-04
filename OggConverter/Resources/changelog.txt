@@ -1,9 +1,8 @@
 What's new in this release?
 
-- When using Quick Convert, the tool will now check for file validity
-- The tool will automatically close after using Quick Convert
-- Updated youtube-dl to version 2019.04.30
-- Code optimization and improvements
-- Fixed a bug in which downloading the song from Youtube wouldn't work at all
+- FFmpeg, FFplay and youtube-dl are not included anymore. Instead, they will be downloaded automatically if they're missing
+- While downloading an update, the progress bar will be displayed
+- Download system overhaul - now the tool won't freeze while downloading the update and it will display the progress bar
+- Dramatically improved loading times by better update checking algorithm
 
 For more visit https://gitlab.com/aathlon/msc-ogg

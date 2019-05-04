@@ -14,9 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
 
-using System;
 using System.Threading.Tasks;
-using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -36,45 +34,8 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task DownloadFile(string url, string folder, int limit, string forcedName = null)
         {
-            if (!Utilities.IsOnline()) return;
-
-            if (Updates.IsYoutubeDlUpdating)
-            {
-                MessageBox.Show("youtube-dl is now updating or looking for the update. Try again in a few seconds.", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                return;
-            }
-
-            if (!File.Exists("youtube-dl.exe"))
-            {
-                DialogResult dl = MessageBox.Show("In order to download the song, the tool requires youtube-dl to be downloaded. Press 'Yes' to download it now", 
-                    "Stop", 
-                    MessageBoxButtons.YesNo, 
-                    MessageBoxIcon.Stop);
-
-                if (dl == DialogResult.Yes)
-                {
-                    Form1.instance.Log("\nDownloading youtube-dl...");
-                    try
-                    {
-                        using (WebClient web = new WebClient())
-                        {
-                            await Task.Run(() => web.DownloadFile(new Uri("https://yt-dl.org/latest/youtube-dl.exe"), "youtube-dl.exe"));
-                            web.Dispose();
-                        }
-                        Form1.instance.Log("Downloaded youtube-dl successfully!");
-                    }
-                    catch (Exception ex)
-                    {
-                        Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created");
-                        Logs.CrashLog(ex.ToString());
-                        return;
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
+            Form1.instance.Log("Downloaded youtube-dl successfully!");
+            Form1.instance.DownloadProgress.Visible = false;
 
             if (!url.ContainsAny("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v=", "ytsearch:"))
             {
@@ -101,19 +62,24 @@ namespace OggConverter
             process.Start();
             await Task.Run(() => process.WaitForExit());
 
-            if (!File.Exists("download.aac"))
+            if (!File.Exists("download.mp3"))
             {
-                Form1.instance.Log("Couldn't donwnload the song. Check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.");
+                Form1.instance.Log("Couldn't donwnload the song. Check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n\n" +
+                    "Also please check if youtube-dl supports the link that you use: https://ytdl-org.github.io/youtube-dl/supportedsites.html");
+                IsBusy = false;
+                Form1.instance.SafeMode(false);
                 return;
             }
 
             Form1.instance.Log("Converting...");
             await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName);
 
-            File.Delete("download.aac");
+            File.Delete("download.mp3");
             IsBusy = false;
 
             Form1.instance.UpdateSongList();
+            Form1.instance.SafeMode(false);
         }
+
     }
 }

@@ -39,11 +39,22 @@ namespace OggConverter
         {
             InitializeComponent();
 
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));            
 
             if (!Settings.AreSettingsValid())
             {
                 MessageBox.Show("Couldn't find My Summer Car path. Set it up first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                this.Close();
+                return;
+            }
+
+            if (!File.Exists("ffmpeg.exe"))
+            {
+                MessageBox.Show("FFmpeg needs to be downloaded first. Start the program to download it now.", 
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 Application.Exit();
                 this.Close();
                 return;

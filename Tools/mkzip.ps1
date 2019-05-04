@@ -5,11 +5,12 @@
 
 Write-Output "Starting the compression...";
 Compress-Archive -LiteralPath `
-"..\OggConverter\bin\Release\MSC Music Manager.exe", `
-"..\OggConverter\bin\Release\ffmpeg.exe", `
-"..\OggConverter\bin\Release\ffplay.exe", `
-"..\OggConverter\bin\Release\youtube-dl.exe" `
+"..\OggConverter\bin\Release\MSC Music Manager.exe"`
 -DestinationPath ..\mscmm.zip -Force;
+#"..\OggConverter\bin\Release\ffmpeg.exe", `
+#"..\OggConverter\bin\Release\ffplay.exe", `
+#"..\OggConverter\bin\Release\youtube-dl.exe" `
+
 Write-Output "Removing history and logs...";
 if (Test-Path "..\OggConverter\bin\Release\history.txt")
 {

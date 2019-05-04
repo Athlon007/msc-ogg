@@ -26,8 +26,15 @@ namespace OggConverter
 {
     class Updates
     {
-        // first two numbers - year, second two numbers - week, last digit - release number in this week. So the 17490 means year 2017, week 49, number of release in this week - 0
-        public const int version = 18181; 
+        /// <summary>
+        /// Stores the update version used to check if there's a newer version available
+        /// 
+        /// Pattern: YYWWB
+        /// YY - year (ex. 19 for 2019)
+        /// WW - week (ex. 18 for 18th week of year)
+        /// B - build of this week
+        /// </summary>
+        public const int version = 18183; 
         static bool newUpdateReady;
         static bool downgrade;
 
@@ -37,10 +44,29 @@ namespace OggConverter
 
         public static bool IsYoutubeDlUpdating { get; set; }
 
+        public static bool IsBusy { get; set; }
+
+        const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
+            "xcopy /s /y %cd%\\update %cd%\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
+
+        const string restartScript = "@echo off\nTASKKILL /IM \"MSC Music Manager.exe\"\nstart \"\" \"MSC Music Manager.exe\"\nexit";
+
+        /// <summary>
+        /// Starts update checking
+        /// </summary>
+        public static async void StartUpdateCheck()
+        {
+            if (Settings.Preview)
+                await Task.Run(() => LookForAnUpdate(true));
+
+            await Task.Run(() => LookForAnUpdate(false));
+            await Task.Run(() => LookForYoutubeDlUpdate());
+        }
+
         /// <summary>
         /// Checks for the update on remote server by downloading the latest version info file.
         /// </summary>
-        public static void LookForAnUpdate(bool getPreview)
+        static async Task LookForAnUpdate(bool getPreview)
         {
             if (Settings.DemoMode || !Utilities.IsOnline()) return;
 
@@ -58,13 +84,55 @@ namespace OggConverter
             }
 
             string latestURL = (getPreview ? preview : stable) + "latest.txt";
-            string latestContent = "";
 
             try
             {
                 using (WebClient client = new WebClient())
                 {
-                    latestContent = client.DownloadString(new Uri(latestURL));
+                    await Task.Run(() => client.DownloadStringAsync(new Uri(latestURL)));
+                    client.DownloadStringCompleted += (s, e) => 
+                    {
+                        int latest = int.Parse(e.Result);
+
+                        if (latest > version)
+                        {
+                            string msg = Settings.Preview && getPreview ? "There's new a newer stable version available to download than yours Preview. Would you like to download the update?" :
+                                "There's a new update ready to download. Would you like to download it now?";
+                            msg += $"\n\nYour version: {version}\nNewest version: {latest}";
+                            DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (res == DialogResult.Yes)
+                            {
+                                DownloadUpdate(getPreview);
+                                return;
+                            }
+
+                            newUpdateReady = true;
+                            Form1.instance.Log("\nThere's an update ready to download!");
+                            Form1.instance.ButtonGetUpdate.Visible = true;
+                            return;
+                        }
+                        else if ((latest < version) && (!Settings.Preview))
+                        {
+                            downgrade = true;
+
+                            DialogResult res = MessageBox.Show("Looks like you use a preview release and you disable preview update channel. Do you want to downgrade now?\n\n" +
+                                "WARNING: In order to keep things still working, all settings will be reset." +
+                                $"\n\nYour version: {version}\nNewest version: {latest}",
+                                "Question",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question);
+
+                            if (res == DialogResult.Yes)
+                                DownloadUpdate(getPreview);
+
+                            newUpdateReady = true;
+                            Form1.instance.Log("\nYou can downgrade now.");
+                            Form1.instance.ButtonGetUpdate.Visible = true;
+                        }
+
+                        if (Settings.Preview && !getPreview) return;
+                        Form1.instance.Log("\nTool is up-to-date");
+                    };
                 }
             }
             catch (Exception ex)
@@ -73,59 +141,15 @@ namespace OggConverter
                 Form1.instance.Log("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
                     "In case the problem still occures, a new crash log has been created.\n");
                 return;
-            }
-
-            int latest = int.Parse(latestContent);
-
-            if (latest > version)
-            {
-                string msg = Settings.Preview && getPreview ? "There's new a newer stable version available to download than yours Preview. Would you like to download the update?" :
-                    "There's a new update ready to download. Would you like to download it now?" +
-                    $"\n\nYour version: {version}\nNewest version: {latest}";
-                DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (res == DialogResult.Yes)
-                {
-                    DownloadUpdate(getPreview);
-                    return;
-                }
-
-                newUpdateReady = true;
-                Form1.instance.Log("\nThere's an update ready to download!");
-                Form1.instance.ButtonGetUpdate.Visible = true;
-                return;
-            }
-            else if ((latest < version) && (!Settings.Preview))
-            {
-                downgrade = true;
-
-                DialogResult res = MessageBox.Show("Looks like you use a preview release and you disable preview update channel. Do you want to downgrade now?\n\n" +
-                    "WARNING: In order to keep things still working, all settings will be reset." +
-                    $"\n\nYour version: {version}\nNewest version: {latest}",
-                    "Question",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (res == DialogResult.Yes)
-                    DownloadUpdate(getPreview);
-
-                newUpdateReady = true;
-                Form1.instance.Log("\nYou can downgrade now.");
-                Form1.instance.ButtonGetUpdate.Visible = true;
-            }
-
-            if (Settings.Preview && !getPreview) return;
-
-            Form1.instance.Log("\nTool is up-to-date");
-        }
-
-        const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
-            "xcopy /s /y %cd%\\update %cd%\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
+            }    
+        }        
 
         /// <summary>
         /// Downloads and installs the latest update.
         /// </summary>
-        public static void DownloadUpdate(bool getPreview)
+        public static async void DownloadUpdate(bool getPreview)
         {
+            IsBusy = true;
             Form1.instance.Log("\nDownloading an update...");
 
             string zipURL = getPreview ? preview : stable;
@@ -133,40 +157,94 @@ namespace OggConverter
 
             using (WebClient client = new WebClient())
             {
-                client.DownloadFile(new Uri(zipURL), "mscmm.zip");
-                client.Dispose();
+                client.DownloadProgressChanged += (s, e) =>
+                {
+                    Form1.instance.DownloadProgress.Invoke(new Action(() =>
+                    { 
+                        Form1.instance.DownloadProgress.Visible = true;
+                        Form1.instance.DownloadProgress.Value = e.ProgressPercentage;
+                    }));
+                    return;
+                };
+
+                await Task.Run(() => client.DownloadFileAsync(new Uri(zipURL), "mscmm.zip"));
+
+                client.DownloadFileCompleted += (s, e) =>
+                {
+                    Form1.instance.Log("Extracting...");
+                    Directory.CreateDirectory("update");
+                    ZipFile.ExtractToDirectory("mscmm.zip", "update");
+
+                    Form1.instance.Log("Installing...");
+                    File.WriteAllText("updater.bat", updaterScript);
+
+                    if (downgrade)
+                        Settings.WipeAll();
+
+                    IsBusy = false;
+
+                    Process process = new Process();
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    process.StartInfo.FileName = "updater.bat";
+                    process.Start();
+                    Application.Exit();
+                };
+            }            
+        }
+
+        /// <summary>
+        /// Downloads youtube-dl directly from youtube-dl servers
+        /// </summary>
+        /// <returns></returns>
+        public static async Task GetYoutubeDl()
+        {
+            IsYoutubeDlUpdating = true;
+            Form1.instance.Log("\nDownloading youtube-dl...");
+            try
+            {
+                using (WebClient web = new WebClient())
+                {
+                    web.DownloadProgressChanged += (s, e) =>
+                    {
+                        Form1.instance.DownloadProgress.Invoke(new Action(() =>
+                        {
+                            Form1.instance.DownloadProgress.Visible = true;
+                            Form1.instance.DownloadProgress.Value = e.ProgressPercentage;
+                        }));
+                        return;
+                    };
+
+                    await Task.Run(() => web.DownloadFileAsync(new Uri("https://yt-dl.org/latest/youtube-dl.exe"), "youtube-dl.exe"));
+
+                    web.DownloadFileCompleted += (s, e) =>
+                    {
+                        Form1.instance.DownloadProgress.Invoke(new Action(() => Form1.instance.DownloadProgress.Visible = false));
+                        IsYoutubeDlUpdating = false;
+                        Form1.instance.Log("youtube-dl downloaded successfully!");
+                        Form1.instance.Invoke(new Action(() => Form1.instance.SafeMode(false)));
+                    };
+                }
             }
-
-            Form1.instance.Log("Extracting...");
-
-            Directory.CreateDirectory("update");
-            ZipFile.ExtractToDirectory("mscmm.zip", "update");
-
-            Form1.instance.Log("Installing...");
-            File.WriteAllText("updater.bat", updaterScript);
-
-            if (downgrade)
-                Settings.WipeAll();
-
-            Process process = new Process();
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.FileName = "updater.bat";
-            process.Start();
-            Application.Exit();
+            catch (Exception ex)
+            {
+                Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created");
+                Logs.CrashLog(ex.ToString());
+                return;
+            }
         }
 
         /// <summary>
         /// Starts the GetYoutubeDlUpdate void
         /// </summary>
         /// <param name="force">Skips the same date test.</param>
-        public static async void LookForYoutubeDlUpdate(bool force = false)
+        public static async Task LookForYoutubeDlUpdate(bool force = false)
         {
             if (!force)
             {
-                if (Settings.DemoMode || Settings.YouTubeDlLastUpdateCheckDay == DateTime.Now.Day)
+                if ((Settings.DemoMode) || (Settings.YouTubeDlLastUpdateCheckDay == DateTime.Now.Day))
                     return;
             }
-            if (!Utilities.IsOnline())
+            if (!Utilities.IsOnline() || !File.Exists("youtube-dl.exe"))
                 return;
 
             await GetYoutubeDlUpdate();
@@ -179,7 +257,7 @@ namespace OggConverter
         static async Task GetYoutubeDlUpdate()
         {
             IsYoutubeDlUpdating = true;
-            Form1.instance.Log("Looking for youtube-dl updates...");
+            Form1.instance.Log("\nLooking for youtube-dl updates...");
             Process process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = "youtube-dl.exe";
@@ -189,6 +267,57 @@ namespace OggConverter
             Form1.instance.Log("youtube-dl is up-to-date!");
             IsYoutubeDlUpdating = false;
             Settings.YouTubeDlLastUpdateCheckDay = DateTime.Now.Day;
+        }
+
+        /// <summary>
+        /// Starts ffmpeg and ffplay download
+        /// </summary>
+        public static async void StartFFmpegDownload()
+        {
+            IsBusy = true;
+            Form1.instance.Log("\nDownloading ffmpeg and ffplay...");
+            await Task.Run(() => GetFFmpeg());
+        }
+
+        /// <summary>
+        /// Downloads ffmpeg and ffplay from MSCMM's Git repo
+        /// </summary>
+        /// <returns></returns>
+        static async Task GetFFmpeg()
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadProgressChanged += (s, e) =>
+                {
+                    Form1.instance.DownloadProgress.Invoke(new Action(() =>
+                    {
+                        Form1.instance.DownloadProgress.Visible = true;
+                        Form1.instance.DownloadProgress.Value = e.ProgressPercentage;
+                    }));
+                    return;
+                };
+
+                string link = (Settings.Preview ? preview : stable) + "Dependencies/ffpack.zip";
+                await Task.Run(() => client.DownloadFileAsync(new Uri(link), "ffpack.zip"));
+
+                client.DownloadFileCompleted += (s, e) =>
+                {
+                    ZipFile.ExtractToDirectory("ffpack.zip", Directory.GetCurrentDirectory());
+                    Form1.instance.DownloadProgress.Invoke(new Action(() =>
+                    {
+                        Form1.instance.DownloadProgress.Visible = false;
+                    }));
+
+                    File.WriteAllText("restart.bat", restartScript);
+                    IsBusy = false;
+
+                    Process process = new Process();
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    process.StartInfo.FileName = "restart.bat";
+                    process.Start();
+                    Application.Exit();
+                };
+            }
         }
     }
 }

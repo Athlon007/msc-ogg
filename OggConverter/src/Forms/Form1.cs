@@ -19,6 +19,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace OggConverter
 {
@@ -29,6 +30,7 @@ namespace OggConverter
         readonly bool firstLoad; // Disables some features if enabled
 
         public ToolStripMenuItem ButtonGetUpdate;
+        public ProgressBar DownloadProgress;
 
         /// <summary>
         /// Checks what radio button is selected and decides what's the current folder
@@ -45,6 +47,7 @@ namespace OggConverter
             
             Log($"MSC Music Manager {Utilities.GetVersion()} ({Updates.version})");
 
+            // Checking if MSCMM isn't installed in My Summer Car's folder
             if (File.Exists("mysummercar.exe") || File.Exists("steam_api.dll") || File.Exists("steam_api64.dll"))
             {
                 MessageBox.Show("Looks like you installed Music Manager into My Summer Car root path. " +
@@ -61,6 +64,7 @@ namespace OggConverter
             ButtonGetUpdate = btnDownloadUpdate;
             ButtonGetUpdate.Click += BtnCheckUpdate_Click;
             songList.DoubleClick += BtnPlay;
+            DownloadProgress = downloadProgress;
 
             // Setting up unicode characters for buttons
             btnUp.Text = char.ConvertFromUtf32(0x2191); // Up arrow
@@ -95,7 +99,6 @@ namespace OggConverter
                 return;
             }
             
-            //Path in textbox
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
             {
                 MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -118,6 +121,17 @@ namespace OggConverter
             btnAutoSort.Checked = Settings.AutoSort;
             btnHistory.Checked = Settings.History;
             btnDisableMetafiles.Checked = Settings.DisableMetaFiles;
+
+            // Checks if ffmpeg or ffplay are missing
+            // If so, they will be downloaded and the tool will be restarted.
+            if (!File.Exists("ffmpeg.exe") || !File.Exists("ffplay.exe"))
+            {
+                SafeMode(true, true);
+                MessageBox.Show("Hi there! In order to this tool to work, the ffmpeg and ffplay need to be downloaded.\n" +
+                    "The tool will now download it and restart itself.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Updates.StartFFmpegDownload();
+                return;
+            }
 
             // Checking if some trackTemp files exist. They may be caused by crash
             if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
@@ -180,17 +194,9 @@ namespace OggConverter
             Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
 
             if (Settings.NoUpdates)
-            {
                 Log("\nUpdates are disabled");
-            }
             else
-            {
-                if (Settings.Preview)
-                    Updates.LookForAnUpdate(true);
-
-                Updates.LookForAnUpdate(false);
-                Updates.LookForYoutubeDlUpdate();
-            }
+                Updates.StartUpdateCheck();
 
             if (Settings.Preview)
             {
@@ -205,7 +211,7 @@ namespace OggConverter
         /// Disabled most features to prevent crashes and bugs.
         /// Used for initial setup and if the My Summer Car directory or file no longer exists.
         /// </summary>
-        public void SafeMode(bool state)
+        public void SafeMode(bool state, bool complete = false)
         {
             state ^= true;
 
@@ -229,6 +235,12 @@ namespace OggConverter
             txtSongName.Enabled = state;
             btnCloneSong.Enabled = state;
             btnShuffle.Enabled = state;
+
+            if (complete)
+            {
+                menuTool.Enabled = state;
+                btnDirectory.Enabled = state;
+            }
         }
 
         /// <summary>
@@ -244,10 +256,17 @@ namespace OggConverter
             value += Environment.NewLine;
 
             if (logOutput.InvokeRequired)
-                logOutput.Invoke(new Action(() => logOutput.Text += value));
-            else
-                logOutput.Text += value;
+            {
+                logOutput.Invoke(new Action(delegate () 
+                {
+                    logOutput.Text += value;
+                    logOutput.SelectionStart = logOutput.TextLength;
+                    logOutput.ScrollToCaret();
+                }));
+                return;
+            }
 
+            logOutput.Text += value;
             logOutput.SelectionStart = logOutput.TextLength;
             logOutput.ScrollToCaret();
         }
@@ -458,6 +477,8 @@ namespace OggConverter
 
             Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
 
+            // Showing currenty playing song in label
+            // If the song name is longer than 51 characters, only words below that number will be displayed
             string song = songList.SelectedItem.ToString();
             string[] songSplit = song.Split(' ');
             song = "";
@@ -661,11 +682,12 @@ namespace OggConverter
                 return;
             }
 
-            Updates.LookForAnUpdate(Settings.Preview);
+            Updates.StartUpdateCheck();
         }
 
         private void BtnDownloadUpdate_Click(object sender, EventArgs e)
         {
+            if (Updates.IsBusy) return;
             Updates.DownloadUpdate(Settings.Preview);
         }
 
@@ -676,6 +698,8 @@ namespace OggConverter
 
         private async void BtnDownload_Click(object sender, EventArgs e)
         {
+            if (!Utilities.IsOnline()) return;
+
             if (Updates.IsYoutubeDlUpdating)
             {
                 MessageBox.Show("youtube-dl is now updating or looking for the update. You'll be notified on Log panel when it's done :)",
@@ -691,13 +715,30 @@ namespace OggConverter
                 return;
             }
 
+            if (!File.Exists("youtube-dl.exe"))
+            {
+                DialogResult dl = MessageBox.Show("In order to download the song, the tool requires youtube-dl to be downloaded. " +
+                    "Press 'Yes' to download it now",
+                    "Information",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+
+                if (dl != DialogResult.Yes)
+                    return;
+
+                SafeMode(true);
+                await Updates.GetYoutubeDl();
+                // The program waits for youtube-dl to download. It checks that every 1 second
+                while (Updates.IsYoutubeDlUpdating) { await Task.Delay(1000); }
+            }
+
             SafeMode(true);
             btnDownload.Enabled = txtboxVideo.Enabled = false;
 
             string url = txtboxVideo.Text;
             string forcedName = null;
 
-            if (!url.StartsWith("https://"))
+            if (!url.StartsWith("https://") || !url.StartsWith("http://"))
             {
                 if (url == "")
                 {
@@ -717,7 +758,6 @@ namespace OggConverter
             await Downloader.DownloadFile(url, CurrentFolder, playerCD.Checked ? 15 : 99, forcedName);
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
-            SafeMode(false);
         }
 
         private void TxtboxVideo_KeyDown(object sender, KeyEventArgs e)
@@ -848,9 +888,9 @@ namespace OggConverter
             UpdateSongList();
         }
 
-        private void BtnYoutubeDlUpdate_Click(object sender, EventArgs e)
+        private async void BtnYoutubeDlUpdate_Click(object sender, EventArgs e)
         {
-            Updates.LookForYoutubeDlUpdate(true);
+            await Task.Run(() => Updates.LookForYoutubeDlUpdate(true));
         }
     }
 }

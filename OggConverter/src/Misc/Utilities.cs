@@ -25,6 +25,12 @@ namespace OggConverter
 {
     static class Utilities
     {
+        static readonly string[] filesToDelete = new string[]
+        {
+            "NReco.VideoConverter.dll", "updater.bat", "restart.bat",
+            "mscmm.zip", "ffpack.zip", "MSC OGG.exe", "LastConversion.txt"
+        };
+
         /// <summary>
         /// Checks if string contains any extension in the file name.
         /// </summary>
@@ -80,34 +86,25 @@ namespace OggConverter
         /// </summary>
         public static void Cleanup()
         {
-            if (File.Exists("NReco.VideoConverter.dll"))
-                File.Delete("NReco.VideoConverter.dll");
-
-            if (File.Exists("updater.bat"))
-                File.Delete("updater.bat");
-
-            if (File.Exists("mscmm.zip"))
-                File.Delete("mscmm.zip");
-
-            if (File.Exists("MSC OGG.exe"))
-                File.Delete("MSC OGG.exe");
+            foreach (string file in filesToDelete)
+            {
+                if (File.Exists(file))
+                    File.Delete(file);
+            }
 
             if (Directory.Exists("update"))
                 Directory.Delete("update", true);
 
             string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "download*.*");
             foreach (string file in files)
-                File.Delete(file);
-
-            if (File.Exists("LastConversion.txt"))
-                File.Delete("LastConversion.txt");
+                File.Delete(file);            
         }
 
         /// <summary>
         /// Checks if any 'long taking' operations are busy.
         /// </summary>
         /// <returns></returns>
-        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating; }
+        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating || Updates.IsBusy; }
 
         /// <summary>
         /// Centers horizontally the sender according to reference control

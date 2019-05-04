@@ -1,5 +1,24 @@
 # Changelog
 
+## Preview 2.3.0.0 (04.05.2019)
+
+### Added
+
+- FFmpeg, FFplay and youtube-dl are not included anymore. Instead, they will be downloaded automatically if they're missing
+- While downloading an update, the progress bar will be displayed
+
+### Changes
+
+- Download system overhaul - now the tool won't freeze while downloading the update and it will display the progress bar
+- Dramatically improved loading times by better update checking algorithm
+
+## 2.2.2 (03.05.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which the MSCMM would think that the youtube-dl didn't downloaded the song
+- Fixed a bug in which the tool will freeze if the file wasn't downloaded
+
 ## 2.2.1 (02.05.2019)
 
 ### Added
