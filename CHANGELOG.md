@@ -1,5 +1,11 @@
 # Changelog
 
+## Preview 2.3.0.3 (06.05.2019)
+
+### Bug fixes
+
+- Fixed broken update script
+
 ## Preview 2.3.0.2 (06.05.2019)
 
 ### Bug fixes
@@ -28,7 +34,7 @@
 ### Changes
 
 - Download system overhaul - now the tool won't freeze while downloading the update and it will display the progress bar
-- Dramatically improved loading times by better update checking algorithm
+- Greatly improved loading times by better update checking algorithm
 
 ## 2.2.2 (03.05.2019)
 

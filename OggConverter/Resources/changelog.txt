@@ -3,7 +3,7 @@ What's new in this release?
 - FFmpeg, FFplay and youtube-dl are not included anymore. Instead, they will be downloaded automatically if they're missing
 - While downloading an update, the progress bar will be displayed
 - Download system overhaul - now the tool won't freeze while downloading the update and it will display the progress bar
-- Dramatically improved loading times by better update checking algorithm
+- Greatly improved loading times by better update checking algorithm
 - Bug fixes
 
 For more visit https://gitlab.com/aathlon/msc-ogg

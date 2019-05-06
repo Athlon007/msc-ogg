@@ -34,7 +34,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 18191;
+        public const int version = 18192;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -54,7 +54,7 @@ namespace OggConverter
         public static bool IsBusy { get; set; }
 
         const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
-            "xcopy /s /y %cd%\\update %cd%\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
+            "xcopy /s /y \"%cd%\\update\" \"%cd%\"\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
         const string restartScript = "@echo off\nTASKKILL /IM \"MSC Music Manager.exe\"\nstart \"\" \"MSC Music Manager.exe\"\nexit";
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace OggConverter
                     IsBusy = false;
 
                     Process process = new Process();
-                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    //process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     process.StartInfo.FileName = "updater.bat";
                     process.Start();
                     Application.Exit();
