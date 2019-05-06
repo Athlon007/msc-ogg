@@ -34,7 +34,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 18190;
+        public const int version = 18191;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -103,8 +103,7 @@ namespace OggConverter
 
                         if (latest > version)
                         {
-                            newPreviewReady = true;
-                            string msg = Settings.Preview && getPreview ? "There's a newer stable version available to download than yours Preview. Would you like to download the update?" :
+                            string msg = Settings.Preview && !getPreview ? "There's a newer stable version available to download than yours Preview. Would you like to download the update?" :
                                 "There's a new update ready to download. Would you like to download it now?";
                             msg += $"\n\nYour version: {version}\nNewest version: {latest}";
                             DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -114,6 +113,7 @@ namespace OggConverter
                                 return;
                             }
 
+                            newPreviewReady = Settings.Preview && getPreview;
                             newUpdateReady = true;
                             Form1.instance.Log("\nThere's an update ready to download!");
                             Form1.instance.ButtonGetUpdate.Visible = true;

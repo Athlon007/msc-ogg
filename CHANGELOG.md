@@ -1,5 +1,12 @@
 # Changelog
 
+## Preview 2.3.0.2 (06.05.2019)
+
+### Bug fixes
+
+- Fixed incorrect message uppon updating the preview release
+- Fixed broken clone button
+
 ## Preview 2.3.0.1 (06.05.2019)
 
 ### Changes

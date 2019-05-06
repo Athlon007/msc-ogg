@@ -255,9 +255,9 @@ namespace OggConverter
 
             string pathToFile = $"{Settings.GamePath}\\{folder}\\{fileName}"; // Path to file to be cloned with it's name
 
-            File.Copy($"{pathToFile}.ogg", $"{pathToFile}.ogg");
+            File.Copy($"{pathToFile}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
             if (File.Exists($"{pathToFile}.mscmm"))
-                File.Copy($"{pathToFile}.mscmm", $"{pathToFile}.mscmm");
+                File.Copy($"{pathToFile}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
 
             Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
             Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
