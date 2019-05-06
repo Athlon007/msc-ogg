@@ -282,18 +282,27 @@ namespace OggConverter
             {
                 File.Move(filePath, $"{Settings.GamePath}\\{folder}\\track{inGame}.ogg");
 
-                ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"")
+                // If the file is trackTemp, check if the meta file still exist
+                if (filePath.EndsWith("trackTemp.ogg") && File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
                 {
-                    UseShellExecute = false,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
-                };
+                    File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm", $"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm");
+                }
+                else
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"")
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
 
-                var process = Process.Start(psi);
+                    var process = Process.Start(psi);
 
-                string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                songName = MetaData.GetFromOutput(ffmpegOut);
-                MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
+                    string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                    songName = MetaData.GetFromOutput(ffmpegOut);
+
+                    MetaData.CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{inGame}.mscmm", songName);
+                }
             }
             else
             {
@@ -332,7 +341,7 @@ namespace OggConverter
         /// <summary>
         /// Checks if there are any files waiting for conversion in folder
         /// </summary>
-        /// <param name="folder">Rado or CD</param>
+        /// <param name="folder">Radio or CD</param>
         /// <returns></returns>
         public static bool FilesWaitingForConversion(string folder)
         {

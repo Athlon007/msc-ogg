@@ -612,15 +612,13 @@ namespace OggConverter
         private void BtnUp_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
-            Player.ChangeOrder(songList, path, true);
+            Player.ChangeOrder(songList, CurrentFolder, true);
         }
 
         private void BtnDown_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
-            Player.ChangeOrder(songList, path, false);
+            Player.ChangeOrder(songList, CurrentFolder, false);
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)

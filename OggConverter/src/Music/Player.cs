@@ -138,11 +138,12 @@ namespace OggConverter
         /// Allows to change the folder of song
         /// </summary>
         /// <param name="songList">Form1 songList</param>
-        /// <param name="mscPath">My Summer Car directory</param>
+        /// <param name="folder">Working folder</param>
         /// <param name="moveUp">false - file is moved down, true - file is moved up</param>
-        public static void ChangeOrder(ListBox songList, string mscPath, bool moveUp)
+        public static void ChangeOrder(ListBox songList, string folder, bool moveUp)
         {
-            if (songList.SelectedIndex == -1) return;
+            int selectedIndex = songList.SelectedIndex;
+            if ((songList.SelectedIndex == -1) || (selectedIndex == 0 && moveUp) || (selectedIndex == songList.Items.Count - 1 && !moveUp)) return;
 
             if (Utilities.IsToolBusy())
             {
@@ -152,37 +153,34 @@ namespace OggConverter
 
             Stop();
 
-            int selectedIndex = songList.SelectedIndex;
-            if (selectedIndex == 0) return;
-
             string oldName = Player.WorkingSongList[selectedIndex];
             string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
 
             // Waiting for file to be free
-            while (!Utilities.IsFileReady($"{mscPath}\\{oldName}.ogg")) { }
+            while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\{oldName}.ogg")) { }
 
             // Moving file that now uses the current new name
             //
             // For instance: we're moving track2 to track1.
             // So we first move track1 out of the place and renaming it to trackTemp IF track1 EXISTS
-            if (File.Exists($"{mscPath}\\{newName}.ogg"))
+            if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.ogg"))
             {
-                File.Move($"{mscPath}\\{newName}.ogg", $"{mscPath}\\trackTemp.ogg");
-                if (File.Exists($"{mscPath}\\{newName}.mscmm"))
-                    File.Move($"{mscPath}\\{newName}.mscmm", $"{mscPath}\\trackTemp.mscmm");
+                File.Move($"{Settings.GamePath}\\{folder}\\{newName}.ogg", $"{Settings.GamePath}\\{folder}\\trackTemp.ogg");
+                if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.mscmm"))
+                    File.Move($"{Settings.GamePath}\\{folder}\\{newName}.mscmm", $"{Settings.GamePath}\\{folder}\\trackTemp.mscmm");
             }
 
             // Now we're moving the file that we want to actually move
-            File.Move($"{mscPath}\\{oldName}.ogg", $"{mscPath}\\{newName}.ogg");
-            if (File.Exists($"{mscPath}\\{oldName}.mscmm"))
-                File.Move($"{mscPath}\\{oldName}.mscmm", $"{mscPath}\\{newName}.mscmm");
+            File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
+            if (File.Exists($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm"))
+                File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
 
             // Finally we move the file that we set as temp (if it exists)
-            if (File.Exists($"{mscPath}\\trackTemp.ogg"))
-                File.Move($"{mscPath}\\trackTemp.ogg", $"{mscPath}\\{oldName}.ogg");
+            if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
+                File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.ogg", $"{Settings.GamePath}\\{folder}\\{oldName}.ogg");
 
-            if (File.Exists($"{mscPath}\\trackTemp.mscmm"))
-                File.Move($"{mscPath}\\trackTemp.mscmm", $"{mscPath}\\{oldName}.mscmm");
+            if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
+                File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm", $"{Settings.GamePath}\\{folder}\\{oldName}.mscmm");
 
             Logs.History($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
             Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");

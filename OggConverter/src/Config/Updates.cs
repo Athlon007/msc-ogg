@@ -34,14 +34,20 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 18183; 
+        public const int version = 18190;
+
         static bool newUpdateReady;
         static bool newPreviewReady;
         static bool downgrade;
 
         // Download sources
+#if DEBUG
+        const string stable = "file:///C:/Users/Athlon/repos/msc-ogg/";
+        const string preview = "file:///C:/Users/Athlon/repos/msc-ogg/";
+#else
         const string stable = "https://gitlab.com/aathlon/msc-ogg/raw/master/";
         const string preview = "https://gitlab.com/aathlon/msc-ogg/raw/development/";
+#endif
 
         public static bool IsYoutubeDlUpdating { get; set; }
 
@@ -49,7 +55,6 @@ namespace OggConverter
 
         const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
             "xcopy /s /y %cd%\\update %cd%\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
-
         const string restartScript = "@echo off\nTASKKILL /IM \"MSC Music Manager.exe\"\nstart \"\" \"MSC Music Manager.exe\"\nexit";
 
         /// <summary>
@@ -154,6 +159,7 @@ namespace OggConverter
         {
             IsBusy = true;
             Form1.instance.Log("\nDownloading an update...");
+            Form1.instance.ButtonGetUpdate.Visible = false;
 
             string zipURL = (getPreview ? preview : stable) + "mscmm.zip";
 
@@ -231,6 +237,7 @@ namespace OggConverter
             {
                 Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created");
                 Logs.CrashLog(ex.ToString());
+                IsYoutubeDlUpdating = false;
                 return;
             }
         }

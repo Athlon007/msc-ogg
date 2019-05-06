@@ -430,8 +430,8 @@
             // 
             this.btnRemMP3.CheckOnClick = true;
             this.btnRemMP3.Name = "btnRemMP3";
-            this.btnRemMP3.Size = new System.Drawing.Size(229, 22);
-            this.btnRemMP3.Text = "Remove files after conversion";
+            this.btnRemMP3.Size = new System.Drawing.Size(267, 22);
+            this.btnRemMP3.Text = "Remove source files after conversion";
             this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
             // 
             // actionAfterConversionToolStripMenuItem
@@ -442,14 +442,14 @@
             this.toolStripSeparator2,
             this.btnAfterNone});
             this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
-            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
             this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion";
             // 
             // btnAfterLaunchGame
             // 
             this.btnAfterLaunchGame.CheckOnClick = true;
             this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
-            this.btnAfterLaunchGame.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterLaunchGame.Size = new System.Drawing.Size(180, 22);
             this.btnAfterLaunchGame.Text = "Launch the game";
             this.btnAfterLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem1_Click);
             // 
@@ -457,20 +457,20 @@
             // 
             this.btnAfterClose.CheckOnClick = true;
             this.btnAfterClose.Name = "btnAfterClose";
-            this.btnAfterClose.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterClose.Size = new System.Drawing.Size(180, 22);
             this.btnAfterClose.Text = "Close the program";
             this.btnAfterClose.Click += new System.EventHandler(this.CloseTheProgramToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // btnAfterNone
             // 
             this.btnAfterNone.CheckOnClick = true;
             this.btnAfterNone.Name = "btnAfterNone";
-            this.btnAfterNone.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterNone.Size = new System.Drawing.Size(180, 22);
             this.btnAfterNone.Text = "None";
             this.btnAfterNone.Click += new System.EventHandler(this.NoneToolStripMenuItem_Click);
             // 
@@ -478,7 +478,7 @@
             // 
             this.btnNoSteam.CheckOnClick = true;
             this.btnNoSteam.Name = "btnNoSteam";
-            this.btnNoSteam.Size = new System.Drawing.Size(229, 22);
+            this.btnNoSteam.Size = new System.Drawing.Size(267, 22);
             this.btnNoSteam.Text = "Launch game without Steam";
             this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
             // 
@@ -486,7 +486,7 @@
             // 
             this.btnAutoSort.CheckOnClick = true;
             this.btnAutoSort.Name = "btnAutoSort";
-            this.btnAutoSort.Size = new System.Drawing.Size(229, 22);
+            this.btnAutoSort.Size = new System.Drawing.Size(267, 22);
             this.btnAutoSort.Text = "Auto Sort";
             this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
@@ -494,7 +494,7 @@
             // 
             this.btnUpdates.CheckOnClick = true;
             this.btnUpdates.Name = "btnUpdates";
-            this.btnUpdates.Size = new System.Drawing.Size(229, 22);
+            this.btnUpdates.Size = new System.Drawing.Size(267, 22);
             this.btnUpdates.Text = "Updates";
             this.btnUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
             // 
@@ -502,7 +502,7 @@
             // 
             this.btnLogs.CheckOnClick = true;
             this.btnLogs.Name = "btnLogs";
-            this.btnLogs.Size = new System.Drawing.Size(229, 22);
+            this.btnLogs.Size = new System.Drawing.Size(267, 22);
             this.btnLogs.Text = "Crash Logs";
             this.btnLogs.Click += new System.EventHandler(this.BtnLogs_Click);
             // 
@@ -510,7 +510,7 @@
             // 
             this.btnHistory.CheckOnClick = true;
             this.btnHistory.Name = "btnHistory";
-            this.btnHistory.Size = new System.Drawing.Size(229, 22);
+            this.btnHistory.Size = new System.Drawing.Size(267, 22);
             this.btnHistory.Text = "History";
             this.btnHistory.Click += new System.EventHandler(this.BtnHistory_Click);
             // 
@@ -518,7 +518,7 @@
             // 
             this.btnDisableMetafiles.CheckOnClick = true;
             this.btnDisableMetafiles.Name = "btnDisableMetafiles";
-            this.btnDisableMetafiles.Size = new System.Drawing.Size(229, 22);
+            this.btnDisableMetafiles.Size = new System.Drawing.Size(267, 22);
             this.btnDisableMetafiles.Text = "Disable Metafiles";
             this.btnDisableMetafiles.Click += new System.EventHandler(this.BtnDisableMetafiles_Click);
             // 
@@ -759,9 +759,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(660, 412);
+            this.MinimumSize = new System.Drawing.Size(759, 418);
             this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MSC Music Manager";
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);

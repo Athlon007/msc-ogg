@@ -1,5 +1,16 @@
 # Changelog
 
+## Preview 2.3.0.1 (06.05.2019)
+
+### Changes
+
+- When the trackTemp is detected, the program will try to also find the meta file of that trackTemp
+
+### Bug fixes
+
+- Fixed bug with whichh the new update message would appear twice when using preview update
+- Fixed bug in which you couldn't change order of first of song in the list
+
 ## Preview 2.3.0.0 (04.05.2019)
 
 ### Added
