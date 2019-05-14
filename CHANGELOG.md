@@ -1,40 +1,26 @@
 # Changelog
 
-## Preview 2.3.0.3 (06.05.2019)
-
-### Bug fixes
-
-- Fixed broken update script
-
-## Preview 2.3.0.2 (06.05.2019)
-
-### Bug fixes
-
-- Fixed incorrect message uppon updating the preview release
-- Fixed broken clone button
-
-## Preview 2.3.0.1 (06.05.2019)
-
-### Changes
-
-- When the trackTemp is detected, the program will try to also find the meta file of that trackTemp
-
-### Bug fixes
-
-- Fixed bug with whichh the new update message would appear twice when using preview update
-- Fixed bug in which you couldn't change order of first of song in the list
-
-## Preview 2.3.0.0 (04.05.2019)
+## 2.3 (07.05.2019)
 
 ### Added
 
 - FFmpeg, FFplay and youtube-dl are not included anymore. Instead, they will be downloaded automatically if they're missing
 - While downloading an update, the progress bar will be displayed
+- When the trackTemp is detected, the program will try to also find the meta file of that trackTemp
 
 ### Changes
 
 - Download system overhaul - now the tool won't freeze while downloading the update and it will display the progress bar
 - Greatly improved loading times by better update checking algorithm
+
+### Bug fixes
+
+- Fixed bug with whichh the new update message would appear twice when using preview update
+- Fixed bug in which you couldn't change order of first of song in the list
+- Fixed incorrect message uppon updating the preview release
+- Fixed broken clone button
+- Fixed a bug in which the update script wouldn't work if the directory had a spacebar in path
+- You can now switch between radio and cd while youtube-dl is updating
 
 ## 2.2.2 (03.05.2019)
 

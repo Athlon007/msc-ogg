@@ -449,7 +449,7 @@
             // 
             this.btnAfterLaunchGame.CheckOnClick = true;
             this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
-            this.btnAfterLaunchGame.Size = new System.Drawing.Size(180, 22);
+            this.btnAfterLaunchGame.Size = new System.Drawing.Size(172, 22);
             this.btnAfterLaunchGame.Text = "Launch the game";
             this.btnAfterLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem1_Click);
             // 
@@ -457,20 +457,20 @@
             // 
             this.btnAfterClose.CheckOnClick = true;
             this.btnAfterClose.Name = "btnAfterClose";
-            this.btnAfterClose.Size = new System.Drawing.Size(180, 22);
+            this.btnAfterClose.Size = new System.Drawing.Size(172, 22);
             this.btnAfterClose.Text = "Close the program";
             this.btnAfterClose.Click += new System.EventHandler(this.CloseTheProgramToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
             // btnAfterNone
             // 
             this.btnAfterNone.CheckOnClick = true;
             this.btnAfterNone.Name = "btnAfterNone";
-            this.btnAfterNone.Size = new System.Drawing.Size(180, 22);
+            this.btnAfterNone.Size = new System.Drawing.Size(172, 22);
             this.btnAfterNone.Text = "None";
             this.btnAfterNone.Click += new System.EventHandler(this.NoneToolStripMenuItem_Click);
             // 
@@ -714,7 +714,7 @@
             this.btnSetName.Name = "btnSetName";
             this.btnSetName.Size = new System.Drawing.Size(172, 24);
             this.btnSetName.TabIndex = 17;
-            this.btnSetName.Text = "Set";
+            this.btnSetName.Text = "Save";
             this.btnSetName.UseVisualStyleBackColor = true;
             this.btnSetName.Click += new System.EventHandler(this.BtnSetName_Click);
             // 

@@ -13,6 +13,7 @@ MSC Music Manager is distributed without any warranty.
 
 - [FFMpeg](https://www.ffmpeg.org) - [License](https://www.ffmpeg.org/legal.html)
 - .NET Framework 4.6
+- [youtube-dl](https://ytdl-org.github.io/youtube-dl/)
 
 ## License
 
@@ -24,21 +25,17 @@ This program is distributed under GNU General Public License v3. Feel free to us
 
 ## Installation
 
-Simply unzip archive anywhere you want.
+Simply unzip archive anywhere you want (except for My Summer Car root folder).
 
 ## Updating
 
-The program has automatic update function, although you can disable it in settings.
+The program has automatic update function, although you can disable it in settings and update it manually by downloading the mscmm.zip from this repo.
 
 ## Images
 
 ![img1](https://i.imgur.com/0JV3HNZ.png)
 ![img2](https://i.imgur.com/9hcJCti.png)
 ![img3](https://i.imgur.com/Sl3WNQZ.png)
-
-## Contribution
-
-Anyone who will can contribute into this project.
 
 ## Versioning
 

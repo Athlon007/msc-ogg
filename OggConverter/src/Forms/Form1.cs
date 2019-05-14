@@ -324,7 +324,7 @@ namespace OggConverter
                     Log("My Summer Car folder loaded successfully!");
 
                     if (firstLoad)
-                    {
+                    { 
                         Form1 f = new Form1();
                         Hide();
                         f.ShowDialog();
@@ -571,24 +571,12 @@ namespace OggConverter
 
         private void PlayerCD_Click(object sender, EventArgs e)
         {
-            if (Utilities.IsToolBusy())
-            {
-                Log("Program is busy.");
-                return;
-            }
-
             UpdateSongList();
             btnMoveSong.Text = "Radio";
         }
 
         private void PlayerRadio_Click(object sender, EventArgs e)
         {
-            if (Utilities.IsToolBusy())
-            {
-                Log("Program is busy.");
-                return;
-            }
-
             UpdateSongList();
             btnMoveSong.Text = "CD";
         }

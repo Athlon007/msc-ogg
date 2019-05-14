@@ -36,7 +36,7 @@ namespace OggConverter
         public static bool CloseAfterConversion { get => Get("CloseAfterConversion", false); set => Set("CloseAfterConversion", value); }
 
         // Should the game be launched after conversion?
-        public static bool LaunchAfterConversion { get => Get("LaunchAfterConversion", true); set => Set("LaunchAfterConversion", value); }
+        public static bool LaunchAfterConversion { get => Get("LaunchAfterConversion", false); set => Set("LaunchAfterConversion", value); }
         
         // Should the game be started without steam?
         public static bool NoSteam { get => Get("NoSteam", false); set => Set("NoSteam", value); }
