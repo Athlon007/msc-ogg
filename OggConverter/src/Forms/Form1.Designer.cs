@@ -33,9 +33,8 @@
             this.songList = new System.Windows.Forms.ListBox();
             this.btnPlaySong = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
-            this.playerRadio = new System.Windows.Forms.RadioButton();
-            this.playerCD = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.selectedFolder = new System.Windows.Forms.ComboBox();
             this.btnShuffle = new System.Windows.Forms.Button();
             this.btnCloneSong = new System.Windows.Forms.Button();
             this.labCounter = new System.Windows.Forms.Label();
@@ -124,6 +123,7 @@
             this.songList.HorizontalScrollbar = true;
             this.songList.Location = new System.Drawing.Point(5, 23);
             this.songList.Name = "songList";
+            this.songList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.songList.Size = new System.Drawing.Size(197, 264);
             this.songList.TabIndex = 8;
             this.songList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
@@ -148,35 +148,10 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.BtnStop_Click);
             // 
-            // playerRadio
-            // 
-            this.playerRadio.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.playerRadio.AutoSize = true;
-            this.playerRadio.Location = new System.Drawing.Point(72, 3);
-            this.playerRadio.Name = "playerRadio";
-            this.playerRadio.Size = new System.Drawing.Size(53, 17);
-            this.playerRadio.TabIndex = 11;
-            this.playerRadio.TabStop = true;
-            this.playerRadio.Text = "Radio";
-            this.playerRadio.UseVisualStyleBackColor = true;
-            this.playerRadio.Click += new System.EventHandler(this.PlayerRadio_Click);
-            // 
-            // playerCD
-            // 
-            this.playerCD.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.playerCD.AutoSize = true;
-            this.playerCD.Location = new System.Drawing.Point(131, 3);
-            this.playerCD.Name = "playerCD";
-            this.playerCD.Size = new System.Drawing.Size(40, 17);
-            this.playerCD.TabIndex = 12;
-            this.playerCD.TabStop = true;
-            this.playerCD.Text = "CD";
-            this.playerCD.UseVisualStyleBackColor = true;
-            this.playerCD.Click += new System.EventHandler(this.PlayerCD_Click);
-            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.selectedFolder);
             this.panel1.Controls.Add(this.btnShuffle);
             this.panel1.Controls.Add(this.btnCloneSong);
             this.panel1.Controls.Add(this.labCounter);
@@ -188,14 +163,28 @@
             this.panel1.Controls.Add(this.btnSort);
             this.panel1.Controls.Add(this.btnDel);
             this.panel1.Controls.Add(this.songList);
-            this.panel1.Controls.Add(this.playerCD);
             this.panel1.Controls.Add(this.btnPlaySong);
-            this.panel1.Controls.Add(this.playerRadio);
             this.panel1.Controls.Add(this.btnStop);
             this.panel1.Location = new System.Drawing.Point(-1, 47);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(256, 333);
             this.panel1.TabIndex = 13;
+            // 
+            // selectedFolder
+            // 
+            this.selectedFolder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectedFolder.FormattingEnabled = true;
+            this.selectedFolder.Items.AddRange(new object[] {
+            "Radio",
+            "CD",
+            "CD1",
+            "CD2",
+            "CD3"});
+            this.selectedFolder.Location = new System.Drawing.Point(63, 1);
+            this.selectedFolder.Name = "selectedFolder";
+            this.selectedFolder.Size = new System.Drawing.Size(121, 21);
+            this.selectedFolder.TabIndex = 23;
+            this.selectedFolder.SelectedIndexChanged += new System.EventHandler(this.SelectedFolder_SelectedIndexChanged);
             // 
             // btnShuffle
             // 
@@ -790,8 +779,6 @@
         private System.Windows.Forms.ListBox songList;
         private System.Windows.Forms.Button btnPlaySong;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.RadioButton playerRadio;
-        private System.Windows.Forms.RadioButton playerCD;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnDown;
@@ -853,6 +840,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnYoutubeDlUpdate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ProgressBar downloadProgress;
+        private System.Windows.Forms.ComboBox selectedFolder;
     }
 }
 

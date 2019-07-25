@@ -52,6 +52,11 @@ namespace OggConverter
         public static bool SkipCD { get; set; }
 
         /// <summary>
+        /// Tells the program to skip new CD folders, if the game is older than 9.5.2019 update
+        /// </summary>
+        public static bool SkipNewCD { get; set; }
+
+        /// <summary>
         /// Starts the conversion of every found file in Radio or CD
         /// </summary>
         public static async void StartConversion()
@@ -80,6 +85,14 @@ namespace OggConverter
 
                 if (!SkipCD)
                     await Converter.ConvertFolder("CD", 15);
+
+                // Added with the new update
+                if (!SkipNewCD)
+                {
+                    await Converter.ConvertFolder("CD1", 15);
+                    await Converter.ConvertFolder("CD2", 15);
+                    await Converter.ConvertFolder("CD3", 15);
+                }
 
                 if (Converter.Skipped != 2)
                 {
@@ -161,7 +174,7 @@ namespace OggConverter
                 // If the limit of files per folder is applied, checks if it isn't over it
                 if ((limit != 0) && (inGame > limit))
                 {
-                    DialogResult res = MessageBox.Show($"There's over {limit} files in CDs already converted. " +
+                    DialogResult res = MessageBox.Show($"There's over {limit} files in {folder} already converted. " +
                         $"My Summer Car allows max {limit} files for {folder.ToUpper()}s and any file above that will be ignored. Would you like to continue?",
                         "Stop",
                         MessageBoxButtons.YesNo,
@@ -353,5 +366,15 @@ namespace OggConverter
 
             return files.Length > 0 ? true : false;
         }        
+
+        /// <summary>
+        /// Checks Radio, CD, CD1, CD2 and CD3 if are waiting for conversion
+        /// </summary>
+        /// <returns></returns>
+        public static bool AnyFilesWaitingForConversion()
+        {
+            return Converter.FilesWaitingForConversion("Radio") || Converter.FilesWaitingForConversion("CD") || Converter.FilesWaitingForConversion("CD1")
+                || Converter.FilesWaitingForConversion("CD2") || Converter.FilesWaitingForConversion("CD3");
+        }
     }
 }

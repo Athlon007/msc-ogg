@@ -74,17 +74,17 @@ namespace OggConverter
 
             this.files = files;
             Message = $"Where do you want to convert {files.Length} file{(files.Length > 1 ? "s" : "")}?";
+            selectedFolder.SelectedIndex = 0;
 
             // Setting up the buttons
-            btnRadio.Click += (s, e) => Convert("Radio", 99);
-            btnCD.Click += (s, e) => Convert("CD", 15);
+            btnApply.Click += (s, e) => Convert(selectedFolder.Text, selectedFolder.Text.StartsWith("CD") ? 15 : 99);
             btnExit.Click += (s, e) => Application.Exit();
         }
 
         async void Convert(string to, int limit)
         {
-            btnRadio.Visible = false;
-            btnCD.Visible = false;
+            btnApply.Visible = false;
+            selectedFolder.Visible = false;
             Message = "Converting now...";
 
             foreach (string file in files)

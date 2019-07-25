@@ -20,6 +20,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Net;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OggConverter
 {
@@ -35,7 +38,9 @@ namespace OggConverter
         /// <summary>
         /// Checks what radio button is selected and decides what's the current folder
         /// </summary>
-        private string CurrentFolder { get => playerCD.Checked ? "CD" : "Radio"; }
+        private string CurrentFolder { get => selectedFolder.Text; }
+        private int SongsLimit { get => selectedFolder.Text.StartsWith("CD") ? 15 : 99; }
+        private ListBox.SelectedIndexCollection SelectedIndices { get;  set; }
 
         // Stores last selected item on songList. Set to -1 by default so nothing's checked
         int lastSelected = -1;
@@ -59,8 +64,10 @@ namespace OggConverter
                     MessageBoxIcon.Information);
             }
 
+            WebRequest.DefaultWebProxy = null;
+
             // Setting up UI elements
-            playerRadio.Checked = true; // Sets Radio as default folder
+            selectedFolder.SelectedIndex = 0;
             ButtonGetUpdate = btnDownloadUpdate;
             ButtonGetUpdate.Click += BtnCheckUpdate_Click;
             songList.DoubleClick += BtnPlay;
@@ -78,8 +85,7 @@ namespace OggConverter
             tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 2, 0);
             btnPlaySong.Left = btnPlaySong.CenterHorizontally(panel1) - btnPlaySong.Width / 2 - 2;
             btnStop.Left = btnStop.CenterHorizontally(panel1) + btnStop.Width / 2 + 2;
-            playerRadio.Left = playerRadio.CenterHorizontally(panel1) - playerRadio.Width / 2 - 2;
-            playerCD.Left = playerRadio.CenterHorizontally(panel1) + playerRadio.Width / 2 + 6;
+            selectedFolder.Left = selectedFolder.CenterHorizontally(panel1);
 
             // Removing temporary or unused files
             Utilities.Cleanup();
@@ -170,6 +176,9 @@ namespace OggConverter
                         SafeMode(true);
                         MetaData.GetMetaFromAllSongs("Radio");
                         MetaData.GetMetaFromAllSongs("CD");
+                        MetaData.GetMetaFromAllSongs("CD1");
+                        MetaData.GetMetaFromAllSongs("CD2");
+                        MetaData.GetMetaFromAllSongs("CD3");
                         UpdateSongList();
                         SafeMode(false);
                     }
@@ -189,6 +198,12 @@ namespace OggConverter
             {
                 Converter.SkipCD = true;
                 Log("CD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.");
+            }
+
+            if (!Directory.Exists($"{Settings.GamePath}\\CD1"))
+            {
+                Converter.SkipNewCD = true;
+                Log("New CD folders are missing. You're probably using 9.5.2019 version of the game, or older, so it will be skipped.");
             }
 
             Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
@@ -225,8 +240,6 @@ namespace OggConverter
             btnUp.Enabled = state;
             btnDown.Enabled = state;
             btnSort.Enabled = state;
-            playerRadio.Enabled = state;
-            playerCD.Enabled = state;
             btnMoveSong.Enabled = state;
             txtboxVideo.Enabled = state;
             btnDownload.Enabled = state;
@@ -235,6 +248,7 @@ namespace OggConverter
             txtSongName.Enabled = state;
             btnCloneSong.Enabled = state;
             btnShuffle.Enabled = state;
+            selectedFolder.Enabled = state;
 
             if (complete)
             {
@@ -278,23 +292,26 @@ namespace OggConverter
         {
             if (firstLoad) return;
 
-            songList.Items.Clear();
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
             int howManySongs = 0;
-            
+
+            List<string> newTrackList = new List<string>();            
             Player.WorkingSongList.Clear();
 
             for (int i = 1; i <= 99; i++)
                 if (File.Exists($"{path}\\track{i}.ogg"))
                 {
                     string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
-                    songList.Items.Add(s);
+                    newTrackList.Add(s);
                     Player.WorkingSongList.Add($"track{i}");
                     howManySongs++;
                 }
 
-            labCounter.Text = $"Songs: {howManySongs}";
-            labCounter.ForeColor = ((CurrentFolder == "CD") && (howManySongs > 15)) || ((CurrentFolder == "Radio") && (howManySongs > 99)) ? Color.Red : Color.Black;
+            songList.Items.Clear();
+            songList.Items.AddRange(newTrackList.ToArray());
+
+            labCounter.Text = $"Songs: {howManySongs}";           
+            labCounter.ForeColor = howManySongs > SongsLimit ? Color.Red : Color.Black;
 
             if (songList.Items.Count > lastSelected)
                 songList.SelectedIndex = lastSelected;
@@ -569,18 +586,6 @@ namespace OggConverter
                 Player.Sort(CurrentFolder);
         }
 
-        private void PlayerCD_Click(object sender, EventArgs e)
-        {
-            UpdateSongList();
-            btnMoveSong.Text = "Radio";
-        }
-
-        private void PlayerRadio_Click(object sender, EventArgs e)
-        {
-            UpdateSongList();
-            btnMoveSong.Text = "CD";
-        }
-
         private void BtnSort_Click(object sender, EventArgs e)
         {
             Player.Sort(CurrentFolder);
@@ -593,7 +598,7 @@ namespace OggConverter
             UpdateSongList();
 
             // If any files have been found in Radio or CD, they will be converter immediately after activating program window
-            if (Converter.FilesWaitingForConversion("Radio") || Converter.FilesWaitingForConversion("CD"))
+            if (Converter.AnyFilesWaitingForConversion())
                 Converter.StartConversion();
         }
 
@@ -631,11 +636,10 @@ namespace OggConverter
             SafeMode(true);
             dragDropPanel.Visible = false;
 
-            int limit = playerCD.Checked ? 15 : 99;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             string dropTo = CurrentFolder;
             foreach (string file in files)
-                await Converter.ConvertFile(file, dropTo, limit);
+                await Converter.ConvertFile(file, dropTo, SongsLimit);
 
             SafeMode(false);
             UpdateSongList();
@@ -648,9 +652,21 @@ namespace OggConverter
 
         private void BtnMoveSong_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Sorry, I'm broken in this build!");
             if (songList.SelectedIndex == -1) return;
 
-            Player.MoveTo(Settings.GamePath, Player.WorkingSongList[songList.SelectedIndex], playerCD.Checked);
+            // TODO
+            /*
+            int[] domains = songList.SelectedIndices.OfType<int>().ToArray();
+
+            foreach (int i in domains)
+            {
+                MessageBox.Show(songList.Items[i].ToString());
+            }
+            */
+
+            // TODO: fix me!
+            //Player.MoveTo(Settings.GamePath, Player.WorkingSongList[songList.SelectedIndex], playerCD.Checked);
         }
 
         private void BtnLogs_Click(object sender, EventArgs e)
@@ -741,7 +757,8 @@ namespace OggConverter
                 url = url.Trim();
             }
 
-            await Downloader.DownloadFile(url, CurrentFolder, playerCD.Checked ? 15 : 99, forcedName);
+            //await Downloader.DownloadFile(url, CurrentFolder, playerCD.Checked ? 15 : 99, forcedName);
+            await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
         }
@@ -877,6 +894,12 @@ namespace OggConverter
         private async void BtnYoutubeDlUpdate_Click(object sender, EventArgs e)
         {
             await Task.Run(() => Updates.LookForYoutubeDlUpdate(true));
+        }
+
+        private void SelectedFolder_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSongList();
+            btnMoveSong.Text = selectedFolder.Text;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19200;
+        public const int version = 19300;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -307,7 +307,17 @@ namespace OggConverter
                 };
 
                 string link = (Settings.Preview ? preview : stable) + "Dependencies/ffpack.zip";
-                await Task.Run(() => client.DownloadFileAsync(new Uri(link), "ffpack.zip"));
+
+                try
+                {
+                    await Task.Run(() => client.DownloadFileAsync(new Uri(link), "ffpack.zip"));
+                }
+                catch 
+                {
+                    MessageBox.Show("Looks like there was some kind of problem with downloading the FFmpeg pack. You'll be taken to the website from which you'll" +
+                        " download the ffpack.zip. Unzip it into the root folder of MSCMM.");
+                    Process.Start("https://gitlab.com/aathlon/msc-ogg/raw/ab9cb011a283f316d56a4ce11b32558887a6fe39/Dependencies/ffpack.zip?inline=false");
+                }
 
                 client.DownloadFileCompleted += (s, e) =>
                 {

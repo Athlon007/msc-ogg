@@ -1,5 +1,22 @@
 # Changelog
 
+## Preview 2.4.0.0 (25.07.2019)
+
+### Added
+
+- Replaced the Radio and CD radio buttons with new combo box with all new CD folders
+- You can now select multiple items in song list (doesn't have any use yet)
+- Added "wipe" argument, which will remove all your settings. To use it, start the MSCMM like this: "./MSC Music Manager.exe wipe"
+
+### Changes
+
+- Downloading updates and FFmpeg should be a bit faster
+- Improved song list updating - now it won't flash white after each refresh
+
+### Known issues
+
+- "Move To" button doesn't work in this build
+
 ## 2.3 (07.05.2019)
 
 ### Added

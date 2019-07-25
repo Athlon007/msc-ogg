@@ -29,29 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QuickConvert));
-            this.btnRadio = new System.Windows.Forms.Button();
-            this.btnCD = new System.Windows.Forms.Button();
             this.strMessage = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
+            this.selectedFolder = new System.Windows.Forms.ComboBox();
+            this.btnApply = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btnRadio
-            // 
-            this.btnRadio.Location = new System.Drawing.Point(12, 33);
-            this.btnRadio.Name = "btnRadio";
-            this.btnRadio.Size = new System.Drawing.Size(75, 23);
-            this.btnRadio.TabIndex = 0;
-            this.btnRadio.Text = "Radio";
-            this.btnRadio.UseVisualStyleBackColor = true;
-            // 
-            // btnCD
-            // 
-            this.btnCD.Location = new System.Drawing.Point(133, 33);
-            this.btnCD.Name = "btnCD";
-            this.btnCD.Size = new System.Drawing.Size(75, 23);
-            this.btnCD.TabIndex = 1;
-            this.btnCD.Text = "CD";
-            this.btnCD.UseVisualStyleBackColor = true;
             // 
             // strMessage
             // 
@@ -73,15 +55,39 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Visible = false;
             // 
+            // selectedFolder
+            // 
+            this.selectedFolder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectedFolder.FormattingEnabled = true;
+            this.selectedFolder.Items.AddRange(new object[] {
+            "Radio",
+            "CD",
+            "CD1",
+            "CD2",
+            "CD3"});
+            this.selectedFolder.Location = new System.Drawing.Point(12, 33);
+            this.selectedFolder.Name = "selectedFolder";
+            this.selectedFolder.Size = new System.Drawing.Size(121, 21);
+            this.selectedFolder.TabIndex = 24;
+            // 
+            // btnApply
+            // 
+            this.btnApply.Location = new System.Drawing.Point(136, 33);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(75, 23);
+            this.btnApply.TabIndex = 25;
+            this.btnApply.Text = "Apply";
+            this.btnApply.UseVisualStyleBackColor = true;
+            // 
             // QuickConvert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(220, 63);
-            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.btnApply);
+            this.Controls.Add(this.selectedFolder);
             this.Controls.Add(this.strMessage);
-            this.Controls.Add(this.btnCD);
-            this.Controls.Add(this.btnRadio);
+            this.Controls.Add(this.btnExit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -95,10 +101,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnRadio;
-        private System.Windows.Forms.Button btnCD;
         private System.Windows.Forms.Label strMessage;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ComboBox selectedFolder;
+        private System.Windows.Forms.Button btnApply;
     }
 }

@@ -1,9 +1,8 @@
 What's new in this release?
 
-- FFmpeg, FFplay and youtube-dl are not included anymore. Instead, they will be downloaded automatically if they're missing
-- While downloading an update, the progress bar will be displayed
-- Download system overhaul - now the tool won't freeze while downloading the update and it will display the progress bar
-- Greatly improved loading times by better update checking algorithm
-- Bug fixes
+- Replaced the Radio and CD radio buttons with new combo box with all new CD folders
+- You can now select multiple items in song list
+- Downloading updates and FFmpeg should be a bit faster
+- Improved song list updating - now it won't flash white after each refresh
 
 For more visit https://gitlab.com/aathlon/msc-ogg
