@@ -34,7 +34,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19301;
+        public const int version = 19302;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -170,7 +170,7 @@ namespace OggConverter
             Form1.instance.Log("\nDownloading an update...");
             Form1.instance.ButtonGetUpdate.Visible = false;
 
-            string zipURL = (getPreview ? preview : stable) + "mscmm.zip";
+            string zipURL = (getPreview ? preview : stable) + "mscmm_update.zip";
 
             using (WebClient client = new WebClient())
             {

@@ -1,39 +1,24 @@
 # Changelog
 
-## Preview 2.4.0.1 (26.07.2019)
+## 2.4 (xx.07.2019)
 
 ### Added
 
 - Added new Move To dialog which let's you choose any music folder in MSC
+- You can now select multiple items in song list
 - You can now move multiple files at once! Simply select few of them and click Move button
-- Added song imported from CD to CD1 folder (please turn on the game first in order for the tool to detect the new game version)
-- Now with the songs number, the songs limit is also displayed
-
-### Changes
-
-- Changed history message for songs with undetected name
-- Now the old CD folder won't be displayed if the new version was detected
-
-### Bug Fixes
-
-- Fixed bug in which moving files up or down wouldn't work
-
-## Preview 2.4.0.0 (25.07.2019)
-
-### Added
-
 - Replaced the Radio and CD radio buttons with new combo box with all new CD folders
-- You can now select multiple items in song list (doesn't have any use yet)
+- Added song imported from CD to CD1 folder (please turn on the game first in order for the tool to detect the new game version)
+- Now with the songs number, the songs limit per folder is also displayed
+- Added tooltips
 - Added "wipe" argument, which will remove all your settings. To use it, start the MSCMM like this: "./MSC Music Manager.exe wipe"
 
 ### Changes
 
+- Changed history message for songs with undetected name
 - Downloading updates and FFmpeg should be a bit faster
 - Improved song list updating - now it won't flash white after each refresh
-
-### Known issues
-
-- "Move To" button doesn't work in this build
+- Updates and the actual MSCMM you download are now a separate thing to avoid FFmpeg downloading problems
 
 ## 2.3 (07.05.2019)
 

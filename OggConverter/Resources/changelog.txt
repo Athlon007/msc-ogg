@@ -1,7 +1,7 @@
 What's new in this release?
 
 - Added new Move To dialog which let's you choose any music folder in MSC
-- Replaced the Radio and CD radio buttons with new combo box with all new CD folders
+- Replaced the Radio and CD radio buttons with combo box with all new CD folders
 - You can now select multiple items in song list
 - You can now move multiple files at once! Simply select few of them and click Move button
 - Downloading updates and FFmpeg should be a bit faster

@@ -259,7 +259,7 @@ namespace OggConverter
 
             mSCOGGToolStripMenuItem.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
 
-            // Tool tips
+            // Tooltips
             ToolTip toolTip = new ToolTip();
 
             toolTip.AutoPopDelay = 5000;
