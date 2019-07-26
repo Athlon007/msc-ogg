@@ -76,6 +76,17 @@ namespace OggConverter
             Message = $"Where do you want to convert {files.Length} file{(files.Length > 1 ? "s" : "")}?";
             selectedFolder.SelectedIndex = 0;
 
+            if (Directory.Exists($"{Settings.GamePath}\\CD1") && !Directory.Exists($"{Settings.GamePath}\\CD"))
+            {
+                selectedFolder.Items.RemoveAt(1);
+            }
+            else
+            {
+                selectedFolder.Items.RemoveAt(2);
+                selectedFolder.Items.RemoveAt(3);
+                selectedFolder.Items.RemoveAt(4);
+            }
+
             // Setting up the buttons
             btnApply.Click += (s, e) => Convert(selectedFolder.Text, selectedFolder.Text.StartsWith("CD") ? 15 : 99);
             btnExit.Click += (s, e) => Application.Exit();

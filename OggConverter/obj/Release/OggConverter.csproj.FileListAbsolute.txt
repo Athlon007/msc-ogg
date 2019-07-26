@@ -21,3 +21,4 @@ C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\MSC Music Manager.exe
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\MSC Music Manager.pdb
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\Interop.IWshRuntimeLibrary.dll
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\OggConverter.csproj.ResolveComReference.cache
+C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\OggConverter.MoveTo.resources

@@ -39,7 +39,6 @@
             this.btnCloneSong = new System.Windows.Forms.Button();
             this.labCounter = new System.Windows.Forms.Label();
             this.labNowPlaying = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.btnMoveSong = new System.Windows.Forms.Button();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
@@ -156,7 +155,6 @@
             this.panel1.Controls.Add(this.btnCloneSong);
             this.panel1.Controls.Add(this.labCounter);
             this.panel1.Controls.Add(this.labNowPlaying);
-            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.btnMoveSong);
             this.panel1.Controls.Add(this.btnDown);
             this.panel1.Controls.Add(this.btnUp);
@@ -227,22 +225,13 @@
             this.labNowPlaying.Text = "labNowPlaying";
             this.labNowPlaying.Visible = false;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(204, 154);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 13);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "Move To:";
-            // 
             // btnMoveSong
             // 
             this.btnMoveSong.Location = new System.Drawing.Point(208, 170);
             this.btnMoveSong.Name = "btnMoveSong";
             this.btnMoveSong.Size = new System.Drawing.Size(43, 23);
             this.btnMoveSong.TabIndex = 17;
-            this.btnMoveSong.Text = "CD";
+            this.btnMoveSong.Text = "Move";
             this.btnMoveSong.UseVisualStyleBackColor = true;
             this.btnMoveSong.Click += new System.EventHandler(this.BtnMoveSong_Click);
             // 
@@ -421,6 +410,8 @@
             this.btnRemMP3.Name = "btnRemMP3";
             this.btnRemMP3.Size = new System.Drawing.Size(267, 22);
             this.btnRemMP3.Text = "Remove source files after conversion";
+            this.btnRemMP3.ToolTipText = "If selected, after converting files which were found in Radio or CD folder, the o" +
+    "riginal files will be deleted.";
             this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
             // 
             // actionAfterConversionToolStripMenuItem
@@ -438,7 +429,7 @@
             // 
             this.btnAfterLaunchGame.CheckOnClick = true;
             this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
-            this.btnAfterLaunchGame.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterLaunchGame.Size = new System.Drawing.Size(180, 22);
             this.btnAfterLaunchGame.Text = "Launch the game";
             this.btnAfterLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem1_Click);
             // 
@@ -446,20 +437,20 @@
             // 
             this.btnAfterClose.CheckOnClick = true;
             this.btnAfterClose.Name = "btnAfterClose";
-            this.btnAfterClose.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterClose.Size = new System.Drawing.Size(180, 22);
             this.btnAfterClose.Text = "Close the program";
             this.btnAfterClose.Click += new System.EventHandler(this.CloseTheProgramToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // btnAfterNone
             // 
             this.btnAfterNone.CheckOnClick = true;
             this.btnAfterNone.Name = "btnAfterNone";
-            this.btnAfterNone.Size = new System.Drawing.Size(172, 22);
+            this.btnAfterNone.Size = new System.Drawing.Size(180, 22);
             this.btnAfterNone.Text = "None";
             this.btnAfterNone.Click += new System.EventHandler(this.NoneToolStripMenuItem_Click);
             // 
@@ -477,6 +468,8 @@
             this.btnAutoSort.Name = "btnAutoSort";
             this.btnAutoSort.Size = new System.Drawing.Size(267, 22);
             this.btnAutoSort.Text = "Auto Sort";
+            this.btnAutoSort.ToolTipText = "If selected, the tool will automatically sort folder after, for instance, moving " +
+    "one song to another folder.";
             this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
             // 
             // btnUpdates
@@ -722,6 +715,7 @@
             this.txtSongName.Name = "txtSongName";
             this.txtSongName.Size = new System.Drawing.Size(469, 20);
             this.txtSongName.TabIndex = 2;
+            this.txtSongName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSongName_KeyDown);
             // 
             // downloadProgress
             // 
@@ -785,7 +779,6 @@
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Button btnSort;
         private System.Windows.Forms.Button btnMoveSong;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ToolStripMenuItem menuTool;
         private System.Windows.Forms.ToolStripMenuItem btnLogFolder;
         private System.Windows.Forms.ToolStripMenuItem btnLastLog;

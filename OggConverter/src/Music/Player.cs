@@ -186,16 +186,17 @@ namespace OggConverter
             Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
 
             Form1.instance.UpdateSongList();
+            songList.SelectedIndex = -1;
             songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
         }
 
         /// <summary>
         ///  Moves file to opposite folder (ex. from Radio to CD and vice versa)
         /// </summary>
-        /// <param name="mscPath">My Summer Car directory</param>
-        /// <param name="selected">File name that we want to move</param>
-        /// <param name="toCD">Whenever we want to move to CD folder or not</param>
-        public static void MoveTo(string mscPath, string selected, bool toCD)
+        /// <param name="fileName">File name that we want to move</param>
+        /// <param name="source">From where the files are being moves</param>
+        /// <param name="destination">Where to files are moved</param>
+        public static void MoveTo(string fileName, string source, string destination)
         {
             if (Utilities.IsToolBusy())
             {
@@ -205,25 +206,19 @@ namespace OggConverter
 
             Stop();
 
-            string moveFrom = toCD ? "CD" : "Radio";
-            string moveTo = moveFrom == "CD" ? "Radio" : "CD";
-
             int newNumber = 1;
 
-            for (int i = 1; File.Exists($"{mscPath}\\{moveTo}\\track{i}.ogg"); i++)
+            for (int i = 1; File.Exists($"{Settings.GamePath}\\{destination}\\track{i}.ogg"); i++)
                 newNumber++;
 
             // Waiting for file to be free
-            while (!Utilities.IsFileReady($"{mscPath}\\{moveFrom}\\{selected}.ogg")) { }
-            File.Move($"{mscPath}\\{moveFrom}\\{selected}.ogg", $"{mscPath}\\{moveTo}\\track{newNumber}.ogg");
-            if (File.Exists($"{mscPath}\\{moveFrom}\\{selected}.mscmm"))
-                File.Move($"{mscPath}\\{moveFrom}\\{selected}.mscmm", $"{mscPath}\\{moveTo}\\track{newNumber}.mscmm");
+            while (!Utilities.IsFileReady($"{Settings.GamePath}\\{source}\\{fileName}.ogg")) { }
+            File.Move($"{Settings.GamePath}\\{source}\\{fileName}.ogg", $"{Settings.GamePath}\\{destination}\\track{newNumber}.ogg");
+            if (File.Exists($"{Settings.GamePath}\\{source}\\{fileName}.mscmm"))
+                File.Move($"{Settings.GamePath}\\{source}\\{fileName}.mscmm", $"{Settings.GamePath}\\{destination}\\track{newNumber}.mscmm");
 
-            Logs.History($"File Moving: moved \"{selected}\" from \"{moveFrom}\" to \"{moveTo}\" as \"track{newNumber}\"");
-            Form1.instance.Log($"File Moving: moved \"{selected}\" from \"{moveFrom}\" to \"{moveTo}\" as \"track{newNumber}\"");
-
-            if (Settings.AutoSort)
-                Player.Sort(moveFrom);
+            Logs.History($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
+            Form1.instance.Log($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");    
 
             Form1.instance.UpdateSongList();
         }

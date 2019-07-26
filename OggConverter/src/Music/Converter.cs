@@ -47,16 +47,6 @@ namespace OggConverter
         public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma", ".ogg" };
 
         /// <summary>
-        /// Tells the program to skip CD folder, if the game is older than 24.10.2017 update
-        /// </summary>
-        public static bool SkipCD { get; set; }
-
-        /// <summary>
-        /// Tells the program to skip new CD folders, if the game is older than 9.5.2019 update
-        /// </summary>
-        public static bool SkipNewCD { get; set; }
-
-        /// <summary>
         /// Starts the conversion of every found file in Radio or CD
         /// </summary>
         public static async void StartConversion()
@@ -83,12 +73,13 @@ namespace OggConverter
                 Form1.instance.Log("\n-----------------------------------------------------------------------------------------------------------------------------------------");
                 await Converter.ConvertFolder("Radio", 99);
 
-                if (!SkipCD)
-                    await Converter.ConvertFolder("CD", 15);
-
-                // Added with the new update
-                if (!SkipNewCD)
+                if (Directory.Exists($"{Settings.GamePath}\\CD") && !Directory.Exists($"{Settings.GamePath}\\CD1"))
                 {
+                    await Converter.ConvertFolder("CD", 15);
+                }
+                else
+                {
+                    // Added with the new update
                     await Converter.ConvertFolder("CD1", 15);
                     await Converter.ConvertFolder("CD2", 15);
                     await Converter.ConvertFolder("CD3", 15);
@@ -143,6 +134,12 @@ namespace OggConverter
 
             Form1.instance.Log($"Initializing {folder} conversion...\n");
             string path = $"{Settings.GamePath}\\{folder}";
+
+            if (!Directory.Exists(path))
+            {
+                Form1.instance.Log($"Skipping {folder} because it doesn't exist...");
+                return;
+            }
 
             DirectoryInfo d = new DirectoryInfo(path);
             FileInfo[] files
@@ -233,7 +230,11 @@ namespace OggConverter
                 if (Settings.RemoveMP3)
                     File.Delete($"{path}\\{file.Name}");
 
-                Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+                if (songName.Length == 0)
+                    Logs.History($"Added track{inGame}.ogg in {folder}");
+                else
+                    Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+
                 inGame++;
                 TotalConversions++;
             }
@@ -274,7 +275,7 @@ namespace OggConverter
 
             if ((limit != 0) && (inGame > limit))
             {
-                DialogResult res = MessageBox.Show($"There's over {limit} files in CDs already converted. " +
+                DialogResult res = MessageBox.Show($"There's over {limit} files in {folder} already converted. " +
                     $"My Summer Car allows max {limit} files for {folder.ToUpper()}s and any file above that will be ignored. Would you like to continue?",
                     "Stop",
                     MessageBoxButtons.YesNo,
@@ -345,7 +346,10 @@ namespace OggConverter
                 await Task.Run(() => process.WaitForExit());
             }
 
-            Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+            if (songName.Length == 0)
+                Logs.History($"Added track{inGame}.ogg in {folder}");
+            else
+                Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
 
             if (Form1.instance != null)
                 Form1.instance.Log($"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"");
@@ -358,6 +362,8 @@ namespace OggConverter
         /// <returns></returns>
         public static bool FilesWaitingForConversion(string folder)
         {
+            if (!Directory.Exists($"{Settings.GamePath}\\{folder}")) return false;
+
             DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
             FileInfo[] files
                 = di.GetFiles()

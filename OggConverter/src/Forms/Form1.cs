@@ -39,8 +39,7 @@ namespace OggConverter
         /// Checks what radio button is selected and decides what's the current folder
         /// </summary>
         private string CurrentFolder { get => selectedFolder.Text; }
-        private int SongsLimit { get => selectedFolder.Text.StartsWith("CD") ? 15 : 99; }
-        private ListBox.SelectedIndexCollection SelectedIndices { get;  set; }
+        private int SongsLimit { get => CurrentFolder.StartsWith("CD") ? 15 : 99; }
 
         // Stores last selected item on songList. Set to -1 by default so nothing's checked
         int lastSelected = -1;
@@ -152,6 +151,24 @@ namespace OggConverter
                 _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
             }
 
+            if (File.Exists($"{Settings.GamePath}\\CD1\\trackTemp.ogg"))
+            {
+                Log("Found temp song file in CD1, possibly due to the crash\nTrying to fix it...");
+                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD1\\trackTemp.ogg", "CD1", 99);
+            }
+
+            if (File.Exists($"{Settings.GamePath}\\CD2\\trackTemp.ogg"))
+            {
+                Log("Found temp song file in CD2, possibly due to the crash\nTrying to fix it...");
+                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD2\\trackTemp.ogg", "CD2", 99);
+            }
+
+            if (File.Exists($"{Settings.GamePath}\\CD3\\trackTemp.ogg"))
+            {
+                Log("Found temp song file in CD3, possibly due to the crash\nTrying to fix it...");
+                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD3\\trackTemp.ogg", "CD3", 99);
+            }
+
             // Showing legal notice if the tool is used for the first time
             if (Settings.LatestVersion == 0)
                 Log("\n" + Utilities.AboutNotice);
@@ -194,16 +211,37 @@ namespace OggConverter
                 Settings.LatestVersion = Updates.version;
             }
 
-            if (!Directory.Exists($"{Settings.GamePath}\\CD"))
+            if (Directory.Exists($"{Settings.GamePath}\\CD") && Directory.Exists($"{Settings.GamePath}\\CD1"))
             {
-                Converter.SkipCD = true;
-                Log("CD folder is missing (you're propably using 24.10.2017 version of the game or older), so it will be skipped.");
+                DialogResult dl = MessageBox.Show("Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. " +
+                    "All songs from the original CD have to be imported to the new CD1 folder in order to be read by My Summer Car. " +
+                    "Press OK to do that now, or Cancel to exit.", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                if (dl == DialogResult.OK)
+                {
+                    DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\CD");
+                    FileInfo[] files = di.GetFiles();
+                    foreach (var file in files)
+                        File.Move($"{Settings.GamePath}\\CD\\{file.Name}", $"{Settings.GamePath}\\CD1\\{file.Name}");
+
+                    Log("Succesfully imported CD songs to new CD1 folder!");
+                    Directory.Delete($"{Settings.GamePath}\\CD", true);
+                }
+                else
+                {
+                    Application.Exit();
+                }
             }
 
-            if (!Directory.Exists($"{Settings.GamePath}\\CD1"))
+            if (Directory.Exists($"{Settings.GamePath}\\CD1") && !Directory.Exists($"{Settings.GamePath}\\CD"))
             {
-                Converter.SkipNewCD = true;
-                Log("New CD folders are missing. You're probably using 9.5.2019 version of the game, or older, so it will be skipped.");
+                selectedFolder.Items.RemoveAt(1);
+            }
+            else
+            {
+                selectedFolder.Items.RemoveAt(2);
+                selectedFolder.Items.RemoveAt(3);
+                selectedFolder.Items.RemoveAt(4);
             }
 
             Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
@@ -220,6 +258,24 @@ namespace OggConverter
             }
 
             mSCOGGToolStripMenuItem.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
+
+            // Tool tips
+            ToolTip toolTip = new ToolTip();
+
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
+
+            toolTip.SetToolTip(btnSort, "Sorts all songs so there are no gaps between songs (ex. if there's track1 and track3, the track3 will be renamed to track2).");
+            toolTip.SetToolTip(btnUp, "Move selected song one up.");
+            toolTip.SetToolTip(btnDown, "Move selected song one down.");
+            toolTip.SetToolTip(btnMoveSong, "Move selected songs to selected folder.");
+            toolTip.SetToolTip(btnCloneSong, "Clones selected song with it's displayed name.");
+            toolTip.SetToolTip(btnDel, "Deletes selected song.");
+            toolTip.SetToolTip(btnShuffle, "Randomizes songs order in chosen folder.");
+            toolTip.SetToolTip(btnOpenGameDir, "Opens My Summer Car folder in Explorer.");
+            toolTip.SetToolTip(btnDirectory, "Lets you change My Summer Car folder.");
         }
 
         /// <summary>
@@ -310,7 +366,7 @@ namespace OggConverter
             songList.Items.Clear();
             songList.Items.AddRange(newTrackList.ToArray());
 
-            labCounter.Text = $"Songs: {howManySongs}";           
+            labCounter.Text = $"Songs: {howManySongs}/{SongsLimit}";
             labCounter.ForeColor = howManySongs > SongsLimit ? Color.Red : Color.Black;
 
             if (songList.Items.Count > lastSelected)
@@ -652,21 +708,18 @@ namespace OggConverter
 
         private void BtnMoveSong_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Sorry, I'm broken in this build!");
             if (songList.SelectedIndex == -1) return;
 
-            // TODO
-            /*
+            Player.Stop();
+     
             int[] domains = songList.SelectedIndices.OfType<int>().ToArray();
+            List<string> moveList = new List<string>();            
 
             foreach (int i in domains)
-            {
-                MessageBox.Show(songList.Items[i].ToString());
-            }
-            */
+                moveList.Add(Player.WorkingSongList[i].ToString());
 
-            // TODO: fix me!
-            //Player.MoveTo(Settings.GamePath, Player.WorkingSongList[songList.SelectedIndex], playerCD.Checked);
+            MoveTo moveTo = new MoveTo(moveList.ToArray(), CurrentFolder);
+            moveTo.ShowDialog();            
         }
 
         private void BtnLogs_Click(object sender, EventArgs e)
@@ -899,7 +952,14 @@ namespace OggConverter
         private void SelectedFolder_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSongList();
-            btnMoveSong.Text = selectedFolder.Text;
+        }
+
+        private void TxtSongName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSetName.PerformClick();
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19300;
+        public const int version = 19301;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -53,9 +53,18 @@ namespace OggConverter
 
         public static bool IsBusy { get; set; }
 
-        const string updaterScript = "@echo off\necho Installing the update...\nTASKKILL /IM \"MSC Music Manager.exe\"\n" +
-            "xcopy /s /y \"%cd%\\update\" \"%cd%\"\necho Finished! Starting MSC Music Manager\nstart \"\" \"MSC Music Manager.exe\"\nexit";
-        const string restartScript = "@echo off\nTASKKILL /IM \"MSC Music Manager.exe\"\nstart \"\" \"MSC Music Manager.exe\"\nexit";
+        const string updaterScript = "@echo off\n" +
+            "echo Installing the update...\n" +
+            "TASKKILL /IM \"MSC Music Manager.exe\"\n" +
+            "xcopy /s /y \"%cd%\\update\" \"%cd%\"\n" +
+            "echo Finished! Starting MSC Music Manager\n" +
+            "start \"\" \"MSC Music Manager.exe\"\n" +
+            "exit";
+
+        const string restartScript = "@echo off\n" +
+            "TASKKILL /IM \"MSC Music Manager.exe\"\n" +
+            "start \"\" \"MSC Music Manager.exe\"\n" +
+            "exit";
 
         /// <summary>
         /// Starts update checking

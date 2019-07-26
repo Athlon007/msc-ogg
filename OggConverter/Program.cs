@@ -19,7 +19,7 @@ namespace OggConverter
                 {
                     case "wipe":
                         Settings.WipeAll();
-                        MessageBox.Show("All your settings have been wiped. Restart the MSCMM without -wipe argument.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("All your settings have been wiped. Restart the MSCMM without 'wipe' argument.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Application.Exit();
                         break;
                     default:

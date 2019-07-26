@@ -1,5 +1,23 @@
 # Changelog
 
+## Preview 2.4.0.1 (26.07.2019)
+
+### Added
+
+- Added new Move To dialog which let's you choose any music folder in MSC
+- You can now move multiple files at once! Simply select few of them and click Move button
+- Added song imported from CD to CD1 folder (please turn on the game first in order for the tool to detect the new game version)
+- Now with the songs number, the songs limit is also displayed
+
+### Changes
+
+- Changed history message for songs with undetected name
+- Now the old CD folder won't be displayed if the new version was detected
+
+### Bug Fixes
+
+- Fixed bug in which moving files up or down wouldn't work
+
 ## Preview 2.4.0.0 (25.07.2019)
 
 ### Added

@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Forms\MoveTo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\MoveTo.Designer.cs">
+      <DependentUpon>MoveTo.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Misc\DesktopShortcut.cs" />
     <Compile Include="src\Forms\QuickConvert.cs">
       <SubType>Form</SubType>
@@ -100,6 +106,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="src\Forms\MoveTo.resx">
+      <DependentUpon>MoveTo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\QuickConvert.resx">
       <DependentUpon>QuickConvert.cs</DependentUpon>
     </EmbeddedResource>
