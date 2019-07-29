@@ -29,6 +29,8 @@ namespace OggConverter
 
         public static List<string> WorkingSongList = new List<string>();
 
+        public static bool IsBusy { get; set; }
+
         /// <summary>
         /// Plays selected song using ffplay.exe
         /// </summary>
@@ -87,51 +89,64 @@ namespace OggConverter
                 return;
             }
 
+            IsBusy = true;
+
             Stop();
 
             int skipped = 0;
 
-            for (int i = 1; i <= 99; i++)
+            try
             {
-                // File doesn't exist? Skipping the value
-                if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
+                for (int i = 1; i <= 99; i++)
                 {
-                    skipped++;
-                }
-                else
-                {
-                    // If nothing was skipped, there is no point of moving file
-                    if (skipped == 0) continue;
-
-                    // Waiting for file to be free
-                    while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\track{i}.ogg")) { }
-
-                    // Moving the file
-                    File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
-
-                    Logs.History($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
-                    Form1.instance.Log($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
-
-                    // Moving metadata (if new naming system is used)
-                    if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
+                    // File doesn't exist? Skipping the value
+                    if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
                     {
-                        // If the song was deleted, but not the meta file
-                        if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm"))
-                            File.Delete($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
-
-                        File.Move($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
+                        skipped++;
                     }
+                    else
+                    {
+                        // If nothing was skipped, there is no point of moving file
+                        if (skipped == 0) continue;
 
-                    // Adjusting the i value by skipped
-                    if (skipped != 0)
-                        i -= skipped;
+                        // Waiting for file to be free
+                        while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\track{i}.ogg")) { }
 
-                    // Reseting skipped value
-                    skipped = 0;
+                        // Moving the file
+                        File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
+
+                        Logs.History($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
+                        Form1.instance.Log($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
+
+                        // Moving metadata (if new naming system is used)
+                        if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
+                        {
+                            // If the song was deleted, but not the meta file
+                            if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm"))
+                                File.Delete($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
+
+                            File.Move($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
+                        }
+
+                        // Adjusting the i value by skipped
+                        if (skipped != 0)
+                            i -= skipped;
+
+                        // Reseting skipped value
+                        skipped = 0;
+                    }
                 }
             }
-
-            Form1.instance.UpdateSongList();
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                IsBusy = false;
+                Form1.instance.UpdateSongList();
+            }
         }
 
         /// <summary>
@@ -151,43 +166,63 @@ namespace OggConverter
                 return;
             }
 
+            IsBusy = true;
             Stop();
 
-            string oldName = Player.WorkingSongList[selectedIndex];
-            string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
-
-            // Waiting for file to be free
-            while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\{oldName}.ogg")) { }
-
-            // Moving file that now uses the current new name
-            //
-            // For instance: we're moving track2 to track1.
-            // So we first move track1 out of the place and renaming it to trackTemp IF track1 EXISTS
-            if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.ogg"))
+            try
             {
-                File.Move($"{Settings.GamePath}\\{folder}\\{newName}.ogg", $"{Settings.GamePath}\\{folder}\\trackTemp.ogg");
-                if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.mscmm"))
-                    File.Move($"{Settings.GamePath}\\{folder}\\{newName}.mscmm", $"{Settings.GamePath}\\{folder}\\trackTemp.mscmm");
+                string oldName = Player.WorkingSongList[selectedIndex];
+                string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
+
+                // Waiting for file to be free
+                while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\{oldName}.ogg")) { }
+
+                // Moving file that now uses the current new name
+                //
+                // For instance: we're moving track2 to track1.
+                // So we first move track1 out of the place and renaming it to trackTemp IF track1 EXISTS
+                if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.ogg"))
+                {
+                    if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
+                        File.Delete($"{Settings.GamePath}\\{folder}\\trackTemp.ogg");
+
+                    if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
+                        File.Delete($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm");
+
+                    File.Move($"{Settings.GamePath}\\{folder}\\{newName}.ogg", $"{Settings.GamePath}\\{folder}\\trackTemp.ogg");
+
+                    if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.mscmm"))
+                        File.Move($"{Settings.GamePath}\\{folder}\\{newName}.mscmm", $"{Settings.GamePath}\\{folder}\\trackTemp.mscmm");
+                }
+
+                // Now we're moving the file that we want to actually move
+                File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
+                if (File.Exists($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm"))
+                    File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
+
+                // Finally we move the file that we set as temp (if it exists)
+                if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
+                    File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.ogg", $"{Settings.GamePath}\\{folder}\\{oldName}.ogg");
+
+                if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
+                    File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm", $"{Settings.GamePath}\\{folder}\\{oldName}.mscmm");
+
+                Logs.History($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
+                Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
+
             }
-
-            // Now we're moving the file that we want to actually move
-            File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
-            if (File.Exists($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm"))
-                File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
-
-            // Finally we move the file that we set as temp (if it exists)
-            if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
-                File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.ogg", $"{Settings.GamePath}\\{folder}\\{oldName}.ogg");
-
-            if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
-                File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm", $"{Settings.GamePath}\\{folder}\\{oldName}.mscmm");
-
-            Logs.History($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
-            Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
-
-            Form1.instance.UpdateSongList();
-            songList.SelectedIndex = -1;
-            songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                IsBusy = false;
+                Form1.instance.UpdateSongList();
+                songList.SelectedIndex = -1;
+                songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
+            }
         }
 
         /// <summary>
@@ -204,23 +239,35 @@ namespace OggConverter
                 return;
             }
 
+            IsBusy = true;
             Stop();
 
-            int newNumber = 1;
+            try
+            {
+                int newNumber = 1;
 
-            for (int i = 1; File.Exists($"{Settings.GamePath}\\{destination}\\track{i}.ogg"); i++)
-                newNumber++;
+                for (int i = 1; File.Exists($"{Settings.GamePath}\\{destination}\\track{i}.ogg"); i++)
+                    newNumber++;
 
-            // Waiting for file to be free
-            while (!Utilities.IsFileReady($"{Settings.GamePath}\\{source}\\{fileName}.ogg")) { }
-            File.Move($"{Settings.GamePath}\\{source}\\{fileName}.ogg", $"{Settings.GamePath}\\{destination}\\track{newNumber}.ogg");
-            if (File.Exists($"{Settings.GamePath}\\{source}\\{fileName}.mscmm"))
-                File.Move($"{Settings.GamePath}\\{source}\\{fileName}.mscmm", $"{Settings.GamePath}\\{destination}\\track{newNumber}.mscmm");
+                // Waiting for file to be free
+                while (!Utilities.IsFileReady($"{Settings.GamePath}\\{source}\\{fileName}.ogg")) { }
+                File.Move($"{Settings.GamePath}\\{source}\\{fileName}.ogg", $"{Settings.GamePath}\\{destination}\\track{newNumber}.ogg");
+                if (File.Exists($"{Settings.GamePath}\\{source}\\{fileName}.mscmm"))
+                    File.Move($"{Settings.GamePath}\\{source}\\{fileName}.mscmm", $"{Settings.GamePath}\\{destination}\\track{newNumber}.mscmm");
 
-            Logs.History($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
-            Form1.instance.Log($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");    
-
-            Form1.instance.UpdateSongList();
+                Logs.History($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
+                Form1.instance.Log($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                IsBusy = false;
+                Form1.instance.UpdateSongList();
+            }
         }
 
         /// <summary>
@@ -236,26 +283,39 @@ namespace OggConverter
                 return;
             }
 
+            IsBusy = true;
             string newName = null;
 
-            // Getting a new name for cloned song
-            for (int i = 1; i <= 99; i++)
+            try
             {
-                if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
+                // Getting a new name for cloned song
+                for (int i = 1; i <= 99; i++)
                 {
-                    newName = $"track{i}";
-                    break;
+                    if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
+                    {
+                        newName = $"track{i}";
+                        break;
+                    }
                 }
+
+                string pathToFile = $"{Settings.GamePath}\\{folder}\\{fileName}"; // Path to file to be cloned with it's name
+
+                File.Copy($"{pathToFile}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
+                if (File.Exists($"{pathToFile}.mscmm"))
+                    File.Copy($"{pathToFile}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
+
+                Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
+                Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
             }
-
-            string pathToFile = $"{Settings.GamePath}\\{folder}\\{fileName}"; // Path to file to be cloned with it's name
-
-            File.Copy($"{pathToFile}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
-            if (File.Exists($"{pathToFile}.mscmm"))
-                File.Copy($"{pathToFile}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
-
-            Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
-            Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         /// <summary>
@@ -270,31 +330,89 @@ namespace OggConverter
                 return;
             }
 
+            IsBusy = true;
             Stop();
 
-            // Collecting all files into FileInfo list
-            DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
-            List<FileInfo> files= new List<FileInfo>(di.GetFiles("track*.ogg"));
+            Form1.instance.Log("Shuffling!");
 
-            // Renaming files to temporary name
-            for (int i = 0; i < files.Count; i++)
+            try
             {
-                string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
-                File.Move($"{file}.ogg", $"{file}.ogg.temp");
-                if (File.Exists($"{file}.mscmm"))
-                    File.Move($"{file}.mscmm", $"{file}.mscmm.temp");
+                // Collecting all files into FileInfo list
+                DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+                List<FileInfo> files = new List<FileInfo>(di.GetFiles("track*.ogg"));
+
+                // Renaming files to temporary name
+                for (int i = 0; i < files.Count; i++)
+                {
+                    string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
+                    File.Move($"{file}.ogg", $"{file}.ogg.temp");
+                    if (File.Exists($"{file}.mscmm"))
+                        File.Move($"{file}.mscmm", $"{file}.mscmm.temp");
+                }
+
+                // Randomizing order of files list
+                files = files.OrderBy(a => Guid.NewGuid()).ToList();
+
+                // Now moving the files with temporary names to new name
+                for (int i = 0; i < files.Count; i++)
+                {
+                    string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
+                    File.Move($"{file}.ogg.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.ogg");
+                    if (File.Exists($"{file}.mscmm.temp"))
+                        File.Move($"{file}.mscmm.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.mscmm");
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public static void Delete(string folder, string fileName, string songName)
+        {
+            if (Utilities.IsToolBusy())
+            {
+                Form1.instance.Log("Program is busy.");
+                return;
             }
 
-            // Randomizing order of files list
-            files = files.OrderBy(a => Guid.NewGuid()).ToList();
-
-            // Now moving the files with temporary names to new name
-            for (int i = 0; i < files.Count; i++)
+            try
             {
-                string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
-                File.Move($"{file}.ogg.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.ogg");
-                if (File.Exists($"{file}.mscmm.temp"))
-                    File.Move($"{file}.mscmm.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.mscmm");
+                string file = $"{Settings.GamePath}\\{folder}\\{fileName}.ogg";
+                string meta = $"{Settings.GamePath}\\{folder}\\{fileName}.mscmm";
+
+                DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songName}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dl == DialogResult.Yes)
+                {
+                    Player.Stop();
+
+                    while (!Utilities.IsFileReady(file)) { }
+
+                    if (File.Exists(file))
+                        File.Delete(file);
+
+                    if (File.Exists(meta))
+                        File.Delete(meta);
+
+                    Logs.History($"Removed \"{songName}\" ({fileName}) from {folder}");
+
+                    if (Settings.AutoSort)
+                        Player.Sort(folder);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                Form1.instance.UpdateSongList();
             }
         }
     }

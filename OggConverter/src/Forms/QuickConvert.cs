@@ -19,6 +19,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace OggConverter
 {
@@ -82,9 +83,9 @@ namespace OggConverter
             }
             else
             {
-                selectedFolder.Items.RemoveAt(2);
-                selectedFolder.Items.RemoveAt(3);
                 selectedFolder.Items.RemoveAt(4);
+                selectedFolder.Items.RemoveAt(3);
+                selectedFolder.Items.RemoveAt(2);
             }
 
             // Setting up the buttons
@@ -98,10 +99,18 @@ namespace OggConverter
             selectedFolder.Visible = false;
             Message = "Converting now...";
 
-            foreach (string file in files)
+            try
             {
-                Message = "Converting\n" + file.Substring(file.LastIndexOf('\\') + 1);
-                await Converter.ConvertFile(file, to, limit);
+                foreach (string file in files)
+                {
+                    Message = "Converting\n" + file.Substring(file.LastIndexOf('\\') + 1);
+                    await Converter.ConvertFile(file, to, limit);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
             }
 
             Message = "Done!";

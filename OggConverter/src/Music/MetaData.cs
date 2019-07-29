@@ -18,6 +18,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace OggConverter
 {
@@ -69,11 +70,19 @@ namespace OggConverter
         {
             if (Settings.DisableMetaFiles) return; // meta files won't be saved if user disabled them
 
-            if (File.Exists(path))
-                File.Delete(path);
+            try
+            {
+                if (File.Exists(path))
+                    File.Delete(path);
 
-            File.WriteAllText(path, value);
-            File.SetAttributes(path, FileAttributes.Hidden);
+                File.WriteAllText(path, value);
+                File.SetAttributes(path, FileAttributes.Hidden);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -84,25 +93,35 @@ namespace OggConverter
         /// <returns></returns>
         public static async void GetMetaFromAllSongs(string folder)
         {
-            for (int i = 1; i <= 99; i++)
+            if (!Directory.Exists($"{Settings.GamePath}\\{folder}")) return;
+
+            try
             {
-                if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg") && !File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
+                for (int i = 1; i <= 99; i++)
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{i}.ogg\"")
+                    if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg") && !File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
                     {
-                        RedirectStandardError = true,
-                        CreateNoWindow = true,
-                        UseShellExecute = false
-                    };
+                        ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{i}.ogg\"")
+                        {
+                            RedirectStandardError = true,
+                            CreateNoWindow = true,
+                            UseShellExecute = false
+                        };
 
-                    Process process = null;
-                    await Task.Run(() => process = Process.Start(psi));
+                        Process process = null;
+                        await Task.Run(() => process = Process.Start(psi));
 
-                    string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                    string songName = GetFromOutput(ffmpegOut);
+                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                        string songName = GetFromOutput(ffmpegOut);
 
-                    CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", songName);
+                        CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", songName);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
             }
         }
 
@@ -111,11 +130,19 @@ namespace OggConverter
         /// </summary>
         public static void RemoveAll(string folder)
         {
-            DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
-            FileInfo[] files = di.GetFiles().Where(f => f.Extension == ".mscmm").ToArray();
+            try
+            {
+                DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+                FileInfo[] files = di.GetFiles().Where(f => f.Extension == ".mscmm").ToArray();
 
-            foreach (FileInfo file in files)
-                File.Delete($"{Settings.GamePath}\\{folder}\\{file.Name}");
+                foreach (FileInfo file in files)
+                    File.Delete($"{Settings.GamePath}\\{folder}\\{file.Name}");
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
         }
     }
 }

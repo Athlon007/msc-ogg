@@ -48,8 +48,12 @@ namespace OggConverter
         {
             InitializeComponent();
             instance = this;
-            
+
+#if DEBUG
+            Log($"MSC Music Manager {Utilities.GetVersion()} ({Updates.version}) DEBUG");
+#else
             Log($"MSC Music Manager {Utilities.GetVersion()} ({Updates.version})");
+#endif
 
             // Checking if MSCMM isn't installed in My Summer Car's folder
             if (File.Exists("mysummercar.exe") || File.Exists("steam_api.dll") || File.Exists("steam_api64.dll"))
@@ -138,110 +142,119 @@ namespace OggConverter
                 return;
             }
 
-            // Checking if some trackTemp files exist. They may be caused by crash
-            if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
+            try
             {
-                Log("Found temp song file in Radio, possibly due to the crash\nTrying to fix it...");
-                _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
-            }
-
-            if (File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
-            {
-                Log("Found temp song file in CD, possibly due to the crash\nTrying to fix it...");
-                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
-            }
-
-            if (File.Exists($"{Settings.GamePath}\\CD1\\trackTemp.ogg"))
-            {
-                Log("Found temp song file in CD1, possibly due to the crash\nTrying to fix it...");
-                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD1\\trackTemp.ogg", "CD1", 99);
-            }
-
-            if (File.Exists($"{Settings.GamePath}\\CD2\\trackTemp.ogg"))
-            {
-                Log("Found temp song file in CD2, possibly due to the crash\nTrying to fix it...");
-                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD2\\trackTemp.ogg", "CD2", 99);
-            }
-
-            if (File.Exists($"{Settings.GamePath}\\CD3\\trackTemp.ogg"))
-            {
-                Log("Found temp song file in CD3, possibly due to the crash\nTrying to fix it...");
-                _ = Converter.ConvertFile($"{Settings.GamePath}\\CD3\\trackTemp.ogg", "CD3", 99);
-            }
-
-            // Showing legal notice if the tool is used for the first time
-            if (Settings.LatestVersion == 0)
-                Log("\n" + Utilities.AboutNotice);
-
-            // User is using this release for first time
-            if (Updates.version > Settings.LatestVersion)
-            {
-                // Displaying the changelog
-                Log("\n" + Properties.Resources.changelog);
-
-                // If the version is older than 2.1 (18151)
-                if (Settings.LatestVersion <= 18151)
+                // Checking if some trackTemp files exist. They may be caused by crash
+                if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
                 {
-                    DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
-                        "(It may take a while, depending on how many songs you have)",
-                        "Question",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question);
+                    Log("Found temp song file in Radio, possibly due to the crash\nTrying to fix it...");
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
+                }
 
-                    if (dl == DialogResult.Yes)
+                if (Directory.Exists($"{Settings.GamePath}\\CD") && File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
+                {
+                    Log("Found temp song file in CD, possibly due to the crash\nTrying to fix it...");
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
+                }
+
+                if (Directory.Exists($"{Settings.GamePath}\\CD1") && File.Exists($"{Settings.GamePath}\\CD1\\trackTemp.ogg"))
+                {
+                    Log("Found temp song file in CD1, possibly due to the crash\nTrying to fix it...");
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD1\\trackTemp.ogg", "CD1", 99);
+                }
+
+                if (Directory.Exists($"{Settings.GamePath}\\CD2") && File.Exists($"{Settings.GamePath}\\CD2\\trackTemp.ogg"))
+                {
+                    Log("Found temp song file in CD2, possibly due to the crash\nTrying to fix it...");
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD2\\trackTemp.ogg", "CD2", 99);
+                }
+
+                if (Directory.Exists($"{Settings.GamePath}\\CD3") && File.Exists($"{Settings.GamePath}\\CD3\\trackTemp.ogg"))
+                {
+                    Log("Found temp song file in CD3, possibly due to the crash\nTrying to fix it...");
+                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD3\\trackTemp.ogg", "CD3", 99);
+                }
+
+                // Showing legal notice if the tool is used for the first time
+                if (Settings.LatestVersion == 0)
+                    Log("\n" + Utilities.AboutNotice);
+
+                // User is using this release for first time
+                if (Updates.version > Settings.LatestVersion)
+                {
+                    // Displaying the changelog
+                    Log("\n" + Properties.Resources.changelog);
+
+                    // If the version is older than 2.1 (18151)
+                    if (Settings.LatestVersion <= 18151)
                     {
-                        SafeMode(true);
-                        MetaData.GetMetaFromAllSongs("Radio");
-                        MetaData.GetMetaFromAllSongs("CD");
-                        MetaData.GetMetaFromAllSongs("CD1");
-                        MetaData.GetMetaFromAllSongs("CD2");
-                        MetaData.GetMetaFromAllSongs("CD3");
-                        UpdateSongList();
-                        SafeMode(false);
+                        DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
+                            "(It may take a while, depending on how many songs you have)",
+                            "Question",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question);
+
+                        if (dl == DialogResult.Yes)
+                        {
+                            SafeMode(true);
+                            MetaData.GetMetaFromAllSongs("Radio");
+                            MetaData.GetMetaFromAllSongs("CD");
+                            MetaData.GetMetaFromAllSongs("CD1");
+                            MetaData.GetMetaFromAllSongs("CD2");
+                            MetaData.GetMetaFromAllSongs("CD3");
+                            UpdateSongList();
+                            SafeMode(false);
+                        }
+                    }
+
+                    if (Settings.LatestVersion == 0 && !DesktopShortcut.ShortcutExist())
+                    {
+                        DialogResult dl = MessageBox.Show("Do you want to create desktop shortcut?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dl == DialogResult.Yes)
+                            DesktopShortcut.Create();
+                    }
+
+                    Settings.LatestVersion = Updates.version;
+                }
+
+                if (Directory.Exists($"{Settings.GamePath}\\CD") && Directory.Exists($"{Settings.GamePath}\\CD1"))
+                {
+                    DialogResult dl = MessageBox.Show("Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. " +
+                        "All songs from the original CD have to be imported to the new CD1 folder in order to be read by My Summer Car. " +
+                        "Press OK to do that now, or Cancel to exit.\n\n" +
+                        "WARNING: This will override currently existing files in CD1!", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                    if (dl == DialogResult.OK)
+                    {
+                        DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\CD");
+                        FileInfo[] files = di.GetFiles();
+                        foreach (var file in files)
+                            File.Move($"{Settings.GamePath}\\CD\\{file.Name}", $"{Settings.GamePath}\\CD1\\{file.Name}");
+
+                        Log("Succesfully imported CD songs to new CD1 folder!");
+                        Directory.Delete($"{Settings.GamePath}\\CD", true);
+                    }
+                    else
+                    {
+                        Application.Exit();
                     }
                 }
 
-                if (Settings.LatestVersion == 0 && !DesktopShortcut.ShortcutExist())
+                if (Directory.Exists($"{Settings.GamePath}\\CD1") && !Directory.Exists($"{Settings.GamePath}\\CD"))
                 {
-                    DialogResult dl = MessageBox.Show("Do you want to create desktop shortcut?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dl == DialogResult.Yes)
-                        DesktopShortcut.Create();
-                }
-
-                Settings.LatestVersion = Updates.version;
-            }
-
-            if (Directory.Exists($"{Settings.GamePath}\\CD") && Directory.Exists($"{Settings.GamePath}\\CD1"))
-            {
-                DialogResult dl = MessageBox.Show("Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. " +
-                    "All songs from the original CD have to be imported to the new CD1 folder in order to be read by My Summer Car. " +
-                    "Press OK to do that now, or Cancel to exit.", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
-                if (dl == DialogResult.OK)
-                {
-                    DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\CD");
-                    FileInfo[] files = di.GetFiles();
-                    foreach (var file in files)
-                        File.Move($"{Settings.GamePath}\\CD\\{file.Name}", $"{Settings.GamePath}\\CD1\\{file.Name}");
-
-                    Log("Succesfully imported CD songs to new CD1 folder!");
-                    Directory.Delete($"{Settings.GamePath}\\CD", true);
+                    selectedFolder.Items.RemoveAt(1);
                 }
                 else
                 {
-                    Application.Exit();
+                    selectedFolder.Items.RemoveAt(4);
+                    selectedFolder.Items.RemoveAt(3);
+                    selectedFolder.Items.RemoveAt(2);
                 }
             }
-
-            if (Directory.Exists($"{Settings.GamePath}\\CD1") && !Directory.Exists($"{Settings.GamePath}\\CD"))
+            catch (Exception ex)
             {
-                selectedFolder.Items.RemoveAt(1);
-            }
-            else
-            {
-                selectedFolder.Items.RemoveAt(2);
-                selectedFolder.Items.RemoveAt(3);
-                selectedFolder.Items.RemoveAt(4);
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
             }
 
             Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
@@ -260,12 +273,13 @@ namespace OggConverter
             mSCOGGToolStripMenuItem.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
 
             // Tooltips
-            ToolTip toolTip = new ToolTip();
-
-            toolTip.AutoPopDelay = 5000;
-            toolTip.InitialDelay = 1000;
-            toolTip.ReshowDelay = 500;
-            toolTip.ShowAlways = true;
+            ToolTip toolTip = new ToolTip
+            {
+                AutoPopDelay = 5000,
+                InitialDelay = 1000,
+                ReshowDelay = 500,
+                ShowAlways = true
+            };
 
             toolTip.SetToolTip(btnSort, "Sorts all songs so there are no gaps between songs (ex. if there's track1 and track3, the track3 will be renamed to track2).");
             toolTip.SetToolTip(btnUp, "Move selected song one up.");
@@ -371,7 +385,7 @@ namespace OggConverter
 
             if (songList.Items.Count > lastSelected)
                 songList.SelectedIndex = lastSelected;
-        }        
+        }
 
         private void Log_TextChanged(object sender, EventArgs e)
         {
@@ -416,7 +430,7 @@ namespace OggConverter
         {
             if (Settings.GamePath.Length == 0)
             {
-                Log("Select game path first.");
+                Log("Set game path first.");
                 return;
             }
 
@@ -607,39 +621,7 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-
-            if (Utilities.IsToolBusy())
-            {
-                Log("Program is busy.");
-                return;
-            }
-
-            string songName = songList.SelectedItem.ToString();
-            string fileName = $"{Player.WorkingSongList[songList.SelectedIndex]}.ogg";
-
-            string file = $"{Settings.GamePath}\\{CurrentFolder}\\{fileName}";
-            string meta = $"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm";
-
-            DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songName}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dl == DialogResult.Yes)
-            {
-                Player.Stop();
-
-                while (!Utilities.IsFileReady(file)) { }
-
-                if (File.Exists(file))
-                    File.Delete(file);
-
-                if (File.Exists(meta))
-                    File.Delete(meta);
-
-                Logs.History($"Removed \"{songName}\" ({fileName}) from {CurrentFolder}");
-
-                UpdateSongList();
-            }
-
-            if (Settings.AutoSort)
-                Player.Sort(CurrentFolder);
+            Player.Delete(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex], songList.SelectedItem.ToString());
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -692,13 +674,23 @@ namespace OggConverter
             SafeMode(true);
             dragDropPanel.Visible = false;
 
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            string dropTo = CurrentFolder;
-            foreach (string file in files)
-                await Converter.ConvertFile(file, dropTo, SongsLimit);
-
-            SafeMode(false);
-            UpdateSongList();
+            try
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                string dropTo = CurrentFolder;
+                foreach (string file in files)
+                    await Converter.ConvertFile(file, dropTo, SongsLimit);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                SafeMode(false);
+                UpdateSongList();
+            }
         }
 
         private void Form1_DragLeave(object sender, EventArgs e)
@@ -957,9 +949,7 @@ namespace OggConverter
         private void TxtSongName_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-            {
                 btnSetName.PerformClick();
-            }
         }
     }
 }

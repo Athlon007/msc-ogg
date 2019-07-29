@@ -20,17 +20,12 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
+using System.Threading;
 
 namespace OggConverter
 {
     static class Utilities
     {
-        static readonly string[] filesToDelete = new string[]
-        {
-            "NReco.VideoConverter.dll", "updater.bat", "restart.bat",
-            "mscmm.zip", "ffpack.zip", "MSC OGG.exe", "LastConversion.txt"
-        };
-
         /// <summary>
         /// Checks if string contains any extension in the file name.
         /// </summary>
@@ -81,6 +76,12 @@ namespace OggConverter
             }
         }
 
+        static readonly string[] filesToDelete = new string[]
+        {
+            "NReco.VideoConverter.dll", "updater.bat", "restart.bat",
+            "mscmm.zip", "ffpack.zip", "MSC OGG.exe", "LastConversion.txt"
+        };
+
         /// <summary>
         /// Removes temporary/unused files
         /// </summary>
@@ -104,7 +105,7 @@ namespace OggConverter
         /// Checks if any 'long taking' operations are busy.
         /// </summary>
         /// <returns></returns>
-        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating || Updates.IsBusy; }
+        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating || Updates.IsBusy || Player.IsBusy; }
 
         /// <summary>
         /// Centers horizontally the sender according to reference control

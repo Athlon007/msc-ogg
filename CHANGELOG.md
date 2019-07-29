@@ -1,6 +1,19 @@
 # Changelog
 
-## 2.4 (xx.07.2019)
+## Preview 2.4.1.0 (29.07.2019)
+
+### Added
+
+- Added crash and error tracking
+- Added new error message
+
+### Bug Fixes
+
+- Potentially fixed bug which involved songs disappearing from list while moving them up or down
+- Fixed a bug in which the program would crash if you used the game version without CD1/2/3 support
+- Removed minimize and maximize boxes from Move window
+
+## 2.4 (27.07.2019)
 
 ### Added
 
@@ -35,18 +48,18 @@
 
 ### Bug fixes
 
-- Fixed bug with whichh the new update message would appear twice when using preview update
-- Fixed bug in which you couldn't change order of first of song in the list
+- Fixed bug with which the new update message would appear twice when using preview update
+- Fixed bug in which you couldn't change order of first song in the list
 - Fixed incorrect message uppon updating the preview release
 - Fixed broken clone button
-- Fixed a bug in which the update script wouldn't work if the directory had a spacebar in path
+- Fixed a bug in which the update script wouldn't work if the directory had a space in path
 - You can now switch between radio and cd while youtube-dl is updating
 
 ## 2.2.2 (03.05.2019)
 
 ### Bug Fixes
 
-- Fixed a bug in which the MSCMM would think that the youtube-dl didn't downloaded the song
+- Fixed a bug in which the MSCMM would think that the youtube-dl didn't download the song
 - Fixed a bug in which the tool will freeze if the file wasn't downloaded
 
 ## 2.2.1 (02.05.2019)

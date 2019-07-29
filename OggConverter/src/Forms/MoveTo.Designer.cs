@@ -36,7 +36,7 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(135, 32);
+            this.btnApply.Location = new System.Drawing.Point(138, 31);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 23);
             this.btnApply.TabIndex = 28;
@@ -80,6 +80,8 @@
             this.Controls.Add(this.strMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MoveTo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Move to";

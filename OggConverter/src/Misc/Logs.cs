@@ -45,7 +45,12 @@ namespace OggConverter
 
             Directory.CreateDirectory("LOG");
             File.WriteAllText(fileName,
-                $"MSC Music Manager {thisVersion} ({Updates.version})\n\n{GetSystemInfo()}\n\n{Directory.GetCurrentDirectory()}\n\n{log}");
+                $"// MSC Music Manager //\n" + 
+                $"// VERSION: {thisVersion} ({Updates.version})\n" +
+                $"// SYSTEM: {GetSystemInfo()}\n" +
+                $"// GAME DIRECTORY: {Directory.GetCurrentDirectory()}\n\n" +
+                $"// {GetWittyComment()} \n\n" +
+                $"{log}");
 
             if (silent) return;
 
@@ -63,7 +68,16 @@ namespace OggConverter
                 productName = Key.GetValue("ProductName").ToString();
                 releaseID = Key.GetValue("BuildLab").ToString();
             }
-            return (productName.StartsWith("Microsoft") ? "" : "Microsoft ") + productName + " \n" + releaseID;
+            return (productName.StartsWith("Microsoft") ? "" : "Microsoft ") + productName + " (" + releaseID + ")";
+        }
+
+        static string GetWittyComment()
+        {
+            string[] messages = new String[] { "Oops!", "My bad", ":(", "Sorry :(", "Well this is awkwkard...", "A team of higly trained monkeys have been dispatched!",
+            "D'oh!", "What, what, what, what, what, what, what, what, what?", "Move along, move along...", "I'm sorry Dave"};
+            var random = new Random();
+            int index = random.Next(messages.Length);
+            return messages[index];
         }
     }
 }
