@@ -35,6 +35,8 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnLog = new System.Windows.Forms.Button();
             this.logOutput = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -99,11 +101,22 @@
             this.logOutput.Size = new System.Drawing.Size(483, 234);
             this.logOutput.TabIndex = 5;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::OggConverter.Properties.Resources.err_emoji;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(110, 110);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
             // ErrorMessage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(507, 169);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.logOutput);
             this.Controls.Add(this.btnLog);
             this.Controls.Add(this.btnClose);
@@ -117,6 +130,7 @@
             this.Name = "ErrorMessage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Oopsie!";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,5 +144,6 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.TextBox logOutput;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

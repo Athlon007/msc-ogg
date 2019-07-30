@@ -63,18 +63,27 @@ namespace OggConverter.Properties {
         /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu What&apos;s new in this release?
         ///
-        ///- The tool is now called &quot;My Summer Car Music Manager&quot;
-        ///- Added music manager - you can now play, sort, move and delete songs right in the program
-        ///- You can now drag &amp; drop music files to quickly convert - either on running app window, or on it&apos;s executable
-        ///- MSMM now can download and install updates automatically
-        ///- Refactored whole code
-        ///- Removed NReco Video Converter - now the tool uses only FFmpeg
-        ///- Lots of bug fixes
-        ///- Added some bugs to fix later.
+        ///- Added crash and error tracking
+        ///- Added new error message
+        ///- Potentially fixed bug which involved songs disappearing from list while moving them up or down
+        ///- Fixed a bug in which the program would crash if you used the game version without CD1/2/3 support
+        ///- Removed minimize and maximize boxes from Move window
+        ///
+        ///For more visit https://gitlab.com/aathlon/msc-ogg.
         /// </summary>
         internal static string changelog {
             get {
                 return ResourceManager.GetString("changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap err_emoji {
+            get {
+                object obj = ResourceManager.GetObject("err_emoji", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

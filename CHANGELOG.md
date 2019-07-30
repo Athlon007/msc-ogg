@@ -1,11 +1,12 @@
 # Changelog
 
-## Preview 2.4.1.0 (29.07.2019)
+## 2.4.1 (30.07.2019)
 
 ### Added
 
 - Added crash and error tracking
 - Added new error message
+- When you Shift + Click Play button, the song will be played in default music player
 
 ### Bug Fixes
 

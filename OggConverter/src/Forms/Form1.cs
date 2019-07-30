@@ -562,6 +562,12 @@ namespace OggConverter
         {
             if (songList.SelectedIndex == -1) return;
 
+            if (ModifierKeys.HasFlag(Keys.Shift))
+            {
+                Process.Start($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
+                return;
+            }
+
             Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
 
             // Showing currenty playing song in label

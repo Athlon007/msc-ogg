@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <Content Include="Resources\err_emoji.png" />
     <None Include="Resources\changelog.txt" />
   </ItemGroup>
   <ItemGroup>
