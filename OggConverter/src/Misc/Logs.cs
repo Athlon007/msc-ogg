@@ -48,7 +48,8 @@ namespace OggConverter
                 $"// MSC Music Manager //\n" + 
                 $"// VERSION: {thisVersion} ({Updates.version})\n" +
                 $"// SYSTEM: {GetSystemInfo()}\n" +
-                $"// GAME DIRECTORY: {Directory.GetCurrentDirectory()}\n\n" +
+                $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n\n" +
+                $"// GAME DIRECTORY: {Settings.GamePath}\n\n" +
                 $"// {GetWittyComment()} \n\n" +
                 $"{log}");
 

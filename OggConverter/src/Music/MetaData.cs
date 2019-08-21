@@ -19,11 +19,14 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using System.Xml.Linq;
 
 namespace OggConverter
 {
     class MetaData
     {
+        public static string XmlFilePath() { return $"{Settings.GamePath}\\{Form1.instance.CurrentFolder}\\songnames.xml"; }
+
         /// <summary>
         /// Retrieves song name from ffmpeg output
         /// </summary>
@@ -47,45 +50,6 @@ namespace OggConverter
         }
 
         /// <summary>
-        /// Retrieves song name from .mscmm meta file
-        /// </summary>
-        /// <param name="folder"></param>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        public static string GetFromMeta(string folder, string file)
-        {
-            string output  = File.Exists($"{Settings.GamePath}\\{folder}\\{file}.mscmm") ? File.ReadAllText($"{Settings.GamePath}\\{folder}\\{file}.mscmm") : file;
-            if (output.Trim() == "")
-                output = file;
-
-            return output;
-        }
-
-        /// <summary>
-        /// Creates and writes meta file for song.
-        /// </summary>
-        /// <param name="path">Full path to the file</param>
-        /// <param name="value">Value which will be written into it</param>
-        public static void CreateMetaFile(string path, string value)
-        {
-            if (Settings.DisableMetaFiles) return; // meta files won't be saved if user disabled them
-
-            try
-            {
-                if (File.Exists(path))
-                    File.Delete(path);
-
-                File.WriteAllText(path, value);
-                File.SetAttributes(path, FileAttributes.Hidden);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage err = new ErrorMessage(ex);
-                err.ShowDialog();
-            }
-        }
-
-        /// <summary>
         /// Reads all track files in directory, and tries to get their names from ffmpeg -i output.
         /// It does it ONLY if the .mscmm meta file DOESN'T exist for file named the same way.
         /// </summary>
@@ -99,7 +63,7 @@ namespace OggConverter
             {
                 for (int i = 1; i <= 99; i++)
                 {
-                    if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg") && !File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
+                    if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg") && !IsInDatabase($"track{i}.ogg"))
                     {
                         ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{i}.ogg\"")
                         {
@@ -114,7 +78,7 @@ namespace OggConverter
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         string songName = GetFromOutput(ffmpegOut);
 
-                        CreateMetaFile($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", songName);
+                        AddOrEdit($"track{i}", songName);
                     }
                 }
             }
@@ -126,22 +90,193 @@ namespace OggConverter
         }
 
         /// <summary>
-        /// Removes all meta files from folder
+        /// Gets all song names from old .mscmm files and removes them
         /// </summary>
-        public static void RemoveAll(string folder)
+        /// <param name="folder">Working folder</param>
+        public static void ConvertFromMscmm(string folder)
         {
+            if (Settings.DisableMetaFiles) return;
+
             try
             {
-                DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
-                FileInfo[] files = di.GetFiles().Where(f => f.Extension == ".mscmm").ToArray();
+                string xFilePath = $"{Settings.GamePath}//{folder}//songnames.xml";
+                XDocument doc;
+                doc = File.Exists(xFilePath) && File.ReadAllText(xFilePath) != "" ? XDocument.Load(xFilePath) : new XDocument(new XElement("songs"));
 
-                foreach (FileInfo file in files)
-                    File.Delete($"{Settings.GamePath}\\{folder}\\{file.Name}");
+                DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+                FileInfo[] fi = di.GetFiles("*.mscmm");
+                foreach (var file in fi)
+                {
+                    string name = Path.GetFileNameWithoutExtension(file.Name);
+                    string value = File.ReadAllText(file.FullName);
+
+                    doc.Root.Add(new XElement("songs",
+                            new XAttribute("name", name), new XAttribute("value", value)
+                            ));
+
+                    File.Delete(file.FullName);
+                }
+
+                doc.Save(xFilePath);
             }
             catch (Exception ex)
             {
                 ErrorMessage err = new ErrorMessage(ex);
                 err.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Returns the song name from database.
+        /// </summary>
+        /// <param name="name">Name of song</param>
+        /// <returns></returns>
+        public static string GetName(string name)
+        {
+            try
+            {
+                XDocument doc = XDocument.Load(XmlFilePath());
+                var attribute = doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name);
+                return attribute == null ? name : attribute.Attribute("value").Value;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+                return name;
+            }
+        }
+
+        /// <summary>
+        /// Checks if value appears in the database
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsInDatabase(string name)
+        {
+            try
+            {
+                XDocument doc = XDocument.Load(XmlFilePath());
+                return doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name) != null;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Creates new attribute, or edits currently existing one if there's one already.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public static void AddOrEdit(string name, string value)
+        {
+            try
+            {
+                XDocument doc = XDocument.Load(XmlFilePath());
+                var attribute = doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name);
+                if (attribute == null)
+                {
+                    doc.Root.Add(new XElement("songs",
+                            new XAttribute("name", name), new XAttribute("value", value)
+                            ));
+                }
+                else
+                {
+                    attribute.Attribute("value").Value = value;
+                }
+
+                doc.Save(XmlFilePath());
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Removes the attribute from the database.
+        /// </summary>
+        /// <param name="name"></param>
+        public static void Remove(string name)
+        {
+            try
+            { 
+                XDocument doc = XDocument.Load(XmlFilePath());
+                doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name).Remove();
+                doc.Save(XmlFilePath());
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage er = new ErrorMessage(ex);
+                er.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Wipes Xml database
+        /// </summary>
+        public static void RemoveAll(string folder)
+        {
+            try
+            {
+                if (File.Exists($"{Settings.GamePath}\\{folder}\\songnames.xml"))
+                    File.Delete($"{Settings.GamePath}\\{folder}\\songnames.xml");              
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Moves song name from one database to another
+        /// </summary>
+        /// <param name="sourceFolder">Source folder in which the source database is located</param>
+        /// <param name="name">Name in source db</param>
+        /// <param name="destinationFolder">Destination folder of database</param>
+        /// <param name="newName">New name</param>
+        public static void MoveToDatabase(string sourceFolder, string name, string destinationFolder, string newName)
+        {
+            try
+            {
+                XDocument src = XDocument.Load($"{Settings.GamePath}\\{sourceFolder}\\songnames.xml");
+                XDocument dst = XDocument.Load($"{Settings.GamePath}\\{destinationFolder}\\songnames.xml");
+
+                string value = src.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name).Attribute("value").Value;
+                dst.Root.Add(new XElement("songs", new XAttribute("name", newName), new XAttribute("value", value)));
+                dst.Save($"{Settings.GamePath}\\{destinationFolder}\\songnames.xml");
+                Remove(name);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage er = new ErrorMessage(ex);
+                er.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Changes name of file saved in database
+        /// </summary>
+        /// <param name="oldName"></param>
+        /// <param name="newName"></param>
+        public static void ChangeFile(string oldName, string newName)
+        {
+            try
+            {
+                XDocument doc = XDocument.Load(XmlFilePath());
+                doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == oldName).Attribute("name").Value = newName;
+                doc.Save(XmlFilePath());
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage er = new ErrorMessage(ex);
+                er.ShowDialog();
             }
         }
     }

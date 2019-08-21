@@ -38,7 +38,7 @@ namespace OggConverter
         /// <summary>
         /// Checks what radio button is selected and decides what's the current folder
         /// </summary>
-        private string CurrentFolder { get => selectedFolder.Text; }
+        public string CurrentFolder { get => selectedFolder.Text; }
         private int SongsLimit { get => CurrentFolder.StartsWith("CD") ? 15 : 99; }
 
         // Stores last selected item on songList. Set to -1 by default so nothing's checked
@@ -173,6 +173,31 @@ namespace OggConverter
                 {
                     Log("Found temp song file in CD3, possibly due to the crash\nTrying to fix it...");
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\CD3\\trackTemp.ogg", "CD3", 99);
+                }
+
+                // Converting song name listing to new format
+                if (!File.Exists($"{Settings.GamePath}\\Radio\\songnames.xml"))
+                {
+                    MetaData.ConvertFromMscmm("Radio");
+                    Log("Converted Radio folder to .MSCMM to XML database.");
+                }
+
+                if (!File.Exists($"{Settings.GamePath}\\CD1\\songnames.xml"))
+                {
+                    MetaData.ConvertFromMscmm("CD1");
+                    Log("Converted CD1 folder to .MSCMM to XML database.");
+                }
+
+                if (!File.Exists($"{Settings.GamePath}\\CD2\\songnames.xml"))
+                {
+                    MetaData.ConvertFromMscmm("CD2");
+                    Log("Converted CD2 folder to .MSCMM to XML database.");
+                }
+
+                if (!File.Exists($"{Settings.GamePath}\\CD3\\songnames.xml"))
+                {
+                    MetaData.ConvertFromMscmm("CD3");
+                    Log("Converted CD3 folder to .MSCMM to XML database.");
                 }
 
                 // Showing legal notice if the tool is used for the first time
@@ -365,15 +390,19 @@ namespace OggConverter
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
             int howManySongs = 0;
 
+            if (!File.Exists(MetaData.XmlFilePath()))
+                MetaData.ConvertFromMscmm(CurrentFolder);
+
             List<string> newTrackList = new List<string>();            
             Player.WorkingSongList.Clear();
 
             for (int i = 1; i <= 99; i++)
                 if (File.Exists($"{path}\\track{i}.ogg"))
                 {
-                    string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
+                    //string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
+                    string s = MetaData.GetName($"track{i}");
                     newTrackList.Add(s);
-                    Player.WorkingSongList.Add($"track{i}");
+                    Player.WorkingSongList.Add(new Tuple<string,string>($"track{i}", s));
                     howManySongs++;
                 }
 
@@ -564,11 +593,11 @@ namespace OggConverter
 
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                Process.Start($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
+                Process.Start($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg");
                 return;
             }
 
-            Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.ogg");
+            Player.Play($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg");
 
             // Showing currenty playing song in label
             // If the song name is longer than 51 characters, only words below that number will be displayed
@@ -627,7 +656,7 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.Delete(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex], songList.SelectedItem.ToString());
+            Player.Delete(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex].Item1, songList.SelectedItem.ToString());
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -714,7 +743,7 @@ namespace OggConverter
             List<string> moveList = new List<string>();            
 
             foreach (int i in domains)
-                moveList.Add(Player.WorkingSongList[i].ToString());
+                moveList.Add(Player.WorkingSongList[i].Item1.ToString());
 
             MoveTo moveTo = new MoveTo(moveList.ToArray(), CurrentFolder);
             moveTo.ShowDialog();            
@@ -870,7 +899,7 @@ namespace OggConverter
                 return;
 
             int selected = songList.SelectedIndex;
-            MetaData.CreateMetaFile($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex]}.mscmm", txtSongName.Text);
+            MetaData.AddOrEdit($"{Player.WorkingSongList[songList.SelectedIndex].Item1}", txtSongName.Text);
             UpdateSongList();
             songList.SelectedIndex = selected;
         }
@@ -880,7 +909,7 @@ namespace OggConverter
             if (songList.SelectedIndex == -1)
                 return;
 
-            Player.Clone(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex]);
+            Player.Clone(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex].Item1);
             UpdateSongList();
         }
 

@@ -1,9 +1,6 @@
 What's new in this release?
 
-- Added crash and error tracking
-- Added new error message
-- Potentially fixed bug which involved songs disappearing from list while moving them up or down
-- Fixed a bug in which the program would crash if you used the game version without CD1/2/3 support
-- Removed minimize and maximize boxes from Move window
+- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
+- Your saved songs will be converted to new format on start
 
 For more visit https://gitlab.com/aathlon/msc-ogg

@@ -64,5 +64,10 @@ namespace OggConverter
             file = file.Replace("\n", Environment.NewLine);
             logOutput.Text = file;
         }
+
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace OggConverter
     {
         static Process process;
 
-        public static List<string> WorkingSongList = new List<string>();
+        public static List<Tuple<string, string>> WorkingSongList = new List<Tuple<string, string>>();
 
         public static bool IsBusy { get; set; }
 
@@ -118,16 +118,9 @@ namespace OggConverter
                         Logs.History($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
                         Form1.instance.Log($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
 
-                        // Moving metadata (if new naming system is used)
-                        if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.mscmm"))
-                        {
-                            // If the song was deleted, but not the meta file
-                            if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm"))
-                                File.Delete($"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
-
-                            File.Move($"{Settings.GamePath}\\{folder}\\track{i}.mscmm", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.mscmm");
-                        }
-
+                        MetaData.AddOrEdit($"track{i - skipped}", MetaData.GetName($"track{i}"));
+                        MetaData.Remove($"track{i}");
+                      
                         // Adjusting the i value by skipped
                         if (skipped != 0)
                             i -= skipped;
@@ -171,8 +164,10 @@ namespace OggConverter
 
             try
             {
-                string oldName = Player.WorkingSongList[selectedIndex];
+                string oldName = Player.WorkingSongList[selectedIndex].Item1;
                 string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
+
+                string trackTemp = "";
 
                 // Waiting for file to be free
                 while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\{oldName}.ogg")) { }
@@ -186,26 +181,19 @@ namespace OggConverter
                     if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
                         File.Delete($"{Settings.GamePath}\\{folder}\\trackTemp.ogg");
 
-                    if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
-                        File.Delete($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm");
-
                     File.Move($"{Settings.GamePath}\\{folder}\\{newName}.ogg", $"{Settings.GamePath}\\{folder}\\trackTemp.ogg");
-
-                    if (File.Exists($"{Settings.GamePath}\\{folder}\\{newName}.mscmm"))
-                        File.Move($"{Settings.GamePath}\\{folder}\\{newName}.mscmm", $"{Settings.GamePath}\\{folder}\\trackTemp.mscmm");
+                    trackTemp = MetaData.GetName(newName);
                 }
 
                 // Now we're moving the file that we want to actually move
                 File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
-                if (File.Exists($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm"))
-                    File.Move($"{Settings.GamePath}\\{folder}\\{oldName}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
+
+                MetaData.AddOrEdit(newName, MetaData.GetName(oldName));
+                MetaData.AddOrEdit(oldName, trackTemp);
 
                 // Finally we move the file that we set as temp (if it exists)
                 if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
                     File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.ogg", $"{Settings.GamePath}\\{folder}\\{oldName}.ogg");
-
-                if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm"))
-                    File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.mscmm", $"{Settings.GamePath}\\{folder}\\{oldName}.mscmm");
 
                 Logs.History($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
                 Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
@@ -245,15 +233,13 @@ namespace OggConverter
             try
             {
                 int newNumber = 1;
-
                 for (int i = 1; File.Exists($"{Settings.GamePath}\\{destination}\\track{i}.ogg"); i++)
                     newNumber++;
 
                 // Waiting for file to be free
                 while (!Utilities.IsFileReady($"{Settings.GamePath}\\{source}\\{fileName}.ogg")) { }
                 File.Move($"{Settings.GamePath}\\{source}\\{fileName}.ogg", $"{Settings.GamePath}\\{destination}\\track{newNumber}.ogg");
-                if (File.Exists($"{Settings.GamePath}\\{source}\\{fileName}.mscmm"))
-                    File.Move($"{Settings.GamePath}\\{source}\\{fileName}.mscmm", $"{Settings.GamePath}\\{destination}\\track{newNumber}.mscmm");
+                MetaData.MoveToDatabase(source, fileName, destination, $"track{newNumber}");
 
                 Logs.History($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
                 Form1.instance.Log($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
@@ -301,8 +287,7 @@ namespace OggConverter
                 string pathToFile = $"{Settings.GamePath}\\{folder}\\{fileName}"; // Path to file to be cloned with it's name
 
                 File.Copy($"{pathToFile}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
-                if (File.Exists($"{pathToFile}.mscmm"))
-                    File.Copy($"{pathToFile}.mscmm", $"{Settings.GamePath}\\{folder}\\{newName}.mscmm");
+                MetaData.AddOrEdit(newName, MetaData.GetName(fileName));
 
                 Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
                 Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
@@ -344,10 +329,9 @@ namespace OggConverter
                 // Renaming files to temporary name
                 for (int i = 0; i < files.Count; i++)
                 {
-                    string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
+                    string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension
                     File.Move($"{file}.ogg", $"{file}.ogg.temp");
-                    if (File.Exists($"{file}.mscmm"))
-                        File.Move($"{file}.mscmm", $"{file}.mscmm.temp");
+                    MetaData.ChangeFile(files[i].Name.Replace(".ogg", ""), $"{files[i].Name.Replace(".ogg", "")}_temp");
                 }
 
                 // Randomizing order of files list
@@ -356,10 +340,9 @@ namespace OggConverter
                 // Now moving the files with temporary names to new name
                 for (int i = 0; i < files.Count; i++)
                 {
-                    string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension;
+                    string file = $"{Settings.GamePath}\\{folder}\\{files[i].Name.Replace(".ogg", "")}"; // path + file name without extension
                     File.Move($"{file}.ogg.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.ogg");
-                    if (File.Exists($"{file}.mscmm.temp"))
-                        File.Move($"{file}.mscmm.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.mscmm");
+                    MetaData.ChangeFile($"{files[i].Name.Replace(".ogg", "")}_temp", $"track{i + 1}");
                 }
             }
             catch (Exception ex)
@@ -384,7 +367,6 @@ namespace OggConverter
             try
             {
                 string file = $"{Settings.GamePath}\\{folder}\\{fileName}.ogg";
-                string meta = $"{Settings.GamePath}\\{folder}\\{fileName}.mscmm";
 
                 DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songName}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dl == DialogResult.Yes)
@@ -396,8 +378,7 @@ namespace OggConverter
                     if (File.Exists(file))
                         File.Delete(file);
 
-                    if (File.Exists(meta))
-                        File.Delete(meta);
+                    MetaData.Remove(fileName);
 
                     Logs.History($"Removed \"{songName}\" ({fileName}) from {folder}");
 

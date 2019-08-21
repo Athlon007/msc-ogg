@@ -36,6 +36,7 @@
             this.btnLog = new System.Windows.Forms.Button();
             this.logOutput = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,9 +46,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
             this.label1.Location = new System.Drawing.Point(136, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 39);
+            this.label1.Size = new System.Drawing.Size(157, 39);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Perkele!";
+            this.label1.Text = "Uhh-ohh!";
             // 
             // label2
             // 
@@ -111,11 +112,22 @@
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(460, 12);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(35, 23);
+            this.btnExit.TabIndex = 7;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
+            // 
             // ErrorMessage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(507, 169);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.logOutput);
             this.Controls.Add(this.btnLog);
@@ -145,5 +157,6 @@
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.TextBox logOutput;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnExit;
     }
 }
