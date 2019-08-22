@@ -85,7 +85,7 @@ namespace OggConverter
                     await Converter.ConvertFolder("CD3", 15);
                 }
 
-                if (Converter.Skipped != 2)
+                if (Converter.Skipped != 4)
                 {
                     Form1.instance.Log($"Converted {Converter.TotalConversions} file{(Converter.TotalConversions > 1 ? "s" : "")} in total");
                     Form1.instance.Log("\nDone");
@@ -233,10 +233,7 @@ namespace OggConverter
                     if (Settings.RemoveMP3)
                         File.Delete($"{path}\\{file.Name}");
 
-                    if (songName.Length == 0)
-                        Logs.History($"Added track{inGame}.ogg in {folder}");
-                    else
-                        Logs.History($"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+                    Logs.History(songName.Length == 0 ? $"Added track{inGame}.ogg in {folder}" : $"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
 
                     inGame++;
                     TotalConversions++;
@@ -257,7 +254,7 @@ namespace OggConverter
         /// <param name="filePath">Path to the file.</param>
         /// <param name="folder">Folder to what we want to convert (CD or Radio)</param>
         /// <param name="limit">Limit of files - My Summer Car uses maximum of 15 files for CD and 99 for Radio</param>
-        /// <param name="forcedName">ONLY IF Settings.UseNewNaming IS ON. If set, instead of getting name from ffmpeg output, it will get it from forcedName.</param>
+        /// <param name="forcedName">If set, instead of getting name from ffmpeg output, it will get it from forcedName.</param>
         /// <returns></returns>
         public static async Task ConvertFile(string filePath, string folder, int limit, string forcedName = null)
         {

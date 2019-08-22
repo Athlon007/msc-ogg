@@ -344,6 +344,8 @@ namespace OggConverter
                     File.Move($"{file}.ogg.temp", $"{Settings.GamePath}\\{folder}\\track{i + 1}.ogg");
                     MetaData.ChangeFile($"{files[i].Name.Replace(".ogg", "")}_temp", $"track{i + 1}");
                 }
+
+                MetaData.SortDatabase();
             }
             catch (Exception ex)
             {
@@ -373,17 +375,18 @@ namespace OggConverter
                 {
                     Player.Stop();
 
-                    while (!Utilities.IsFileReady(file)) { }
-
                     if (File.Exists(file))
+                    {
+                        while (!Utilities.IsFileReady(file)) { }
+
                         File.Delete(file);
+                        MetaData.Remove(fileName);
 
-                    MetaData.Remove(fileName);
+                        Logs.History($"Removed \"{songName}\" ({fileName}) from {folder}");
 
-                    Logs.History($"Removed \"{songName}\" ({fileName}) from {folder}");
-
-                    if (Settings.AutoSort)
-                        Player.Sort(folder);
+                        if (Settings.AutoSort)
+                            Player.Sort(folder);
+                    }
                 }
             }
             catch (Exception ex)

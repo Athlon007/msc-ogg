@@ -47,4 +47,4 @@ The program was build with Microsoft Visual Studio 2019 Community, so I think it
 
 ## Author(s)
 
-- [Athlon](http://twitter.com/_athl/)
+- [Athlon](http://athlon.kkmr.pl/)

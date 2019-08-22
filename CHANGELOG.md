@@ -1,5 +1,21 @@
 # Changelog
 
+## Preview 2.5.0.1 (22.08.2019)
+
+### Added
+
+- Database is now being sorted numerically
+
+### Changes
+
+- Delete button has a text instead of left arrow with X
+- Small UI changes
+
+### Bug Fixed
+
+- Fixed few potential crash causing bugs
+- Small bug fixes and improvements
+
 ## Preview 2.5.0.0 (21.08.2019)
 
 ### Added

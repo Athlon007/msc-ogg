@@ -81,7 +81,7 @@ namespace OggConverter
             btnDown.Text = char.ConvertFromUtf32(0x2193); // Down arrow
             btnPlaySong.Text = char.ConvertFromUtf32(0x25B6); // Play (triangle pointed to right)
             btnStop.Text = char.ConvertFromUtf32(0x25A0); // Pause (square)
-            btnDel.Text = char.ConvertFromUtf32(0x232B); // Delete (arrow with X inside)
+            // btnDel.Text = char.ConvertFromUtf32(0x232B); // Delete (arrow with X inside)
 
             // Positioning UI elemenmts
             dragDropPanel.Dock = DockStyle.Fill;

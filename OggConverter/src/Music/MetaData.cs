@@ -118,6 +118,7 @@ namespace OggConverter
                 }
 
                 doc.Save(xFilePath);
+                SortDatabase();
             }
             catch (Exception ex)
             {
@@ -190,6 +191,7 @@ namespace OggConverter
                 }
 
                 doc.Save(XmlFilePath());
+                SortDatabase();
             }
             catch (Exception ex)
             {
@@ -205,10 +207,14 @@ namespace OggConverter
         public static void Remove(string name)
         {
             try
-            { 
-                XDocument doc = XDocument.Load(XmlFilePath());
-                doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name).Remove();
-                doc.Save(XmlFilePath());
+            {
+                if (IsInDatabase(name))
+                {
+                    XDocument doc = XDocument.Load(XmlFilePath());
+                    doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name).Remove();
+                    doc.Save(XmlFilePath());
+                    SortDatabase();
+                }
             }
             catch (Exception ex)
             {
@@ -252,6 +258,7 @@ namespace OggConverter
                 dst.Root.Add(new XElement("songs", new XAttribute("name", newName), new XAttribute("value", value)));
                 dst.Save($"{Settings.GamePath}\\{destinationFolder}\\songnames.xml");
                 Remove(name);
+                SortDatabase();
             }
             catch (Exception ex)
             {
@@ -278,6 +285,22 @@ namespace OggConverter
                 ErrorMessage er = new ErrorMessage(ex);
                 er.ShowDialog();
             }
+        }
+
+        /// <summary>
+        /// Sorts database by the number after "track"
+        /// </summary>
+        public static void SortDatabase()
+        {
+            XDocument input = XDocument.Load(XmlFilePath());
+            XDocument data =
+                new XDocument(
+                    new XElement("songs",
+                        from node in input.Root.Elements()
+                        orderby Convert.ToInt32(node.Attribute("name").Value.Replace("track", "")) ascending
+                        select node));
+
+            data.Save(XmlFilePath());
         }
     }
 }

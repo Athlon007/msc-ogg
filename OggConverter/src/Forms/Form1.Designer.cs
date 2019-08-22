@@ -186,7 +186,7 @@
             // 
             // btnShuffle
             // 
-            this.btnShuffle.Location = new System.Drawing.Point(205, 307);
+            this.btnShuffle.Location = new System.Drawing.Point(204, 307);
             this.btnShuffle.Name = "btnShuffle";
             this.btnShuffle.Size = new System.Drawing.Size(48, 23);
             this.btnShuffle.TabIndex = 22;
@@ -196,9 +196,9 @@
             // 
             // btnCloneSong
             // 
-            this.btnCloneSong.Location = new System.Drawing.Point(208, 228);
+            this.btnCloneSong.Location = new System.Drawing.Point(204, 228);
             this.btnCloneSong.Name = "btnCloneSong";
-            this.btnCloneSong.Size = new System.Drawing.Size(43, 23);
+            this.btnCloneSong.Size = new System.Drawing.Size(48, 23);
             this.btnCloneSong.TabIndex = 21;
             this.btnCloneSong.Text = "Clone";
             this.btnCloneSong.UseVisualStyleBackColor = true;
@@ -227,9 +227,9 @@
             // 
             // btnMoveSong
             // 
-            this.btnMoveSong.Location = new System.Drawing.Point(208, 170);
+            this.btnMoveSong.Location = new System.Drawing.Point(204, 170);
             this.btnMoveSong.Name = "btnMoveSong";
-            this.btnMoveSong.Size = new System.Drawing.Size(43, 23);
+            this.btnMoveSong.Size = new System.Drawing.Size(48, 23);
             this.btnMoveSong.TabIndex = 17;
             this.btnMoveSong.Text = "Move";
             this.btnMoveSong.UseVisualStyleBackColor = true;
@@ -237,9 +237,9 @@
             // 
             // btnDown
             // 
-            this.btnDown.Location = new System.Drawing.Point(208, 52);
+            this.btnDown.Location = new System.Drawing.Point(204, 52);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(43, 23);
+            this.btnDown.Size = new System.Drawing.Size(48, 23);
             this.btnDown.TabIndex = 16;
             this.btnDown.Text = "v";
             this.btnDown.UseVisualStyleBackColor = true;
@@ -247,9 +247,9 @@
             // 
             // btnUp
             // 
-            this.btnUp.Location = new System.Drawing.Point(208, 23);
+            this.btnUp.Location = new System.Drawing.Point(204, 23);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(43, 23);
+            this.btnUp.Size = new System.Drawing.Size(48, 23);
             this.btnUp.TabIndex = 15;
             this.btnUp.Text = "^";
             this.btnUp.UseVisualStyleBackColor = true;
@@ -257,9 +257,9 @@
             // 
             // btnSort
             // 
-            this.btnSort.Location = new System.Drawing.Point(208, 105);
+            this.btnSort.Location = new System.Drawing.Point(204, 105);
             this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(43, 23);
+            this.btnSort.Size = new System.Drawing.Size(48, 23);
             this.btnSort.TabIndex = 14;
             this.btnSort.Text = "Sort";
             this.btnSort.UseVisualStyleBackColor = true;
@@ -267,9 +267,9 @@
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(208, 260);
+            this.btnDel.Location = new System.Drawing.Point(204, 260);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(43, 23);
+            this.btnDel.Size = new System.Drawing.Size(48, 23);
             this.btnDel.TabIndex = 13;
             this.btnDel.Text = "Delete";
             this.btnDel.UseVisualStyleBackColor = true;
@@ -429,7 +429,7 @@
             // 
             this.btnAfterLaunchGame.CheckOnClick = true;
             this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
-            this.btnAfterLaunchGame.Size = new System.Drawing.Size(180, 22);
+            this.btnAfterLaunchGame.Size = new System.Drawing.Size(172, 22);
             this.btnAfterLaunchGame.Text = "Launch the game";
             this.btnAfterLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem1_Click);
             // 
@@ -437,20 +437,20 @@
             // 
             this.btnAfterClose.CheckOnClick = true;
             this.btnAfterClose.Name = "btnAfterClose";
-            this.btnAfterClose.Size = new System.Drawing.Size(180, 22);
+            this.btnAfterClose.Size = new System.Drawing.Size(172, 22);
             this.btnAfterClose.Text = "Close the program";
             this.btnAfterClose.Click += new System.EventHandler(this.CloseTheProgramToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
             // btnAfterNone
             // 
             this.btnAfterNone.CheckOnClick = true;
             this.btnAfterNone.Name = "btnAfterNone";
-            this.btnAfterNone.Size = new System.Drawing.Size(180, 22);
+            this.btnAfterNone.Size = new System.Drawing.Size(172, 22);
             this.btnAfterNone.Text = "None";
             this.btnAfterNone.Click += new System.EventHandler(this.NoneToolStripMenuItem_Click);
             // 
