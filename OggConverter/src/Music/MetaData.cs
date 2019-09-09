@@ -46,7 +46,7 @@ namespace OggConverter
                 if (artist != null && title != null) break;
             }
 
-            return ((artist != null) && (title != null)) ? $"{artist} - {title}" : null;
+            return ((artist != null) && (title != null)) ? $"{artist} - {title}" : "";
         }
 
         /// <summary>
@@ -177,6 +177,8 @@ namespace OggConverter
         {
             try
             {
+                value = value == null || value == "" ? name : value;
+
                 XDocument doc = XDocument.Load(XmlFilePath());
                 var attribute = doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name);
                 if (attribute == null)

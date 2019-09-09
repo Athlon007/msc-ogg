@@ -2,5 +2,9 @@ What's new in this release?
 
 - Song names are now stored in single XML file per folder. No more tons of .mscmm files!
 - Your saved songs will be converted to new format on start
+- Delete button has a text instead of left arrow with X
+- Small UI changes
+- Fixed few potential crash causing bugs
+- Small bug fixes and improvements
 
 For more visit https://gitlab.com/aathlon/msc-ogg

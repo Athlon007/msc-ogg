@@ -27,8 +27,8 @@ namespace OggConverter
         string FileName { get; set; }
 
         int defaultY = 208;
-        int extraY = 457;
-        bool extended;
+        int extendedY = 457;
+        bool isExtended;
 
         public ErrorMessage(Exception ex)
         {
@@ -57,9 +57,9 @@ namespace OggConverter
 
         private void BtnMoreDetail_Click(object sender, EventArgs e)
         {
-            extended ^= true;
-            this.Size = new Size(this.Size.Width, extended ? extraY : defaultY);
-            btnMoreDetail.Text = extended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193)+ " Show More Info");
+            isExtended ^= true;
+            this.Size = new Size(this.Size.Width, isExtended ? extendedY : defaultY);
+            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193)+ " Show More Info");
             string file = File.ReadAllText($"LOG\\{FileName}.txt");
             file = file.Replace("\n", Environment.NewLine);
             logOutput.Text = file;

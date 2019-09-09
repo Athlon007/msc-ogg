@@ -709,23 +709,23 @@ namespace OggConverter
             SafeMode(true);
             dragDropPanel.Visible = false;
 
-            try
-            {
+            //try
+            //{
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 string dropTo = CurrentFolder;
                 foreach (string file in files)
                     await Converter.ConvertFile(file, dropTo, SongsLimit);
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage err = new ErrorMessage(ex);
-                err.ShowDialog();
-            }
-            finally
-            {
+            //}
+            //catch (Exception ex)
+            //{
+            //    ErrorMessage err = new ErrorMessage(ex);
+            //    err.ShowDialog();
+            //}
+            //finally
+            //{
                 SafeMode(false);
                 UpdateSongList();
-            }
+            //}
         }
 
         private void Form1_DragLeave(object sender, EventArgs e)
@@ -985,6 +985,11 @@ namespace OggConverter
         {
             if (e.KeyCode == Keys.Enter)
                 btnSetName.PerformClick();
+        }
+
+        private void BtnWebsite_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://athlon.kkmr.pl");
         }
     }
 }

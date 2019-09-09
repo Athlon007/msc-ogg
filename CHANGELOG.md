@@ -1,10 +1,11 @@
 # Changelog
 
-## Preview 2.5.0.1 (22.08.2019)
+## 2.5 (08.09.2019)
 
 ### Added
 
-- Database is now being sorted numerically
+- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
+- Your saved songs will be converted to new format on start
 
 ### Changes
 
@@ -15,13 +16,6 @@
 
 - Fixed few potential crash causing bugs
 - Small bug fixes and improvements
-
-## Preview 2.5.0.0 (21.08.2019)
-
-### Added
-
-- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
-- Your saved songs will be converted to new format on start
 
 ## 2.4.1 (30.07.2019)
 

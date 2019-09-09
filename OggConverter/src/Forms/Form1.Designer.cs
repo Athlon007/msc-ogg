@@ -94,6 +94,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
             this.downloadProgress = new System.Windows.Forms.ProgressBar();
+            this.btnWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -282,6 +283,7 @@
             this.btnLastLog,
             this.btnLogFolder,
             this.toolStripSeparator1,
+            this.btnWebsite,
             this.btnGitLab,
             this.btnSteam,
             this.toolStripSeparator3,
@@ -725,6 +727,13 @@
             this.downloadProgress.TabIndex = 19;
             this.downloadProgress.Visible = false;
             // 
+            // btnWebsite
+            // 
+            this.btnWebsite.Name = "btnWebsite";
+            this.btnWebsite.Size = new System.Drawing.Size(232, 22);
+            this.btnWebsite.Text = "Website";
+            this.btnWebsite.Click += new System.EventHandler(this.BtnWebsite_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -770,7 +779,6 @@
 
         #endregion
         private System.Windows.Forms.TextBox logOutput;
-        private System.Windows.Forms.ListBox songList;
         private System.Windows.Forms.Button btnPlaySong;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Panel panel1;
@@ -834,6 +842,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ProgressBar downloadProgress;
         private System.Windows.Forms.ComboBox selectedFolder;
+        public System.Windows.Forms.ListBox songList;
+        private System.Windows.Forms.ToolStripMenuItem btnWebsite;
     }
 }
 

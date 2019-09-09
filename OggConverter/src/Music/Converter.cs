@@ -276,8 +276,8 @@ namespace OggConverter
                 Form1.instance.Log($"\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n");
 
 
-            try
-            {
+            //try
+            //{
                 //Counting how many OGG files there are already
                 for (int c = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{c}.ogg"); c++)
                     inGame++;
@@ -289,7 +289,7 @@ namespace OggConverter
                         "Stop",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information);
-
+                    
                     if (res == DialogResult.No)
                     {
                         if (Form1.instance != null)
@@ -318,7 +318,6 @@ namespace OggConverter
                     songName = MetaData.GetFromOutput(ffmpegOut);
 
                     MetaData.AddOrEdit($"track{inGame}", songName);
-                    //}
                 }
                 else
                 {
@@ -352,12 +351,12 @@ namespace OggConverter
 
                 if (Form1.instance != null)
                     Form1.instance.Log($"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"");
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage err = new ErrorMessage(ex);
-                err.ShowDialog();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    ErrorMessage err = new ErrorMessage(ex);
+            //    err.ShowDialog();
+            //}
         }
 
         /// <summary>
