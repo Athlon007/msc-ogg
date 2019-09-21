@@ -57,6 +57,7 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
+            this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -79,6 +80,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chkNoSteam);
             this.tabPage1.Controls.Add(this.chkShortcut);
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.chkNoMetafiles);
@@ -381,6 +383,17 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
+            // chkNoSteam
+            // 
+            this.chkNoSteam.AutoSize = true;
+            this.chkNoSteam.Location = new System.Drawing.Point(471, 62);
+            this.chkNoSteam.Name = "chkNoSteam";
+            this.chkNoSteam.Size = new System.Drawing.Size(215, 21);
+            this.chkNoSteam.TabIndex = 5;
+            this.chkNoSteam.Text = "Start the game without Steam";
+            this.chkNoSteam.UseVisualStyleBackColor = true;
+            this.chkNoSteam.Click += new System.EventHandler(this.ChkNoSteam_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -435,5 +448,6 @@
         private System.Windows.Forms.CheckBox chkShortcut;
         private System.Windows.Forms.Label labNotice;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkNoSteam;
     }
 }

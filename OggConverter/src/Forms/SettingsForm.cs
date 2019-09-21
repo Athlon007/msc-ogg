@@ -41,6 +41,7 @@ namespace OggConverter
             chkHistory.Checked = Settings.History;
             cbYoutubeDlUpdateFrequency.SelectedIndex = Settings.YouTubeDlUpdateFrequency;
             chkShortcut.Checked = DesktopShortcut.Exists();
+            chkNoSteam.Checked = Settings.NoSteam;
         }
 
         private void ChkRemoveSource_Click(object sender, EventArgs e)
@@ -175,6 +176,11 @@ namespace OggConverter
                 DesktopShortcut.Delete();
             else
                 DesktopShortcut.Create();
+        }
+
+        private void ChkNoSteam_Click(object sender, EventArgs e)
+        {
+            Settings.NoSteam ^= true;
         }
     }
 }

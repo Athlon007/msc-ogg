@@ -7,6 +7,7 @@
 - Completly new Settings
 - You can now select how frequent youtube-dl checks for updates
 - You can now open last log file
+- Restored "start game without Steam" checkbox
 
 ### Changes
 
