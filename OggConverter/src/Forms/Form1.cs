@@ -104,7 +104,7 @@ namespace OggConverter
 
                 Log("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.");
                 firstLoad = true;
-                SafeMode(true);
+                RestrictedMode(true);
                 return;
             }
             
@@ -113,7 +113,7 @@ namespace OggConverter
                 MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Log("\nCouldn't find mysummercar.exe. Please set the correct game path.");
                 firstLoad = true;
-                SafeMode(true);
+                RestrictedMode(true);
                 return;
             }
 
@@ -135,7 +135,7 @@ namespace OggConverter
             // If so, they will be downloaded and the tool will be restarted.
             if (!File.Exists("ffmpeg.exe") || !File.Exists("ffplay.exe"))
             {
-                SafeMode(true, true);
+                RestrictedMode(true, true);
                 MessageBox.Show("Hi there! In order to this tool to work, the ffmpeg and ffplay need to be downloaded.\n" +
                     "The tool will now download it and restart itself.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Updates.StartFFmpegDownload();
@@ -221,14 +221,14 @@ namespace OggConverter
 
                         if (dl == DialogResult.Yes)
                         {
-                            SafeMode(true);
+                            RestrictedMode(true);
                             MetaData.GetMetaFromAllSongs("Radio");
                             MetaData.GetMetaFromAllSongs("CD");
                             MetaData.GetMetaFromAllSongs("CD1");
                             MetaData.GetMetaFromAllSongs("CD2");
                             MetaData.GetMetaFromAllSongs("CD3");
                             UpdateSongList();
-                            SafeMode(false);
+                            RestrictedMode(false);
                         }
                     }
 
@@ -321,7 +321,7 @@ namespace OggConverter
         /// Disabled most features to prevent crashes and bugs.
         /// Used for initial setup and if the My Summer Car directory or file no longer exists.
         /// </summary>
-        public void SafeMode(bool state, bool complete = false)
+        public void RestrictedMode(bool state, bool complete = false)
         {
             state ^= true;
 
@@ -706,26 +706,26 @@ namespace OggConverter
 
         private async void Form1_DragDrop(object sender, DragEventArgs e)
         {
-            SafeMode(true);
+            RestrictedMode(true);
             dragDropPanel.Visible = false;
 
-            //try
-            //{
+            try
+            {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 string dropTo = CurrentFolder;
                 foreach (string file in files)
-                    await Converter.ConvertFile(file, dropTo, SongsLimit);
-            //}
-            //catch (Exception ex)
-            //{
-            //    ErrorMessage err = new ErrorMessage(ex);
-            //    err.ShowDialog();
-            //}
-            //finally
-            //{
-                SafeMode(false);
+                    await Converter.ConvertFile(file, dropTo, SongsLimit, file.Split('\\').Last().Split('.').First());
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
+            finally
+            {
+                RestrictedMode(false);
                 UpdateSongList();
-            //}
+            }
         }
 
         private void Form1_DragLeave(object sender, EventArgs e)
@@ -782,6 +782,8 @@ namespace OggConverter
         {
             if (!Utilities.IsOnline()) return;
 
+            btnCancelDownload.Enabled = true;
+
             if (Updates.IsYoutubeDlUpdating)
             {
                 MessageBox.Show("youtube-dl is now updating or looking for the update. You'll be notified on Log panel when it's done :)",
@@ -808,13 +810,13 @@ namespace OggConverter
                 if (dl != DialogResult.Yes)
                     return;
 
-                SafeMode(true);
+                RestrictedMode(true);
                 await Updates.GetYoutubeDl();
                 // The program waits for youtube-dl to download. It checks that every 1 second
                 while (Updates.IsYoutubeDlUpdating) { await Task.Delay(1000); }
             }
 
-            SafeMode(true);
+            RestrictedMode(true);
             btnDownload.Enabled = txtboxVideo.Enabled = false;
 
             string url = txtboxVideo.Text;
@@ -824,7 +826,7 @@ namespace OggConverter
             {
                 if (url == "")
                 {
-                    SafeMode(false);
+                    RestrictedMode(false);
                     return;
                 }
 
@@ -837,8 +839,8 @@ namespace OggConverter
                 url = url.Trim();
             }
 
-            //await Downloader.DownloadFile(url, CurrentFolder, playerCD.Checked ? 15 : 99, forcedName);
             await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
+
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
         }
@@ -962,10 +964,10 @@ namespace OggConverter
 
                 if (getMeta == DialogResult.Yes)
                 {
-                    SafeMode(true);
+                    RestrictedMode(true);
                     MetaData.GetMetaFromAllSongs($"Radio");
                     MetaData.GetMetaFromAllSongs($"CD");
-                    SafeMode(false);
+                    RestrictedMode(false);
                 }
             }
             UpdateSongList();
@@ -990,6 +992,13 @@ namespace OggConverter
         private void BtnWebsite_Click(object sender, EventArgs e)
         {
             Process.Start("http://athlon.kkmr.pl");
+        }
+
+        private void BtnCancelDownload_Click(object sender, EventArgs e)
+        {
+            Downloader.Cancel();
+            RestrictedMode(false);
+            btnCancelDownload.Enabled = false;
         }
     }
 }

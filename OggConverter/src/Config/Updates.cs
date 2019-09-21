@@ -34,7 +34,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19404;
+        public const int version = 19405;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -42,8 +42,8 @@ namespace OggConverter
 
         // Download sources
 #if DEBUG
-        const string stable = "file:///C:/Users/Athlon/repos/msc-ogg/";
-        const string preview = "file:///C:/Users/Athlon/repos/msc-ogg/";
+        const string stable = "file:///C:/Users/aathl/source/repos/msc-ogg/";
+        const string preview = "file:///C:/Users/aathl/source/repos/msc-ogg/";
 #else
         const string stable = "https://gitlab.com/aathlon/msc-ogg/raw/master/";
         const string preview = "https://gitlab.com/aathlon/msc-ogg/raw/development/";
@@ -130,9 +130,11 @@ namespace OggConverter
                         }
                         else if ((latest < version) && (!Settings.Preview))
                         {
+                            // DOWNGRADE MODE
                             downgrade = true;
 
-                            DialogResult res = MessageBox.Show("Looks like you use a preview release and you disable preview update channel. Do you want to downgrade now?\n\n" +
+                            DialogResult res = MessageBox.Show("Looks like you use a preview release and you disable preview update channel. " +
+                                "Do you want to downgrade now?\n\n" +
                                 "WARNING: In order to keep things still working, all settings will be reset." +
                                 $"\n\nYour version: {version}\nNewest version: {latest}",
                                 "Question",
@@ -238,7 +240,7 @@ namespace OggConverter
                         Form1.instance.DownloadProgress.Invoke(new Action(() => Form1.instance.DownloadProgress.Visible = false));
                         IsYoutubeDlUpdating = false;
                         Form1.instance.Log("youtube-dl downloaded successfully!");
-                        Form1.instance.Invoke(new Action(() => Form1.instance.SafeMode(false)));
+                        Form1.instance.Invoke(new Action(() => Form1.instance.RestrictedMode(false)));
                     };
                 }
             }

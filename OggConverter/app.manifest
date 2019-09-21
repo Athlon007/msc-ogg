@@ -49,13 +49,13 @@
        wartościach DPI. Aplikacje korzystające z technologii Windows Presentation Foundation (WPF) automatycznie rozpoznają wartości DPI i nie potrzebują
        tej opcji. Aplikacje korzystające z technologii Windows Forms przeznaczone dla platformy .NET Framework 4.6, które korzystają z tej opcji, powinny
        ustawić także wartość „true” dla parametru „EnableWindowsFormsHighDpiAutoResizing” w pliku app.config. -->
-  <!--
+  
   <application xmlns="urn:schemas-microsoft-com:asm.v3">
     <windowsSettings>
       <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
     </windowsSettings>
   </application>
-  -->
+  
 
   <!-- Włącz motywy dla typowych formantów systemu Windows i okien dialogowych (system Windows XP i nowsze) -->
   <!--

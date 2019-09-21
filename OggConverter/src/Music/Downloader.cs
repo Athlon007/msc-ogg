@@ -18,12 +18,14 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System;
 
 namespace OggConverter
 {
     class Downloader
     {
         public static bool IsBusy { get; set; }
+        public static bool CancelDownload { get; set; }
 
         /// <summary>
         /// Downloads the song as .ACC file
@@ -34,52 +36,108 @@ namespace OggConverter
         /// <returns></returns>
         public static async Task DownloadFile(string url, string folder, int limit, string forcedName = null)
         {
-            Form1.instance.Log("Downloaded youtube-dl successfully!");
-            Form1.instance.DownloadProgress.Visible = false;
-
-            if (!url.ContainsAny("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v=", "ytsearch:"))
+            try
             {
-                MessageBox.Show("Not a valid URL. Currently only YouTube is suported.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                CancelDownload = false;
 
-            IsBusy = true;
+                Form1.instance.Log("Downloaded youtube-dl successfully!");
+                Form1.instance.DownloadProgress.Visible = false;
 
-            if (File.Exists("download.aac"))
-                File.Delete("download.aac");
+                if (!url.ContainsAny("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v=", "ytsearch:"))
+                {
+                    MessageBox.Show("Not a valid URL. Currently only YouTube is suported.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            Form1.instance.Log("\nDownloading song...");
-            Logs.History($"Downloader: Downloading song from \"{url}\"");
+                IsBusy = true;
 
-            Process process = new Process();
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
+                if (File.Exists("download.aac"))
+                    File.Delete("download.aac");
 
-            // Setup executable and parameters
-            process.StartInfo.FileName = "youtube-dl.exe";
-            process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality 0 -o \"download.%(ext)s\" {url}";
-            process.Start();
-            await Task.Run(() => process.WaitForExit());
+                Form1.instance.Log("\nDownloading song...");
+                Logs.History($"Downloader: Downloading song from \"{url}\"");
 
-            if (!File.Exists("download.mp3"))
-            {
-                Form1.instance.Log("Couldn't donwnload the song. Check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n\n" +
-                    "Also please check if youtube-dl supports the link that you use: https://ytdl-org.github.io/youtube-dl/supportedsites.html");
+                Process process = new Process();
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                // Setup executable and parameters
+                process.StartInfo.FileName = "youtube-dl.exe";
+                process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality 0 -o \"download.%(ext)s\" {url}";
+
+                if (CancelDownload)
+                {
+                    CancelDownload = true;
+                    return;
+                }
+
+                await Task.Run(() => process.Start());
+                string[] youtubeDllOutput = null;
+                await Task.Run(() => youtubeDllOutput = process.StandardOutput.ReadToEnd().Split('\n'));
+                await Task.Run(() => process.WaitForExit());
+                Logs.History("-- youtube-dl output: --\n" + string.Join("\n", youtubeDllOutput));
+
+                // File wasn't downloaded?
+                if (!File.Exists("download.mp3"))
+                {
+                    Form1.instance.Log("Couldn't donwnload the song.\n" +
+                        "If you canceled the download, then everything's fine.\n" +
+                        "If not, check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n" +
+                        "Also please check if youtube-dl supports the link that you use: " +
+                        "https://ytdl-org.github.io/youtube-dl/supportedsites.html. \n" +
+                        "If it's going to happen again, please send the history.txt file content to developer on Steam, or via mail.");
+                    IsBusy = false;
+                    Form1.instance.RestrictedMode(false);
+                    return;
+                }
+
+                Form1.instance.Log("Converting...");
+
+                if (CancelDownload)
+                {
+                    CancelDownload = true;
+                    return;
+                }
+
+                await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName, true);
+
+                File.Delete("download.mp3");
                 IsBusy = false;
-                Form1.instance.SafeMode(false);
-                return;
+
+                Form1.instance.UpdateSongList();
+                Form1.instance.RestrictedMode(false);
             }
-
-            Form1.instance.Log("Converting...");
-            await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName);
-
-            File.Delete("download.mp3");
-            IsBusy = false;
-
-            Form1.instance.UpdateSongList();
-            Form1.instance.SafeMode(false);
+            catch (Exception) when (CancelDownload)
+            {
+                Form1.instance.Log("Canceled!");
+            }
         }
 
+        public static void Cancel()
+        {
+            if (!IsBusy) return;
+
+            CancelDownload = true;
+
+            IsBusy = false;
+            foreach (var process in Process.GetProcessesByName("youtube-dl"))
+            {
+                process.Kill();
+            }
+
+            foreach (var process in Process.GetProcessesByName("ffmpeg"))
+            {
+                process.Kill();
+            }
+
+            DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
+            FileInfo[] files = di.GetFiles("download*");
+            foreach (FileInfo file in files)
+            {
+                if (File.Exists(file.FullName))
+                    File.Delete(file.FullName);
+            }
+        }
     }
 }

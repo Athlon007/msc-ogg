@@ -1,10 +1,18 @@
 What's new in this release?
 
-- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
-- Your saved songs will be converted to new format on start
-- Delete button has a text instead of left arrow with X
-- Small UI changes
-- Fixed few potential crash causing bugs
-- Small bug fixes and improvements
+Added:
+- Added support for high DPI screens
+- You can now cancel the YouTube download, partially adressing the "stuck while downloading song" bug
+
+Changes:
+- Safe Mode is now refered as Restricted Mode in the code
+- When no file name was found in meta, the file name's going to be used
+- Now when you start the MSCMM after update, the full changelog is displayed instead of the short version
+- WARNING: 'Action After Conversion' feature is now considered as obsolete and will be removed in the future updates
+
+Bug Fixes:
+- Fixed bug in which MSCMM would rename already existing track files to new name (ex. track1 to track16)
+- Fixed freezing window after drag & dropping the file
+- Restored disabled in earlier update error loggers
 
 For more visit https://gitlab.com/aathlon/msc-ogg

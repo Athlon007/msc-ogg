@@ -69,7 +69,7 @@ namespace OggConverter
 
             try
             {
-                Form1.instance.SafeMode(true);
+                Form1.instance.RestrictedMode(true);
                 Form1.instance.Log("\n-----------------------------------------------------------------------------------------------------------------------------------------");
                 await Converter.ConvertFolder("Radio", 99);
 
@@ -113,7 +113,7 @@ namespace OggConverter
             finally
             {
                 Converter.IsBusy = false;
-                Form1.instance.SafeMode(false);
+                Form1.instance.RestrictedMode(false);
             }
 
             Form1.instance.UpdateSongList();
@@ -192,7 +192,7 @@ namespace OggConverter
                     string songName = null;
 
                     // If the file is already in OGG format - skip conversion and just rename it accordingly.
-                    if (file.Name.EndsWith(".ogg"))
+                    if (file.Name.EndsWith(".ogg") && !file.Name.StartsWith("track"))
                     {
                         File.Move($"{path}\\{file.Name}", $"{path}\\track{inGame}.ogg");
                         ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{path}\\track{inGame}.ogg\"")
@@ -256,7 +256,7 @@ namespace OggConverter
         /// <param name="limit">Limit of files - My Summer Car uses maximum of 15 files for CD and 99 for Radio</param>
         /// <param name="forcedName">If set, instead of getting name from ffmpeg output, it will get it from forcedName.</param>
         /// <returns></returns>
-        public static async Task ConvertFile(string filePath, string folder, int limit, string forcedName = null)
+        public static async Task ConvertFile(string filePath, string folder, int limit, string altName = "", bool forceAltName = false)
         {
             if (!File.Exists($"{Directory.GetCurrentDirectory()}\\ffmpeg.exe"))
             {
@@ -276,8 +276,8 @@ namespace OggConverter
                 Form1.instance.Log($"\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n");
 
 
-            //try
-            //{
+            try
+            {
                 //Counting how many OGG files there are already
                 for (int c = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{c}.ogg"); c++)
                     inGame++;
@@ -332,14 +332,16 @@ namespace OggConverter
                     Process process = null;
                     await Task.Run(() => process = Process.Start(psi));
 
-                    if (forcedName == null)
+                    if (altName == null)
                     {
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         songName = MetaData.GetFromOutput(ffmpegOut);
+                        if ((songName == " - " || songName == "") && altName != "")
+                            songName = altName;
                     }
                     else
                     {
-                        songName = forcedName;
+                        songName = altName;
                     }
 
                     MetaData.AddOrEdit($"track{inGame}", songName);
@@ -351,12 +353,12 @@ namespace OggConverter
 
                 if (Form1.instance != null)
                     Form1.instance.Log($"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"");
-            //}
-            //catch (Exception ex)
-            //{
-            //    ErrorMessage err = new ErrorMessage(ex);
-            //    err.ShowDialog();
-            //}
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage err = new ErrorMessage(ex);
+                err.ShowDialog();
+            }
         }
 
         /// <summary>

@@ -1,6 +1,27 @@
 # Changelog
 
-## 2.5 (08.09.2019)
+## 2.5.1 (21.09.2019)
+
+### Added
+
+- Added support for high DPI screens
+- You can now cancel the YouTube download, partially adressing the "stuck while downloading song" bug
+- youtube-dl output is now being saved into history.txt
+
+### Changes
+
+- Safe Mode is now refered as Restricted Mode in the code
+- When no file name was found in meta, the file name's going to be used
+- Now when you start the MSCMM after update, the full changelog is displayed instead of the short version
+- WARNING: 'Action After Conversion' feature is now considered as obsolete and will be removed in the future updates
+
+### Bug Fixes
+
+- Fixed bug in which MSCMM would rename already existing track files to new name (ex. track1 to track16)
+- Fixed freezing window after drag & dropping the file
+- Restored disabled in earlier update error loggers
+
+## 2.5 (09.09.2019)
 
 ### Added
 
@@ -244,7 +265,7 @@
 - Added EXE only download in repository for updates
 - Support for WAV, AAC, M4A and WMA file types
 - The game now starts using Steam (you can change that in settings)
-- Added ability to perform action by program after finishing the conversion (you can change that in settings). Default is none 
+- Added ability to perform action by program after finishing the conversion (you can change that in settings). Default is none
 - Added more bugs to fix later
 
 ### Changes
