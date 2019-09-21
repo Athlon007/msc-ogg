@@ -50,7 +50,8 @@ namespace OggConverter
             instance = this;
 
 #if DEBUG
-            Log($"MSC Music Manager {Utilities.GetVersion()} ({Updates.version}) DEBUG");
+            Log($"MSC Music Manager {Utilities.GetVersion(true)} ({Updates.version}) DEBUG\n" +
+                $"THIS VERSION IS NOT INTENDED FOR DISTRIBUTION!");
 #else
             Log($"MSC Music Manager {Utilities.GetVersion()} ({Updates.version})");
 #endif
@@ -81,7 +82,6 @@ namespace OggConverter
             btnDown.Text = char.ConvertFromUtf32(0x2193); // Down arrow
             btnPlaySong.Text = char.ConvertFromUtf32(0x25B6); // Play (triangle pointed to right)
             btnStop.Text = char.ConvertFromUtf32(0x25A0); // Pause (square)
-            // btnDel.Text = char.ConvertFromUtf32(0x232B); // Delete (arrow with X inside)
 
             // Positioning UI elemenmts
             dragDropPanel.Dock = DockStyle.Fill;
@@ -99,7 +99,7 @@ namespace OggConverter
                 // There was some kind of problem while starting.
                 // Launching the first start sequence
 
-                MessageBox.Show("Hello there! We've asked Teimo nicely where My Summer Car is installed, but he wouldn't tell me at all!.\n\n" +
+                MessageBox.Show("Hello there! I've asked Teimo nicely where My Summer Car is installed, but he wouldn't tell me at all!.\n\n" +
                     "Please select where the game is installed :)", "Terve", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Log("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.");
@@ -118,18 +118,6 @@ namespace OggConverter
             }
 
             Log($"Game Folder: {Settings.GamePath}");
-
-            // Setting Settings settings (hehe)
-            btnRemMP3.Checked = Settings.RemoveMP3;
-            btnNoSteam.Checked = Settings.NoSteam;
-            btnAfterLaunchGame.Checked = Settings.LaunchAfterConversion;
-            btnAfterClose.Checked = Settings.CloseAfterConversion;
-            btnAfterNone.Checked = !Settings.CloseAfterConversion && !Settings.LaunchAfterConversion;
-            btnUpdates.Checked = !Settings.NoUpdates;
-            btnLogs.Checked = Settings.Logs;
-            btnAutoSort.Checked = Settings.AutoSort;
-            btnHistory.Checked = Settings.History;
-            btnDisableMetafiles.Checked = Settings.DisableMetaFiles;
 
             // Checks if ffmpeg or ffplay are missing
             // If so, they will be downloaded and the tool will be restarted.
@@ -232,7 +220,7 @@ namespace OggConverter
                         }
                     }
 
-                    if (Settings.LatestVersion == 0 && !DesktopShortcut.ShortcutExist())
+                    if (Settings.LatestVersion == 0 && !DesktopShortcut.Exists())
                     {
                         DialogResult dl = MessageBox.Show("Do you want to create desktop shortcut?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dl == DialogResult.Yes)
@@ -288,12 +276,6 @@ namespace OggConverter
                 Log("\nUpdates are disabled");
             else
                 Updates.StartUpdateCheck();
-
-            if (Settings.Preview)
-            {
-                btnUpdates.ForeColor = Color.Red;
-                btnUpdates.Text = "Updates (Preview)";
-            }
 
             mSCOGGToolStripMenuItem.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
 
@@ -513,11 +495,6 @@ namespace OggConverter
             Utilities.LaunchGame();
         }
 
-        private void RemoveOldMP3FilesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Settings.RemoveMP3 ^= true;
-        }
-
         private void QuitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -526,55 +503,6 @@ namespace OggConverter
         private void SteamCommunityDiscussionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://steamcommunity.com/app/516750/discussions/2/1489992713697876617/");
-        }
-
-        private void NoneToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Settings.CloseAfterConversion = btnAfterClose.Checked = false;
-            Settings.LaunchAfterConversion = btnAfterLaunchGame.Checked = false;
-        }
-
-        private void CloseTheProgramToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Settings.CloseAfterConversion ^= true;
-            btnAfterNone.Checked = false;
-        }
-
-        private void LaunchTheGameToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Settings.LaunchAfterConversion ^= true;
-            btnAfterNone.Checked = false;
-        }
-
-        private void LaunchGameWithoutSteamToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Settings.NoSteam ^= true;
-        }
-
-        private void CheckBoxUpdates_Click(object sender, EventArgs e)
-        {
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                DialogResult dialogResult = MessageBox.Show(Settings.Preview ? "Would you like to disable preview updates?" :
-                    "Would you like to enable preview updates?\n\nWarning: preview releases may be unstable and/or broken.",
-                    "Question",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (dialogResult == DialogResult.Yes)
-                {
-                    Settings.Preview ^= true;
-
-                    MessageBox.Show($"In order to {(Settings.Preview ? "update" : "downgrade")}, use 'Check for Update' button",
-                        "Info",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                }
-
-                btnUpdates.Checked ^= true;
-                return;
-            }
-            Settings.NoUpdates ^= true;
         }
 
         private void BtnFFmpegLicense_Click(object sender, EventArgs e)
@@ -749,11 +677,6 @@ namespace OggConverter
             moveTo.ShowDialog();            
         }
 
-        private void BtnLogs_Click(object sender, EventArgs e)
-        {
-            Settings.Logs ^= true;
-        }
-
         private void BtnCheckUpdate_Click(object sender, EventArgs e)
         {
             // Force download and install update
@@ -771,11 +694,6 @@ namespace OggConverter
         {
             if (Updates.IsBusy) return;
             Updates.DownloadUpdate(Settings.Preview);
-        }
-
-        private void BtnAutoSort_Click(object sender, EventArgs e)
-        {
-            Settings.AutoSort ^= true;
         }
 
         private async void BtnDownload_Click(object sender, EventArgs e)
@@ -849,13 +767,7 @@ namespace OggConverter
         {
             if (e.KeyCode == Keys.Enter)
                 BtnDownload_Click(sender, e);
-        }
-
-        private void BtnDesktopShortcut_Click(object sender, EventArgs e)
-        {
-            if (!DesktopShortcut.ShortcutExist())
-                DesktopShortcut.Create();
-        }      
+        }  
 
         private void BtnHelp_Click(object sender, EventArgs e)
         {
@@ -868,11 +780,6 @@ namespace OggConverter
                 "Help", 
                 MessageBoxButtons.OK, 
                 MessageBoxIcon.Information);
-        }
-
-        private void BtnHistory_Click(object sender, EventArgs e)
-        {
-            Settings.History ^= true;
         }
 
         private void SongList_SelectedIndexChanged(object sender, EventArgs e)
@@ -921,58 +828,6 @@ namespace OggConverter
             UpdateSongList();
         }
 
-        private void BtnDisableMetafiles_Click(object sender, EventArgs e)
-        {
-            if (!Settings.DisableMetaFiles)
-            {
-                DialogResult dl = MessageBox.Show("Disabling metafiles will result in MSC Music Manager using file names, instead of saved song names.\n" +
-                    "Are you sure you want to continue?",
-                    "Question",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Stop);
-
-                if (dl != DialogResult.Yes)
-                {
-                    btnDisableMetafiles.Checked ^= true;
-                    return;
-                }
-            }
-
-            Player.Stop();
-            Settings.DisableMetaFiles ^= true;
-
-            if (Settings.DisableMetaFiles)
-            {
-                DialogResult removeMeta = MessageBox.Show("Would you like to remove ALL meta files?",
-                "Question",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-                if (removeMeta == DialogResult.Yes)
-                {
-                    MetaData.RemoveAll($"Radio");
-                    MetaData.RemoveAll($"CD");
-                }
-            }
-            else
-            {
-                DialogResult getMeta = MessageBox.Show("Would you like the MSCMM to get song names directly from files now? " +
-                    "(It may take some time, depending on how many songs you have)",
-                "Question",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-                if (getMeta == DialogResult.Yes)
-                {
-                    RestrictedMode(true);
-                    MetaData.GetMetaFromAllSongs($"Radio");
-                    MetaData.GetMetaFromAllSongs($"CD");
-                    RestrictedMode(false);
-                }
-            }
-            UpdateSongList();
-        }
-
         private async void BtnYoutubeDlUpdate_Click(object sender, EventArgs e)
         {
             await Task.Run(() => Updates.LookForYoutubeDlUpdate(true));
@@ -999,6 +854,12 @@ namespace OggConverter
             Downloader.Cancel();
             RestrictedMode(false);
             btnCancelDownload.Enabled = false;
+        }
+
+        private void MenuSettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm form = new SettingsForm();
+            form.Show();
         }
     }
 }

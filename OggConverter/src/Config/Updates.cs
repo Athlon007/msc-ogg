@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace OggConverter
 {
@@ -259,6 +260,7 @@ namespace OggConverter
         /// <param name="force">Skips the same date test.</param>
         public static async Task LookForYoutubeDlUpdate(bool force = false)
         {
+            /*
             if (!force)
             {
                 if ((Settings.DemoMode) || (Settings.YouTubeDlLastUpdateCheckDay == DateTime.Now.Day))
@@ -268,6 +270,45 @@ namespace OggConverter
                 return;
 
             await GetYoutubeDlUpdate();
+            */
+            if (Settings.DemoMode || !Utilities.IsOnline() || !File.Exists("youtube-dl.exe")) return;
+
+            if (!force)
+            {
+                switch (Settings.YouTubeDlUpdateFrequency)
+                {
+                    // No updates by default
+                    default:
+                        return;
+                    // Upon start
+                    case 0:
+                        await GetYoutubeDlUpdate();
+                        break;
+                    // Daily
+                    case 1:
+                        if (Settings.LastYTDLUpdateCheck.Day != DateTime.Now.Day)
+                            await GetYoutubeDlUpdate();
+                        break;
+                    // Weekly
+                    case 2:
+                        Calendar cal = CultureInfo.InvariantCulture.Calendar;
+                        if (cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday) > 
+                            cal.GetWeekOfYear(Settings.LastYTDLUpdateCheck, CalendarWeekRule.FirstDay, DayOfWeek.Monday) ||
+                            DateTime.Now.Year != Settings.LastYTDLUpdateCheck.Year)
+                            await GetYoutubeDlUpdate();
+                        break;
+                    // Monthly
+                    case 3:
+                        if (DateTime.Now.Month > Settings.LastYTDLUpdateCheck.Month ||
+                            DateTime.Now.Year != Settings.LastYTDLUpdateCheck.Year)
+                            await GetYoutubeDlUpdate();
+                        break;
+                }
+            }
+            else
+            {
+                await GetYoutubeDlUpdate();
+            }
         }
 
         /// <summary>
@@ -286,7 +327,7 @@ namespace OggConverter
             await Task.Run(() => process.WaitForExit());
             Form1.instance.Log("youtube-dl is up-to-date!");
             IsYoutubeDlUpdating = false;
-            Settings.YouTubeDlLastUpdateCheckDay = DateTime.Now.Day;
+            Settings.LastYTDLUpdateCheck = DateTime.Now;
         }
 
         /// <summary>

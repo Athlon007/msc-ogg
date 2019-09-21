@@ -23,24 +23,39 @@ namespace OggConverter
 {
     class DesktopShortcut
     {
+        static string DesktopPath { get => Environment.GetFolderPath(Environment.SpecialFolder.Desktop); }
+
         /// <summary>
         /// Checks if desktop shortcut exists.
         /// </summary>
         /// <returns></returns>
-        public static bool ShortcutExist() { return System.IO.File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.Desktop)}\\My Summer Car Music Manager.lnk"); }
+        public static bool Exists() { return System.IO.File.Exists($"{DesktopPath}\\My Summer Car Music Manager.lnk"); }
 
         /// <summary>
         /// Creates a new desktop shortcut.
         /// </summary>
         public static void Create()
         {
-            string link = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + Path.DirectorySeparatorChar + Application.ProductName + ".lnk";
+            if (Exists()) return;
+
+            string link = DesktopPath + Path.DirectorySeparatorChar + Application.ProductName + ".lnk";
             var shell = new WshShell();
             var shortcut = shell.CreateShortcut(link) as IWshShortcut;
             shortcut.TargetPath = Application.ExecutablePath;
             shortcut.WorkingDirectory = Application.StartupPath;
             shortcut.Description = "Add, Remove and Download Songs!";
             shortcut.Save();
+        }
+
+        /// <summary>
+        /// Deletes the desktop shortcut.
+        /// </summary>
+        public static void Delete()
+        {
+            if (Exists())
+            {
+                System.IO.File.Delete($"{DesktopPath}\\My Summer Car Music Manager.lnk");
+            }
         }
     }
 }

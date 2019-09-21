@@ -41,7 +41,7 @@ namespace OggConverter
 
             string date = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
             string thisVersion = Application.ProductVersion;
-            string fileName = @"LOG\" + date + ".txt";
+            string fileName = $"LOG\\{date}.txt";
 
             Directory.CreateDirectory("LOG");
             File.WriteAllText(fileName,
@@ -52,6 +52,8 @@ namespace OggConverter
                 $"// GAME DIRECTORY: {Settings.GamePath}\n\n" +
                 $"// {GetWittyComment()} \n\n" +
                 $"{log}");
+
+            Settings.LastCrashLogFile = $"{date}.txt";
 
             if (silent) return;
 

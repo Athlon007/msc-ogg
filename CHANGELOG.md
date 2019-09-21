@@ -1,5 +1,22 @@
 # Changelog
 
+## Preview 2.6.0.0 (xx.09.2019)
+
+### Added
+
+- Completly new Settings
+- You can now select how frequent youtube-dl checks for updates
+- You can now open last log file
+
+### Changes
+
+- "Create Desktop Shortcut" has been moved into Settings
+- Moved "Check for Update" and "Check for youtube-dl update" into Settings
+
+### Removed
+
+- Removed Herobrine
+
 ## 2.5.1 (21.09.2019)
 
 ### Added

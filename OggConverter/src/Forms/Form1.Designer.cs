@@ -51,28 +51,12 @@
             this.btnWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGitLab = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnYoutubeDlUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnDesktopShortcut = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mSCOGGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFFmpegLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.btnQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnRemMP3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.actionAfterConversionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAfterLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAfterClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnAfterNone = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnNoSteam = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAutoSort = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnUpdates = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLogs = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnHistory = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnDisableMetafiles = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.btnHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -303,15 +287,11 @@
             this.btnWebsite,
             this.btnGitLab,
             this.btnSteam,
-            this.toolStripSeparator3,
-            this.btnCheckUpdate,
-            this.btnYoutubeDlUpdate,
             this.toolStripSeparator4,
-            this.btnDesktopShortcut,
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(52, 24);
+            this.menuTool.Size = new System.Drawing.Size(52, 26);
             this.menuTool.Text = "Tool";
             // 
             // btnLastLog
@@ -354,36 +334,10 @@
             this.btnSteam.Text = "Steam Community discussion";
             this.btnSteam.Click += new System.EventHandler(this.SteamCommunityDiscussionToolStripMenuItem_Click);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(282, 6);
-            // 
-            // btnCheckUpdate
-            // 
-            this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(285, 26);
-            this.btnCheckUpdate.Text = "Check for Update";
-            this.btnCheckUpdate.Click += new System.EventHandler(this.BtnCheckUpdate_Click);
-            // 
-            // btnYoutubeDlUpdate
-            // 
-            this.btnYoutubeDlUpdate.Name = "btnYoutubeDlUpdate";
-            this.btnYoutubeDlUpdate.Size = new System.Drawing.Size(285, 26);
-            this.btnYoutubeDlUpdate.Text = "Check for youtube-dl update";
-            this.btnYoutubeDlUpdate.Click += new System.EventHandler(this.BtnYoutubeDlUpdate_Click);
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(282, 6);
-            // 
-            // btnDesktopShortcut
-            // 
-            this.btnDesktopShortcut.Name = "btnDesktopShortcut";
-            this.btnDesktopShortcut.Size = new System.Drawing.Size(285, 26);
-            this.btnDesktopShortcut.Text = "Create Destkop Shortcut";
-            this.btnDesktopShortcut.Click += new System.EventHandler(this.BtnDesktopShortcut_Click);
             // 
             // btnAbout
             // 
@@ -417,123 +371,15 @@
             // 
             // menuSettings
             // 
-            this.menuSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnRemMP3,
-            this.actionAfterConversionToolStripMenuItem,
-            this.btnNoSteam,
-            this.btnAutoSort,
-            this.btnUpdates,
-            this.btnLogs,
-            this.btnHistory,
-            this.btnDisableMetafiles});
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 24);
+            this.menuSettings.Size = new System.Drawing.Size(76, 26);
             this.menuSettings.Text = "Settings";
-            // 
-            // btnRemMP3
-            // 
-            this.btnRemMP3.CheckOnClick = true;
-            this.btnRemMP3.Name = "btnRemMP3";
-            this.btnRemMP3.Size = new System.Drawing.Size(335, 26);
-            this.btnRemMP3.Text = "Remove source files after conversion";
-            this.btnRemMP3.ToolTipText = "If selected, after converting files which were found in Radio or CD folder, the o" +
-    "riginal files will be deleted.";
-            this.btnRemMP3.Click += new System.EventHandler(this.RemoveOldMP3FilesToolStripMenuItem_Click);
-            // 
-            // actionAfterConversionToolStripMenuItem
-            // 
-            this.actionAfterConversionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAfterLaunchGame,
-            this.btnAfterClose,
-            this.toolStripSeparator2,
-            this.btnAfterNone});
-            this.actionAfterConversionToolStripMenuItem.Name = "actionAfterConversionToolStripMenuItem";
-            this.actionAfterConversionToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
-            this.actionAfterConversionToolStripMenuItem.Text = "Action after conversion (depreacted)";
-            // 
-            // btnAfterLaunchGame
-            // 
-            this.btnAfterLaunchGame.CheckOnClick = true;
-            this.btnAfterLaunchGame.Name = "btnAfterLaunchGame";
-            this.btnAfterLaunchGame.Size = new System.Drawing.Size(224, 26);
-            this.btnAfterLaunchGame.Text = "Launch the game";
-            this.btnAfterLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem1_Click);
-            // 
-            // btnAfterClose
-            // 
-            this.btnAfterClose.CheckOnClick = true;
-            this.btnAfterClose.Name = "btnAfterClose";
-            this.btnAfterClose.Size = new System.Drawing.Size(224, 26);
-            this.btnAfterClose.Text = "Close the program";
-            this.btnAfterClose.Click += new System.EventHandler(this.CloseTheProgramToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
-            // 
-            // btnAfterNone
-            // 
-            this.btnAfterNone.CheckOnClick = true;
-            this.btnAfterNone.Name = "btnAfterNone";
-            this.btnAfterNone.Size = new System.Drawing.Size(224, 26);
-            this.btnAfterNone.Text = "None";
-            this.btnAfterNone.Click += new System.EventHandler(this.NoneToolStripMenuItem_Click);
-            // 
-            // btnNoSteam
-            // 
-            this.btnNoSteam.CheckOnClick = true;
-            this.btnNoSteam.Name = "btnNoSteam";
-            this.btnNoSteam.Size = new System.Drawing.Size(335, 26);
-            this.btnNoSteam.Text = "Launch game without Steam";
-            this.btnNoSteam.Click += new System.EventHandler(this.LaunchGameWithoutSteamToolStripMenuItem_Click);
-            // 
-            // btnAutoSort
-            // 
-            this.btnAutoSort.CheckOnClick = true;
-            this.btnAutoSort.Name = "btnAutoSort";
-            this.btnAutoSort.Size = new System.Drawing.Size(335, 26);
-            this.btnAutoSort.Text = "Auto Sort";
-            this.btnAutoSort.ToolTipText = "If selected, the tool will automatically sort folder after, for instance, moving " +
-    "one song to another folder.";
-            this.btnAutoSort.Click += new System.EventHandler(this.BtnAutoSort_Click);
-            // 
-            // btnUpdates
-            // 
-            this.btnUpdates.CheckOnClick = true;
-            this.btnUpdates.Name = "btnUpdates";
-            this.btnUpdates.Size = new System.Drawing.Size(335, 26);
-            this.btnUpdates.Text = "Updates";
-            this.btnUpdates.Click += new System.EventHandler(this.CheckBoxUpdates_Click);
-            // 
-            // btnLogs
-            // 
-            this.btnLogs.CheckOnClick = true;
-            this.btnLogs.Name = "btnLogs";
-            this.btnLogs.Size = new System.Drawing.Size(335, 26);
-            this.btnLogs.Text = "Crash Logs";
-            this.btnLogs.Click += new System.EventHandler(this.BtnLogs_Click);
-            // 
-            // btnHistory
-            // 
-            this.btnHistory.CheckOnClick = true;
-            this.btnHistory.Name = "btnHistory";
-            this.btnHistory.Size = new System.Drawing.Size(335, 26);
-            this.btnHistory.Text = "History";
-            this.btnHistory.Click += new System.EventHandler(this.BtnHistory_Click);
-            // 
-            // btnDisableMetafiles
-            // 
-            this.btnDisableMetafiles.CheckOnClick = true;
-            this.btnDisableMetafiles.Name = "btnDisableMetafiles";
-            this.btnDisableMetafiles.Size = new System.Drawing.Size(335, 26);
-            this.btnDisableMetafiles.Text = "Disable Metafiles";
-            this.btnDisableMetafiles.Click += new System.EventHandler(this.BtnDisableMetafiles_Click);
+            this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(111, 24);
+            this.btnLaunchGame.Size = new System.Drawing.Size(111, 26);
             this.btnLaunchGame.Text = "Launch game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -550,14 +396,14 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 28);
+            this.menu.Size = new System.Drawing.Size(991, 30);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 24);
+            this.btnHelp.Size = new System.Drawing.Size(55, 26);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
@@ -565,7 +411,7 @@
             // 
             this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
-            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 24);
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 26);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
             this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
@@ -842,24 +688,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem btnGitLab;
         private System.Windows.Forms.ToolStripMenuItem btnSteam;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem btnAbout;
         private System.Windows.Forms.ToolStripMenuItem mSCOGGToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnFFmpegLicense;
         private System.Windows.Forms.ToolStripMenuItem btnQuit;
         private System.Windows.Forms.ToolStripMenuItem menuSettings;
-        private System.Windows.Forms.ToolStripMenuItem btnRemMP3;
-        private System.Windows.Forms.ToolStripMenuItem actionAfterConversionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem btnAfterLaunchGame;
-        private System.Windows.Forms.ToolStripMenuItem btnAfterClose;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem btnAfterNone;
-        private System.Windows.Forms.ToolStripMenuItem btnNoSteam;
-        private System.Windows.Forms.ToolStripMenuItem btnUpdates;
-        private System.Windows.Forms.ToolStripMenuItem btnLogs;
         private System.Windows.Forms.ToolStripMenuItem btnLaunchGame;
         private System.Windows.Forms.MenuStrip menu;
-        private System.Windows.Forms.ToolStripMenuItem btnCheckUpdate;
         private System.Windows.Forms.ToolStripMenuItem btnDownloadUpdate;
         private System.Windows.Forms.ToolStripMenuItem downloadUpdateNowToolStripMenuItem;
         private System.Windows.Forms.Button btnOpenGameDir;
@@ -867,17 +702,14 @@
         private System.Windows.Forms.Label labelConvert;
         private System.Windows.Forms.Panel dragDropPanel;
         private System.Windows.Forms.Label labNowPlaying;
-        private System.Windows.Forms.ToolStripMenuItem btnAutoSort;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabLog;
         private System.Windows.Forms.TabPage tabDownload;
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtboxVideo;
-        private System.Windows.Forms.ToolStripMenuItem btnDesktopShortcut;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem btnHelp;
-        private System.Windows.Forms.ToolStripMenuItem btnHistory;
         private System.Windows.Forms.Label labCounter;
         private System.Windows.Forms.TabPage tabMeta;
         private System.Windows.Forms.Button btnSetName;
@@ -886,8 +718,6 @@
         private System.Windows.Forms.Button btnCloneSong;
         private System.Windows.Forms.Button btnShuffle;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolStripMenuItem btnDisableMetafiles;
-        private System.Windows.Forms.ToolStripMenuItem btnYoutubeDlUpdate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ProgressBar downloadProgress;
         public System.Windows.Forms.ListBox songList;

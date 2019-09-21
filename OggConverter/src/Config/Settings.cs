@@ -62,18 +62,31 @@ namespace OggConverter
         // My Summer Car directory path
         public static string GamePath { get => Get("MSC Path", GetMSCPath()); set => Set("MSC Path", value); }
 
+        // How often youtube-dl updates are being checked for
+        //
+        // 0 - Upon launch
+        // 1 - Daily
+        // 2 - Once a week
+        // 3 - Once a month
+        public static int YouTubeDlUpdateFrequency { get => Get("YouTubeDlUpdateFrequency", 1);
+            set => Set("YouTubeDlUpdateFrequency", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////  
-        
+
         // Stores last build used.
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }                
 
-        // Disables or hides features (used for screenshots mostly)
+        // Disables or hides features (used mostly for screenshots)
         public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
+        
+        // Stores what was the last crash log file
+        public static string LastCrashLogFile { get => Get("LastCrashLogFile", ""); set => Set("LastCrashLogFile", value); }
 
-        // Stores the last update check day for youtube-dl
-        public static int YouTubeDlLastUpdateCheckDay { get => Get("YouTubeDlLastUpdateCheckDay", 1); set => Set("YouTubeDlLastUpdateCheckDay", value); }
+        // Stores the last time when the MSCMM checked for youtube-dl update
+        public static DateTime LastYTDLUpdateCheck { get => Get("LastYTDLUpdateCheck", new DateTime(1970, 1, 1, 1, 0, 0));
+            set => Set("LastYTDLUpdateCheck", value); }
 
 
         /// <summary>

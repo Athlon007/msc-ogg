@@ -20,7 +20,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
-using System.Threading;
 
 namespace OggConverter
 {
@@ -45,9 +44,13 @@ namespace OggConverter
         /// Returns MSC Music Manager version
         /// </summary>
         /// <returns></returns>
-        public static string GetVersion()
+        public static string GetVersion(bool fullVersion = false)
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
+            if (fullVersion)
+            {
+                return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+            }
             return version.Build == 0 ? $"{version.Major}.{version.Minor}" : $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
