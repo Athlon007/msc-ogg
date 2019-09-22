@@ -170,22 +170,34 @@ namespace OggConverter
                     Log("Converted Radio folder to .MSCMM to XML database.");
                 }
 
-                if (!File.Exists($"{Settings.GamePath}\\CD1\\songnames.xml"))
+                // Checks if old CD folder exists instead of the new ones
+                if (Directory.Exists($"{Settings.GamePath}\\CD"))
                 {
-                    MetaData.ConvertFromMscmm("CD1");
-                    Log("Converted CD1 folder to .MSCMM to XML database.");
+                    if (!File.Exists($"{Settings.GamePath}\\CD\\songnames.xml"))
+                    {
+                        MetaData.ConvertFromMscmm("CD");
+                        Log("Converted CD folder from .MSCMM to XML database.");
+                    }
                 }
-
-                if (!File.Exists($"{Settings.GamePath}\\CD2\\songnames.xml"))
+                else if (Directory.Exists($"{Settings.GamePath}\\CD1"))
                 {
-                    MetaData.ConvertFromMscmm("CD2");
-                    Log("Converted CD2 folder to .MSCMM to XML database.");
-                }
+                    if (!File.Exists($"{Settings.GamePath}\\CD1\\songnames.xml"))
+                    {
+                        MetaData.ConvertFromMscmm("CD1");
+                        Log("Converted CD1 folder from .MSCMM to XML database.");
+                    }
 
-                if (!File.Exists($"{Settings.GamePath}\\CD3\\songnames.xml"))
-                {
-                    MetaData.ConvertFromMscmm("CD3");
-                    Log("Converted CD3 folder to .MSCMM to XML database.");
+                    if (!File.Exists($"{Settings.GamePath}\\CD2\\songnames.xml"))
+                    {
+                        MetaData.ConvertFromMscmm("CD2");
+                        Log("Converted CD2 folder from .MSCMM to XML database.");
+                    }
+
+                    if (!File.Exists($"{Settings.GamePath}\\CD3\\songnames.xml"))
+                    {
+                        MetaData.ConvertFromMscmm("CD3");
+                        Log("Converted CD3 folder from .MSCMM to XML database.");
+                    }
                 }
 
                 // Showing legal notice if the tool is used for the first time

@@ -14,6 +14,11 @@
 - "Create Desktop Shortcut" has been moved into Settings
 - Moved "Check for Update" and "Check for youtube-dl update" into Settings
 
+### Bug Fixes
+
+- Fixed a bug that would cause MSCMM to try and save the null value into registry causing a crash
+- Fixed a bug in which MSCMM would crash on start if the user used older MSC version without CD1/2/3 support
+
 ### Removed
 
 - Removed Herobrine
