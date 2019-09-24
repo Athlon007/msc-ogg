@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.chkShortcut = new System.Windows.Forms.CheckBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.chkNoSteam = new System.Windows.Forms.CheckBox();
+            this.chkShortcut = new System.Windows.Forms.CheckBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
             this.chkRemoveSource = new System.Windows.Forms.CheckBox();
@@ -57,16 +57,18 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.chkNoSteam = new System.Windows.Forms.CheckBox();
+            this.btnDelHis = new System.Windows.Forms.Button();
+            this.btnDelLogs = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
+            this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
@@ -78,11 +80,66 @@
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl.TabIndex = 0;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label2);
+            this.tabPage4.Controls.Add(this.comboBox1);
+            this.tabPage4.Controls.Add(this.chkNoSteam);
+            this.tabPage4.Controls.Add(this.chkShortcut);
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(792, 421);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "General";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(480, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 17);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "Language";
+            this.label2.Visible = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "English"});
+            this.comboBox1.Location = new System.Drawing.Point(483, 56);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(160, 24);
+            this.comboBox1.TabIndex = 26;
+            this.comboBox1.Visible = false;
+            // 
+            // chkNoSteam
+            // 
+            this.chkNoSteam.AutoSize = true;
+            this.chkNoSteam.Location = new System.Drawing.Point(29, 62);
+            this.chkNoSteam.Name = "chkNoSteam";
+            this.chkNoSteam.Size = new System.Drawing.Size(215, 21);
+            this.chkNoSteam.TabIndex = 7;
+            this.chkNoSteam.Text = "Start the game without Steam";
+            this.chkNoSteam.UseVisualStyleBackColor = true;
+            this.chkNoSteam.Click += new System.EventHandler(this.ChkNoSteam_Click);
+            // 
+            // chkShortcut
+            // 
+            this.chkShortcut.AutoSize = true;
+            this.chkShortcut.Location = new System.Drawing.Point(29, 35);
+            this.chkShortcut.Name = "chkShortcut";
+            this.chkShortcut.Size = new System.Drawing.Size(139, 21);
+            this.chkShortcut.TabIndex = 6;
+            this.chkShortcut.Text = "Desktop Shortcut";
+            this.chkShortcut.UseVisualStyleBackColor = true;
+            this.chkShortcut.Click += new System.EventHandler(this.ChkShortcut_Click);
+            // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.chkNoSteam);
-            this.tabPage1.Controls.Add(this.chkShortcut);
-            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.chkNoMetafiles);
             this.tabPage1.Controls.Add(this.chkAutoSort);
             this.tabPage1.Controls.Add(this.chkRemoveSource);
@@ -93,56 +150,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Files";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // chkShortcut
-            // 
-            this.chkShortcut.AutoSize = true;
-            this.chkShortcut.Location = new System.Drawing.Point(471, 35);
-            this.chkShortcut.Name = "chkShortcut";
-            this.chkShortcut.Size = new System.Drawing.Size(139, 21);
-            this.chkShortcut.TabIndex = 4;
-            this.chkShortcut.Text = "Desktop Shortcut";
-            this.chkShortcut.UseVisualStyleBackColor = true;
-            this.chkShortcut.Click += new System.EventHandler(this.ChkShortcut_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.checkBox3);
-            this.panel1.Controls.Add(this.checkBox2);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(29, 130);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 115);
-            this.panel1.TabIndex = 3;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 47);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(146, 21);
-            this.checkBox3.TabIndex = 5;
-            this.checkBox3.Text = "Close the program";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 20);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(140, 21);
-            this.checkBox2.TabIndex = 4;
-            this.checkBox2.Text = "Launch the game";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(238, 17);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Folder Conversion (NOT WORKING)";
             // 
             // chkNoMetafiles
             // 
@@ -297,6 +304,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnDelLogs);
+            this.tabPage3.Controls.Add(this.btnDelHis);
             this.tabPage3.Controls.Add(this.checkBox1);
             this.tabPage3.Controls.Add(this.labNotice);
             this.tabPage3.Controls.Add(this.btLogFolder);
@@ -320,6 +329,7 @@
             this.checkBox1.TabIndex = 28;
             this.checkBox1.Text = "Enable tracing (NOT WORKING)";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
             // 
             // labNotice
             // 
@@ -333,7 +343,7 @@
             // 
             // btLogFolder
             // 
-            this.btLogFolder.Location = new System.Drawing.Point(305, 116);
+            this.btLogFolder.Location = new System.Drawing.Point(167, 157);
             this.btLogFolder.Name = "btLogFolder";
             this.btLogFolder.Size = new System.Drawing.Size(132, 35);
             this.btLogFolder.TabIndex = 5;
@@ -343,7 +353,7 @@
             // 
             // btnOpenLog
             // 
-            this.btnOpenLog.Location = new System.Drawing.Point(167, 116);
+            this.btnOpenLog.Location = new System.Drawing.Point(29, 157);
             this.btnOpenLog.Name = "btnOpenLog";
             this.btnOpenLog.Size = new System.Drawing.Size(132, 35);
             this.btnOpenLog.TabIndex = 4;
@@ -383,16 +393,25 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // chkNoSteam
+            // btnDelHis
             // 
-            this.chkNoSteam.AutoSize = true;
-            this.chkNoSteam.Location = new System.Drawing.Point(471, 62);
-            this.chkNoSteam.Name = "chkNoSteam";
-            this.chkNoSteam.Size = new System.Drawing.Size(215, 21);
-            this.chkNoSteam.TabIndex = 5;
-            this.chkNoSteam.Text = "Start the game without Steam";
-            this.chkNoSteam.UseVisualStyleBackColor = true;
-            this.chkNoSteam.Click += new System.EventHandler(this.ChkNoSteam_Click);
+            this.btnDelHis.Location = new System.Drawing.Point(167, 116);
+            this.btnDelHis.Name = "btnDelHis";
+            this.btnDelHis.Size = new System.Drawing.Size(132, 35);
+            this.btnDelHis.TabIndex = 29;
+            this.btnDelHis.Text = "Delete History";
+            this.btnDelHis.UseVisualStyleBackColor = true;
+            this.btnDelHis.Click += new System.EventHandler(this.BtnDelHis_Click);
+            // 
+            // btnDelLogs
+            // 
+            this.btnDelLogs.Location = new System.Drawing.Point(305, 157);
+            this.btnDelLogs.Name = "btnDelLogs";
+            this.btnDelLogs.Size = new System.Drawing.Size(132, 35);
+            this.btnDelLogs.TabIndex = 30;
+            this.btnDelLogs.Text = "Delete all logs";
+            this.btnDelLogs.UseVisualStyleBackColor = true;
+            this.btnDelLogs.Click += new System.EventHandler(this.BtnDelLogs_Click);
             // 
             // SettingsForm
             // 
@@ -406,10 +425,10 @@
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.tabControl.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -435,19 +454,20 @@
         private System.Windows.Forms.CheckBox chkHistory;
         private System.Windows.Forms.Button btnOpenLog;
         private System.Windows.Forms.Button btnOpenHistory;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbYoutubeDlUpdateFrequency;
         private System.Windows.Forms.Button btLogFolder;
         private System.Windows.Forms.Label labVer;
         private System.Windows.Forms.Button btnCheckUpdate;
         private System.Windows.Forms.Button btnCheckYTDLUpdates;
-        private System.Windows.Forms.CheckBox chkShortcut;
         private System.Windows.Forms.Label labNotice;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.CheckBox chkNoSteam;
+        private System.Windows.Forms.CheckBox chkShortcut;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnDelHis;
+        private System.Windows.Forms.Button btnDelLogs;
     }
 }

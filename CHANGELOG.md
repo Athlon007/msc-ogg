@@ -1,27 +1,47 @@
 # Changelog
 
-## Preview 2.6.0.0 (xx.09.2019)
+## Preview 2.6.0.0 (24.09.2019)
 
 ### Added
 
-- Completly new Settings
+- Completly redesigned Settings
 - You can now select how frequent youtube-dl checks for updates
 - You can now open last log file
 - Restored "start game without Steam" checkbox
+- You can now delete multiple files at the same time
+- Added new keyboard controls for song list:
+  - Select all files by pressing CTRL+A
+  - Delete all files by clicking "Delete"
+  - You can now play the song by pressing Enter
 
 ### Changes
 
 - "Create Desktop Shortcut" has been moved into Settings
 - Moved "Check for Update" and "Check for youtube-dl update" into Settings
+- Minor UI changes
 
 ### Bug Fixes
 
-- Fixed a bug that would cause MSCMM to try and save the null value into registry causing a crash
 - Fixed a bug in which MSCMM would crash on start if the user used older MSC version without CD1/2/3 support
+- Fixed a bug in which MSCMM would crash if the MSCMM was converting the songs if they're dropped inside of folder
 
 ### Removed
 
 - Removed Herobrine
+
+## 2.5.3 (22.09.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which MSCMM would read the My Summer Car path incorrectly, if the game wasn't installed in main Steam folder
+
+## 2.5.2 (22.09.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which the program wouldn't start on computers using DD/MM/YYYY or MM/DD/YYYY date format
+- Fixed a bug that would cause MSCMM to try and save the null value into registry causing a crash (thanks to @Patrick-van-Halm at GitLab)
+- Fixed an error which occured if the GamePath value was empty
 
 ## 2.5.1 (21.09.2019)
 

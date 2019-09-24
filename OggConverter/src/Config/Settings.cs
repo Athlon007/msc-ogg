@@ -32,12 +32,6 @@ namespace OggConverter
         // Should MSCMM remove source song files after conversion?
         public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }
 
-        // Should the program close after conversion?
-        public static bool CloseAfterConversion { get => Get("CloseAfterConversion", false); set => Set("CloseAfterConversion", value); }
-
-        // Should the game be launched after conversion?
-        public static bool LaunchAfterConversion { get => Get("LaunchAfterConversion", false); set => Set("LaunchAfterConversion", value); }
-        
         // Should the game be started without steam?
         public static bool NoSteam { get => Get("NoSteam", false); set => Set("NoSteam", value); }
 
@@ -68,25 +62,34 @@ namespace OggConverter
         // 1 - Daily
         // 2 - Once a week
         // 3 - Once a month
-        public static int YouTubeDlUpdateFrequency { get => Get("YouTubeDlUpdateFrequency", 1);
-            set => Set("YouTubeDlUpdateFrequency", value); }
+        public static int YouTubeDlUpdateFrequency
+        {
+            get => Get("YouTubeDlUpdateFrequency", 1);
+            set => Set("YouTubeDlUpdateFrequency", value);
+        }
+
+        /// Stores the set language by user
+        public static string Language { get => Get("Language", "english"); set => Set("Language", value); }
 
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
-        //////////////////////////////////////////////  
+        //////////////////////////////////////////////
 
         // Stores last build used.
-        public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }                
+        public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }
 
         // Disables or hides features (used mostly for screenshots)
         public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
-        
+
         // Stores what was the last crash log file
         public static string LastCrashLogFile { get => Get("LastCrashLogFile", ""); set => Set("LastCrashLogFile", value); }
 
         // Stores the last time when the MSCMM checked for youtube-dl update
-        public static DateTime LastYTDLUpdateCheck { get => Get("LastYTDLUpdateCheck", new DateTime(1970, 1, 1, 1, 0, 0));
-            set => Set("LastYTDLUpdateCheck", value); }
+        public static DateTime LastYTDLUpdateCheck
+        {
+            get => Get("LastYTDLUpdateCheck", new DateTime(1970, 1, 1, 1, 0, 0));
+            set => Set("LastYTDLUpdateCheck", value);
+        }
 
 
         /// <summary>
@@ -108,24 +111,35 @@ namespace OggConverter
         /// <param name="value">Value to set</param>
         static void Set<T>(string name, T value)
         {
-            using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))
-                Key.SetValue(name, value);
+            if (value != null)
+                using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))
+                    Key.SetValue(name, value);
         }
 
         /// <summary>
         /// Removes all settings.
         /// </summary>
-        public static void WipeAll() { Registry.CurrentUser.DeleteSubKeyTree(key); LatestVersion = Updates.version;  }
+        public static void WipeAll() { Registry.CurrentUser.DeleteSubKeyTree(key); LatestVersion = Updates.version; }
 
         /// <summary>
         /// Checks registry key validity - if it exists and if the game path is correct.
         /// </summary>
         /// <returns></returns>
         public static bool AreSettingsValid()
-        {           
+        {
             GamePath = GetMSCPath();
-            return !String.IsNullOrEmpty(GamePath);           
+            //return GamePath == null || GamePath != "invalid";
+            if (GamePath == null || GamePath == "")
+                return false;
+
+            if (GamePath == "invalid")
+                return false;
+
+            return true;
         }
+
+        // If you're reading this - I hope you had a better day than me fixing that fucking error fixed in 2.5.2...
+        // ~ Athlon
 
         /// <summary>
         /// Tries to find My Summer Car folder.
@@ -142,36 +156,42 @@ namespace OggConverter
 
             // My Summer Car path is not saved. Now we're trying to find it in Steam root folder
             string steamFolder = "";
-            using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
+            if (Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam") != null)
             {
-                steamFolder = Key.GetValue("SteamPath").ToString();
-                steamFolder = steamFolder.Replace("/", "\\");
-            }
-
-            // MSC is installed in root Steam folder
-            if (File.Exists($"{steamFolder}\\steamapps\\common\\My Summer Car\\mysummercar.exe"))
-            {
-                GamePath = $"{steamFolder}\\steamapps\\common\\My Summer Car";
-                return $"{steamFolder}\\steamapps\\common\\My Summer Car";
-            }
-
-            // MSC not found - gotta open config.vdf file and browse all libraries for MSC folder...
-            // Dumping config.vdf to string array
-            string[] config = File.ReadAllText($"{steamFolder}\\config\\config.vdf").Split('\n');
-            // Creating list in which all BaseInstallFolder values will be stored
-            foreach (string line in config)
-            {
-                if (line.Contains("BaseInstallFolder"))
+                using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
                 {
-                    string path = line.Substring(line.LastIndexOf('\t')).Replace("\"", "").Replace("\\\\", "\\").Trim();
-                    path += "\\steamapps\\common\\My Summer Car\\mysummercar.exe";
-                    if (File.Exists(path))
+                    steamFolder = Key.GetValue("SteamPath").ToString();
+                    steamFolder = steamFolder.Replace("/", "\\");
+                }
+            }
+
+            if (steamFolder != "")
+            {
+                // MSC is installed in root Steam folder
+                if (File.Exists($"{steamFolder}\\steamapps\\common\\My Summer Car\\mysummercar.exe"))
+                {
+                    GamePath = $"{steamFolder}\\steamapps\\common\\My Summer Car";
+                    return $"{steamFolder}\\steamapps\\common\\My Summer Car";
+                }
+
+                // MSC not found - gotta open config.vdf file and browse all libraries for MSC folder...
+                // Dumping config.vdf to string array
+                string[] config = File.ReadAllText($"{steamFolder}\\config\\config.vdf").Split('\n');
+                // Creating list in which all BaseInstallFolder values will be stored
+                foreach (string line in config)
+                {
+                    if (line.Contains("BaseInstallFolder"))
                     {
-                        GamePath = path;
-                        return path;
+                        string path = line.Substring(line.LastIndexOf('\t')).Replace("\"", "").Replace("\\\\", "\\").Trim();
+                        path += "\\steamapps\\common\\My Summer Car";
+                        if (Directory.Exists(path))
+                        {
+                            GamePath = path;
+                            return path;
+                        }
                     }
                 }
-            }   
+            }
 
             // Still haven't found? User will be asked to select it manually. Return null
             return null;

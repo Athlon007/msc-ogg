@@ -27,14 +27,17 @@ namespace OggConverter
         string FileName { get; set; }
 
         int defaultY = 208;
-        int extendedY = 457;
+        //int extendedY = 457;
+        int extendedY = 560;
         bool isExtended;
 
         public ErrorMessage(Exception ex)
         {
             InitializeComponent();
 
-            string fileName = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+            string fileName = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} " +
+                $"{DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+
             FileName = fileName;
 
             label2.Text = $"An error has occured and the info has been saved to {fileName}\n" +
@@ -59,7 +62,7 @@ namespace OggConverter
         {
             isExtended ^= true;
             this.Size = new Size(this.Size.Width, isExtended ? extendedY : defaultY);
-            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193)+ " Show More Info");
+            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193) + " Show More Info");
             string file = File.ReadAllText($"LOG\\{FileName}.txt");
             file = file.Replace("\n", Environment.NewLine);
             logOutput.Text = file;
@@ -67,7 +70,7 @@ namespace OggConverter
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

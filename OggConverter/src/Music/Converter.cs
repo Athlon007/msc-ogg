@@ -71,7 +71,7 @@ namespace OggConverter
             {
                 Form1.instance.RestrictedMode(true);
                 Form1.instance.Log("\n-----------------------------------------------------------------------------------------------------------------------------------------");
-                await Converter.ConvertFolder("Radio", 99);
+                await Task.Run(() => Converter.ConvertFolder("Radio", 99));
 
                 if (Directory.Exists($"{Settings.GamePath}\\CD") && !Directory.Exists($"{Settings.GamePath}\\CD1"))
                 {
@@ -80,16 +80,16 @@ namespace OggConverter
                 else
                 {
                     // Added with the new update
-                    await Converter.ConvertFolder("CD1", 15);
-                    await Converter.ConvertFolder("CD2", 15);
-                    await Converter.ConvertFolder("CD3", 15);
+                    await Task.Run(() => Converter.ConvertFolder("CD1", 15));
+                    await Task.Run(() => Converter.ConvertFolder("CD2", 15));
+                    await Task.Run(() => Converter.ConvertFolder("CD3", 15));
                 }
 
                 if (Converter.Skipped != 4)
                 {
+                    Form1.instance.Log("\nDone!");
                     Form1.instance.Log($"Converted {Converter.TotalConversions} file{(Converter.TotalConversions > 1 ? "s" : "")} in total");
-                    Form1.instance.Log("\nDone");
-                    Form1.instance.Log("Conversion log was saved to LastConversion.txt");
+                    Form1.instance.Log("Conversion log was saved to history.txt");
                 }
                 else
                 {
@@ -97,13 +97,6 @@ namespace OggConverter
                 }
 
                 SystemSounds.Exclamation.Play();
-
-                //Actions after conversion
-                if (Settings.LaunchAfterConversion)
-                    Utilities.LaunchGame();
-
-                if (Settings.CloseAfterConversion)
-                    Application.Exit();
             }
             catch (Exception ex)
             {
@@ -206,7 +199,8 @@ namespace OggConverter
 
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         songName = MetaData.GetFromOutput(ffmpegOut);
-                        MetaData.AddOrEdit($"track{inGame}", songName);
+                        MetaData.AddOrEdit($"track{inGame}", songName, folder);
+                        //await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
                     }
                     else
                     {
@@ -222,10 +216,10 @@ namespace OggConverter
                         await Task.Run(() => process = Process.Start(psi));
 
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        songName = MetaData.GetFromOutput(ffmpegOut);
-                        MetaData.AddOrEdit($"track{inGame}", songName);
-
                         await Task.Run(() => process.WaitForExit());
+                        songName = MetaData.GetFromOutput(ffmpegOut);
+                        //MetaData.AddOrEdit($"track{inGame}", songName, folder);
+                        await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
                     }
 
                     Form1.instance.Log($"Finished {file.Name} as track{inGame}.ogg");

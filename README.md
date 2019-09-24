@@ -21,7 +21,9 @@ This program is distributed under GNU General Public License v3. Feel free to us
 
 ## Download
 
-### [Download](mscmm.zip)
+**[Full Download (recommended)](mscmm.zip)**
+
+[Update Only](mscmm_update.zip)
 
 ## Installation
 

@@ -38,7 +38,24 @@ namespace OggConverter
         /// <summary>
         /// Checks what radio button is selected and decides what's the current folder
         /// </summary>
-        public string CurrentFolder { get => selectedFolder.Text; }
+        public string CurrentFolder
+        {
+            //get => selectedFolder.Text;
+            get
+            {
+                if (selectedFolder.InvokeRequired)
+                {
+                    string val = "";
+                    selectedFolder.Invoke(new Action(delegate ()
+                    {
+                        val = selectedFolder.Text;
+                    }));
+                    return val;
+                }
+
+                return selectedFolder.Text;
+            }
+        }
         private int SongsLimit { get => CurrentFolder.StartsWith("CD") ? 15 : 99; }
 
         // Stores last selected item on songList. Set to -1 by default so nothing's checked
@@ -48,6 +65,7 @@ namespace OggConverter
         {
             InitializeComponent();
             instance = this;
+            this.KeyPreview = true;
 
 #if DEBUG
             Log($"MSC Music Manager {Utilities.GetVersion(true)} ({Updates.version}) DEBUG\n" +
@@ -63,7 +81,7 @@ namespace OggConverter
                     "While nothing should happen, I'm not not responsible for any damages done to you/your computer/your game/" +
                     "Satsuma/Teimo/or anything other at all!\n\n" +
                     "I'll also bother you with this message until you move Music Manager somewhere else every time you start the tool ;)",
-                    "Ruh-roh", 
+                    "Ruh-roh",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
@@ -93,9 +111,10 @@ namespace OggConverter
             // Removing temporary or unused files
             Utilities.Cleanup();
 
-            // Checking file validity   
+            // Checking file validity
             if (!Settings.AreSettingsValid())
             {
+                firstLoad = true;
                 // There was some kind of problem while starting.
                 // Launching the first start sequence
 
@@ -103,11 +122,10 @@ namespace OggConverter
                     "Please select where the game is installed :)", "Terve", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Log("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.");
-                firstLoad = true;
                 RestrictedMode(true);
                 return;
             }
-            
+
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
             {
                 MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -360,7 +378,7 @@ namespace OggConverter
 
             if (logOutput.InvokeRequired)
             {
-                logOutput.Invoke(new Action(delegate () 
+                logOutput.Invoke(new Action(delegate ()
                 {
                     logOutput.Text += value;
                     logOutput.SelectionStart = logOutput.TextLength;
@@ -387,7 +405,7 @@ namespace OggConverter
             if (!File.Exists(MetaData.XmlFilePath()))
                 MetaData.ConvertFromMscmm(CurrentFolder);
 
-            List<string> newTrackList = new List<string>();            
+            List<string> newTrackList = new List<string>();
             Player.WorkingSongList.Clear();
 
             for (int i = 1; i <= 99; i++)
@@ -396,7 +414,7 @@ namespace OggConverter
                     //string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
                     string s = MetaData.GetName($"track{i}");
                     newTrackList.Add(s);
-                    Player.WorkingSongList.Add(new Tuple<string,string>($"track{i}", s));
+                    Player.WorkingSongList.Add(new Tuple<string, string>($"track{i}", s));
                     howManySongs++;
                 }
 
@@ -434,7 +452,7 @@ namespace OggConverter
                     Log("My Summer Car folder loaded successfully!");
 
                     if (firstLoad)
-                    { 
+                    {
                         Form1 f = new Form1();
                         Hide();
                         f.ShowDialog();
@@ -596,7 +614,14 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.Delete(CurrentFolder, Player.WorkingSongList[songList.SelectedIndex].Item1, songList.SelectedItem.ToString());
+
+            int[] domains = songList.SelectedIndices.OfType<int>().ToArray();
+            List<string> deleteList = new List<string>();
+
+            foreach (int i in domains)
+                deleteList.Add(Player.WorkingSongList[i].Item1.ToString());
+
+            Player.Delete(CurrentFolder, deleteList.ToArray());
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -678,15 +703,15 @@ namespace OggConverter
             if (songList.SelectedIndex == -1) return;
 
             Player.Stop();
-     
+
             int[] domains = songList.SelectedIndices.OfType<int>().ToArray();
-            List<string> moveList = new List<string>();            
+            List<string> moveList = new List<string>();
 
             foreach (int i in domains)
                 moveList.Add(Player.WorkingSongList[i].Item1.ToString());
 
             MoveTo moveTo = new MoveTo(moveList.ToArray(), CurrentFolder);
-            moveTo.ShowDialog();            
+            moveTo.ShowDialog();
         }
 
         private void BtnCheckUpdate_Click(object sender, EventArgs e)
@@ -779,7 +804,7 @@ namespace OggConverter
         {
             if (e.KeyCode == Keys.Enter)
                 BtnDownload_Click(sender, e);
-        }  
+        }
 
         private void BtnHelp_Click(object sender, EventArgs e)
         {
@@ -788,9 +813,9 @@ namespace OggConverter
                 "- Paste songs into Radio or CD folder in My Summer Car folder and click on the program's window - the program will detect new songs automatically\n" +
                 "- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term\n\n" +
                 "Use Shuffle to randomize songs order.\n" +
-                "In Edit tab you can change song's displayed name.", 
-                "Help", 
-                MessageBoxButtons.OK, 
+                "In Edit tab you can change song's displayed name.",
+                "Help",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
@@ -872,6 +897,38 @@ namespace OggConverter
         {
             SettingsForm form = new SettingsForm();
             form.Show();
+        }
+
+        private void SongList_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Select all items on songlist
+            if (e.Control && e.KeyCode == Keys.A)
+                for (int i = 0; i < songList.Items.Count; i++)
+                    songList.SelectedItem = songList.Items[i];
+
+            // Delete selected item
+            if (e.KeyCode == Keys.Delete)
+                btnDel.PerformClick();
+
+            // Play or stop playing the song
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (labNowPlaying.Visible && labNowPlaying.Text.Contains(Player.WorkingSongList[songList.SelectedIndex].Item2)) 
+                    btnStop.PerformClick();
+                else
+                    btnPlaySong.PerformClick();
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // If the songlist is not focused and user presses up or down arrow - it will focus on song list and select the first song
+            if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) && songList.SelectedIndex == -1)
+            {
+                songList.SelectedIndex = 0;
+                songList.Select();
+                songList.Focus();
+            }
         }
     }
 }

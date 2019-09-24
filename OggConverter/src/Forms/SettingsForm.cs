@@ -137,8 +137,8 @@ namespace OggConverter
 
         private void BtnOpenLog_Click(object sender, EventArgs e)
         {
-            if (Settings.LastCrashLogFile != "")
-                Process.Start($"LOG//{Settings.LastCrashLogFile}.txt");
+            if (Settings.LastCrashLogFile != "" && File.Exists($"LOG\\{Settings.LastCrashLogFile}"))
+                Process.Start($"LOG\\{Settings.LastCrashLogFile}");
         }
 
         private void BtLogFolder_Click(object sender, EventArgs e)
@@ -181,6 +181,28 @@ namespace OggConverter
         private void ChkNoSteam_Click(object sender, EventArgs e)
         {
             Settings.NoSteam ^= true;
+        }
+
+        private void BtnDelHis_Click(object sender, EventArgs e)
+        {
+            DialogResult dl = MessageBox.Show("Are you sure you want to remove entire history?", 
+                "Question", 
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question);
+
+            if (dl == DialogResult.Yes && File.Exists("history.txt"))
+                File.Delete("history.txt");
+        }
+
+        private void BtnDelLogs_Click(object sender, EventArgs e)
+        {
+            DialogResult dl = MessageBox.Show("Are you sure you want to delete all logs?",
+                "Question",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dl == DialogResult.Yes && Directory.Exists("LOG"))
+                Directory.Delete("LOG", true);
         }
     }
 }

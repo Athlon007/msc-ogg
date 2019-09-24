@@ -39,17 +39,19 @@ namespace OggConverter
             // Logs disabled? Don't save it
             if (!Settings.Logs) return;
 
-            string date = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
             string thisVersion = Application.ProductVersion;
             string fileName = $"LOG\\{date}.txt";
 
             Directory.CreateDirectory("LOG");
             File.WriteAllText(fileName,
-                $"// MSC Music Manager //\n" + 
+                $"// MSC Music Manager //\n" +
                 $"// VERSION: {thisVersion} ({Updates.version})\n" +
                 $"// SYSTEM: {GetSystemInfo()}\n" +
-                $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n\n" +
-                $"// GAME DIRECTORY: {Settings.GamePath}\n\n" +
+                $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n" +
+                $"// GAME DIRECTORY: {Settings.GamePath}\n" +
+                $"// TIME OF CRASH: {DateTime.Now.Date}\n\n" +
+                //$"// LANGUAGE: \n\n" +
                 $"// {GetWittyComment()} \n\n" +
                 $"{log}");
 
