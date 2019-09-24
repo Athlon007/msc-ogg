@@ -23,3 +23,19 @@ C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\Interop.IWshRuntimeLibrar
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\OggConverter.csproj.ResolveComReference.cache
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\OggConverter.MoveTo.resources
 C:\Users\Athlon\repos\msc-ogg\OggConverter\obj\Release\OggConverter.ErrorMessage.resources
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\bin\Release\MSC Music Manager.exe.config
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\bin\Release\MSC Music Manager.exe
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\bin\Release\MSC Music Manager.pdb
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.csprojAssemblyReference.cache
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\Interop.IWshRuntimeLibrary.dll
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.csproj.ResolveComReference.cache
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.ErrorMessage.resources
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.Form1.resources
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.Properties.Resources.resources
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.MoveTo.resources
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.QuickConvert.resources
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.csproj.GenerateResource.cache
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.csproj.CoreCompileInputs.cache
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\MSC Music Manager.exe
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\MSC Music Manager.pdb
+C:\Users\aathl\source\repos\msc-ogg\OggConverter\obj\Release\OggConverter.SettingsForm.resources

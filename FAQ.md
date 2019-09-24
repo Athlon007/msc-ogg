@@ -7,12 +7,22 @@ You can either wait a little longer, or download the required files yourself [HE
 
 ## MSCMM won't start at all
 
-Check if all required dependencies are installed. You can see them in [README.md](README.md)
+Check if all required dependencies are installed. You can see them in [README.md](README.md).
+
+## MSCMM is showing the System.IO.DirectoryNotFoundException" error while loading
+
+On the error screen, click Continue and manually select the MSC folder by pressing "Select Game Folder".
 
 ## MSCMM used to work perfectly fine, but now it doesn't
 
-That may be related to broken update, or configuration. Try to redownload the MSCMM. If that doesn't cut it, start MSCMM with "wipe" argument. That will remove all your settings.
+That may be related to broken update, or configuration. Try to re-download the MSCMM.
+
+You can also reset MSCMM. To do that, create a new desktop shortuct to the MSCMM. Then, right click on it, go into the properties and at the end of the "Target" line, add "wipe" (after spacebar). Then start the MSCMM, which will display "All your settings have been wiped. Restart the MSCMM without 'wipe' argument.".
 
 ## My game stopped working/computer blew up/dog died/I started thermonuclear war because of MSCMM
 
 I'm sorry to hear that! Please refer to [LICENSE.md](LICENSE.md).
+
+## My problem isn't listed on the list, or nothing worked
+
+Please report about the issue on the Steam discussion, or add issue on GitLab. Also please tell the steps to reproduce that bug. Also, please add the last log file from log folder and put it on the [Pastebin](https://pastebin.com/).

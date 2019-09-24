@@ -46,7 +46,7 @@ namespace OggConverter
                 if (artist != null && title != null) break;
             }
 
-            return ((artist != null) && (title != null)) ? $"{artist} - {title}" : null;
+            return ((artist != null) && (title != null)) ? $"{artist} - {title}" : "";
         }
 
         /// <summary>
@@ -96,6 +96,7 @@ namespace OggConverter
         public static void ConvertFromMscmm(string folder)
         {
             if (Settings.DisableMetaFiles) return;
+            if (Settings.GamePath == null || Settings.GamePath == "" || Settings.GamePath == "invalid") return;
 
             try
             {
@@ -173,11 +174,14 @@ namespace OggConverter
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public static void AddOrEdit(string name, string value)
+        public static void AddOrEdit(string name, string value, string alternateFolder = "")
         {
             try
             {
-                XDocument doc = XDocument.Load(XmlFilePath());
+                value = value == null || value == "" ? name : value;
+
+                string documentPath = alternateFolder == "" ? XmlFilePath() : $"{Settings.GamePath}\\{alternateFolder}\\songnames.xml";
+                XDocument doc = XDocument.Load(documentPath);
                 var attribute = doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name);
                 if (attribute == null)
                 {
@@ -190,7 +194,7 @@ namespace OggConverter
                     attribute.Attribute("value").Value = value;
                 }
 
-                doc.Save(XmlFilePath());
+                doc.Save(documentPath);
                 SortDatabase();
             }
             catch (Exception ex)
@@ -231,7 +235,7 @@ namespace OggConverter
             try
             {
                 if (File.Exists($"{Settings.GamePath}\\{folder}\\songnames.xml"))
-                    File.Delete($"{Settings.GamePath}\\{folder}\\songnames.xml");              
+                    File.Delete($"{Settings.GamePath}\\{folder}\\songnames.xml");
             }
             catch (Exception ex)
             {

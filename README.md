@@ -11,7 +11,7 @@ MSC Music Manager is distributed without any warranty.
 
 ## Used third-party technologies
 
-- [FFMpeg](https://www.ffmpeg.org) - [License](https://www.ffmpeg.org/legal.html)
+- [FFMpeg](https://www.ffmpeg.org) ([License](https://www.ffmpeg.org/legal.html))
 - .NET Framework 4.6
 - [youtube-dl](https://ytdl-org.github.io/youtube-dl/)
 
@@ -21,7 +21,9 @@ This program is distributed under GNU General Public License v3. Feel free to us
 
 ## Download
 
-### [Download](mscmm.zip)
+**[Full Download (recommended)](mscmm.zip)**
+
+[Update Only](mscmm_update.zip)
 
 ## Installation
 
@@ -33,8 +35,8 @@ The program has automatic update function, although you can disable it in settin
 
 ## Images
 
-![img1](https://i.imgur.com/0JV3HNZ.png)
-![img2](https://i.imgur.com/9hcJCti.png)
+![img1](https://i.imgur.com/eI6SUGL.png)
+![img2](https://i.imgur.com/GL1E7Kl.png)
 ![img3](https://i.imgur.com/Sl3WNQZ.png)
 
 ## Versioning

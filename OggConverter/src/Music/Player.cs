@@ -27,6 +27,12 @@ namespace OggConverter
     {
         static Process process;
 
+        /// <summary>
+        /// List of all songs in current working list.
+        /// 
+        /// Item1 - file name (ex. track1.ogg)
+        /// Item2 - song name (ex. Queen - We Will Rock You)
+        /// </summary>
         public static List<Tuple<string, string>> WorkingSongList = new List<Tuple<string, string>>();
 
         public static bool IsBusy { get; set; }
@@ -358,7 +364,13 @@ namespace OggConverter
             }
         }
 
-        public static void Delete(string folder, string fileName, string songName)
+        /// <summary>
+        /// Deletes the songs from list.
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <param name="fileName"></param>
+        /// <param name="songName"></param>
+        public static void Delete(string folder, string[] files)
         {
             if (Utilities.IsToolBusy())
             {
@@ -368,24 +380,44 @@ namespace OggConverter
 
             try
             {
-                string file = $"{Settings.GamePath}\\{folder}\\{fileName}.ogg";
+                string message = $"Are you sure you want to delete";
+                message += "\n\n";
+                int listed = 0;
+                foreach (string file in files)
+                {
+                    message += $"- {MetaData.GetName(file.Split('.')[0])}\n";
+                    listed++;
 
-                DialogResult dl = MessageBox.Show($"Are you sure you want to delete:\n\n{songName}?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (listed >= 10)
+                        break;
+                }
+
+                if (files.Length - listed > 0)
+                    message += $"\n\n...and {files.Length - listed} more?";
+
+                DialogResult dl = MessageBox.Show(message, 
+                    "Question", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Question);
+
                 if (dl == DialogResult.Yes)
                 {
                     Player.Stop();
 
-                    if (File.Exists(file))
+                    foreach (string file in files)
                     {
-                        while (!Utilities.IsFileReady(file)) { }
+                        string filePath = $"{Settings.GamePath}\\{folder}\\{file}.ogg";
+                        if (File.Exists(filePath))
+                        {
+                            while (!Utilities.IsFileReady(filePath)) { }
 
-                        File.Delete(file);
-                        MetaData.Remove(fileName);
+                            File.Delete(filePath);
+                            string name = MetaData.GetName(file.Split('.')[0]);
+                            MetaData.Remove(file);
 
-                        Logs.History($"Removed \"{songName}\" ({fileName}) from {folder}");
-
-                        if (Settings.AutoSort)
-                            Player.Sort(folder);
+                            Logs.History($"Removed \"{name}\" ({file}) from {folder}");
+                            Form1.instance.Log($"Removed \"{name}\" ({file}) from {folder}");
+                        }
                     }
                 }
             }
@@ -396,6 +428,9 @@ namespace OggConverter
             }
             finally
             {
+                if (Settings.AutoSort)
+                    Player.Sort(folder);
+
                 Form1.instance.UpdateSongList();
             }
         }

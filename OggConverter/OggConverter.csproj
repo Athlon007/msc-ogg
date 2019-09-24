@@ -78,6 +78,12 @@
     <Compile Include="src\Forms\MoveTo.Designer.cs">
       <DependentUpon>MoveTo.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Forms\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Misc\DesktopShortcut.cs" />
     <Compile Include="src\Forms\QuickConvert.cs">
       <SubType>Form</SubType>
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\QuickConvert.resx">
       <DependentUpon>QuickConvert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Forms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>

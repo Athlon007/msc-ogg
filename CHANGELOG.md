@@ -1,10 +1,75 @@
 # Changelog
 
-## Preview 2.5.0.1 (22.08.2019)
+## Preview 2.6.0.0 (24.09.2019)
 
 ### Added
 
-- Database is now being sorted numerically
+- Completly redesigned Settings
+- You can now select how frequent youtube-dl checks for updates
+- You can now open last log file
+- Restored "start game without Steam" checkbox
+- You can now delete multiple files at the same time
+- Added new keyboard controls for song list:
+  - Select all files by pressing CTRL+A
+  - Delete all files by clicking "Delete"
+  - You can now play the song by pressing Enter
+
+### Changes
+
+- "Create Desktop Shortcut" has been moved into Settings
+- Moved "Check for Update" and "Check for youtube-dl update" into Settings
+- Minor UI changes
+
+### Bug Fixes
+
+- Fixed a bug in which MSCMM would crash on start if the user used older MSC version without CD1/2/3 support
+- Fixed a bug in which MSCMM would crash if the MSCMM was converting the songs if they're dropped inside of folder
+
+### Removed
+
+- Removed Herobrine
+
+## 2.5.3 (22.09.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which MSCMM would read the My Summer Car path incorrectly, if the game wasn't installed in main Steam folder
+
+## 2.5.2 (22.09.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which the program wouldn't start on computers using DD/MM/YYYY or MM/DD/YYYY date format
+- Fixed a bug that would cause MSCMM to try and save the null value into registry causing a crash (thanks to @Patrick-van-Halm at GitLab)
+- Fixed an error which occured if the GamePath value was empty
+
+## 2.5.1 (21.09.2019)
+
+### Added
+
+- Added support for high DPI screens
+- You can now cancel the YouTube download, partially adressing the "stuck while downloading song" bug
+- youtube-dl output is now being saved into history.txt
+
+### Changes
+
+- Safe Mode is now refered as Restricted Mode in the code
+- When no file name was found in meta, the file name's going to be used
+- Now when you start the MSCMM after update, the full changelog is displayed instead of the short version
+- WARNING: 'Action After Conversion' feature is now considered as obsolete and will be removed in the future updates
+
+### Bug Fixes
+
+- Fixed bug in which MSCMM would rename already existing track files to new name (ex. track1 to track16)
+- Fixed freezing window after drag & dropping the file
+- Restored disabled in earlier update error loggers
+
+## 2.5 (09.09.2019)
+
+### Added
+
+- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
+- Your saved songs will be converted to new format on start
 
 ### Changes
 
@@ -15,13 +80,6 @@
 
 - Fixed few potential crash causing bugs
 - Small bug fixes and improvements
-
-## Preview 2.5.0.0 (21.08.2019)
-
-### Added
-
-- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
-- Your saved songs will be converted to new format on start
 
 ## 2.4.1 (30.07.2019)
 
@@ -250,7 +308,7 @@
 - Added EXE only download in repository for updates
 - Support for WAV, AAC, M4A and WMA file types
 - The game now starts using Steam (you can change that in settings)
-- Added ability to perform action by program after finishing the conversion (you can change that in settings). Default is none 
+- Added ability to perform action by program after finishing the conversion (you can change that in settings). Default is none
 - Added more bugs to fix later
 
 ### Changes

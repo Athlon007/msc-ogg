@@ -1,6 +1,26 @@
 What's new in this release?
 
-- Song names are now stored in single XML file per folder. No more tons of .mscmm files!
-- Your saved songs will be converted to new format on start
+Added:
+- Completly redesigned Settings
+- You can now select how frequent youtube-dl checks for updates
+- You can now open last log file
+- Restored "start game without Steam" checkbox
+- You can now delete multiple files at the same time
+- Added new keyboard controls for song list:
+  - Select all files by pressing CTRL+A
+  - Delete all files by clicking "Delete"
+  - You can now play the song by pressing Enter
+
+Changes:
+- "Create Desktop Shortcut" has been moved into Settings
+- Moved "Check for Update" and "Check for youtube-dl update" into Settings
+- Minor UI changes
+
+Bug Fixes:
+- Fixed a bug in which MSCMM would crash on start if the user used older MSC version without CD1/2/3 support
+- Fixed a bug in which MSCMM would crash if the MSCMM was converting the songs if they're dropped inside of folder
+
+Removed:
+- Removed Herobrine
 
 For more visit https://gitlab.com/aathlon/msc-ogg
