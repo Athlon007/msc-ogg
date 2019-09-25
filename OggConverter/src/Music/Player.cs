@@ -29,7 +29,7 @@ namespace OggConverter
 
         /// <summary>
         /// List of all songs in current working list.
-        /// 
+        ///
         /// Item1 - file name (ex. track1.ogg)
         /// Item2 - song name (ex. Queen - We Will Rock You)
         /// </summary>
@@ -55,7 +55,7 @@ namespace OggConverter
             process.StartInfo.RedirectStandardOutput = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.CreateNoWindow = true;
-            
+
             // Setup executable and parameters
             process.StartInfo.FileName = "ffplay.exe";
             process.StartInfo.Arguments = $"-nodisp \"{path}\"";
@@ -84,7 +84,7 @@ namespace OggConverter
         }
 
         /// <summary>
-        /// Sorts songs to remove gaps 
+        /// Sorts songs to remove gaps
         /// </summary>
         /// <param name="folder">Radio or CD folder/param>
         public static void Sort(string folder)
@@ -126,7 +126,7 @@ namespace OggConverter
 
                         MetaData.AddOrEdit($"track{i - skipped}", MetaData.GetName($"track{i}"));
                         MetaData.Remove($"track{i}");
-                      
+
                         // Adjusting the i value by skipped
                         if (skipped != 0)
                             i -= skipped;
@@ -380,8 +380,7 @@ namespace OggConverter
 
             try
             {
-                string message = $"Are you sure you want to delete";
-                message += "\n\n";
+                string message = $"Are you sure you want to delete\n\n";
                 int listed = 0;
                 foreach (string file in files)
                 {
@@ -395,9 +394,9 @@ namespace OggConverter
                 if (files.Length - listed > 0)
                     message += $"\n\n...and {files.Length - listed} more?";
 
-                DialogResult dl = MessageBox.Show(message, 
-                    "Question", 
-                    MessageBoxButtons.YesNo, 
+                DialogResult dl = MessageBox.Show(message,
+                    "Question",
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
                 if (dl == DialogResult.Yes)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.logOutput = new System.Windows.Forms.TextBox();
             this.songList = new System.Windows.Forms.ListBox();
@@ -67,7 +68,7 @@
             this.btnDirectory = new System.Windows.Forms.Button();
             this.labelConvert = new System.Windows.Forms.Label();
             this.dragDropPanel = new System.Windows.Forms.Panel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabs = new System.Windows.Forms.TabControl();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.tabDownload = new System.Windows.Forms.TabPage();
             this.btnCancelDownload = new System.Windows.Forms.Button();
@@ -81,13 +82,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
             this.downloadProgress = new System.Windows.Forms.ProgressBar();
+            this.songListContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.tabs.SuspendLayout();
             this.tabLog.SuspendLayout();
             this.tabDownload.SuspendLayout();
             this.tabMeta.SuspendLayout();
+            this.songListContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // logOutput
@@ -117,6 +124,7 @@
             this.songList.TabIndex = 8;
             this.songList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
             this.songList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SongList_KeyDown);
+            this.songList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SongList_MouseDown);
             // 
             // btnPlaySong
             // 
@@ -308,7 +316,7 @@
             // 
             this.btnLogFolder.Name = "btnLogFolder";
             this.btnLogFolder.Size = new System.Drawing.Size(285, 26);
-            this.btnLogFolder.Text = "Open LOG folder";
+            this.btnLogFolder.Text = "Open Log Folder";
             this.btnLogFolder.Click += new System.EventHandler(this.BtnLogFolder_Click);
             // 
             // toolStripSeparator1
@@ -477,20 +485,20 @@
             this.dragDropPanel.TabIndex = 14;
             this.dragDropPanel.Visible = false;
             // 
-            // tabControl1
+            // tabs
             // 
-            this.tabControl1.Controls.Add(this.tabLog);
-            this.tabControl1.Controls.Add(this.tabDownload);
-            this.tabControl1.Controls.Add(this.tabMeta);
-            this.tabControl1.HotTrack = true;
-            this.tabControl1.Location = new System.Drawing.Point(340, 33);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(653, 434);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabControl1.TabIndex = 1;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
+            this.tabs.Controls.Add(this.tabLog);
+            this.tabs.Controls.Add(this.tabDownload);
+            this.tabs.Controls.Add(this.tabMeta);
+            this.tabs.HotTrack = true;
+            this.tabs.Location = new System.Drawing.Point(340, 33);
+            this.tabs.Margin = new System.Windows.Forms.Padding(4);
+            this.tabs.Name = "tabs";
+            this.tabs.SelectedIndex = 0;
+            this.tabs.Size = new System.Drawing.Size(653, 434);
+            this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabs.TabIndex = 1;
+            this.tabs.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
             // 
             // tabLog
             // 
@@ -638,6 +646,50 @@
             this.downloadProgress.TabIndex = 19;
             this.downloadProgress.Visible = false;
             // 
+            // songListContext
+            // 
+            this.songListContext.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.songListContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextCopy,
+            this.contextDelete,
+            this.contextMove,
+            this.contextAll});
+            this.songListContext.Name = "songListContext";
+            this.songListContext.Size = new System.Drawing.Size(193, 100);
+            // 
+            // contextCopy
+            // 
+            this.contextCopy.Name = "contextCopy";
+            this.contextCopy.ShortcutKeyDisplayString = "Ctrl+C";
+            this.contextCopy.Size = new System.Drawing.Size(192, 24);
+            this.contextCopy.Text = "Clone";
+            this.contextCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.contextCopy.Click += new System.EventHandler(this.ContextCopy_Click);
+            // 
+            // contextAll
+            // 
+            this.contextAll.Name = "contextAll";
+            this.contextAll.ShortcutKeyDisplayString = "Ctrl+A";
+            this.contextAll.Size = new System.Drawing.Size(192, 24);
+            this.contextAll.Text = "Select All";
+            this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
+            // 
+            // contextDelete
+            // 
+            this.contextDelete.Name = "contextDelete";
+            this.contextDelete.ShortcutKeyDisplayString = "Delete";
+            this.contextDelete.Size = new System.Drawing.Size(192, 24);
+            this.contextDelete.Text = "Delete";
+            this.contextDelete.Click += new System.EventHandler(this.ContextDelete_Click);
+            // 
+            // contextMove
+            // 
+            this.contextMove.Name = "contextMove";
+            this.contextMove.ShortcutKeyDisplayString = "Ctrl+X";
+            this.contextMove.Size = new System.Drawing.Size(192, 24);
+            this.contextMove.Text = "Move";
+            this.contextMove.Click += new System.EventHandler(this.ContextMove_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -646,7 +698,7 @@
             this.ClientSize = new System.Drawing.Size(991, 466);
             this.Controls.Add(this.downloadProgress);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabs);
             this.Controls.Add(this.btnOpenGameDir);
             this.Controls.Add(this.btnDirectory);
             this.Controls.Add(this.menu);
@@ -656,7 +708,7 @@
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1006, 504);
+            this.MinimumSize = new System.Drawing.Size(1009, 513);
             this.Name = "Form1";
             this.Text = "MSC Music Manager";
             this.Activated += new System.EventHandler(this.Form1_Activated);
@@ -671,13 +723,14 @@
             this.menu.PerformLayout();
             this.dragDropPanel.ResumeLayout(false);
             this.dragDropPanel.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.tabs.ResumeLayout(false);
             this.tabLog.ResumeLayout(false);
             this.tabLog.PerformLayout();
             this.tabDownload.ResumeLayout(false);
             this.tabDownload.PerformLayout();
             this.tabMeta.ResumeLayout(false);
             this.tabMeta.PerformLayout();
+            this.songListContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -713,7 +766,7 @@
         private System.Windows.Forms.Label labelConvert;
         private System.Windows.Forms.Panel dragDropPanel;
         private System.Windows.Forms.Label labNowPlaying;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabs;
         private System.Windows.Forms.TabPage tabLog;
         private System.Windows.Forms.TabPage tabDownload;
         private System.Windows.Forms.Button btnDownload;
@@ -736,6 +789,11 @@
         private System.Windows.Forms.Button btnCancelDownload;
         private System.Windows.Forms.ComboBox selectedFolder;
         private System.Windows.Forms.ToolStripMenuItem btnTrello;
+        private System.Windows.Forms.ContextMenuStrip songListContext;
+        private System.Windows.Forms.ToolStripMenuItem contextCopy;
+        private System.Windows.Forms.ToolStripMenuItem contextAll;
+        private System.Windows.Forms.ToolStripMenuItem contextDelete;
+        private System.Windows.Forms.ToolStripMenuItem contextMove;
     }
 }
 

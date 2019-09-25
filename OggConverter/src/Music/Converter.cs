@@ -35,11 +35,11 @@ namespace OggConverter
         /// Stores how many files have been skipped while sorting
         /// </summary>
         public static int Skipped { get; set; }
-        
+
         /// <summary>
         /// Prevents the program from closing if conversion is in progress
         /// </summary>
-        public static bool IsBusy { get; set; } 
+        public static bool IsBusy { get; set; }
 
         /// <summary>
         /// List of supported extensions
@@ -59,7 +59,7 @@ namespace OggConverter
 
             if (Settings.GamePath.Length == 0)
             {
-                Form1.instance.Log("Select game path first.");
+                Form1.instance.Log("Select the game path first.");
                 return;
             }
 
@@ -283,7 +283,7 @@ namespace OggConverter
                         "Stop",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information);
-                    
+
                     if (res == DialogResult.No)
                     {
                         if (Form1.instance != null)
@@ -371,7 +371,7 @@ namespace OggConverter
                 .ToArray();
 
             return files.Length > 0 ? true : false;
-        }        
+        }
 
         /// <summary>
         /// Checks Radio, CD, CD1, CD2 and CD3 if are waiting for conversion

@@ -1,26 +1,13 @@
 What's new in this release?
 
 Added:
-- Completly redesigned Settings
-- You can now select how frequent youtube-dl checks for updates
-- You can now open last log file
-- Restored "start game without Steam" checkbox
-- You can now delete multiple files at the same time
-- Added new keyboard controls for song list:
-  - Select all files by pressing CTRL+A
-  - Delete all files by clicking "Delete"
-  - You can now play the song by pressing Enter
+- Added context menu to song list
 
 Changes:
-- "Create Desktop Shortcut" has been moved into Settings
-- Moved "Check for Update" and "Check for youtube-dl update" into Settings
-- Minor UI changes
+- Tabs in settings now fully expand to the window size
 
 Bug Fixes:
-- Fixed a bug in which MSCMM would crash on start if the user used older MSC version without CD1/2/3 support
-- Fixed a bug in which MSCMM would crash if the MSCMM was converting the songs if they're dropped inside of folder
-
-Removed:
-- Removed Herobrine
+- Fixed bug in which the program would crash if you pressed the arrow keys and the song list was empty
+- Download button won't work if the URL text box is empty
 
 For more visit https://gitlab.com/aathlon/msc-ogg

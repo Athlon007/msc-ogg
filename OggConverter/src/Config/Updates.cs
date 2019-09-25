@@ -35,7 +35,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19408;
+        public const int version = 19409;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -247,7 +247,7 @@ namespace OggConverter
             }
             catch (Exception ex)
             {
-                Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created");
+                Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created.");
                 Logs.CrashLog(ex.ToString());
                 IsYoutubeDlUpdating = false;
                 return;
@@ -260,54 +260,42 @@ namespace OggConverter
         /// <param name="force">Skips the same date test.</param>
         public static async Task LookForYoutubeDlUpdate(bool force = false)
         {
-            /*
-            if (!force)
-            {
-                if ((Settings.DemoMode) || (Settings.YouTubeDlLastUpdateCheckDay == DateTime.Now.Day))
-                    return;
-            }
-            if (!Utilities.IsOnline() || !File.Exists("youtube-dl.exe"))
-                return;
-
-            await GetYoutubeDlUpdate();
-            */
             if (Settings.DemoMode || !Utilities.IsOnline() || !File.Exists("youtube-dl.exe")) return;
 
-            if (!force)
-            {
-                switch (Settings.YouTubeDlUpdateFrequency)
-                {
-                    // No updates by default
-                    default:
-                        return;
-                    // Upon start
-                    case 0:
-                        await GetYoutubeDlUpdate();
-                        break;
-                    // Daily
-                    case 1:
-                        if (Settings.LastYTDLUpdateCheck.Day != DateTime.Now.Day)
-                            await GetYoutubeDlUpdate();
-                        break;
-                    // Weekly
-                    case 2:
-                        Calendar cal = CultureInfo.InvariantCulture.Calendar;
-                        if (cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday) > 
-                            cal.GetWeekOfYear(Settings.LastYTDLUpdateCheck, CalendarWeekRule.FirstDay, DayOfWeek.Monday) ||
-                            DateTime.Now.Year != Settings.LastYTDLUpdateCheck.Year)
-                            await GetYoutubeDlUpdate();
-                        break;
-                    // Monthly
-                    case 3:
-                        if (DateTime.Now.Month > Settings.LastYTDLUpdateCheck.Month ||
-                            DateTime.Now.Year != Settings.LastYTDLUpdateCheck.Year)
-                            await GetYoutubeDlUpdate();
-                        break;
-                }
-            }
-            else
+            if (force)
             {
                 await GetYoutubeDlUpdate();
+                return;
+            }
+
+            switch (Settings.YouTubeDlUpdateFrequency)
+            {
+                // No updates by default
+                default:
+                    return;
+                // Upon every start
+                case 0:
+                    await GetYoutubeDlUpdate();
+                    break;
+                // Daily
+                case 1:
+                    if (Settings.LastYTDLUpdateCheck.Day != DateTime.Now.Day)
+                        await GetYoutubeDlUpdate();
+                    break;
+                // Weekly
+                case 2:
+                    Calendar cal = CultureInfo.InvariantCulture.Calendar;
+                    if (cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday) >
+                        cal.GetWeekOfYear(Settings.LastYTDLUpdateCheck, CalendarWeekRule.FirstDay, DayOfWeek.Monday) ||
+                        DateTime.Now.Year != Settings.LastYTDLUpdateCheck.Year)
+                        await GetYoutubeDlUpdate();
+                    break;
+                // Monthly
+                case 3:
+                    if (DateTime.Now.Month > Settings.LastYTDLUpdateCheck.Month ||
+                        DateTime.Now.Year != Settings.LastYTDLUpdateCheck.Year)
+                        await GetYoutubeDlUpdate();
+                    break;
             }
         }
 
