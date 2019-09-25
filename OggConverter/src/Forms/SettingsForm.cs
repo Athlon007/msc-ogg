@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.Drawing;
 
 namespace OggConverter
 {
@@ -31,6 +32,8 @@ namespace OggConverter
             labVer.Text = $"Your Version: {Utilities.GetVersion(true)}\n" +
                 $"Build: {Updates.version}";
 
+            tabControl.ItemSize = new Size((tabControl.Width / tabControl.TabCount) - 1, 0);
+
             chkRemoveSource.Checked = Settings.RemoveMP3;
             chkAutoSort.Checked = Settings.AutoSort;
             chkNoMetafiles.Checked = Settings.DisableMetaFiles;
@@ -42,6 +45,7 @@ namespace OggConverter
             cbYoutubeDlUpdateFrequency.SelectedIndex = Settings.YouTubeDlUpdateFrequency;
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
+            comboLang.Text = Settings.Language;
         }
 
         private void ChkRemoveSource_Click(object sender, EventArgs e)
@@ -203,6 +207,11 @@ namespace OggConverter
 
             if (dl == DialogResult.Yes && Directory.Exists("LOG"))
                 Directory.Delete("LOG", true);
+        }
+
+        private void ComboLang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Language = comboLang.Text;
         }
     }
 }

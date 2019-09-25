@@ -164,7 +164,7 @@ namespace OggConverter
                     steamFolder = steamFolder.Replace("/", "\\");
                 }
             }
-
+            
             if (steamFolder != "")
             {
                 // MSC is installed in root Steam folder

@@ -26,9 +26,9 @@ namespace OggConverter
     {
         string FileName { get; set; }
 
-        int defaultY = 208;
-        //int extendedY = 457;
-        int extendedY = 560;
+        const int DEFAULT_Y = 208;
+        int EXTENDED_Y = 560;
+
         bool isExtended;
 
         public ErrorMessage(Exception ex)
@@ -61,7 +61,7 @@ namespace OggConverter
         private void BtnMoreDetail_Click(object sender, EventArgs e)
         {
             isExtended ^= true;
-            this.Size = new Size(this.Size.Width, isExtended ? extendedY : defaultY);
+            this.Size = new Size(this.Size.Width, isExtended ? EXTENDED_Y : DEFAULT_Y);
             btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193) + " Show More Info");
             string file = File.ReadAllText($"LOG\\{FileName}.txt");
             file = file.Replace("\n", Environment.NewLine);

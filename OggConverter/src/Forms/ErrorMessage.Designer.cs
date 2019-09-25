@@ -65,7 +65,7 @@
             // btnMoreDetail
             // 
             this.btnMoreDetail.Location = new System.Drawing.Point(16, 176);
-            this.btnMoreDetail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnMoreDetail.Margin = new System.Windows.Forms.Padding(4);
             this.btnMoreDetail.Name = "btnMoreDetail";
             this.btnMoreDetail.Size = new System.Drawing.Size(156, 28);
             this.btnMoreDetail.TabIndex = 2;
@@ -76,7 +76,7 @@
             // btnClose
             // 
             this.btnClose.Location = new System.Drawing.Point(504, 176);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(156, 28);
             this.btnClose.TabIndex = 3;
@@ -87,7 +87,7 @@
             // btnLog
             // 
             this.btnLog.Location = new System.Drawing.Point(340, 176);
-            this.btnLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLog.Margin = new System.Windows.Forms.Padding(4);
             this.btnLog.Name = "btnLog";
             this.btnLog.Size = new System.Drawing.Size(156, 28);
             this.btnLog.TabIndex = 4;
@@ -100,7 +100,7 @@
             this.logOutput.BackColor = System.Drawing.SystemColors.Control;
             this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.logOutput.Location = new System.Drawing.Point(16, 212);
-            this.logOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.logOutput.Margin = new System.Windows.Forms.Padding(4);
             this.logOutput.Multiline = true;
             this.logOutput.Name = "logOutput";
             this.logOutput.ReadOnly = true;
@@ -112,7 +112,7 @@
             // 
             this.pictureBox1.Image = global::OggConverter.Properties.Resources.err_emoji;
             this.pictureBox1.Location = new System.Drawing.Point(16, 15);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(147, 135);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -122,7 +122,7 @@
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(613, 15);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(47, 28);
             this.btnExit.TabIndex = 7;
@@ -145,7 +145,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ErrorMessage";

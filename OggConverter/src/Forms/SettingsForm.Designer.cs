@@ -32,7 +32,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboLang = new System.Windows.Forms.ComboBox();
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -50,15 +50,16 @@
             this.radOfficial = new System.Windows.Forms.RadioButton();
             this.chkAutoUpdates = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnDelLogs = new System.Windows.Forms.Button();
+            this.btnDelHis = new System.Windows.Forms.Button();
             this.labNotice = new System.Windows.Forms.Label();
             this.btLogFolder = new System.Windows.Forms.Button();
             this.btnOpenLog = new System.Windows.Forms.Button();
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.btnDelHis = new System.Windows.Forms.Button();
-            this.btnDelLogs = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -83,7 +84,7 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.label2);
-            this.tabPage4.Controls.Add(this.comboBox1);
+            this.tabPage4.Controls.Add(this.comboLang);
             this.tabPage4.Controls.Add(this.chkNoSteam);
             this.tabPage4.Controls.Add(this.chkShortcut);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
@@ -96,25 +97,24 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(480, 35);
+            this.label2.Location = new System.Drawing.Point(26, 111);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 17);
             this.label2.TabIndex = 27;
             this.label2.Text = "Language";
             this.label2.Visible = false;
             // 
-            // comboBox1
+            // comboLang
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "English"});
-            this.comboBox1.Location = new System.Drawing.Point(483, 56);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(160, 24);
-            this.comboBox1.TabIndex = 26;
-            this.comboBox1.Visible = false;
+            this.comboLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboLang.FormattingEnabled = true;
+            this.comboLang.Location = new System.Drawing.Point(29, 132);
+            this.comboLang.Margin = new System.Windows.Forms.Padding(4);
+            this.comboLang.Name = "comboLang";
+            this.comboLang.Size = new System.Drawing.Size(160, 24);
+            this.comboLang.TabIndex = 26;
+            this.comboLang.Visible = false;
+            this.comboLang.SelectedIndexChanged += new System.EventHandler(this.ComboLang_SelectedIndexChanged);
             // 
             // chkNoSteam
             // 
@@ -132,9 +132,9 @@
             this.chkShortcut.AutoSize = true;
             this.chkShortcut.Location = new System.Drawing.Point(29, 35);
             this.chkShortcut.Name = "chkShortcut";
-            this.chkShortcut.Size = new System.Drawing.Size(139, 21);
+            this.chkShortcut.Size = new System.Drawing.Size(137, 21);
             this.chkShortcut.TabIndex = 6;
-            this.chkShortcut.Text = "Desktop Shortcut";
+            this.chkShortcut.Text = "Desktop shortcut";
             this.chkShortcut.UseVisualStyleBackColor = true;
             this.chkShortcut.Click += new System.EventHandler(this.ChkShortcut_Click);
             // 
@@ -246,7 +246,7 @@
             this.cbYoutubeDlUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbYoutubeDlUpdateFrequency.FormattingEnabled = true;
             this.cbYoutubeDlUpdateFrequency.Items.AddRange(new object[] {
-            "Upon start",
+            "Upon every start",
             "Daily",
             "Weekly",
             "Monthly",
@@ -304,9 +304,10 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.btnDelLogs);
             this.tabPage3.Controls.Add(this.btnDelHis);
-            this.tabPage3.Controls.Add(this.checkBox1);
             this.tabPage3.Controls.Add(this.labNotice);
             this.tabPage3.Controls.Add(this.btLogFolder);
             this.tabPage3.Controls.Add(this.btnOpenLog);
@@ -320,16 +321,25 @@
             this.tabPage3.Text = "Logging & Privacy";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // btnDelLogs
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(29, 89);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(236, 21);
-            this.checkBox1.TabIndex = 28;
-            this.checkBox1.Text = "Enable tracing (NOT WORKING)";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
+            this.btnDelLogs.Location = new System.Drawing.Point(305, 188);
+            this.btnDelLogs.Name = "btnDelLogs";
+            this.btnDelLogs.Size = new System.Drawing.Size(132, 35);
+            this.btnDelLogs.TabIndex = 30;
+            this.btnDelLogs.Text = "Delete all logs";
+            this.btnDelLogs.UseVisualStyleBackColor = true;
+            this.btnDelLogs.Click += new System.EventHandler(this.BtnDelLogs_Click);
+            // 
+            // btnDelHis
+            // 
+            this.btnDelHis.Location = new System.Drawing.Point(167, 118);
+            this.btnDelHis.Name = "btnDelHis";
+            this.btnDelHis.Size = new System.Drawing.Size(132, 35);
+            this.btnDelHis.TabIndex = 29;
+            this.btnDelHis.Text = "Delete history";
+            this.btnDelHis.UseVisualStyleBackColor = true;
+            this.btnDelHis.Click += new System.EventHandler(this.BtnDelHis_Click);
             // 
             // labNotice
             // 
@@ -343,7 +353,7 @@
             // 
             // btLogFolder
             // 
-            this.btLogFolder.Location = new System.Drawing.Point(167, 157);
+            this.btLogFolder.Location = new System.Drawing.Point(167, 188);
             this.btLogFolder.Name = "btLogFolder";
             this.btLogFolder.Size = new System.Drawing.Size(132, 35);
             this.btLogFolder.TabIndex = 5;
@@ -353,7 +363,7 @@
             // 
             // btnOpenLog
             // 
-            this.btnOpenLog.Location = new System.Drawing.Point(29, 157);
+            this.btnOpenLog.Location = new System.Drawing.Point(29, 188);
             this.btnOpenLog.Name = "btnOpenLog";
             this.btnOpenLog.Size = new System.Drawing.Size(132, 35);
             this.btnOpenLog.TabIndex = 4;
@@ -363,11 +373,11 @@
             // 
             // btnOpenHistory
             // 
-            this.btnOpenHistory.Location = new System.Drawing.Point(29, 116);
+            this.btnOpenHistory.Location = new System.Drawing.Point(29, 118);
             this.btnOpenHistory.Name = "btnOpenHistory";
             this.btnOpenHistory.Size = new System.Drawing.Size(132, 35);
             this.btnOpenHistory.TabIndex = 3;
-            this.btnOpenHistory.Text = "Open History";
+            this.btnOpenHistory.Text = "Open history";
             this.btnOpenHistory.UseVisualStyleBackColor = true;
             this.btnOpenHistory.Click += new System.EventHandler(this.BtnOpenHistory_Click);
             // 
@@ -393,25 +403,23 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // btnDelHis
+            // label4
             // 
-            this.btnDelHis.Location = new System.Drawing.Point(167, 116);
-            this.btnDelHis.Name = "btnDelHis";
-            this.btnDelHis.Size = new System.Drawing.Size(132, 35);
-            this.btnDelHis.TabIndex = 29;
-            this.btnDelHis.Text = "Delete History";
-            this.btnDelHis.UseVisualStyleBackColor = true;
-            this.btnDelHis.Click += new System.EventHandler(this.BtnDelHis_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 98);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 17);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "History";
             // 
-            // btnDelLogs
+            // label5
             // 
-            this.btnDelLogs.Location = new System.Drawing.Point(305, 157);
-            this.btnDelLogs.Name = "btnDelLogs";
-            this.btnDelLogs.Size = new System.Drawing.Size(132, 35);
-            this.btnDelLogs.TabIndex = 30;
-            this.btnDelLogs.Text = "Delete all logs";
-            this.btnDelLogs.UseVisualStyleBackColor = true;
-            this.btnDelLogs.Click += new System.EventHandler(this.BtnDelLogs_Click);
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 168);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 17);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Logs";
             // 
             // SettingsForm
             // 
@@ -461,13 +469,14 @@
         private System.Windows.Forms.Button btnCheckUpdate;
         private System.Windows.Forms.Button btnCheckYTDLUpdates;
         private System.Windows.Forms.Label labNotice;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.CheckBox chkNoSteam;
         private System.Windows.Forms.CheckBox chkShortcut;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboLang;
         private System.Windows.Forms.Button btnDelHis;
         private System.Windows.Forms.Button btnDelLogs;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
     }
 }

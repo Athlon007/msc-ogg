@@ -103,7 +103,7 @@ namespace OggConverter
 
             // Positioning UI elemenmts
             dragDropPanel.Dock = DockStyle.Fill;
-            tabControl1.ItemSize = new Size((tabControl1.Width / tabControl1.TabCount) - 2, 0);
+            tabs.ItemSize = new Size((tabs.Width / tabs.TabCount) - 2, 0);
             btnPlaySong.Left = btnPlaySong.CenterHorizontally(panel1) - btnPlaySong.Width / 2 - 2;
             btnStop.Left = btnStop.CenterHorizontally(panel1) + btnStop.Width / 2 + 2;
             selectedFolder.Left = selectedFolder.CenterHorizontally(panel1);
@@ -185,7 +185,7 @@ namespace OggConverter
                 if (!File.Exists($"{Settings.GamePath}\\Radio\\songnames.xml"))
                 {
                     MetaData.ConvertFromMscmm("Radio");
-                    Log("Converted Radio folder to .MSCMM to XML database.");
+                    Log("Converted Radio folder from .MSCMM to XML database.");
                 }
 
                 // Checks if old CD folder exists instead of the new ones
@@ -232,7 +232,7 @@ namespace OggConverter
                     if (Settings.LatestVersion <= 18151)
                     {
                         DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
-                            "(It may take a while, depending on how many songs you have)",
+                            "(It may take a while, depending on how many songs you have).",
                             "Question",
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question);
@@ -300,7 +300,7 @@ namespace OggConverter
                 err.ShowDialog();
             }
 
-            Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW UPDATE CHANNEL" : "");
+            Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW VERSION" : "");
 
             if (Settings.NoUpdates)
                 Log("\nUpdates are disabled");
@@ -411,7 +411,6 @@ namespace OggConverter
             for (int i = 1; i <= 99; i++)
                 if (File.Exists($"{path}\\track{i}.ogg"))
                 {
-                    //string s = MetaData.GetFromMeta(CurrentFolder, $"track{i}");
                     string s = MetaData.GetName($"track{i}");
                     newTrackList.Add(s);
                     Player.WorkingSongList.Add(new Tuple<string, string>($"track{i}", s));
@@ -471,7 +470,7 @@ namespace OggConverter
         {
             if (Settings.GamePath.Length == 0)
             {
-                Log("Set game path first.");
+                Log("Set the game path first.");
                 return;
             }
 
@@ -499,7 +498,7 @@ namespace OggConverter
         {
             if (!File.Exists("history.txt"))
             {
-                Log("History file doesn't exist");
+                Log("History file doesn't exist.");
                 return;
             }
 
@@ -735,7 +734,7 @@ namespace OggConverter
 
         private async void BtnDownload_Click(object sender, EventArgs e)
         {
-            if (!Utilities.IsOnline()) return;
+            if (!Utilities.IsOnline() || txtboxVideo.Text == "") return;
 
             btnCancelDownload.Enabled = true;
 
@@ -757,7 +756,7 @@ namespace OggConverter
             if (!File.Exists("youtube-dl.exe"))
             {
                 DialogResult dl = MessageBox.Show("In order to download the song, the tool requires youtube-dl to be downloaded. " +
-                    "Press 'Yes' to download it now",
+                    "Press 'Yes' to download it now.",
                     "Information",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information);
@@ -824,7 +823,7 @@ namespace OggConverter
             lastSelected = songList.SelectedIndex;
 
             // If Edit tab is not open, or nothing's selected - don't load the song name to edit box
-            if (tabControl1.SelectedIndex != 2 || songList.SelectedIndex == -1)
+            if (tabs.SelectedIndex != 2 || songList.SelectedIndex == -1)
                 return;
 
             // Get current song name to Edit box
@@ -833,7 +832,7 @@ namespace OggConverter
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || tabControl1.SelectedIndex != 2)
+            if (songList.SelectedIndex == -1 || tabs.SelectedIndex != 2)
                 return;
 
             txtSongName.Text = songList.SelectedItem.ToString();
@@ -901,19 +900,27 @@ namespace OggConverter
 
         private void SongList_KeyDown(object sender, KeyEventArgs e)
         {
-            // Select all items on songlist
+            // Select all items on songlist (Ctrl+A)
             if (e.Control && e.KeyCode == Keys.A)
                 for (int i = 0; i < songList.Items.Count; i++)
                     songList.SelectedItem = songList.Items[i];
 
-            // Delete selected item
+            // Clone (Ctrl+C)
+            if (e.Control && e.KeyCode == Keys.C)
+                btnCloneSong.PerformClick();
+
+            // Move (Ctrl+X)
+            if (e.Control && e.KeyCode == Keys.X)
+                btnMoveSong.PerformClick();
+
+            // Delete selected item (Del)
             if (e.KeyCode == Keys.Delete)
                 btnDel.PerformClick();
 
-            // Play or stop playing the song
+            // Play or stop playing the song (Enter)
             if (e.KeyCode == Keys.Enter)
             {
-                if (labNowPlaying.Visible && labNowPlaying.Text.Contains(Player.WorkingSongList[songList.SelectedIndex].Item2)) 
+                if (labNowPlaying.Visible && labNowPlaying.Text.Contains(Player.WorkingSongList[songList.SelectedIndex].Item2))
                     btnStop.PerformClick();
                 else
                     btnPlaySong.PerformClick();
@@ -923,12 +930,52 @@ namespace OggConverter
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // If the songlist is not focused and user presses up or down arrow - it will focus on song list and select the first song
-            if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) && songList.SelectedIndex == -1)
+            if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.Down) && songList.SelectedIndex == -1 && this.ActiveControl != selectedFolder)
             {
-                songList.SelectedIndex = 0;
+                songList.SelectedIndex = songList.Items.Count > 0 ? 0 : -1; // Makes sure that songList isn't empty
                 songList.Select();
                 songList.Focus();
             }
+        }
+
+        private void SongList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                songListContext.Show(Cursor.Position);
+                if (songList.SelectedIndices.Count < 2)
+                songList.SelectedIndex = -1;
+                songList.SelectedIndex = songList.IndexFromPoint(e.X, e.Y);
+
+
+                bool singleSongRelated = songList.SelectedIndex != -1;
+
+                contextCopy.Enabled = singleSongRelated;
+                contextDelete.Enabled = singleSongRelated;
+                contextMove.Enabled = singleSongRelated;
+            }
+        }
+
+        private void ContextCopy_Click(object sender, EventArgs e)
+        {
+            btnCloneSong.PerformClick();
+        }
+
+        private void ContextDelete_Click(object sender, EventArgs e)
+        {
+            btnDel.PerformClick();
+        }
+
+        private void ContextMove_Click(object sender, EventArgs e)
+        {
+            btnMoveSong.PerformClick();
+        }
+
+        private void ContextAll_Click(object sender, EventArgs e)
+        {
+            // Select all items on songlist
+            for (int i = 0; i < songList.Items.Count; i++)
+                songList.SelectedItem = songList.Items[i];
         }
     }
 }

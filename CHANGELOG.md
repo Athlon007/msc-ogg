@@ -1,5 +1,20 @@
 # Changelog
 
+## Preview 2.6.0.1 (xx.09.2019)
+
+### Added
+
+- Added context menu to song list
+
+### Changes
+
+- Tabs in settings now fully expand
+
+### Bug Fixes
+
+- Fixed bug in which the program would crash if you pressed the arrow keys and the song list was empty
+- Download button won't work if the URL text box is empty
+
 ## Preview 2.6.0.0 (24.09.2019)
 
 ### Added
