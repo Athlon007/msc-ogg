@@ -66,6 +66,7 @@ namespace OggConverter
             InitializeComponent();
             instance = this;
             this.KeyPreview = true;
+            Localization.LoadLocaleFile();
 
 #if DEBUG
             Log($"MSC Music Manager {Utilities.GetVersion(true)} ({Updates.version}) DEBUG\n" +
@@ -135,7 +136,9 @@ namespace OggConverter
                 return;
             }
 
-            Log($"Game Folder: {Settings.GamePath}");
+            //Log($"Game Folder: {Settings.GamePath}");
+            Log(String.Format(Localization.Get("Game Folder: {0}"), Settings.GamePath));
+
 
             // Checks if ffmpeg or ffplay are missing
             // If so, they will be downloaded and the tool will be restarted.

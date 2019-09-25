@@ -102,7 +102,6 @@
             this.label2.Size = new System.Drawing.Size(72, 17);
             this.label2.TabIndex = 27;
             this.label2.Text = "Language";
-            this.label2.Visible = false;
             // 
             // comboLang
             // 
@@ -113,7 +112,6 @@
             this.comboLang.Name = "comboLang";
             this.comboLang.Size = new System.Drawing.Size(160, 24);
             this.comboLang.TabIndex = 26;
-            this.comboLang.Visible = false;
             this.comboLang.SelectedIndexChanged += new System.EventHandler(this.ComboLang_SelectedIndexChanged);
             // 
             // chkNoSteam

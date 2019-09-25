@@ -47,6 +47,14 @@ namespace OggConverter
             chkNoSteam.Checked = Settings.NoSteam;
             comboLang.Text = Settings.Language;
 
+            if (Directory.Exists("locales"))
+            {
+                DirectoryInfo di = new DirectoryInfo("locales");
+                FileInfo[] files = di.GetFiles("*.po");
+                foreach (FileInfo file in files)
+                    comboLang.Items.Add(file.Name.Replace(file.Extension, ""));
+            }
+
             // Tooltips
             ToolTip toolTip = new ToolTip
             {
@@ -233,6 +241,26 @@ namespace OggConverter
         private void ComboLang_SelectedIndexChanged(object sender, EventArgs e)
         {
             Settings.Language = comboLang.Text;
+
+            DialogResult dl = MessageBox.Show("In order to apply the change, you need to restart MSCMM. Would you like to do that now?", 
+                "Question",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (dl == DialogResult.Yes)
+            {
+                const string restartScript = "@echo off\n" +
+                    "TASKKILL /IM \"MSC Music Manager.exe\"\n" +
+                    "start \"\" \"MSC Music Manager.exe\"\n" +
+                    "exit";
+                File.WriteAllText("restart.bat", restartScript);
+
+                Process process = new Process();
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.StartInfo.FileName = "restart.bat";
+                process.Start();
+                Application.Exit();
+            }
         }
     }
 }
