@@ -1,6 +1,6 @@
 # Changelog
 
-## Preview 2.6.0.1 (xx.09.2019)
+## Preview 2.6.0.1 (25.09.2019)
 
 ### Added
 
@@ -8,7 +8,7 @@
 
 ### Changes
 
-- Tabs in settings now fully expand
+- Tabs in settings now fully expand to the window size
 
 ### Bug Fixes
 
