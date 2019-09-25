@@ -1,5 +1,11 @@
 # Changelog
 
+## Preview 2.6.0.2 (xx.09.2019)
+
+### Added
+
+- Added tooltips into Settings
+
 ## Preview 2.6.0.1 (25.09.2019)
 
 ### Added

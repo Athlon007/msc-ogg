@@ -50,6 +50,8 @@
             this.radOfficial = new System.Windows.Forms.RadioButton();
             this.chkAutoUpdates = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnDelLogs = new System.Windows.Forms.Button();
             this.btnDelHis = new System.Windows.Forms.Button();
             this.labNotice = new System.Windows.Forms.Label();
@@ -58,8 +60,6 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -321,6 +321,24 @@
             this.tabPage3.Text = "Logging & Privacy";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 168);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 17);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Logs";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 98);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 17);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "History";
+            // 
             // btnDelLogs
             // 
             this.btnDelLogs.Location = new System.Drawing.Point(305, 188);
@@ -402,24 +420,6 @@
             this.chkCrashLog.Text = "Create logs after crash";
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 98);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 17);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "History";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 168);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 17);
-            this.label5.TabIndex = 32;
-            this.label5.Text = "Logs";
             // 
             // SettingsForm
             // 

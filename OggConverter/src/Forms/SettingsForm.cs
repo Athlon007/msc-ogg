@@ -46,6 +46,27 @@ namespace OggConverter
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
             comboLang.Text = Settings.Language;
+
+            // Tooltips
+            ToolTip toolTip = new ToolTip
+            {
+                AutoPopDelay = 5000,
+                InitialDelay = 1000,
+                ReshowDelay = 500,
+                ShowAlways = true
+            };
+
+            toolTip.SetToolTip(chkRemoveSource, "Removes the original files that the song is converted from.");
+            toolTip.SetToolTip(chkAutoSort, "After each file change, the songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3).");
+            toolTip.SetToolTip(chkNoMetafiles, "Disables song name saving into songnames.xml. Only file name will be used.");
+            toolTip.SetToolTip(chkAutoUpdates, "On each start, the program will connect to the server and check if the new updates are available.");
+            toolTip.SetToolTip(radOfficial, "Official update channel is the most stable one and is recommended for most users.");
+            toolTip.SetToolTip(radPreview, "Preview update channel offers you an early access to new updates and improvements. Only for advanced users.");
+            toolTip.SetToolTip(cbYoutubeDlUpdateFrequency, "Set how often does youtube-dl start in order to check for updates.");
+            toolTip.SetToolTip(chkCrashLog, "The program after each crash causing error will try to save the crash info to log folder.");
+            toolTip.SetToolTip(chkHistory, "All operations on songs will be saved into history file - converting, moving, deleting and more.");
+            toolTip.SetToolTip(chkShortcut, "Create desktop shortcut to MSCMM.");
+            toolTip.SetToolTip(chkNoSteam, "Uppon pressing \"Launch Game\", the program won't use Steam, and rather start the game through exe.");
         }
 
         private void ChkRemoveSource_Click(object sender, EventArgs e)

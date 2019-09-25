@@ -84,9 +84,9 @@
             this.downloadProgress = new System.Windows.Forms.ProgressBar();
             this.songListContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -302,8 +302,8 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(52, 24);
-            this.menuTool.Text = "Tool";
+            this.menuTool.Size = new System.Drawing.Size(58, 26);
+            this.menuTool.Text = "Tools";
             // 
             // btnLastLog
             // 
@@ -390,14 +390,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 24);
+            this.menuSettings.Size = new System.Drawing.Size(76, 26);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -414,14 +414,14 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 28);
+            this.menu.Size = new System.Drawing.Size(991, 30);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 24);
+            this.btnHelp.Size = new System.Drawing.Size(55, 26);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
@@ -429,7 +429,7 @@
             // 
             this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
-            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 24);
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 26);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
             this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
@@ -666,14 +666,6 @@
             this.contextCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.contextCopy.Click += new System.EventHandler(this.ContextCopy_Click);
             // 
-            // contextAll
-            // 
-            this.contextAll.Name = "contextAll";
-            this.contextAll.ShortcutKeyDisplayString = "Ctrl+A";
-            this.contextAll.Size = new System.Drawing.Size(192, 24);
-            this.contextAll.Text = "Select All";
-            this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
-            // 
             // contextDelete
             // 
             this.contextDelete.Name = "contextDelete";
@@ -689,6 +681,14 @@
             this.contextMove.Size = new System.Drawing.Size(192, 24);
             this.contextMove.Text = "Move";
             this.contextMove.Click += new System.EventHandler(this.ContextMove_Click);
+            // 
+            // contextAll
+            // 
+            this.contextAll.Name = "contextAll";
+            this.contextAll.ShortcutKeyDisplayString = "Ctrl+A";
+            this.contextAll.Size = new System.Drawing.Size(192, 24);
+            this.contextAll.Text = "Select All";
+            this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
             // Form1
             // 
