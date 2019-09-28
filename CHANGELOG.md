@@ -1,5 +1,13 @@
 # Changelog
 
+## Preview 2.6.0.2 (27.09.2019)
+
+### Added
+
+- Added localisation support! If you want to help with translating MSCMM to Your language, visit Steam Community discussion, or GitLab repository!
+- All errors related to localisations will be saved in LOG/locale_errors
+- Added tooltips into Settings
+
 ## Preview 2.6.0.1 (25.09.2019)
 
 ### Added

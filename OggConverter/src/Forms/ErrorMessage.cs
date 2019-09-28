@@ -40,12 +40,19 @@ namespace OggConverter
 
             FileName = fileName;
 
-            label2.Text = $"An error has occured and the info has been saved to {fileName}\n" +
+            label2.Text = Localisation.Get($"An error has occured and the info has been saved to {0}\n" +
                 $"inside of LOG folder.\n" +
-                $"If it happens again, please send the log to the MSCMM developer.";
+                $"If it happens again, please send the log to the MSCMM developer.", fileName);
 
             Logs.CrashLog(ex.ToString(), true);
-            btnMoreDetail.Text = (char.ConvertFromUtf32(0x2193) + " Show More Info");
+            btnMoreDetail.Text = (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));
+        }
+
+        void LoadLanguage()
+        {
+            btnExit.Text = Localisation.Get("Exit");
+            btnLog.Text = Localisation.Get("Open Log");
+            btnClose.Text = Localisation.Get("Close");
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -62,7 +69,8 @@ namespace OggConverter
         {
             isExtended ^= true;
             this.Size = new Size(this.Size.Width, isExtended ? EXTENDED_Y : DEFAULT_Y);
-            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193) + " Show More Info");
+            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " " + Localisation.Get("Hide More Info")) 
+                : (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));
             string file = File.ReadAllText($"LOG\\{FileName}.txt");
             file = file.Replace("\n", Environment.NewLine);
             logOutput.Text = file;

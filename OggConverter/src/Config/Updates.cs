@@ -35,7 +35,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19409;
+        public const int version = 19410;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -89,11 +89,11 @@ namespace OggConverter
 
             if (newUpdateReady)
             {
-                DialogResult res = MessageBox.Show("There's a new update ready to download. Would you like to download it now?", 
-                    "Update", 
+                DialogResult res = MessageBox.Show(Localisation.Get("There's a new update ready to download. Would you like to download it now?"), 
+                    Localisation.Get("Update"), 
                     MessageBoxButtons.YesNo, 
                     MessageBoxIcon.Information);
-                Form1.instance.Log("\nThere's an update ready to download!");
+                Form1.instance.Log(Localisation.Get("\nThere's an update ready to download!"));
                 if (res == DialogResult.Yes)
                     DownloadUpdate(getPreview);
 
@@ -113,10 +113,10 @@ namespace OggConverter
 
                         if (latest > version)
                         {
-                            string msg = Settings.Preview && !getPreview ? "There's a newer stable version available to download than yours Preview. Would you like to download the update?" :
-                                "There's a new update ready to download. Would you like to download it now?";
-                            msg += $"\n\nYour version: {version}\nNewest version: {latest}";
-                            DialogResult res = MessageBox.Show(msg, "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            string msg = Settings.Preview && !getPreview ? Localisation.Get("There's a newer stable version available to download than yours Preview. Would you like to download the update?") :
+                                Localisation.Get("There's a new update ready to download. Would you like to download it now?");
+                            msg += Localisation.Get($"\n\nYour version: {0}\nNewest version: {1}", version, latest);
+                            DialogResult res = MessageBox.Show(msg, Localisation.Get("Update"), MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                             if (res == DialogResult.Yes)
                             {
                                 DownloadUpdate(getPreview);
@@ -125,7 +125,7 @@ namespace OggConverter
 
                             newPreviewReady = Settings.Preview && getPreview;
                             newUpdateReady = true;
-                            Form1.instance.Log("\nThere's an update ready to download!");
+                            Form1.instance.Log(Localisation.Get("\nThere's an update ready to download!"));
                             Form1.instance.ButtonGetUpdate.Visible = true;
                             return;
                         }
@@ -134,11 +134,12 @@ namespace OggConverter
                             // DOWNGRADE MODE
                             downgrade = true;
 
-                            DialogResult res = MessageBox.Show("Looks like you use a preview release and you disable preview update channel. " +
+                            DialogResult res = MessageBox.Show(
+                                Localisation.Get("Looks like you use a preview release and you disable preview update channel. " +
                                 "Do you want to downgrade now?\n\n" +
                                 "WARNING: In order to keep things still working, all settings will be reset." +
-                                $"\n\nYour version: {version}\nNewest version: {latest}",
-                                "Question",
+                                $"\n\nYour version: {0}\nNewest version: {1}", version, latest),
+                                Localisation.Get("Question"),
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question);
 
@@ -146,20 +147,20 @@ namespace OggConverter
                                 DownloadUpdate(getPreview);
 
                             newUpdateReady = true;
-                            Form1.instance.Log("\nYou can downgrade now.");
+                            Form1.instance.Log(Localisation.Get("\nYou can downgrade now."));
                             Form1.instance.ButtonGetUpdate.Visible = true;
                         }
 
                         if (Settings.Preview && !getPreview) return;
-                        Form1.instance.Log("\nTool is up-to-date");
+                        Form1.instance.Log(Localisation.Get("\nTool is up-to-date"));
                     };
                 }
             }
             catch (Exception ex)
             {
                 Logs.CrashLog(ex.ToString(), true);
-                Form1.instance.Log("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
-                    "In case the problem still occures, a new crash log has been created.\n");
+                Form1.instance.Log(Localisation.Get("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
+                    "In case the problem still occures, a new crash log has been created.\n"));
                 return;
             }    
         }        
@@ -170,7 +171,7 @@ namespace OggConverter
         public static async void DownloadUpdate(bool getPreview)
         {
             IsBusy = true;
-            Form1.instance.Log("\nDownloading an update...");
+            Form1.instance.Log(Localisation.Get("\nDownloading an update..."));
             Form1.instance.ButtonGetUpdate.Visible = false;
 
             string zipURL = (getPreview ? preview : stable) + "mscmm_update.zip";
@@ -191,11 +192,11 @@ namespace OggConverter
 
                 client.DownloadFileCompleted += (s, e) =>
                 {
-                    Form1.instance.Log("Extracting...");
+                    Form1.instance.Log(Localisation.Get("Extracting..."));
                     Directory.CreateDirectory("update");
                     ZipFile.ExtractToDirectory("mscmm.zip", "update");
 
-                    Form1.instance.Log("Installing...");
+                    Form1.instance.Log(Localisation.Get("Installing..."));
                     File.WriteAllText("updater.bat", updaterScript);
 
                     if (downgrade)
@@ -219,7 +220,7 @@ namespace OggConverter
         public static async Task GetYoutubeDl()
         {
             IsYoutubeDlUpdating = true;
-            Form1.instance.Log("\nDownloading youtube-dl...");
+            Form1.instance.Log(Localisation.Get("\nDownloading youtube-dl..."));
             try
             {
                 using (WebClient web = new WebClient())
@@ -240,14 +241,14 @@ namespace OggConverter
                     {
                         Form1.instance.DownloadProgress.Invoke(new Action(() => Form1.instance.DownloadProgress.Visible = false));
                         IsYoutubeDlUpdating = false;
-                        Form1.instance.Log("youtube-dl downloaded successfully!");
+                        Form1.instance.Log(Localisation.Get("youtube-dl downloaded successfully!"));
                         Form1.instance.Invoke(new Action(() => Form1.instance.RestrictedMode(false)));
                     };
                 }
             }
             catch (Exception ex)
             {
-                Form1.instance.Log("Couldn't download youtube-dl. Crash log has been created.");
+                Form1.instance.Log(Localisation.Get("Couldn't download youtube-dl. Crash log has been created."));
                 Logs.CrashLog(ex.ToString());
                 IsYoutubeDlUpdating = false;
                 return;
@@ -306,14 +307,14 @@ namespace OggConverter
         static async Task GetYoutubeDlUpdate()
         {
             IsYoutubeDlUpdating = true;
-            Form1.instance.Log("\nLooking for youtube-dl updates...");
+            Form1.instance.Log(Localisation.Get("\nLooking for youtube-dl updates..."));
             Process process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = "youtube-dl.exe";
             process.StartInfo.Arguments = "-U";
             process.Start();
             await Task.Run(() => process.WaitForExit());
-            Form1.instance.Log("youtube-dl is up-to-date!");
+            Form1.instance.Log(Localisation.Get("youtube-dl is up-to-date!"));
             IsYoutubeDlUpdating = false;
             Settings.LastYTDLUpdateCheck = DateTime.Now;
         }
@@ -324,7 +325,7 @@ namespace OggConverter
         public static async void StartFFmpegDownload()
         {
             IsBusy = true;
-            Form1.instance.Log("\nDownloading ffmpeg and ffplay...");
+            Form1.instance.Log(Localisation.Get("\nDownloading ffmpeg and ffplay..."));
             await Task.Run(() => GetFFmpeg());
         }
 
@@ -354,8 +355,9 @@ namespace OggConverter
                 }
                 catch 
                 {
-                    MessageBox.Show("Looks like there was some kind of problem with downloading the FFmpeg pack. You'll be taken to the website from which you'll" +
-                        " download the ffpack.zip. Unzip it into the root folder of MSCMM.");
+                    MessageBox.Show(Localisation.Get("Looks like there was some kind of problem with downloading the FFmpeg pack. " +
+                        "You'll be taken to the website from which you'll" +
+                        " download the ffpack.zip. Unzip it into the root folder of MSCMM."));
                     Process.Start("https://gitlab.com/aathlon/msc-ogg/raw/ab9cb011a283f316d56a4ce11b32558887a6fe39/Dependencies/ffpack.zip?inline=false");
                 }
 

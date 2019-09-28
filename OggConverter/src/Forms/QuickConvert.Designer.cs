@@ -38,18 +38,20 @@
             // strMessage
             // 
             this.strMessage.AutoSize = true;
-            this.strMessage.Location = new System.Drawing.Point(12, 9);
+            this.strMessage.Location = new System.Drawing.Point(16, 11);
+            this.strMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.strMessage.Name = "strMessage";
-            this.strMessage.Size = new System.Drawing.Size(197, 13);
+            this.strMessage.Size = new System.Drawing.Size(261, 17);
             this.strMessage.TabIndex = 2;
             this.strMessage.Text = "Where do you want to convert {i} file(s)?";
             this.strMessage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(73, 33);
+            this.btnExit.Location = new System.Drawing.Point(97, 41);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.Size = new System.Drawing.Size(100, 28);
             this.btnExit.TabIndex = 3;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -65,31 +67,34 @@
             "CD1",
             "CD2",
             "CD3"});
-            this.selectedFolder.Location = new System.Drawing.Point(12, 33);
+            this.selectedFolder.Location = new System.Drawing.Point(16, 41);
+            this.selectedFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.selectedFolder.Name = "selectedFolder";
-            this.selectedFolder.Size = new System.Drawing.Size(121, 21);
+            this.selectedFolder.Size = new System.Drawing.Size(160, 24);
             this.selectedFolder.TabIndex = 24;
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(136, 33);
+            this.btnApply.Location = new System.Drawing.Point(181, 41);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(75, 23);
+            this.btnApply.Size = new System.Drawing.Size(100, 28);
             this.btnApply.TabIndex = 25;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
             // 
             // QuickConvert
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(220, 63);
+            this.ClientSize = new System.Drawing.Size(293, 78);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.selectedFolder);
             this.Controls.Add(this.strMessage);
             this.Controls.Add(this.btnExit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "QuickConvert";

@@ -30,16 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabGeneral = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
             this.comboLang = new System.Windows.Forms.ComboBox();
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabFiles = new System.Windows.Forms.TabPage();
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
             this.chkRemoveSource = new System.Windows.Forms.CheckBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabUpdates = new System.Windows.Forms.TabPage();
             this.btnCheckYTDLUpdates = new System.Windows.Forms.Button();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.labVer = new System.Windows.Forms.Label();
@@ -49,7 +49,9 @@
             this.radPreview = new System.Windows.Forms.RadioButton();
             this.radOfficial = new System.Windows.Forms.RadioButton();
             this.chkAutoUpdates = new System.Windows.Forms.CheckBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabLogging = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnDelLogs = new System.Windows.Forms.Button();
             this.btnDelHis = new System.Windows.Forms.Button();
             this.labNotice = new System.Windows.Forms.Label();
@@ -58,21 +60,19 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.tabGeneral.SuspendLayout();
+            this.tabFiles.SuspendLayout();
+            this.tabUpdates.SuspendLayout();
+            this.tabLogging.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
-            this.tabControl.Controls.Add(this.tabPage4);
-            this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Controls.Add(this.tabGeneral);
+            this.tabControl.Controls.Add(this.tabFiles);
+            this.tabControl.Controls.Add(this.tabUpdates);
+            this.tabControl.Controls.Add(this.tabLogging);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -81,18 +81,18 @@
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl.TabIndex = 0;
             // 
-            // tabPage4
+            // tabGeneral
             // 
-            this.tabPage4.Controls.Add(this.label2);
-            this.tabPage4.Controls.Add(this.comboLang);
-            this.tabPage4.Controls.Add(this.chkNoSteam);
-            this.tabPage4.Controls.Add(this.chkShortcut);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(792, 421);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "General";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabGeneral.Controls.Add(this.label2);
+            this.tabGeneral.Controls.Add(this.comboLang);
+            this.tabGeneral.Controls.Add(this.chkNoSteam);
+            this.tabGeneral.Controls.Add(this.chkShortcut);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 25);
+            this.tabGeneral.Name = "tabGeneral";
+            this.tabGeneral.Size = new System.Drawing.Size(792, 421);
+            this.tabGeneral.TabIndex = 3;
+            this.tabGeneral.Text = "General";
+            this.tabGeneral.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -102,7 +102,6 @@
             this.label2.Size = new System.Drawing.Size(72, 17);
             this.label2.TabIndex = 27;
             this.label2.Text = "Language";
-            this.label2.Visible = false;
             // 
             // comboLang
             // 
@@ -113,8 +112,7 @@
             this.comboLang.Name = "comboLang";
             this.comboLang.Size = new System.Drawing.Size(160, 24);
             this.comboLang.TabIndex = 26;
-            this.comboLang.Visible = false;
-            this.comboLang.SelectedIndexChanged += new System.EventHandler(this.ComboLang_SelectedIndexChanged);
+            this.comboLang.SelectionChangeCommitted += new System.EventHandler(this.ComboLang_SelectionChangeCommitted);
             // 
             // chkNoSteam
             // 
@@ -138,18 +136,18 @@
             this.chkShortcut.UseVisualStyleBackColor = true;
             this.chkShortcut.Click += new System.EventHandler(this.ChkShortcut_Click);
             // 
-            // tabPage1
+            // tabFiles
             // 
-            this.tabPage1.Controls.Add(this.chkNoMetafiles);
-            this.tabPage1.Controls.Add(this.chkAutoSort);
-            this.tabPage1.Controls.Add(this.chkRemoveSource);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 421);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Files";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabFiles.Controls.Add(this.chkNoMetafiles);
+            this.tabFiles.Controls.Add(this.chkAutoSort);
+            this.tabFiles.Controls.Add(this.chkRemoveSource);
+            this.tabFiles.Location = new System.Drawing.Point(4, 25);
+            this.tabFiles.Name = "tabFiles";
+            this.tabFiles.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFiles.Size = new System.Drawing.Size(792, 421);
+            this.tabFiles.TabIndex = 0;
+            this.tabFiles.Text = "Files";
+            this.tabFiles.UseVisualStyleBackColor = true;
             // 
             // chkNoMetafiles
             // 
@@ -184,30 +182,30 @@
             this.chkRemoveSource.UseVisualStyleBackColor = true;
             this.chkRemoveSource.Click += new System.EventHandler(this.ChkRemoveSource_Click);
             // 
-            // tabPage2
+            // tabUpdates
             // 
-            this.tabPage2.Controls.Add(this.btnCheckYTDLUpdates);
-            this.tabPage2.Controls.Add(this.btnCheckUpdate);
-            this.tabPage2.Controls.Add(this.labVer);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.cbYoutubeDlUpdateFrequency);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.radPreview);
-            this.tabPage2.Controls.Add(this.radOfficial);
-            this.tabPage2.Controls.Add(this.chkAutoUpdates);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 421);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Updates";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabUpdates.Controls.Add(this.btnCheckYTDLUpdates);
+            this.tabUpdates.Controls.Add(this.btnCheckUpdate);
+            this.tabUpdates.Controls.Add(this.labVer);
+            this.tabUpdates.Controls.Add(this.label3);
+            this.tabUpdates.Controls.Add(this.cbYoutubeDlUpdateFrequency);
+            this.tabUpdates.Controls.Add(this.label1);
+            this.tabUpdates.Controls.Add(this.radPreview);
+            this.tabUpdates.Controls.Add(this.radOfficial);
+            this.tabUpdates.Controls.Add(this.chkAutoUpdates);
+            this.tabUpdates.Location = new System.Drawing.Point(4, 25);
+            this.tabUpdates.Name = "tabUpdates";
+            this.tabUpdates.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUpdates.Size = new System.Drawing.Size(792, 421);
+            this.tabUpdates.TabIndex = 1;
+            this.tabUpdates.Text = "Updates";
+            this.tabUpdates.UseVisualStyleBackColor = true;
             // 
             // btnCheckYTDLUpdates
             // 
             this.btnCheckYTDLUpdates.Location = new System.Drawing.Point(26, 268);
             this.btnCheckYTDLUpdates.Name = "btnCheckYTDLUpdates";
-            this.btnCheckYTDLUpdates.Size = new System.Drawing.Size(132, 35);
+            this.btnCheckYTDLUpdates.Size = new System.Drawing.Size(132, 44);
             this.btnCheckYTDLUpdates.TabIndex = 28;
             this.btnCheckYTDLUpdates.Text = "Check for Update";
             this.btnCheckYTDLUpdates.UseVisualStyleBackColor = true;
@@ -217,7 +215,7 @@
             // 
             this.btnCheckUpdate.Location = new System.Drawing.Point(29, 157);
             this.btnCheckUpdate.Name = "btnCheckUpdate";
-            this.btnCheckUpdate.Size = new System.Drawing.Size(132, 35);
+            this.btnCheckUpdate.Size = new System.Drawing.Size(132, 44);
             this.btnCheckUpdate.TabIndex = 27;
             this.btnCheckUpdate.Text = "Check for Update";
             this.btnCheckUpdate.UseVisualStyleBackColor = true;
@@ -302,30 +300,48 @@
             this.chkAutoUpdates.UseVisualStyleBackColor = true;
             this.chkAutoUpdates.Click += new System.EventHandler(this.ChkAutoUpdates_Click);
             // 
-            // tabPage3
+            // tabLogging
             // 
-            this.tabPage3.Controls.Add(this.label5);
-            this.tabPage3.Controls.Add(this.label4);
-            this.tabPage3.Controls.Add(this.btnDelLogs);
-            this.tabPage3.Controls.Add(this.btnDelHis);
-            this.tabPage3.Controls.Add(this.labNotice);
-            this.tabPage3.Controls.Add(this.btLogFolder);
-            this.tabPage3.Controls.Add(this.btnOpenLog);
-            this.tabPage3.Controls.Add(this.btnOpenHistory);
-            this.tabPage3.Controls.Add(this.chkHistory);
-            this.tabPage3.Controls.Add(this.chkCrashLog);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(792, 421);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Logging & Privacy";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabLogging.Controls.Add(this.label5);
+            this.tabLogging.Controls.Add(this.label4);
+            this.tabLogging.Controls.Add(this.btnDelLogs);
+            this.tabLogging.Controls.Add(this.btnDelHis);
+            this.tabLogging.Controls.Add(this.labNotice);
+            this.tabLogging.Controls.Add(this.btLogFolder);
+            this.tabLogging.Controls.Add(this.btnOpenLog);
+            this.tabLogging.Controls.Add(this.btnOpenHistory);
+            this.tabLogging.Controls.Add(this.chkHistory);
+            this.tabLogging.Controls.Add(this.chkCrashLog);
+            this.tabLogging.Location = new System.Drawing.Point(4, 25);
+            this.tabLogging.Name = "tabLogging";
+            this.tabLogging.Size = new System.Drawing.Size(792, 421);
+            this.tabLogging.TabIndex = 2;
+            this.tabLogging.Text = "Logging & Privacy";
+            this.tabLogging.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 168);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 17);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Logs";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 98);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 17);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "History";
             // 
             // btnDelLogs
             // 
             this.btnDelLogs.Location = new System.Drawing.Point(305, 188);
             this.btnDelLogs.Name = "btnDelLogs";
-            this.btnDelLogs.Size = new System.Drawing.Size(132, 35);
+            this.btnDelLogs.Size = new System.Drawing.Size(132, 44);
             this.btnDelLogs.TabIndex = 30;
             this.btnDelLogs.Text = "Delete all logs";
             this.btnDelLogs.UseVisualStyleBackColor = true;
@@ -335,7 +351,7 @@
             // 
             this.btnDelHis.Location = new System.Drawing.Point(167, 118);
             this.btnDelHis.Name = "btnDelHis";
-            this.btnDelHis.Size = new System.Drawing.Size(132, 35);
+            this.btnDelHis.Size = new System.Drawing.Size(132, 44);
             this.btnDelHis.TabIndex = 29;
             this.btnDelHis.Text = "Delete history";
             this.btnDelHis.UseVisualStyleBackColor = true;
@@ -355,7 +371,7 @@
             // 
             this.btLogFolder.Location = new System.Drawing.Point(167, 188);
             this.btLogFolder.Name = "btLogFolder";
-            this.btLogFolder.Size = new System.Drawing.Size(132, 35);
+            this.btLogFolder.Size = new System.Drawing.Size(132, 44);
             this.btLogFolder.TabIndex = 5;
             this.btLogFolder.Text = "Open log folder";
             this.btLogFolder.UseVisualStyleBackColor = true;
@@ -365,7 +381,7 @@
             // 
             this.btnOpenLog.Location = new System.Drawing.Point(29, 188);
             this.btnOpenLog.Name = "btnOpenLog";
-            this.btnOpenLog.Size = new System.Drawing.Size(132, 35);
+            this.btnOpenLog.Size = new System.Drawing.Size(132, 44);
             this.btnOpenLog.TabIndex = 4;
             this.btnOpenLog.Text = "Open last log";
             this.btnOpenLog.UseVisualStyleBackColor = true;
@@ -375,7 +391,7 @@
             // 
             this.btnOpenHistory.Location = new System.Drawing.Point(29, 118);
             this.btnOpenHistory.Name = "btnOpenHistory";
-            this.btnOpenHistory.Size = new System.Drawing.Size(132, 35);
+            this.btnOpenHistory.Size = new System.Drawing.Size(132, 44);
             this.btnOpenHistory.TabIndex = 3;
             this.btnOpenHistory.Text = "Open history";
             this.btnOpenHistory.UseVisualStyleBackColor = true;
@@ -403,24 +419,6 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 98);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 17);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "History";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 168);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 17);
-            this.label5.TabIndex = 32;
-            this.label5.Text = "Logs";
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -433,14 +431,14 @@
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.tabControl.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.tabGeneral.ResumeLayout(false);
+            this.tabGeneral.PerformLayout();
+            this.tabFiles.ResumeLayout(false);
+            this.tabFiles.PerformLayout();
+            this.tabUpdates.ResumeLayout(false);
+            this.tabUpdates.PerformLayout();
+            this.tabLogging.ResumeLayout(false);
+            this.tabLogging.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -448,9 +446,9 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabFiles;
+        private System.Windows.Forms.TabPage tabUpdates;
+        private System.Windows.Forms.TabPage tabLogging;
         private System.Windows.Forms.CheckBox chkRemoveSource;
         private System.Windows.Forms.CheckBox chkAutoSort;
         private System.Windows.Forms.CheckBox chkNoMetafiles;
@@ -469,7 +467,7 @@
         private System.Windows.Forms.Button btnCheckUpdate;
         private System.Windows.Forms.Button btnCheckYTDLUpdates;
         private System.Windows.Forms.Label labNotice;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.CheckBox chkNoSteam;
         private System.Windows.Forms.CheckBox chkShortcut;
         private System.Windows.Forms.Label label2;

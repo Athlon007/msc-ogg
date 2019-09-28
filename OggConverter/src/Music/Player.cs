@@ -45,7 +45,7 @@ namespace OggConverter
         {
             if (!File.Exists("ffplay.exe"))
             {
-                MessageBox.Show("FFplay is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Localisation.Get("FFplay is missing! Try to re-download MSC Music Manager."), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Localisation.Get("Program is busy."), Localisation.Get("Stop"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
@@ -121,8 +121,8 @@ namespace OggConverter
                         // Moving the file
                         File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
 
-                        Logs.History($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
-                        Form1.instance.Log($"Sorting: moved \"track{i}\" to \"track{i - skipped}\" in {folder}");
+                        Logs.History(Localisation.Get("Sorting: moved 'track{0}' to 'track{1}' in {2}", i, i - skipped, folder));
+                        Form1.instance.Log(Localisation.Get("Sorting: moved 'track{0}' to 'track{1}' in {2}", i, i - skipped, folder));
 
                         MetaData.AddOrEdit($"track{i - skipped}", MetaData.GetName($"track{i}"));
                         MetaData.Remove($"track{i}");
@@ -161,7 +161,7 @@ namespace OggConverter
 
             if (Utilities.IsToolBusy())
             {
-                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Localisation.Get("Program is busy."), Localisation.Get("Stop"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
@@ -201,8 +201,8 @@ namespace OggConverter
                 if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
                     File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.ogg", $"{Settings.GamePath}\\{folder}\\{oldName}.ogg");
 
-                Logs.History($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
-                Form1.instance.Log($"Changing Order: moved \"{newName}\" to \"{oldName}\", and \"{oldName}\" to \"{newName}\"");
+                Logs.History(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
+                Form1.instance.Log(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
 
             }
             catch (Exception ex)
@@ -229,7 +229,7 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Localisation.Get("Program is busy."), Localisation.Get("Stop"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
@@ -247,8 +247,8 @@ namespace OggConverter
                 File.Move($"{Settings.GamePath}\\{source}\\{fileName}.ogg", $"{Settings.GamePath}\\{destination}\\track{newNumber}.ogg");
                 MetaData.MoveToDatabase(source, fileName, destination, $"track{newNumber}");
 
-                Logs.History($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
-                Form1.instance.Log($"File Moving: moved \"{fileName}\" from \"{source}\" to \"{destination}\" as \"track{newNumber}\"");
+                Logs.History(Localisation.Get("File Moving: moved '{0}' from '{1}' to '{2}' as 'track{3}'", fileName, source, destination, newNumber));
+                Form1.instance.Log(Localisation.Get("File Moving: moved '{0}' from '{1}' to '{2}' as 'track{3}'", fileName, source, destination, newNumber));
             }
             catch (Exception ex)
             {
@@ -271,7 +271,7 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Localisation.Get("Program is busy."), Localisation.Get("Stop"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
@@ -295,8 +295,8 @@ namespace OggConverter
                 File.Copy($"{pathToFile}.ogg", $"{Settings.GamePath}\\{folder}\\{newName}.ogg");
                 MetaData.AddOrEdit(newName, MetaData.GetName(fileName));
 
-                Logs.History($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
-                Form1.instance.Log($"Cloned \"{fileName}\" to \"{newName}\" in {folder}");
+                Logs.History(Localisation.Get("Cloned '{0}' to '{1}' in {2}", fileName, newName, folder));
+                Form1.instance.Log(Localisation.Get("Cloned '{0}' to '{1}' in {2}", fileName, newName, folder));
             }
             catch (Exception ex)
             {
@@ -317,14 +317,14 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                MessageBox.Show("Program is busy", "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Localisation.Get("Program is busy."), Localisation.Get("Stop"), MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 
             IsBusy = true;
             Stop();
 
-            Form1.instance.Log("Shuffling!");
+            Form1.instance.Log(Localisation.Get("Shuffling!"));
 
             try
             {
@@ -374,13 +374,13 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                Form1.instance.Log("Program is busy.");
+                Form1.instance.Log(Localisation.Get("Program is busy."));
                 return;
             }
 
             try
             {
-                string message = $"Are you sure you want to delete\n\n";
+                string message = Localisation.Get("Are you sure you want to delete\n\n");
                 int listed = 0;
                 foreach (string file in files)
                 {
@@ -392,10 +392,10 @@ namespace OggConverter
                 }
 
                 if (files.Length - listed > 0)
-                    message += $"\n\n...and {files.Length - listed} more?";
+                    message += Localisation.Get("\n\n...and {0} more?", files.Length - listed);
 
                 DialogResult dl = MessageBox.Show(message,
-                    "Question",
+                    Localisation.Get("Question"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
@@ -414,8 +414,8 @@ namespace OggConverter
                             string name = MetaData.GetName(file.Split('.')[0]);
                             MetaData.Remove(file);
 
-                            Logs.History($"Removed \"{name}\" ({file}) from {folder}");
-                            Form1.instance.Log($"Removed \"{name}\" ({file}) from {folder}");
+                            Logs.History(Localisation.Get("Removed '{0}' ({1}) from {2}", name, file, folder));
+                            Form1.instance.Log(Localisation.Get("Removed '{0}' ({1}) from {2}", name, file, folder));
                         }
                     }
                 }

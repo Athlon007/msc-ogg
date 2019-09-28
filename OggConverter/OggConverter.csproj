@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Config\Localisation.cs" />
     <Compile Include="src\Forms\ErrorMessage.cs">
       <SubType>Form</SubType>
     </Compile>

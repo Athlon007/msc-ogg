@@ -53,13 +53,13 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                Form1.instance.Log("Program is busy.");
+                Form1.instance.Log(Localisation.Get("Program is busy."));
                 return;
             }
 
             if (Settings.GamePath.Length == 0)
             {
-                Form1.instance.Log("Select the game path first.");
+                Form1.instance.Log(Localisation.Get("Select the game path first."));
                 return;
             }
 
@@ -87,13 +87,13 @@ namespace OggConverter
 
                 if (Converter.Skipped != 4)
                 {
-                    Form1.instance.Log("\nDone!");
-                    Form1.instance.Log($"Converted {Converter.TotalConversions} file{(Converter.TotalConversions > 1 ? "s" : "")} in total");
-                    Form1.instance.Log("Conversion log was saved to history.txt");
+                    Form1.instance.Log(Localisation.Get("\nDone!"));
+                    Form1.instance.Log(Localisation.Get("Converted {0} file(s)in total", Converter.TotalConversions));
+                    Form1.instance.Log(Localisation.Get("Conversion log was saved to history.txt"));
                 }
                 else
                 {
-                    Form1.instance.Log("Conversion log will not be saved, because both Radio and CD were skipped");
+                    Form1.instance.Log(Localisation.Get("Conversion log will not be saved, because both Radio and CDs were skipped"));
                 }
 
                 SystemSounds.Exclamation.Play();
@@ -122,16 +122,17 @@ namespace OggConverter
         {
             if (!File.Exists("ffmpeg.exe"))
             {
-                MessageBox.Show("FFmpeg.exe is missing! Try to re-download MSC Music Manager.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Localisation.Get("FFmpeg.exe is missing! Try to re-download MSC Music Manager."), 
+                    Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Form1.instance.Log($"Initializing {folder} conversion...\n");
+            Form1.instance.Log(Localisation.Get("Initializing {0} conversion...\n", folder));
             string path = $"{Settings.GamePath}\\{folder}";
 
             if (!Directory.Exists(path))
             {
-                Form1.instance.Log($"Skipping {folder} because it doesn't exist...");
+                Form1.instance.Log(Localisation.Get("Skipping {0} because it doesn't exist...", folder));
                 return;
             }
 
@@ -146,7 +147,7 @@ namespace OggConverter
                 // If no files have been found - aborts the conversion
                 if (files.Length == 0)
                 {
-                    Form1.instance.Log($"Couldn't find any file to convert in {folder}");
+                    Form1.instance.Log(Localisation.Get("Couldn't find any file to convert in {0}", folder));
                     Skipped++;
                     return;
                 }
@@ -167,20 +168,22 @@ namespace OggConverter
                     // If the limit of files per folder is applied, checks if it isn't over it
                     if ((limit != 0) && (inGame > limit))
                     {
-                        DialogResult res = MessageBox.Show($"There's over {limit} files in {folder} already converted. " +
-                            $"My Summer Car allows max {limit} files for {folder.ToUpper()}s and any file above that will be ignored. Would you like to continue?",
-                            "Stop",
+                        DialogResult res = MessageBox.Show(
+                            Localisation.Get("There's over {0} files in {1} already converted. " +
+                            "My Summer Car allows max {0} files for {1} and any file above that will be ignored. " +
+                            "Would you like to continue?", limit, folder),
+                            Localisation.Get("Stop"),
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Information);
 
                         if (res == DialogResult.No)
                         {
-                            Form1.instance.Log($"Aborted {folder} conversion.");
+                            Form1.instance.Log(Localisation.Get("Aborted {0} conversion.", folder));
                             break;
                         }
                     }
 
-                    Form1.instance.Log($"Converting {file.Name}");
+                    Form1.instance.Log(Localisation.Get("Converting {0}", file.Name));
 
                     string songName = null;
 
@@ -199,8 +202,7 @@ namespace OggConverter
 
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         songName = MetaData.GetFromOutput(ffmpegOut);
-                        MetaData.AddOrEdit($"track{inGame}", songName, folder);
-                        //await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
+                        await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName, folder));
                     }
                     else
                     {
@@ -218,16 +220,15 @@ namespace OggConverter
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         await Task.Run(() => process.WaitForExit());
                         songName = MetaData.GetFromOutput(ffmpegOut);
-                        //MetaData.AddOrEdit($"track{inGame}", songName, folder);
                         await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
                     }
 
-                    Form1.instance.Log($"Finished {file.Name} as track{inGame}.ogg");
+                    Form1.instance.Log(Localisation.Get("Finished {0} as track{1}.ogg", file.Name, inGame));
 
                     if (Settings.RemoveMP3)
                         File.Delete($"{path}\\{file.Name}");
 
-                    Logs.History(songName.Length == 0 ? $"Added track{inGame}.ogg in {folder}" : $"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+                    Logs.History(Localisation.Get("Added '{0}' (track{1}.ogg) in {2}", songName, inGame, folder));
 
                     inGame++;
                     TotalConversions++;
@@ -239,7 +240,7 @@ namespace OggConverter
                 err.ShowDialog();
             }
 
-            Form1.instance.Log($"Converted {TotalConversions} file{(Converter.TotalConversions > 1 ? "s" : "")} in {folder}");
+            Form1.instance.Log(Localisation.Get("Converted {0} file(s) in {1}", TotalConversions, folder));
         }
 
         /// <summary>
@@ -261,13 +262,13 @@ namespace OggConverter
             if (!filePath.ContainsAny(extensions))
             {
                 if (Form1.instance != null)
-                    Form1.instance.Log($"\"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" is not a recognizable music file, so it will be skipped.");
+                    Form1.instance.Log(Localisation.Get("'{0}' is not a recognizable music file, so it will be skipped.", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
                 return;
             }
 
             int inGame = 1;
             if (Form1.instance != null)
-                Form1.instance.Log($"\nConverting \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\"\n");
+                Form1.instance.Log(Localisation.Get($"\nConverting '{0}'\n", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
 
 
             try
@@ -278,16 +279,18 @@ namespace OggConverter
 
                 if ((limit != 0) && (inGame > limit))
                 {
-                    DialogResult res = MessageBox.Show($"There's over {limit} files in {folder} already converted. " +
-                        $"My Summer Car allows max {limit} files for {folder.ToUpper()}s and any file above that will be ignored. Would you like to continue?",
-                        "Stop",
+                    DialogResult res = MessageBox.Show(
+                        Localisation.Get("There's over {0} files in {1} already converted. " +
+                        "My Summer Car allows max {0} files for {1} and any file above that will be ignored. " +
+                        "Would you like to continue?", limit, folder),
+                        Localisation.Get("Stop"),
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Information);
 
                     if (res == DialogResult.No)
                     {
                         if (Form1.instance != null)
-                            Form1.instance.Log($"Aborted {folder} conversion.");
+                            Form1.instance.Log(Localisation.Get("Aborted {0} conversion.", folder));
                         return;
                     }
                 }
@@ -343,10 +346,10 @@ namespace OggConverter
                     await Task.Run(() => process.WaitForExit());
                 }
 
-                Logs.History(songName.Length == 0 ? $"Added track{inGame}.ogg in {folder}" : $"Added \"{songName}\" (track{inGame}.ogg) in {folder}");
+                Logs.History(Localisation.Get("Added '{0}' (track{1}.ogg) in {2}", songName, inGame, folder));
 
                 if (Form1.instance != null)
-                    Form1.instance.Log($"Finished \"{filePath.Substring(filePath.LastIndexOf('\\') + 1)}\" as \"track{inGame}.ogg\"");
+                    Form1.instance.Log(Localisation.Get("Finished '{0}' as 'track{1}.ogg'", filePath.Substring(filePath.LastIndexOf('\\') + 1), inGame));
             }
             catch (Exception ex)
             {

@@ -13,6 +13,7 @@ namespace OggConverter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Localisation.LoadLocaleFile();
 
             if (args.Length > 0)
             {
