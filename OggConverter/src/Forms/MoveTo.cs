@@ -29,7 +29,8 @@ namespace OggConverter
         {
             InitializeComponent();
 
-            Message = $"Where do you want to move {files.Length} file{(files.Length > 1 ? "s" : "")}?";
+            Localize();
+            Message = Localisation.Get("Where do you want to move {0} file(s)?", files.Length);
 
             this.files = files;
             this.sourceFolder = sourceFolder;
@@ -73,6 +74,12 @@ namespace OggConverter
                 Player.Sort(sourceFolder);
 
             this.Close();
+        }
+
+        void Localize ()
+        {
+            btnApply.Text = Localisation.Get("Apply");
+            this.Text = Localisation.Get("Move");
         }
     }
 }

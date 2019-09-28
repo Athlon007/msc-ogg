@@ -29,8 +29,9 @@ namespace OggConverter
         {
             InitializeComponent();
 
-            labVer.Text = $"Your Version: {Utilities.GetVersion(true)}\n" +
-                $"Build: {Updates.version}";
+            Localize();
+            labVer.Text = Localisation.Get("Your Version: {0}\n" +
+                "Build: {1}", Utilities.GetVersion(true), Updates.version);
 
             tabControl.ItemSize = new Size((tabControl.Width / tabControl.TabCount) - 1, 0);
 
@@ -45,7 +46,6 @@ namespace OggConverter
             cbYoutubeDlUpdateFrequency.SelectedIndex = Settings.YouTubeDlUpdateFrequency;
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
-            comboLang.Text = Settings.Language;
 
             if (Directory.Exists("locales"))
             {
@@ -54,6 +54,8 @@ namespace OggConverter
                 foreach (FileInfo file in files)
                     comboLang.Items.Add(file.Name.Replace(file.Extension, ""));
             }
+
+            comboLang.Text = Settings.Language;
 
             // Tooltips
             ToolTip toolTip = new ToolTip
@@ -64,17 +66,17 @@ namespace OggConverter
                 ShowAlways = true
             };
 
-            toolTip.SetToolTip(chkRemoveSource, "Removes the original files that the song is converted from.");
-            toolTip.SetToolTip(chkAutoSort, "After each file change, the songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3).");
-            toolTip.SetToolTip(chkNoMetafiles, "Disables song name saving into songnames.xml. Only file name will be used.");
-            toolTip.SetToolTip(chkAutoUpdates, "On each start, the program will connect to the server and check if the new updates are available.");
-            toolTip.SetToolTip(radOfficial, "Official update channel is the most stable one and is recommended for most users.");
-            toolTip.SetToolTip(radPreview, "Preview update channel offers you an early access to new updates and improvements. Only for advanced users.");
-            toolTip.SetToolTip(cbYoutubeDlUpdateFrequency, "Set how often does youtube-dl start in order to check for updates.");
-            toolTip.SetToolTip(chkCrashLog, "The program after each crash causing error will try to save the crash info to log folder.");
-            toolTip.SetToolTip(chkHistory, "All operations on songs will be saved into history file - converting, moving, deleting and more.");
-            toolTip.SetToolTip(chkShortcut, "Create desktop shortcut to MSCMM.");
-            toolTip.SetToolTip(chkNoSteam, "Uppon pressing \"Launch Game\", the program won't use Steam, and rather start the game through exe.");
+            toolTip.SetToolTip(chkRemoveSource, Localisation.Get("Removes the original files that the song is converted from."));
+            toolTip.SetToolTip(chkAutoSort, Localisation.Get("After each file change, all songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3)."));
+            toolTip.SetToolTip(chkNoMetafiles, Localisation.Get("Disables song name saving into songnames.xml. Only file name will be used."));
+            toolTip.SetToolTip(chkAutoUpdates, Localisation.Get("On each start, the program will connect to the server and check if the new updates are available."));
+            toolTip.SetToolTip(radOfficial, Localisation.Get("Official update channel is the most stable one and is recommended for most users."));
+            toolTip.SetToolTip(radPreview, Localisation.Get("Preview update channel offers you an early access to new updates and improvements. Only for advanced users."));
+            toolTip.SetToolTip(cbYoutubeDlUpdateFrequency, Localisation.Get("Set how often does youtube-dl start in order to check for updates."));
+            toolTip.SetToolTip(chkCrashLog, Localisation.Get("The program after each crash causing error will try to save the crash info to log folder."));
+            toolTip.SetToolTip(chkHistory, Localisation.Get("All operations on songs will be saved into history file - converting, moving, deleting and more."));
+            toolTip.SetToolTip(chkShortcut, Localisation.Get("Create desktop shortcut to MSCMM."));
+            toolTip.SetToolTip(chkNoSteam, Localisation.Get("Uppon pressing 'Launch Game', the program won't use Steam, and rather start the game through exe."));
         }
 
         private void ChkRemoveSource_Click(object sender, EventArgs e)
@@ -91,9 +93,10 @@ namespace OggConverter
         {
             if (!Settings.DisableMetaFiles)
             {
-                DialogResult dl = MessageBox.Show("Disabling metafiles will result in MSC Music Manager using file names, instead of saved song names.\n" +
-                    "Are you sure you want to continue?",
-                    "Question",
+                DialogResult dl = MessageBox.Show(
+                    Localisation.Get("Disabling metafiles will result in MSC Music Manager using file names, instead of saved song names.\n" +
+                    "Are you sure you want to continue?"),
+                    Localisation.Get("Question"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Stop);
 
@@ -109,8 +112,9 @@ namespace OggConverter
 
             if (Settings.DisableMetaFiles)
             {
-                DialogResult removeMeta = MessageBox.Show("Would you like to remove ALL meta files?",
-                "Question",
+                DialogResult removeMeta = MessageBox.Show(
+                    Localisation.Get("Would you like to remove ALL meta files?"),
+                    Localisation.Get("Question"),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -122,9 +126,10 @@ namespace OggConverter
             }
             else
             {
-                DialogResult getMeta = MessageBox.Show("Would you like the MSCMM to get song names directly from files now? " +
-                    "(It may take some time, depending on how many songs you have)",
-                "Question",
+                DialogResult getMeta = MessageBox.Show(
+                    Localisation.Get("Would you like the MSCMM to get song names directly from files now? " +
+                    "(It may take some time, depending on how many songs you have)"),
+                Localisation.Get("Question"),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -190,7 +195,7 @@ namespace OggConverter
             // Force download and install update
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                Form1.instance.Log("\nForcing the update...");
+                Form1.instance.Log(Localisation.Get("\nForcing the update..."));
                 Updates.DownloadUpdate(Settings.Preview);
                 return;
             }
@@ -218,8 +223,8 @@ namespace OggConverter
 
         private void BtnDelHis_Click(object sender, EventArgs e)
         {
-            DialogResult dl = MessageBox.Show("Are you sure you want to remove entire history?", 
-                "Question", 
+            DialogResult dl = MessageBox.Show(Localisation.Get("Are you sure you want to remove entire history?"), 
+                Localisation.Get("Question"), 
                 MessageBoxButtons.YesNo, 
                 MessageBoxIcon.Question);
 
@@ -229,8 +234,8 @@ namespace OggConverter
 
         private void BtnDelLogs_Click(object sender, EventArgs e)
         {
-            DialogResult dl = MessageBox.Show("Are you sure you want to delete all logs?",
-                "Question",
+            DialogResult dl = MessageBox.Show(Localisation.Get("Are you sure you want to delete all logs?"),
+                Localisation.Get("Question"),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -238,12 +243,13 @@ namespace OggConverter
                 Directory.Delete("LOG", true);
         }
 
-        private void ComboLang_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboLang_SelectionChangeCommitted(object sender, EventArgs e)
         {
             Settings.Language = comboLang.Text;
 
-            DialogResult dl = MessageBox.Show("In order to apply the change, you need to restart MSCMM. Would you like to do that now?", 
-                "Question",
+            DialogResult dl = MessageBox.Show(
+                Localisation.Get("In order to apply the change, you need to restart MSCMM. Would you like to do that now?"),
+                Localisation.Get("Question"),
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
@@ -261,6 +267,40 @@ namespace OggConverter
                 process.Start();
                 Application.Exit();
             }
+        }
+
+        void Localize()
+        {
+            chkShortcut.Text = Localisation.Get("Desktop shortcut");
+            chkNoSteam.Text = Localisation.Get("Start the game without Steam");
+            label2.Text = Localisation.Get("Language");
+            chkRemoveSource.Text = Localisation.Get("Remove source files after conversion");
+            chkAutoSort.Text = Localisation.Get("Sort files after conversion");
+            chkNoMetafiles.Text = Localisation.Get("Don't save song names");
+            chkAutoUpdates.Text = Localisation.Get("Automatically look for updates");
+            label1.Text = Localisation.Get("Update Channel:");
+            radOfficial.Text = Localisation.Get("Official");
+            radPreview.Text = Localisation.Get("Preview");
+            btnCheckUpdate.Text = Localisation.Get("Check for Update");
+            label3.Text = Localisation.Get("Check for youtube-dl updates:");
+            btnCheckYTDLUpdates.Text = Localisation.Get("Check for Update");
+            chkCrashLog.Text = Localisation.Get("Create logs after crash");
+            chkHistory.Text = Localisation.Get("Save usage into history");
+            label4.Text = Localisation.Get("History");
+            btnOpenHistory.Text = Localisation.Get("Open history");
+            btnDelHis.Text = Localisation.Get("Delete history");
+            label5.Text = Localisation.Get("Logs");
+            btnOpenLog.Text = Localisation.Get("Open last log");
+            btLogFolder.Text = Localisation.Get("Open Log Folder");
+            btnDelLogs.Text = Localisation.Get("Delete all logs");
+            labNotice.Text = Localisation.Get("Notice: not a single log or any info is sent from your computer.\nEverything that is being logged is saved on Your computer.");
+
+            tabGeneral.Text = Localisation.Get("General");
+            tabFiles.Text = Localisation.Get("Files");
+            tabUpdates.Text = Localisation.Get("Updates");
+            tabLogging.Text = Localisation.Get("Logging & Privacy");
+
+            this.Text = Localisation.Get("Settings");
         }
     }
 }

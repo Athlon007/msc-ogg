@@ -43,7 +43,7 @@ namespace OggConverter
             var shortcut = shell.CreateShortcut(link) as IWshShortcut;
             shortcut.TargetPath = Application.ExecutablePath;
             shortcut.WorkingDirectory = Application.StartupPath;
-            shortcut.Description = "Add, Remove and Download Songs!";
+            shortcut.Description = Localisation.Get("Add, Remove and Download Songs!");
             shortcut.Save();
         }
 

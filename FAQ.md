@@ -1,6 +1,6 @@
 # Ye Olde FAQ
 
-## MSCMM is stuck while downloading FFmpeg. What should I do?
+## MSCMM is stuck while downloading FFmpeg
 
 That kind of problems are often related to your Internet connection, or the problem may be on the GitLab's side.
 You can either wait a little longer, or download the required files yourself [HERE](https://gitlab.com/aathlon/msc-ogg/raw/ab9cb011a283f316d56a4ce11b32558887a6fe39/Dependencies/ffpack.zip?inline=false)

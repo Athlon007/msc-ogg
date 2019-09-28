@@ -66,8 +66,6 @@ namespace OggConverter
             InitializeComponent();
             instance = this;
             this.KeyPreview = true;
-            Localization.LoadLocaleFile();
-
 #if DEBUG
             Log($"MSC Music Manager {Utilities.GetVersion(true)} ({Updates.version}) DEBUG\n" +
                 $"THIS VERSION IS NOT INTENDED FOR DISTRIBUTION!");
@@ -78,14 +76,16 @@ namespace OggConverter
             // Checking if MSCMM isn't installed in My Summer Car's folder
             if (File.Exists("mysummercar.exe") || File.Exists("steam_api.dll") || File.Exists("steam_api64.dll"))
             {
-                MessageBox.Show("Looks like you installed Music Manager into My Summer Car root path. " +
+                MessageBox.Show(Localisation.Get("Looks like you installed Music Manager into My Summer Car root path. " +
                     "While nothing should happen, I'm not not responsible for any damages done to you/your computer/your game/" +
                     "Satsuma/Teimo/or anything other at all!\n\n" +
-                    "I'll also bother you with this message until you move Music Manager somewhere else every time you start the tool ;)",
+                    "I'll also bother you with this message until you move Music Manager somewhere else every time you start the tool ;)"),
                     "Ruh-roh",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
+
+            Localize();
 
             WebRequest.DefaultWebProxy = null;
 
@@ -119,25 +119,25 @@ namespace OggConverter
                 // There was some kind of problem while starting.
                 // Launching the first start sequence
 
-                MessageBox.Show("Hello there! I've asked Teimo nicely where My Summer Car is installed, but he wouldn't tell me at all!.\n\n" +
-                    "Please select where the game is installed :)", "Terve", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Localisation.Get("Hello there! I've asked Teimo nicely where My Summer Car is installed, but he wouldn't tell me at all!.\n\n" +
+                    "Please select where the game is installed :)"), "Terve", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                Log("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\.");
+                Log(Localisation.Get("\nSelect My Summer Car Directory\nEx. C:\\Steam\\steamapps\\common\\My Summer Car\\."));
                 RestrictedMode(true);
                 return;
             }
 
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
             {
-                MessageBox.Show("Couldn't find mysummercar.exe.\n\nPlease set the correct game path.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log("\nCouldn't find mysummercar.exe. Please set the correct game path.");
+                MessageBox.Show(Localisation.Get("Couldn't find mysummercar.exe.\n\nPlease set the correct game path."), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log(Localisation.Get("\nCouldn't find mysummercar.exe. Please set the correct game path."));
                 firstLoad = true;
                 RestrictedMode(true);
                 return;
             }
 
             //Log($"Game Folder: {Settings.GamePath}");
-            Log(String.Format(Localization.Get("Game Folder: {0}"), Settings.GamePath));
+            Log(Localisation.Get("Game Folder: {0}", Settings.GamePath));
 
 
             // Checks if ffmpeg or ffplay are missing
@@ -145,8 +145,8 @@ namespace OggConverter
             if (!File.Exists("ffmpeg.exe") || !File.Exists("ffplay.exe"))
             {
                 RestrictedMode(true, true);
-                MessageBox.Show("Hi there! In order to this tool to work, the ffmpeg and ffplay need to be downloaded.\n" +
-                    "The tool will now download it and restart itself.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Localisation.Get("Hi there! In order to this tool to work, the ffmpeg and ffplay need to be downloaded.\n" +
+                    "The tool will now download it and restart itself."), Localisation.Get("Info"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Updates.StartFFmpegDownload();
                 return;
             }
@@ -156,31 +156,31 @@ namespace OggConverter
                 // Checking if some trackTemp files exist. They may be caused by crash
                 if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
                 {
-                    Log("Found temp song file in Radio, possibly due to the crash\nTrying to fix it...");
+                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "Radio"));
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
                 }
 
                 if (Directory.Exists($"{Settings.GamePath}\\CD") && File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
                 {
-                    Log("Found temp song file in CD, possibly due to the crash\nTrying to fix it...");
+                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD"));
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
                 }
 
                 if (Directory.Exists($"{Settings.GamePath}\\CD1") && File.Exists($"{Settings.GamePath}\\CD1\\trackTemp.ogg"))
                 {
-                    Log("Found temp song file in CD1, possibly due to the crash\nTrying to fix it...");
+                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD1"));
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\CD1\\trackTemp.ogg", "CD1", 99);
                 }
 
                 if (Directory.Exists($"{Settings.GamePath}\\CD2") && File.Exists($"{Settings.GamePath}\\CD2\\trackTemp.ogg"))
                 {
-                    Log("Found temp song file in CD2, possibly due to the crash\nTrying to fix it...");
+                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD2"));
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\CD2\\trackTemp.ogg", "CD2", 99);
                 }
 
                 if (Directory.Exists($"{Settings.GamePath}\\CD3") && File.Exists($"{Settings.GamePath}\\CD3\\trackTemp.ogg"))
                 {
-                    Log("Found temp song file in CD3, possibly due to the crash\nTrying to fix it...");
+                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD3"));
                     _ = Converter.ConvertFile($"{Settings.GamePath}\\CD3\\trackTemp.ogg", "CD3", 99);
                 }
 
@@ -188,7 +188,7 @@ namespace OggConverter
                 if (!File.Exists($"{Settings.GamePath}\\Radio\\songnames.xml"))
                 {
                     MetaData.ConvertFromMscmm("Radio");
-                    Log("Converted Radio folder from .MSCMM to XML database.");
+                    Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "Radio"));
                 }
 
                 // Checks if old CD folder exists instead of the new ones
@@ -197,7 +197,7 @@ namespace OggConverter
                     if (!File.Exists($"{Settings.GamePath}\\CD\\songnames.xml"))
                     {
                         MetaData.ConvertFromMscmm("CD");
-                        Log("Converted CD folder from .MSCMM to XML database.");
+                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD"));
                     }
                 }
                 else if (Directory.Exists($"{Settings.GamePath}\\CD1"))
@@ -205,19 +205,19 @@ namespace OggConverter
                     if (!File.Exists($"{Settings.GamePath}\\CD1\\songnames.xml"))
                     {
                         MetaData.ConvertFromMscmm("CD1");
-                        Log("Converted CD1 folder from .MSCMM to XML database.");
+                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD1"));
                     }
 
                     if (!File.Exists($"{Settings.GamePath}\\CD2\\songnames.xml"))
                     {
                         MetaData.ConvertFromMscmm("CD2");
-                        Log("Converted CD2 folder from .MSCMM to XML database.");
+                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD2"));
                     }
 
                     if (!File.Exists($"{Settings.GamePath}\\CD3\\songnames.xml"))
                     {
                         MetaData.ConvertFromMscmm("CD3");
-                        Log("Converted CD3 folder from .MSCMM to XML database.");
+                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD3"));
                     }
                 }
 
@@ -234,9 +234,10 @@ namespace OggConverter
                     // If the version is older than 2.1 (18151)
                     if (Settings.LatestVersion <= 18151)
                     {
-                        DialogResult dl = MessageBox.Show("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
-                            "(It may take a while, depending on how many songs you have).",
-                            "Question",
+                        DialogResult dl = MessageBox.Show(
+                            Localisation.Get("Would you like MSC Music Manager to get song names from already existing songs?\n\n" +
+                            "(It may take a while, depending on how many songs you have)."),
+                            Localisation.Get("Question"),
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question);
 
@@ -255,7 +256,8 @@ namespace OggConverter
 
                     if (Settings.LatestVersion == 0 && !DesktopShortcut.Exists())
                     {
-                        DialogResult dl = MessageBox.Show("Do you want to create desktop shortcut?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult dl = MessageBox.Show(Localisation.Get("Do you want to create desktop shortcut?"), Localisation.Get("Question"), 
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dl == DialogResult.Yes)
                             DesktopShortcut.Create();
                     }
@@ -265,10 +267,12 @@ namespace OggConverter
 
                 if (Directory.Exists($"{Settings.GamePath}\\CD") && Directory.Exists($"{Settings.GamePath}\\CD1"))
                 {
-                    DialogResult dl = MessageBox.Show("Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. " +
+                    DialogResult dl = MessageBox.Show(
+                        Localisation.Get("Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. " +
                         "All songs from the original CD have to be imported to the new CD1 folder in order to be read by My Summer Car. " +
                         "Press OK to do that now, or Cancel to exit.\n\n" +
-                        "WARNING: This will override currently existing files in CD1!", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        "WARNING: This will override currently existing files in CD1!"), Localisation.Get("Question"),
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
                     if (dl == DialogResult.OK)
                     {
@@ -277,7 +281,7 @@ namespace OggConverter
                         foreach (var file in files)
                             File.Move($"{Settings.GamePath}\\CD\\{file.Name}", $"{Settings.GamePath}\\CD1\\{file.Name}");
 
-                        Log("Succesfully imported CD songs to new CD1 folder!");
+                        Log(Localisation.Get("Succesfully imported CD songs to new CD1 folder!"));
                         Directory.Delete($"{Settings.GamePath}\\CD", true);
                     }
                     else
@@ -303,14 +307,14 @@ namespace OggConverter
                 err.ShowDialog();
             }
 
-            Log((Settings.Preview && !Settings.DemoMode) ? "YOU ARE USING PREVIEW VERSION" : "");
+            Log((Settings.Preview && !Settings.DemoMode) ? Localisation.Get("YOU ARE USING PREVIEW VERSION") : "");
 
             if (Settings.NoUpdates)
-                Log("\nUpdates are disabled");
+                Log(Localisation.Get("\nUpdates are disabled"));
             else
                 Updates.StartUpdateCheck();
 
-            mSCOGGToolStripMenuItem.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
+            btnMSCMMAbout.Text += Settings.DemoMode ? " (DEMO MODE)" : "";
 
             // Tooltips
             ToolTip toolTip = new ToolTip
@@ -321,15 +325,16 @@ namespace OggConverter
                 ShowAlways = true
             };
 
-            toolTip.SetToolTip(btnSort, "Sorts all songs so there are no gaps between songs (ex. if there's track1 and track3, the track3 will be renamed to track2).");
-            toolTip.SetToolTip(btnUp, "Move selected song one up.");
-            toolTip.SetToolTip(btnDown, "Move selected song one down.");
-            toolTip.SetToolTip(btnMoveSong, "Move selected songs to selected folder.");
-            toolTip.SetToolTip(btnCloneSong, "Clones selected song with it's displayed name.");
-            toolTip.SetToolTip(btnDel, "Deletes selected song.");
-            toolTip.SetToolTip(btnShuffle, "Randomizes songs order in chosen folder.");
-            toolTip.SetToolTip(btnOpenGameDir, "Opens My Summer Car folder in Explorer.");
-            toolTip.SetToolTip(btnDirectory, "Lets you change My Summer Car folder.");
+            toolTip.SetToolTip(btnSort, Localisation.Get("Sorts all songs so there are no gaps between songs " +
+                "(ex. if there's track1 and track3, the track3 will be renamed to track2)."));
+            toolTip.SetToolTip(btnUp, Localisation.Get("Move selected song one up."));
+            toolTip.SetToolTip(btnDown, Localisation.Get("Move selected song one down."));
+            toolTip.SetToolTip(btnMoveSong, Localisation.Get("Move selected songs to selected folder."));
+            toolTip.SetToolTip(btnCloneSong, Localisation.Get("Clones selected song with it's displayed name."));
+            toolTip.SetToolTip(btnDel, Localisation.Get("Deletes selected song."));
+            toolTip.SetToolTip(btnShuffle, Localisation.Get("Randomizes songs order in chosen folder."));
+            toolTip.SetToolTip(btnOpenGameDir, Localisation.Get("Opens My Summer Car folder in Explorer."));
+            toolTip.SetToolTip(btnDirectory, Localisation.Get("Lets you change My Summer Car folder."));
         }
 
         /// <summary>
@@ -365,6 +370,43 @@ namespace OggConverter
                 menuTool.Enabled = state;
                 btnDirectory.Enabled = state;
             }
+        }
+
+        void Localize()
+        {
+            foreach (ToolStripMenuItem c in menu.Items)
+            {
+                c.Text = Localisation.Get(c.Text);
+            }
+
+            btnLastLog.Text = Localisation.Get("Open History");
+            btnLogFolder.Text = Localisation.Get("Open Log Folder");
+            btnWebsite.Text = Localisation.Get("Website");
+            btnGitLab.Text = Localisation.Get("GitLab repository");
+            btnSteam.Text = Localisation.Get("Steam Community discussion");
+            btnAbout.Text = Localisation.Get("About");
+            btnQuit.Text = Localisation.Get("Quit");
+            btnDirectory.Text = Localisation.Get("Set Game Folder");
+            btnOpenGameDir.Text = Localisation.Get("Open in Explorer");
+            btnSort.Text = Localisation.Get("Sort");
+            btnMoveSong.Text = Localisation.Get("Move");
+            btnCloneSong.Text = Localisation.Get("Clone");
+            btnDel.Text = Localisation.Get("Delete");
+            btnShuffle.Text = Localisation.Get("Shuffle");
+            contextCopy.Text = Localisation.Get("Clone");
+            contextDelete.Text = Localisation.Get("Delete");
+            contextMove.Text = Localisation.Get("Move");
+            contextAll.Text = Localisation.Get("Select All");
+
+            tabDownload.Text = Localisation.Get("Download");
+            tabMeta.Text = Localisation.Get("Edit");
+            label5.Text = Localisation.Get("Search Term/Video Link:");
+            btnDownload.Text = Localisation.Get("Download");
+            btnCancelDownload.Text = Localisation.Get("Cancel");
+            label6.Text = Localisation.Get("Note:\nThe autor of this tool doesn't take any responsibility for the way how that tool is used.");
+            label2.Text = Localisation.Get("Select song from the list to the left and edit it's displayed name.");
+            label1.Text = Localisation.Get("Name:");
+            btnSetName.Text = Localisation.Get("Save");
         }
 
         /// <summary>
@@ -423,7 +465,7 @@ namespace OggConverter
             songList.Items.Clear();
             songList.Items.AddRange(newTrackList.ToArray());
 
-            labCounter.Text = $"Songs: {howManySongs}/{SongsLimit}";
+            labCounter.Text = Localisation.Get("Songs: {0}/{1}", howManySongs, SongsLimit);
             labCounter.ForeColor = howManySongs > SongsLimit ? Color.Red : Color.Black;
 
             if (songList.Items.Count > lastSelected)
@@ -440,7 +482,7 @@ namespace OggConverter
         {
             if (Utilities.IsToolBusy())
             {
-                Log("Program is busy.");
+                Log(Localisation.Get("Program is busy."));
                 return;
             }
 
@@ -451,7 +493,7 @@ namespace OggConverter
                 if (dialog == DialogResult.OK && Directory.GetFiles(folderDialog.SelectedPath, "mysummercar.exe").Length != 0)
                 {
                     Settings.GamePath = folderDialog.SelectedPath;
-                    Log("My Summer Car folder loaded successfully!");
+                    Log(Localisation.Get("My Summer Car folder loaded successfully!"));
 
                     if (firstLoad)
                     {
@@ -462,10 +504,10 @@ namespace OggConverter
                     }
                 }
                 else if (dialog == DialogResult.Cancel)
-                    Log("Operation canceled");
+                    Log(Localisation.Get("Operation canceled"));
                 else
-                    Log("Couldn't find mysummercar.exe. " +
-                        "Make sure you've selected the game's ROOT folder (ex. C:\\Steam\\steamapps\\common\\My Summer Car) and NOT Radio or CD!");
+                    Log(Localisation.Get("Couldn't find mysummercar.exe. " +
+                        "Make sure you've selected the game's ROOT folder (ex. C:\\Steam\\steamapps\\common\\My Summer Car) and NOT Radio or CD!"));
             }
         }
 
@@ -473,7 +515,7 @@ namespace OggConverter
         {
             if (Settings.GamePath.Length == 0)
             {
-                Log("Set the game path first.");
+                Log(Localisation.Get("Set the game path first."));
                 return;
             }
 
@@ -490,7 +532,7 @@ namespace OggConverter
             if (Utilities.IsToolBusy())
             {
                 e.Cancel = true;
-                Log("Program is busy.");
+                Log(Localisation.Get("Program is busy."));
                 return;
             }
 
@@ -501,13 +543,13 @@ namespace OggConverter
         {
             if (!File.Exists("history.txt"))
             {
-                Log("History file doesn't exist.");
+                Log(Localisation.Get("History file doesn't exist."));
                 return;
             }
 
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                DialogResult dl = MessageBox.Show("Would you like to remove history file?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dl = MessageBox.Show(Localisation.Get("Would you like to remove history file?"), Localisation.Get("Question"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dl == DialogResult.Yes)
                     File.Delete("history.txt");
 
@@ -544,7 +586,7 @@ namespace OggConverter
 
         private void MSCOGGToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Utilities.AboutNotice, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Utilities.AboutNotice, Localisation.Get("Information"), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnPlay(object sender, EventArgs e)
@@ -589,7 +631,8 @@ namespace OggConverter
         {
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                DialogResult dl = MessageBox.Show("Would you like to remove all logs?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dl = MessageBox.Show(Localisation.Get("Would you like to remove all logs?"), Localisation.Get("Question"), 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dl == DialogResult.Yes)
                     Directory.Delete("LOG", true);
 
@@ -598,13 +641,13 @@ namespace OggConverter
 
             if (!Settings.Logs)
             {
-                Log("Logs are disabled");
+                Log(Localisation.Get("Logs are disabled"));
                 return;
             }
 
             if (!Directory.Exists("Log"))
             {
-                Log("Log folder doesn't exist");
+                Log(Localisation.Get("Log folder doesn't exist"));
                 return;
             }
 
@@ -664,7 +707,7 @@ namespace OggConverter
                 dragDropPanel.Visible = true;
                 dragDropPanel.BringToFront();
                 int filesLength = ((string[])e.Data.GetData(DataFormats.FileDrop)).Length;
-                labelConvert.Text = $"Convert {filesLength} file{(filesLength > 1 ? "s" : "")} to {(CurrentFolder)}?\n\n(Drop to Confirm)";
+                labelConvert.Text = Localisation.Get("Convert {0} file(s) to {1}?\n\n(Drop to Confirm)", filesLength, CurrentFolder);
                 labelConvert.Left = labelConvert.CenterHorizontally(dragDropPanel);
                 labelConvert.Top = (this.ClientSize.Height - labelConvert.Size.Height) / 2;
                 e.Effect = DragDropEffects.Copy;
@@ -721,7 +764,7 @@ namespace OggConverter
             // Force download and install update
             if (ModifierKeys.HasFlag(Keys.Shift))
             {
-                Log("\nForcing the update...");
+                Log(Localisation.Get("\nForcing the update..."));
                 Updates.DownloadUpdate(Settings.Preview);
                 return;
             }
@@ -743,8 +786,9 @@ namespace OggConverter
 
             if (Updates.IsYoutubeDlUpdating)
             {
-                MessageBox.Show("youtube-dl is now updating or looking for the update. You'll be notified on Log panel when it's done :)",
-                    "Stop",
+                MessageBox.Show(Localisation.Get("youtube-dl is now updating or looking for the update. " +
+                    "You'll be notified on Log panel when it's done :)"),
+                    Localisation.Get("Stop"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Stop);
                 return;
@@ -752,14 +796,14 @@ namespace OggConverter
 
             if (Utilities.IsToolBusy())
             {
-                Log("Program is busy.");
+                Log(Localisation.Get("Program is busy."));
                 return;
             }
 
             if (!File.Exists("youtube-dl.exe"))
             {
-                DialogResult dl = MessageBox.Show("In order to download the song, the tool requires youtube-dl to be downloaded. " +
-                    "Press 'Yes' to download it now.",
+                DialogResult dl = MessageBox.Show(Localisation.Get("In order to download the song, the tool requires youtube-dl to be downloaded. " +
+                    "Press 'Yes' to download it now."),
                     "Information",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information);
@@ -810,13 +854,13 @@ namespace OggConverter
 
         private void BtnHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("How to use:\n\n" +
+            MessageBox.Show(Localisation.Get("How to use:\n\n" +
                 "- Drag and drop music files on the program's window or executable to quickly convert one or more songs\n" +
                 "- Paste songs into Radio or CD folder in My Summer Car folder and click on the program's window - the program will detect new songs automatically\n" +
                 "- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term\n\n" +
                 "Use Shuffle to randomize songs order.\n" +
-                "In Edit tab you can change song's displayed name.",
-                "Help",
+                "In Edit tab you can change song's displayed name."),
+                Localisation.Get("Help"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }

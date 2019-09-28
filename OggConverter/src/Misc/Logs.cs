@@ -59,8 +59,8 @@ namespace OggConverter
 
             if (silent) return;
 
-            DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG folder. " +
-                "Would you like to open it now?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            DialogResult dl = MessageBox.Show(Localisation.Get("An error has occured. Log has been saved into LOG folder. " +
+                "Would you like to open it now?"), Localisation.Get("Error"), MessageBoxButtons.YesNo, MessageBoxIcon.Error);
             if (dl == DialogResult.Yes) Process.Start(fileName);
         }
 

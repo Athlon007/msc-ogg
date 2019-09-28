@@ -52,10 +52,9 @@
             this.btnWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGitLab = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTrello = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSCOGGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnMSCMMAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.btnFFmpegLicense = new System.Windows.Forms.ToolStripMenuItem();
             this.btnQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -297,12 +296,11 @@
             this.btnWebsite,
             this.btnGitLab,
             this.btnSteam,
-            this.btnTrello,
             this.toolStripSeparator4,
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 26);
+            this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
             // 
             // btnLastLog
@@ -345,13 +343,6 @@
             this.btnSteam.Text = "Steam Community discussion";
             this.btnSteam.Click += new System.EventHandler(this.SteamCommunityDiscussionToolStripMenuItem_Click);
             // 
-            // btnTrello
-            // 
-            this.btnTrello.Name = "btnTrello";
-            this.btnTrello.Size = new System.Drawing.Size(285, 26);
-            this.btnTrello.Text = "Visit Trello Roadmap";
-            this.btnTrello.Visible = false;
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -360,18 +351,18 @@
             // btnAbout
             // 
             this.btnAbout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mSCOGGToolStripMenuItem,
+            this.btnMSCMMAbout,
             this.btnFFmpegLicense});
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(285, 26);
             this.btnAbout.Text = "About";
             // 
-            // mSCOGGToolStripMenuItem
+            // btnMSCMMAbout
             // 
-            this.mSCOGGToolStripMenuItem.Name = "mSCOGGToolStripMenuItem";
-            this.mSCOGGToolStripMenuItem.Size = new System.Drawing.Size(227, 26);
-            this.mSCOGGToolStripMenuItem.Text = "MSC Music Manager";
-            this.mSCOGGToolStripMenuItem.Click += new System.EventHandler(this.MSCOGGToolStripMenuItem_Click);
+            this.btnMSCMMAbout.Name = "btnMSCMMAbout";
+            this.btnMSCMMAbout.Size = new System.Drawing.Size(227, 26);
+            this.btnMSCMMAbout.Text = "MSC Music Manager";
+            this.btnMSCMMAbout.Click += new System.EventHandler(this.MSCOGGToolStripMenuItem_Click);
             // 
             // btnFFmpegLicense
             // 
@@ -390,14 +381,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 26);
+            this.menuSettings.Size = new System.Drawing.Size(76, 24);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -414,14 +405,14 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 30);
+            this.menu.Size = new System.Drawing.Size(991, 28);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 26);
+            this.btnHelp.Size = new System.Drawing.Size(55, 24);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
@@ -429,7 +420,7 @@
             // 
             this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
-            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 26);
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 24);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
             this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
@@ -536,7 +527,7 @@
             this.btnCancelDownload.Location = new System.Drawing.Point(148, 65);
             this.btnCancelDownload.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelDownload.Name = "btnCancelDownload";
-            this.btnCancelDownload.Size = new System.Drawing.Size(132, 35);
+            this.btnCancelDownload.Size = new System.Drawing.Size(132, 44);
             this.btnCancelDownload.TabIndex = 16;
             this.btnCancelDownload.Text = "Cancel";
             this.btnCancelDownload.UseVisualStyleBackColor = true;
@@ -548,9 +539,9 @@
             this.label6.Location = new System.Drawing.Point(4, 370);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(546, 34);
+            this.label6.Size = new System.Drawing.Size(543, 34);
             this.label6.TabIndex = 15;
-            this.label6.Text = "Note:\r\nThe author of this tool doesn\'t take any responsibility of the way how tha" +
+            this.label6.Text = "Note:\r\nThe autor of this tool doesn\'t take any responsibility for the way how tha" +
     "t tool is used.";
             // 
             // btnDownload
@@ -558,7 +549,7 @@
             this.btnDownload.Location = new System.Drawing.Point(8, 65);
             this.btnDownload.Margin = new System.Windows.Forms.Padding(4);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(132, 35);
+            this.btnDownload.Size = new System.Drawing.Size(132, 44);
             this.btnDownload.TabIndex = 15;
             this.btnDownload.Text = "Download";
             this.btnDownload.UseVisualStyleBackColor = true;
@@ -612,7 +603,7 @@
             this.btnSetName.Location = new System.Drawing.Point(8, 91);
             this.btnSetName.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetName.Name = "btnSetName";
-            this.btnSetName.Size = new System.Drawing.Size(132, 35);
+            this.btnSetName.Size = new System.Drawing.Size(132, 44);
             this.btnSetName.TabIndex = 17;
             this.btnSetName.Text = "Save";
             this.btnSetName.UseVisualStyleBackColor = true;
@@ -753,7 +744,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnGitLab;
         private System.Windows.Forms.ToolStripMenuItem btnSteam;
         private System.Windows.Forms.ToolStripMenuItem btnAbout;
-        private System.Windows.Forms.ToolStripMenuItem mSCOGGToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnMSCMMAbout;
         private System.Windows.Forms.ToolStripMenuItem btnFFmpegLicense;
         private System.Windows.Forms.ToolStripMenuItem btnQuit;
         private System.Windows.Forms.ToolStripMenuItem menuSettings;
@@ -788,7 +779,6 @@
         private System.Windows.Forms.ToolStripMenuItem btnWebsite;
         private System.Windows.Forms.Button btnCancelDownload;
         private System.Windows.Forms.ComboBox selectedFolder;
-        private System.Windows.Forms.ToolStripMenuItem btnTrello;
         private System.Windows.Forms.ContextMenuStrip songListContext;
         private System.Windows.Forms.ToolStripMenuItem contextCopy;
         private System.Windows.Forms.ToolStripMenuItem contextAll;

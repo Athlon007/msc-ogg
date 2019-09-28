@@ -55,10 +55,10 @@ namespace OggConverter
             return version.Build == 0 ? $"{version.Major}.{version.Minor}" : $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
-        public static string AboutNotice = $"MSC Music Manager {Application.ProductVersion} ({Updates.version})\nCopyright (C) 2019 Athlon\n\n" +
+        public static string AboutNotice = Localisation.Get("MSC Music Manager {0} ({1})\nCopyright (C) 2019 Athlon\n\n" +
                 $"This program comes with ABSOLUTELY NO WARRANTY.\n" +
                 $"This is free software, and you are welcome to redistribute it, as long as you include original copyright, state changes and include license.\n\n" +
-                $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.";
+                $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.", Application.ProductVersion, Updates.version);
 
         /// <summary>
         /// Checks if file is being used by some other process.
@@ -150,7 +150,7 @@ namespace OggConverter
             }
             catch
             {
-                Form1.instance.Log("Looks like you're offline. Can't check for the update availability");
+                Form1.instance.Log(Localisation.Get("Looks like you're offline. Can't check for the update availability"));
                 isOffline = true;
                 return false;
             }
