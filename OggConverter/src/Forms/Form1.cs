@@ -388,11 +388,19 @@ namespace OggConverter
             btnQuit.Text = Localisation.Get("Quit");
             btnDirectory.Text = Localisation.Get("Set Game Folder");
             btnOpenGameDir.Text = Localisation.Get("Open in Explorer");
-            btnSort.Text = Localisation.Get("Sort");
-            btnMoveSong.Text = Localisation.Get("Move");
-            btnCloneSong.Text = Localisation.Get("Clone");
-            btnDel.Text = Localisation.Get("Delete");
-            btnShuffle.Text = Localisation.Get("Shuffle");
+
+            // Player
+            Button[] btns = new Button[] { btnSort, btnMoveSong, btnCloneSong, btnDel, btnShuffle };
+            foreach (Button btn in btns)
+            {
+                btn.Text = Localisation.Get(btn.Text);
+                if (btn.Text.Length > 7)
+                    btn.Font = new Font("Microsoft Sans Serif", 7);
+
+                if (btn.Text.Length > 8)
+                    btn.Text = btn.Text.Substring(0, 6) + "...";
+            }
+
             contextCopy.Text = Localisation.Get("Clone");
             contextDelete.Text = Localisation.Get("Delete");
             contextMove.Text = Localisation.Get("Move");

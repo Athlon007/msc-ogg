@@ -5,4 +5,4 @@ Added:
 - All errors related to localisations will be saved in LOG/locale_errors
 - Added tooltips into Settings
 
-For more visit https://gitlab.com/aathlon/msc-ogg
+For more, visit https://gitlab.com/aathlon/msc-ogg

@@ -69,7 +69,7 @@ namespace OggConverter
         }
 
         /// Stores the set language by user
-        public static string Language { get => Get("Language", "English (GB)"); set => Set("Language", value); }
+        public static string Language { get => Get("Language", "English (UK)"); set => Set("Language", value); }
 
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //

@@ -1,6 +1,14 @@
 # Changelog
 
-## Preview 2.6.0.2 (27.09.2019)
+## Preview 2.6.0.3 (28.09.2019)
+
+### Bug Fixes
+
+- Fixed incorrectly displaying new and current version number on update dialog
+- Fixed a bug in which the program would show an error when changing language straight after updating from 2.5.3
+- Player buttons will react if the text is too big for a button
+
+## Preview 2.6.0.2 (28.09.2019)
 
 ### Added
 
