@@ -48,7 +48,7 @@ namespace OggConverter
                 Directory.CreateDirectory("log\\locale_errors");
                 File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
 
-                return id;
+                return String.Format(id, args);
             }
 
             string output = localeFileContent[id];
@@ -143,8 +143,6 @@ namespace OggConverter
                     localeFileContent.Add(id, str);
                 }
             }
-
-            //System.Windows.Forms.MessageBox.Show(localeFileContent["Language"]);
         }
     }
 }

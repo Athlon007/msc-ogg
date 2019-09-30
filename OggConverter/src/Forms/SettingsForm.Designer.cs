@@ -243,12 +243,6 @@
             // 
             this.cbYoutubeDlUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbYoutubeDlUpdateFrequency.FormattingEnabled = true;
-            this.cbYoutubeDlUpdateFrequency.Items.AddRange(new object[] {
-            "Upon every start",
-            "Daily",
-            "Weekly",
-            "Monthly",
-            "Never"});
             this.cbYoutubeDlUpdateFrequency.Location = new System.Drawing.Point(29, 237);
             this.cbYoutubeDlUpdateFrequency.Margin = new System.Windows.Forms.Padding(4);
             this.cbYoutubeDlUpdateFrequency.Name = "cbYoutubeDlUpdateFrequency";

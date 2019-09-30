@@ -35,6 +35,12 @@ namespace OggConverter
 
             tabControl.ItemSize = new Size((tabControl.Width / tabControl.TabCount) - 1, 0);
 
+            cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Upon every start"));
+            cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Daily"));
+            cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Weekly"));
+            cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Monthly"));
+            cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Never"));
+
             chkRemoveSource.Checked = Settings.RemoveMP3;
             chkAutoSort.Checked = Settings.AutoSort;
             chkNoMetafiles.Checked = Settings.DisableMetaFiles;
