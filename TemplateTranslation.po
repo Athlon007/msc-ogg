@@ -687,4 +687,4 @@ msgid "Save"
 msgstr ""
 
 msgid "Quick Convert"
-msgstr "Szybka Konwersja"
+msgstr ""
