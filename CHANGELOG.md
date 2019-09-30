@@ -13,6 +13,15 @@
 - Player buttons will react if the text is too big for a button
 - Fixed "Looking for youtube-dl" dialog not translating properly
 - youtube-dl update frequency settings are now translated properly
+- Dialog after using "wipe" argument is now being translated properly
+- If the translation hasn't been found, the program will not return empty arguments in strings
+- Fixed an unintention quotation mark in Polish translation
+- Fixed bugged Error Message appearing in few situations
+- Fixed time of crash always saving as 00:00:00
+- Fixed the non translating error message dialog
+- When using quick converter, if the song name is longer than 40 characters, the text will not overflow
+- Fixed quick converter throwing error while saving metafile and not saving song name
+- Quick convert now saves the song name as the file name if the FFmpeg hadn't found the name in meta
 
 ## Preview 2.6.0.2 (28.09.2019)
 

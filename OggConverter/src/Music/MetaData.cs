@@ -25,7 +25,12 @@ namespace OggConverter
 {
     class MetaData
     {
-        public static string XmlFilePath() { return $"{Settings.GamePath}\\{Form1.instance.CurrentFolder}\\songnames.xml"; }
+        public static string AlternateFolder { get; set; }
+        public static string XmlFilePath()
+        {
+            string folder = String.IsNullOrEmpty(AlternateFolder) ? Form1.instance.CurrentFolder : AlternateFolder;
+            return $"{Settings.GamePath}\\{folder}\\songnames.xml";
+        }
 
         /// <summary>
         /// Retrieves song name from ffmpeg output
@@ -174,13 +179,13 @@ namespace OggConverter
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public static void AddOrEdit(string name, string value, string alternateFolder = "")
+        public static void AddOrEdit(string name, string value)
         {
             try
             {
                 value = value == null || value == "" ? name : value;
 
-                string documentPath = alternateFolder == "" ? XmlFilePath() : $"{Settings.GamePath}\\{alternateFolder}\\songnames.xml";
+                string documentPath = XmlFilePath();
                 XDocument doc = XDocument.Load(documentPath);
                 var attribute = doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name);
                 if (attribute == null)

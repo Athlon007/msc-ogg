@@ -138,6 +138,8 @@ namespace OggConverter
 
             try
             {
+                MetaData.AlternateFolder = folder;
+
                 DirectoryInfo d = new DirectoryInfo(path);
                 FileInfo[] files
                     = d.GetFiles()
@@ -202,7 +204,7 @@ namespace OggConverter
 
                         string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
                         songName = MetaData.GetFromOutput(ffmpegOut);
-                        await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName, folder));
+                        await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
                     }
                     else
                     {
@@ -239,6 +241,10 @@ namespace OggConverter
                 ErrorMessage err = new ErrorMessage(ex);
                 err.ShowDialog();
             }
+            finally
+            {
+                MetaData.AlternateFolder = null;
+            }
 
             Form1.instance.Log(Localisation.Get("Converted {0} file(s) in {1}", TotalConversions, folder));
         }
@@ -268,11 +274,12 @@ namespace OggConverter
 
             int inGame = 1;
             if (Form1.instance != null)
-                Form1.instance.Log(Localisation.Get($"\nConverting '{0}'\n", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
-
+                Form1.instance.Log(Localisation.Get("\nConverting '{0}'\n", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
 
             try
             {
+                MetaData.AlternateFolder = folder;
+
                 //Counting how many OGG files there are already
                 for (int c = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{c}.ogg"); c++)
                     inGame++;
@@ -355,6 +362,10 @@ namespace OggConverter
             {
                 ErrorMessage err = new ErrorMessage(ex);
                 err.ShowDialog();
+            }
+            finally
+            {
+                MetaData.AlternateFolder = "";
             }
         }
 

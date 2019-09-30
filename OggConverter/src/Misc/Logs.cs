@@ -50,8 +50,8 @@ namespace OggConverter
                 $"// SYSTEM: {GetSystemInfo()}\n" +
                 $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n" +
                 $"// GAME DIRECTORY: {Settings.GamePath}\n" +
-                $"// TIME OF CRASH: {DateTime.Now.Date}\n\n" +
-                //$"// LANGUAGE: \n\n" +
+                $"// TIME OF CRASH: {DateTime.Now}\n" +
+                $"// LANGUAGE: {Settings.Language}\n\n" +
                 $"// {GetWittyComment()} \n\n" +
                 $"{log}");
 
