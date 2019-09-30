@@ -143,8 +143,6 @@ namespace OggConverter
                     localeFileContent.Add(id, str);
                 }
             }
-
-            //System.Windows.Forms.MessageBox.Show(localeFileContent["Language"]);
         }
     }
 }

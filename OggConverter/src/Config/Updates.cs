@@ -35,7 +35,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19410;
+        public const int version = 19411;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -307,7 +307,7 @@ namespace OggConverter
         static async Task GetYoutubeDlUpdate()
         {
             IsYoutubeDlUpdating = true;
-            Form1.instance.Log(Localisation.Get("\nLooking for youtube-dl updates..."));
+            Form1.instance.Log("\n" + Localisation.Get("Looking for youtube-dl updates..."));
             Process process = new Process();
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.FileName = "youtube-dl.exe";

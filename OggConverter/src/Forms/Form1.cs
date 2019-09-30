@@ -153,71 +153,25 @@ namespace OggConverter
 
             try
             {
-                // Checking if some trackTemp files exist. They may be caused by crash
-                if (File.Exists($"{Settings.GamePath}\\Radio\\trackTemp.ogg"))
-                {
-                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "Radio"));
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", "Radio", 99);
-                }
+                string[] folders = new string[] { "Radio", "CD", "CD1", "CD2", "CD3" };
 
-                if (Directory.Exists($"{Settings.GamePath}\\CD") && File.Exists($"{Settings.GamePath}\\CD\\trackTemp.ogg"))
+                foreach (string folder in folders)
                 {
-                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD"));
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD\\trackTemp.ogg", "CD", 99);
-                }
-
-                if (Directory.Exists($"{Settings.GamePath}\\CD1") && File.Exists($"{Settings.GamePath}\\CD1\\trackTemp.ogg"))
-                {
-                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD1"));
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD1\\trackTemp.ogg", "CD1", 99);
-                }
-
-                if (Directory.Exists($"{Settings.GamePath}\\CD2") && File.Exists($"{Settings.GamePath}\\CD2\\trackTemp.ogg"))
-                {
-                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD2"));
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD2\\trackTemp.ogg", "CD2", 99);
-                }
-
-                if (Directory.Exists($"{Settings.GamePath}\\CD3") && File.Exists($"{Settings.GamePath}\\CD3\\trackTemp.ogg"))
-                {
-                    Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", "CD3"));
-                    _ = Converter.ConvertFile($"{Settings.GamePath}\\CD3\\trackTemp.ogg", "CD3", 99);
-                }
-
-                // Converting song name listing to new format
-                if (!File.Exists($"{Settings.GamePath}\\Radio\\songnames.xml"))
-                {
-                    MetaData.ConvertFromMscmm("Radio");
-                    Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "Radio"));
-                }
-
-                // Checks if old CD folder exists instead of the new ones
-                if (Directory.Exists($"{Settings.GamePath}\\CD"))
-                {
-                    if (!File.Exists($"{Settings.GamePath}\\CD\\songnames.xml"))
+                    if (Directory.Exists($"{Settings.GamePath}\\{folder}"))
                     {
-                        MetaData.ConvertFromMscmm("CD");
-                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD"));
-                    }
-                }
-                else if (Directory.Exists($"{Settings.GamePath}\\CD1"))
-                {
-                    if (!File.Exists($"{Settings.GamePath}\\CD1\\songnames.xml"))
-                    {
-                        MetaData.ConvertFromMscmm("CD1");
-                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD1"));
-                    }
+                        // Checking if some trackTemp files exist. They may be caused by crash
+                        if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
+                        {
+                            Log(Localisation.Get("Found temp song file in {0}, possibly due to the crash\nTrying to fix it...", folder));
+                            _ = Converter.ConvertFile($"{Settings.GamePath}\\Radio\\trackTemp.ogg", folder, (folder == "Radio" ? 99 : 15));
+                        }
 
-                    if (!File.Exists($"{Settings.GamePath}\\CD2\\songnames.xml"))
-                    {
-                        MetaData.ConvertFromMscmm("CD2");
-                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD2"));
-                    }
-
-                    if (!File.Exists($"{Settings.GamePath}\\CD3\\songnames.xml"))
-                    {
-                        MetaData.ConvertFromMscmm("CD3");
-                        Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", "CD3"));
+                        // Checks if songnames.xml exists in folder
+                        if (!File.Exists($"{Settings.GamePath}\\{folder}\\songnames.xml"))
+                        {
+                            MetaData.ConvertFromMscmm(folder);
+                            Log(Localisation.Get("Converted {0} folder from .MSCMM to XML database.", folder));
+                        }
                     }
                 }
 
@@ -244,11 +198,10 @@ namespace OggConverter
                         if (dl == DialogResult.Yes)
                         {
                             RestrictedMode(true);
-                            MetaData.GetMetaFromAllSongs("Radio");
-                            MetaData.GetMetaFromAllSongs("CD");
-                            MetaData.GetMetaFromAllSongs("CD1");
-                            MetaData.GetMetaFromAllSongs("CD2");
-                            MetaData.GetMetaFromAllSongs("CD3");
+                            
+                            foreach (string folder in folders)
+                                MetaData.GetMetaFromAllSongs(folder);
+
                             UpdateSongList();
                             RestrictedMode(false);
                         }
@@ -256,7 +209,8 @@ namespace OggConverter
 
                     if (Settings.LatestVersion == 0 && !DesktopShortcut.Exists())
                     {
-                        DialogResult dl = MessageBox.Show(Localisation.Get("Do you want to create desktop shortcut?"), Localisation.Get("Question"), 
+                        DialogResult dl = MessageBox.Show(Localisation.Get("Do you want to create desktop shortcut?"), 
+                            Localisation.Get("Question"), 
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dl == DialogResult.Yes)
                             DesktopShortcut.Create();
@@ -394,7 +348,7 @@ namespace OggConverter
             foreach (Button btn in btns)
             {
                 btn.Text = Localisation.Get(btn.Text);
-                if (btn.Text.Length > 7)
+                if (btn.Text.Length > 7) 
                     btn.Font = new Font("Microsoft Sans Serif", 7);
 
                 if (btn.Text.Length > 8)
