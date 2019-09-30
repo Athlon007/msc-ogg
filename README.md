@@ -24,7 +24,7 @@ This program is distributed under GNU General Public License v3. Feel free to us
 MSCMM at this moment is fully localised in English and Polish languages. If you want to help with translation to Your language, here's what you want to do.
 
 1. Download [Poedit](https://poedit.net/)
-2. Download the [template translation](<OggConverter/bin/Release/locales/English (Great Britain).po>)
+2. Download the [template translation](TemplateTranslation.po)
 3. Open Poedit and open the template translation
 4. Go to Catalogue (or press Alt+Enter) -> and select Language to yours
 5. Go to File -> Preferences and fill "Information about the translator" section
@@ -41,6 +41,8 @@ Available translations:
 |----|--------------|---------------|------------|
 | 🇬🇧 | English (UK) | Konrad Figura | 100%       |
 | 🇵🇱 | Polski       | Konrad Figura | 100%       |
+
+Note: translations fixes are also welcome :)
 
 ## Download
 
