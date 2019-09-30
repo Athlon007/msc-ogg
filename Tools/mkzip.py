@@ -71,5 +71,5 @@ if os.path.isdir("LOG"):
     shutil.rmtree('LOG')
 
 print("Done!")
-print("Qutting...")
+print("Quitting...")
 quit()
