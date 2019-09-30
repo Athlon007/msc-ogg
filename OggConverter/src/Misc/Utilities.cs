@@ -20,7 +20,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
-using System.Threading;
 
 namespace OggConverter
 {
@@ -44,30 +43,35 @@ namespace OggConverter
         /// <summary>
         /// Returns MSC Music Manager version
         /// </summary>
+        /// <param name="fullVersion">If true, returns the name with inclusion of revision number.</param>
         /// <returns></returns>
-        public static string GetVersion()
+        public static string GetVersion(bool fullVersion = false)
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            if (fullVersion)
+                return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+
             return version.Build == 0 ? $"{version.Major}.{version.Minor}" : $"{version.Major}.{version.Minor}.{version.Build}";
         }
 
-        public static string AboutNotice = $"MSC Music Manager {Application.ProductVersion} ({Updates.version})\nCopyright (C) 2019 Athlon\n\n" +
+        public static string AboutNotice = Localisation.Get("MSC Music Manager {0} ({1})\nCopyright (C) 2019 Athlon\n\n" +
                 $"This program comes with ABSOLUTELY NO WARRANTY.\n" +
                 $"This is free software, and you are welcome to redistribute it, as long as you include original copyright, state changes and include license.\n\n" +
-                $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.";
+                $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.", Application.ProductVersion, Updates.version);
 
         /// <summary>
-        /// Checks if file is being used by other process and returns the value.
+        /// Checks if file is being used by some other process.
         /// </summary>
-        /// <param name="filename">Path to the file</param>
-        /// <returns>If any process is in FileStream, returns true (as it's used). Else it returns false (file is free to use)</returns>
-        public static bool IsFileReady(string filename)
+        /// <param name="fileName">Path to the file</param>
+        /// <returns>If any process is in FileStream, returns true (as it's used). Else it returns false (file is unlocked)</returns>
+        public static bool IsFileReady(string fileName)
         {
             // If the file can be opened for exclusive access it means that the file
             // is no longer locked by another process.
             try
             {
-                using (FileStream inputStream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.None))
+                using (FileStream inputStream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
                     return inputStream.Length > 0;
             }
             catch
@@ -76,6 +80,9 @@ namespace OggConverter
             }
         }
 
+        /// <summary>
+        /// List of files to delete (old unused files, temps, etc.)
+        /// </summary>
         static readonly string[] filesToDelete = new string[]
         {
             "NReco.VideoConverter.dll", "updater.bat", "restart.bat",
@@ -143,7 +150,7 @@ namespace OggConverter
             }
             catch
             {
-                Form1.instance.Log("Looks like you're offline. Can't check for the update availability");
+                Form1.instance.Log(Localisation.Get("Looks like you're offline. Can't check for the update availability"));
                 isOffline = true;
                 return false;
             }

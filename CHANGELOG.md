@@ -1,5 +1,59 @@
 # Changelog
 
+## 2.6 (30.09.2019)
+
+### Added
+
+- Added localisation support! If you want to help with translating MSCMM to Your language, visit Steam Community discussion, or GitLab repository!
+- Completly redesigned Settings
+- You can now select how frequent youtube-dl checks for updates
+- You can now open last log file directly in MSCMM
+- Restored "start game without Steam" setting
+- You can now delete multiple files at the same time
+- Added new keyboard controls for song list:
+  - Select all files by pressing CTRL+A
+  - Delete single or all files by clicking "Delete"
+  - You can now play the song by pressing Enter when focused on song list
+- Added context menu to song list
+- All errors related to localisations will be saved in LOG/locale_errors
+
+### Changes
+
+- "Create Desktop Shortcut" has been moved into Settings
+- Moved "Check for Update" and "Check for youtube-dl update" into Settings
+- Minor UI changes
+- Code optimization and improvements
+
+### Bug Fixes
+
+- Fixed a bug in which MSCMM would crash on start if the user used older MSC version without CD1/2/3 support
+- Fixed a bug in which MSCMM would crash if the MSCMM was converting the songs if they're dropped inside of folder
+- Download button now won't work if the URL text box is empty
+- Player buttons will react if the text is too big for a button
+- Fixed bugged Error Message appearing in few conditions
+- Fixed time of crash saving as 00:00:00
+- When using quick converter, if the song name is longer than 40 characters, the text will not overflow
+- Fixed quick converter throwing error while saving metafile and not saving song name
+- Quick convert now saves the song name as the file name if the FFmpeg hadn't found the name in meta
+
+### Removed
+
+- Removed Herobrine
+
+## 2.5.3 (22.09.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which MSCMM would read the My Summer Car path incorrectly, if the game wasn't installed in main Steam folder
+
+## 2.5.2 (22.09.2019)
+
+### Bug Fixes
+
+- Fixed a bug in which the program wouldn't start on computers using DD/MM/YYYY or MM/DD/YYYY date format
+- Fixed a bug that would cause MSCMM to try and save the null value into registry causing a crash (thanks to @Patrick-van-Halm at GitLab)
+- Fixed an error which occured if the GamePath value was empty
+
 ## 2.5.1 (21.09.2019)
 
 ### Added

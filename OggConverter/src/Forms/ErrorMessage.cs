@@ -26,23 +26,43 @@ namespace OggConverter
     {
         string FileName { get; set; }
 
-        int defaultY = 208;
-        int extendedY = 457;
+        int DEFAULT_Y = -1;
+        int EXTENDED_Y = -1;
+
         bool isExtended;
+
+        public static ErrorMessage instance;
 
         public ErrorMessage(Exception ex)
         {
             InitializeComponent();
 
-            string fileName = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+            if (instance != null)
+                return;
+
+            DEFAULT_Y = this.Height;
+            EXTENDED_Y = logOutput.Location.Y + logOutput.Height + 50;
+
+            instance = this;
+
+            string fileName = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} " +
+                $"{DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+
             FileName = fileName;
 
-            label2.Text = $"An error has occured and the info has been saved to {fileName}\n" +
+            label2.Text = Localisation.Get("An error has occured and the info has been saved to {0}\n" +
                 $"inside of LOG folder.\n" +
-                $"If it happens again, please send the log to the MSCMM developer.";
+                $"If it happens again, please send the log to the MSCMM developer.", fileName);
 
             Logs.CrashLog(ex.ToString(), true);
-            btnMoreDetail.Text = (char.ConvertFromUtf32(0x2193) + " Show More Info");
+            btnMoreDetail.Text = (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));
+        }
+
+        void LoadLanguage()
+        {
+            btnExit.Text = Localisation.Get("Exit");
+            btnLog.Text = Localisation.Get("Open Log");
+            btnClose.Text = Localisation.Get("Close");
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -58,8 +78,9 @@ namespace OggConverter
         private void BtnMoreDetail_Click(object sender, EventArgs e)
         {
             isExtended ^= true;
-            this.Size = new Size(this.Size.Width, isExtended ? extendedY : defaultY);
-            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " Hide More Info") : (char.ConvertFromUtf32(0x2193)+ " Show More Info");
+            this.Size = new Size(this.Size.Width, isExtended ? EXTENDED_Y : DEFAULT_Y);
+            btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " " + Localisation.Get("Hide More Info")) 
+                : (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));
             string file = File.ReadAllText($"LOG\\{FileName}.txt");
             file = file.Replace("\n", Environment.NewLine);
             logOutput.Text = file;
@@ -67,7 +88,7 @@ namespace OggConverter
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

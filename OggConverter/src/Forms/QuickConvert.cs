@@ -40,11 +40,13 @@ namespace OggConverter
         {
             InitializeComponent();
 
+            Localize();
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));            
 
             if (!Settings.AreSettingsValid())
             {
-                MessageBox.Show("Couldn't find My Summer Car path. Set it up first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Localisation.Get("Couldn't find My Summer Car path. Set it up first!"), 
+                    Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
                 this.Close();
                 return;
@@ -52,8 +54,8 @@ namespace OggConverter
 
             if (!File.Exists("ffmpeg.exe"))
             {
-                MessageBox.Show("FFmpeg needs to be downloaded first. Start the program to download it now.", 
-                    "Error",
+                MessageBox.Show(Localisation.Get("FFmpeg needs to be downloaded first. Start the program to download it now."), 
+                    Localisation.Get("Error"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
                 Application.Exit();
@@ -66,7 +68,8 @@ namespace OggConverter
             {
                 if (!file.ContainsAny(Converter.extensions))
                 {
-                    MessageBox.Show("One or more files are not supported music file formats. Exiting now.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Localisation.Get("One or more files are not supported music file formats. Exiting now."), 
+                        Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                     this.Close();
                     return;
@@ -74,7 +77,7 @@ namespace OggConverter
             }
 
             this.files = files;
-            Message = $"Where do you want to convert {files.Length} file{(files.Length > 1 ? "s" : "")}?";
+            Message = Localisation.Get("Where do you want to convert {0} file(s)?", files.Length);
             selectedFolder.SelectedIndex = 0;
 
             if (Directory.Exists($"{Settings.GamePath}\\CD1") && !Directory.Exists($"{Settings.GamePath}\\CD"))
@@ -97,14 +100,15 @@ namespace OggConverter
         {
             btnApply.Visible = false;
             selectedFolder.Visible = false;
-            Message = "Converting now...";
+            Message = Localisation.Get("Converting now...");
 
             try
             {
                 foreach (string file in files)
                 {
-                    Message = "Converting\n" + file.Substring(file.LastIndexOf('\\') + 1);
-                    await Converter.ConvertFile(file, to, limit);
+                    string name = file.Substring(file.LastIndexOf('\\') + 1);
+                    Message = Localisation.Get("Converting\n{0}", name.Length > 40 ? name.Substring(0, 40) + "..." : name);
+                    await Converter.ConvertFile(file, to, limit, name);
                 }
             }
             catch (Exception ex)
@@ -113,11 +117,18 @@ namespace OggConverter
                 err.ShowDialog();
             }
 
-            Message = "Done!";
+            Message = Localisation.Get("Done!");
             btnExit.Visible = true;
 
             await Task.Run(() => Thread.Sleep(3000));
             Application.Exit();
+        }
+
+        void Localize()
+        {
+            btnApply.Text = Localisation.Get("Apply");
+            btnExit.Text = Localisation.Get("Exit");
+            this.Text = Localisation.Get("Quick Convert");
         }
     }
 }

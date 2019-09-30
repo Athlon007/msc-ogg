@@ -39,24 +39,28 @@ namespace OggConverter
             // Logs disabled? Don't save it
             if (!Settings.Logs) return;
 
-            string date = $"{DateTime.Now.Date.ToShortDateString()} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
             string thisVersion = Application.ProductVersion;
-            string fileName = @"LOG\" + date + ".txt";
+            string fileName = $"LOG\\{date}.txt";
 
             Directory.CreateDirectory("LOG");
             File.WriteAllText(fileName,
-                $"// MSC Music Manager //\n" + 
+                $"// MSC Music Manager //\n" +
                 $"// VERSION: {thisVersion} ({Updates.version})\n" +
                 $"// SYSTEM: {GetSystemInfo()}\n" +
-                $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n\n" +
-                $"// GAME DIRECTORY: {Settings.GamePath}\n\n" +
+                $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n" +
+                $"// GAME DIRECTORY: {Settings.GamePath}\n" +
+                $"// TIME OF CRASH: {DateTime.Now}\n" +
+                $"// LANGUAGE: {Settings.Language}\n\n" +
                 $"// {GetWittyComment()} \n\n" +
                 $"{log}");
 
+            Settings.LastCrashLogFile = $"{date}.txt";
+
             if (silent) return;
 
-            DialogResult dl = MessageBox.Show("An error has occured. Log has been saved into LOG folder. " +
-                "Would you like to open it now?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            DialogResult dl = MessageBox.Show(Localisation.Get("An error has occured. Log has been saved into LOG folder. " +
+                "Would you like to open it now?"), Localisation.Get("Error"), MessageBoxButtons.YesNo, MessageBoxIcon.Error);
             if (dl == DialogResult.Yes) Process.Start(fileName);
         }
 

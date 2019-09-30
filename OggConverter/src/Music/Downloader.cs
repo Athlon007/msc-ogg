@@ -40,12 +40,13 @@ namespace OggConverter
             {
                 CancelDownload = false;
 
-                Form1.instance.Log("Downloaded youtube-dl successfully!");
+                Form1.instance.Log(Localisation.Get("Downloaded youtube-dl successfully!"));
                 Form1.instance.DownloadProgress.Visible = false;
 
                 if (!url.ContainsAny("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v=", "ytsearch:"))
                 {
-                    MessageBox.Show("Not a valid URL. Currently only YouTube is suported.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Localisation.Get("Not a valid URL. Currently only YouTube is suported."), 
+                        Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -54,8 +55,8 @@ namespace OggConverter
                 if (File.Exists("download.aac"))
                     File.Delete("download.aac");
 
-                Form1.instance.Log("\nDownloading song...");
-                Logs.History($"Downloader: Downloading song from \"{url}\"");
+                Form1.instance.Log(Localisation.Get("\nDownloading song..."));
+                Logs.History(Localisation.Get("Downloader: Downloading song from '{0}'", url));
 
                 Process process = new Process();
                 process.StartInfo.RedirectStandardOutput = true;
@@ -81,18 +82,18 @@ namespace OggConverter
                 // File wasn't downloaded?
                 if (!File.Exists("download.mp3"))
                 {
-                    Form1.instance.Log("Couldn't donwnload the song.\n" +
+                    Form1.instance.Log(Localisation.Get("Couldn't donwnload the song.\n" +
                         "If you canceled the download, then everything's fine.\n" +
                         "If not, check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n" +
                         "Also please check if youtube-dl supports the link that you use: " +
                         "https://ytdl-org.github.io/youtube-dl/supportedsites.html. \n" +
-                        "If it's going to happen again, please send the history.txt file content to developer on Steam, or via mail.");
+                        "If it's going to happen again, please send the history.txt file content to developer on Steam, or via mail."));
                     IsBusy = false;
                     Form1.instance.RestrictedMode(false);
                     return;
                 }
 
-                Form1.instance.Log("Converting...");
+                Form1.instance.Log(Localisation.Get("Converting..."));
 
                 if (CancelDownload)
                 {
@@ -110,7 +111,7 @@ namespace OggConverter
             }
             catch (Exception) when (CancelDownload)
             {
-                Form1.instance.Log("Canceled!");
+                Form1.instance.Log(Localisation.Get("Canceled!"));
             }
         }
 

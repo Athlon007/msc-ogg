@@ -19,9 +19,36 @@ MSC Music Manager is distributed without any warranty.
 
 This program is distributed under GNU General Public License v3. Feel free to use its source code as long as you mention the author and state the changes. You can also modify, share and distribute it, as long as you state changes. For more, see [LICENSE](LICENSE.md) file.
 
+## Localisation
+
+MSCMM at this moment is fully localised in English and Polish languages. If you want to help with translation to Your language, here's what you want to do.
+
+1. Download [Poedit](https://poedit.net/)
+2. Download the [template translation](TemplateTranslation.po)
+3. Open Poedit and open the template translation
+4. Go to Catalogue (or press Alt+Enter) -> and select Language to yours
+5. Go to File -> Preferences and fill "Information about the translator" section
+
+You're ready to start making your translation! After you're done, you can test your translation, by pasting it into "locales" folder in MSCMM folder and going into Settings -> Languages.
+
+Once you're done, you can send the file either o [this mail](mail.jpg), or send it on Steam Community discussion.
+
+**Wanted translators for Finnish, Spanish, Brazilian (Portuguese), German, French, Italian, and Russian.**
+
+Available translations:
+
+|    | Language     | Translator(s) | % Complete |
+|----|--------------|---------------|------------|
+| 🇬🇧 | English (UK) | Konrad Figura | 100%       |
+| 🇵🇱 | Polski       | Konrad Figura | 100%       |
+
+Note: translations fixes are also welcome :)
+
 ## Download
 
-### [Download](mscmm.zip)
+**[Full Download (recommended)](mscmm.zip)**
+
+[Update Only](mscmm_update.zip)
 
 ## Installation
 

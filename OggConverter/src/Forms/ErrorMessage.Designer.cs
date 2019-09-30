@@ -44,27 +44,30 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.label1.Location = new System.Drawing.Point(136, 27);
+            this.label1.Location = new System.Drawing.Point(181, 33);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(157, 39);
+            this.label1.Size = new System.Drawing.Size(191, 48);
             this.label1.TabIndex = 0;
             this.label1.Text = "Uhh-ohh!";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(140, 75);
+            this.label2.Location = new System.Drawing.Point(187, 92);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(319, 26);
+            this.label2.Size = new System.Drawing.Size(422, 34);
             this.label2.TabIndex = 1;
             this.label2.Text = "An error has occured and the info has been saved to {fileName}. \r\nIf it happens a" +
     "gain, please send the log to the MSCMM developer.";
             // 
             // btnMoreDetail
             // 
-            this.btnMoreDetail.Location = new System.Drawing.Point(12, 143);
+            this.btnMoreDetail.Location = new System.Drawing.Point(16, 176);
+            this.btnMoreDetail.Margin = new System.Windows.Forms.Padding(4);
             this.btnMoreDetail.Name = "btnMoreDetail";
-            this.btnMoreDetail.Size = new System.Drawing.Size(117, 23);
+            this.btnMoreDetail.Size = new System.Drawing.Size(156, 28);
             this.btnMoreDetail.TabIndex = 2;
             this.btnMoreDetail.Text = "Show More Detail";
             this.btnMoreDetail.UseVisualStyleBackColor = true;
@@ -72,9 +75,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(378, 143);
+            this.btnClose.Location = new System.Drawing.Point(504, 176);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(117, 23);
+            this.btnClose.Size = new System.Drawing.Size(156, 28);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -82,9 +86,10 @@
             // 
             // btnLog
             // 
-            this.btnLog.Location = new System.Drawing.Point(255, 143);
+            this.btnLog.Location = new System.Drawing.Point(340, 176);
+            this.btnLog.Margin = new System.Windows.Forms.Padding(4);
             this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(117, 23);
+            this.btnLog.Size = new System.Drawing.Size(156, 28);
             this.btnLog.TabIndex = 4;
             this.btnLog.Text = "Open Log";
             this.btnLog.UseVisualStyleBackColor = true;
@@ -94,29 +99,32 @@
             // 
             this.logOutput.BackColor = System.Drawing.SystemColors.Control;
             this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.logOutput.Location = new System.Drawing.Point(12, 172);
+            this.logOutput.Location = new System.Drawing.Point(16, 212);
+            this.logOutput.Margin = new System.Windows.Forms.Padding(4);
             this.logOutput.Multiline = true;
             this.logOutput.Name = "logOutput";
             this.logOutput.ReadOnly = true;
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logOutput.Size = new System.Drawing.Size(483, 234);
+            this.logOutput.Size = new System.Drawing.Size(643, 288);
             this.logOutput.TabIndex = 5;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::OggConverter.Properties.Resources.err_emoji;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(16, 15);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(110, 110);
+            this.pictureBox1.Size = new System.Drawing.Size(147, 135);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(460, 12);
+            this.btnExit.Location = new System.Drawing.Point(613, 15);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(35, 23);
+            this.btnExit.Size = new System.Drawing.Size(47, 28);
             this.btnExit.TabIndex = 7;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -124,9 +132,9 @@
             // 
             // ErrorMessage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(507, 169);
+            this.ClientSize = new System.Drawing.Size(676, 208);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.logOutput);
@@ -137,6 +145,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ErrorMessage";

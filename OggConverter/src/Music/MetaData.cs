@@ -25,7 +25,12 @@ namespace OggConverter
 {
     class MetaData
     {
-        public static string XmlFilePath() { return $"{Settings.GamePath}\\{Form1.instance.CurrentFolder}\\songnames.xml"; }
+        public static string AlternateFolder { get; set; }
+        public static string XmlFilePath()
+        {
+            string folder = String.IsNullOrEmpty(AlternateFolder) ? Form1.instance.CurrentFolder : AlternateFolder;
+            return $"{Settings.GamePath}\\{folder}\\songnames.xml";
+        }
 
         /// <summary>
         /// Retrieves song name from ffmpeg output
@@ -96,6 +101,7 @@ namespace OggConverter
         public static void ConvertFromMscmm(string folder)
         {
             if (Settings.DisableMetaFiles) return;
+            if (Settings.GamePath == null || Settings.GamePath == "" || Settings.GamePath == "invalid") return;
 
             try
             {
@@ -179,7 +185,8 @@ namespace OggConverter
             {
                 value = value == null || value == "" ? name : value;
 
-                XDocument doc = XDocument.Load(XmlFilePath());
+                string documentPath = XmlFilePath();
+                XDocument doc = XDocument.Load(documentPath);
                 var attribute = doc.Root.Descendants("songs").SingleOrDefault(e => (string)e.Attribute("name") == name);
                 if (attribute == null)
                 {
@@ -192,7 +199,7 @@ namespace OggConverter
                     attribute.Attribute("value").Value = value;
                 }
 
-                doc.Save(XmlFilePath());
+                doc.Save(documentPath);
                 SortDatabase();
             }
             catch (Exception ex)
@@ -233,7 +240,7 @@ namespace OggConverter
             try
             {
                 if (File.Exists($"{Settings.GamePath}\\{folder}\\songnames.xml"))
-                    File.Delete($"{Settings.GamePath}\\{folder}\\songnames.xml");              
+                    File.Delete($"{Settings.GamePath}\\{folder}\\songnames.xml");
             }
             catch (Exception ex)
             {
