@@ -86,6 +86,7 @@
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.ytdlOutput = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -300,7 +301,7 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 26);
+            this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
             // 
             // btnLastLog
@@ -381,14 +382,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 26);
+            this.menuSettings.Size = new System.Drawing.Size(76, 24);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -405,14 +406,14 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 30);
+            this.menu.Size = new System.Drawing.Size(991, 28);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 26);
+            this.btnHelp.Size = new System.Drawing.Size(55, 24);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
@@ -508,6 +509,7 @@
             // tabDownload
             // 
             this.tabDownload.BackColor = System.Drawing.Color.White;
+            this.tabDownload.Controls.Add(this.ytdlOutput);
             this.tabDownload.Controls.Add(this.btnCancelDownload);
             this.tabDownload.Controls.Add(this.label6);
             this.tabDownload.Controls.Add(this.btnDownload);
@@ -681,6 +683,19 @@
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
+            // ytdlOutput
+            // 
+            this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
+            this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ytdlOutput.Location = new System.Drawing.Point(11, 130);
+            this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4);
+            this.ytdlOutput.Multiline = true;
+            this.ytdlOutput.Name = "ytdlOutput";
+            this.ytdlOutput.ReadOnly = true;
+            this.ytdlOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ytdlOutput.Size = new System.Drawing.Size(621, 223);
+            this.ytdlOutput.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -704,10 +719,12 @@
             this.Text = "MSC Music Manager";
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.DragLeave += new System.EventHandler(this.Form1_DragLeave);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menu.ResumeLayout(false);
@@ -784,6 +801,7 @@
         private System.Windows.Forms.ToolStripMenuItem contextAll;
         private System.Windows.Forms.ToolStripMenuItem contextDelete;
         private System.Windows.Forms.ToolStripMenuItem contextMove;
+        private System.Windows.Forms.TextBox ytdlOutput;
     }
 }
 

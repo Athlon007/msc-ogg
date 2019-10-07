@@ -80,9 +80,8 @@ namespace OggConverter
                 else
                 {
                     // Added with the new update
-                    await Task.Run(() => Converter.ConvertFolder("CD1", 15));
-                    await Task.Run(() => Converter.ConvertFolder("CD2", 15));
-                    await Task.Run(() => Converter.ConvertFolder("CD3", 15));
+                    for (int i = 1; i <= 3; i++)
+                        await Task.Run(() => Converter.ConvertFolder($"CD{i}", 15));
                 }
 
                 if (Converter.Skipped != 4)
@@ -268,7 +267,8 @@ namespace OggConverter
             if (!filePath.ContainsAny(extensions))
             {
                 if (Form1.instance != null)
-                    Form1.instance.Log(Localisation.Get("'{0}' is not a recognizable music file, so it will be skipped.", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
+                    Form1.instance.Log(Localisation.Get("'{0}' is not a recognizable music file, so it will be skipped.", 
+                        filePath.Substring(filePath.LastIndexOf('\\') + 1)));
                 return;
             }
 
@@ -356,7 +356,8 @@ namespace OggConverter
                 Logs.History(Localisation.Get("Added '{0}' (track{1}.ogg) in {2}", songName, inGame, folder));
 
                 if (Form1.instance != null)
-                    Form1.instance.Log(Localisation.Get("Finished '{0}' as 'track{1}.ogg'", filePath.Substring(filePath.LastIndexOf('\\') + 1), inGame));
+                    Form1.instance.Log(Localisation.Get("Finished '{0}' as 'track{1}.ogg'", 
+                        filePath.Substring(filePath.LastIndexOf('\\') + 1), inGame));
             }
             catch (Exception ex)
             {
@@ -393,8 +394,9 @@ namespace OggConverter
         /// <returns></returns>
         public static bool AnyFilesWaitingForConversion()
         {
-            return Converter.FilesWaitingForConversion("Radio") || Converter.FilesWaitingForConversion("CD") || Converter.FilesWaitingForConversion("CD1")
-                || Converter.FilesWaitingForConversion("CD2") || Converter.FilesWaitingForConversion("CD3");
+            return Converter.FilesWaitingForConversion("Radio") || Converter.FilesWaitingForConversion("CD") || 
+                Converter.FilesWaitingForConversion("CD1") || Converter.FilesWaitingForConversion("CD2") || 
+                Converter.FilesWaitingForConversion("CD3");
         }
     }
 }

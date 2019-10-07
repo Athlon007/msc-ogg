@@ -25,29 +25,29 @@ namespace OggConverter
     {
         static Dictionary<string, string> localeFileContent;
 
+        /// <summary>
+        /// Get translated by ID from localeFileContent.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static string Get(string id, params object[] args)
         {
             string localFile = $"locales\\{Settings.Language}.po";
 
+            // locales folder doens't exists? Create it now
             if (!Directory.Exists("locales"))
                 Directory.CreateDirectory("locales");
 
+            // locale file doesn't exists? Return the id
             if (!File.Exists(localFile))
                 return String.Format(id, args);
 
+            // Locale file doesn't contain the ID?
+            // Return the id
             if (!localeFileContent.ContainsKey(id))
             {
-                string errorMessage = $"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\nCouldn't find id in dictionary.\n\n" +
-                    $"ID: {id}\nLanguage: {Settings.Language}\n\nArgs:";
-                foreach (object arg in args)
-                    errorMessage = arg.ToString();
-                errorMessage += "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
-
-                string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
-                Directory.CreateDirectory("log");
-                Directory.CreateDirectory("log\\locale_errors");
-                File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
-
+                DumpError(id, args);
                 return String.Format(id, args);
             }
 
@@ -73,76 +73,90 @@ namespace OggConverter
             localeFileContent = new Dictionary<string, string>();
 
             // Reading locale file and skipping comments, and Poedit configurations to array
+            string[] forbiddenElements = new string[] { "#", "Project-Id-Version: ", "POT-Creation-Date: ", "PO-Revision-Date: ",
+            "Last-Translator: ", "Language-Team: ", "MIME-Version: ", "Content-Type: ", "Content-Transfer-Encoding: ", "X-Generator: ",
+            "X-Poedit-Basepath: ", "Plural-Forms: ", "Language: "};
             string[] localeArray = File.ReadLines(localeFilePath)
-                .Where(line => !line.Contains("#"))
                 .Where(line => line.Length > 0).Where(line => line.StartsWith("msg") || line.StartsWith("\""))
-                .Where(line => !line.Contains("Project-Id-Version"))
-                .Where(line => !line.Contains("POT-Creation-Date"))
-                .Where(line => !line.Contains("PO-Revision-Date"))
-                .Where(line => !line.Contains("Last-Translator"))
-                .Where(line => !line.Contains("Language-Team:"))
-                .Where(line => !line.Contains("MIME-Version"))
-                .Where(line => !line.Contains("Content-Type"))
-                .Where(line => !line.Contains("Content-Transfer-Encoding"))
-                .Where(line => !line.Contains("X-Generator"))
-                .Where(line => !line.Contains("X-Poedit-Basepath"))
-                .Where(line => !line.Contains("Plural-Forms"))
-                .Where(line => !line.Contains("Language: "))
+                .Where(line => !line.ContainsAny(forbiddenElements))
                 .ToArray();
 
             // Reading array one by one
-            for (int i = 0; i < localeArray.Length ; i++)
+            for (int i = 0; i < localeArray.Length; i++)
             {
-                // Saving starts from 'msgid' prefix
-                if (localeArray[i].StartsWith("msgid"))
+                // Saving starts from 'msgid' prefix. If the line doesn't start with msgid, continue.
+                if (!localeArray[i].StartsWith("msgid")) continue;
+
+                string id = ""; // msgid
+                string str = ""; // msgstr
+
+                // Reading from the start of msgid, until the msgstr is reached"
+                for (int a = i; !localeArray[a].StartsWith("msgstr"); a++)
                 {
-                    string id = ""; // msgid
-                    string str = ""; // msgstr
-
-                    // Reading from the start of msgid, until the msgstr is reached"
-                    for (int a = i; !localeArray[a].StartsWith("msgstr"); a++)
-                    {
-                        string n = localeArray[a];
-
-                        // Removing quotation marks (") on the beginning and end and replacing \\n with \n
-                        n = n.Remove(0, n.IndexOf("\"") + 1);
-                        n = n.Remove(n.LastIndexOf("\""));
-                        n = n.Replace("\\n", "\n");
-                        if (n == "") continue;
-                        id += n;
-                        i = a;
-                    }
-
-                    // Adding plus one to read the msgstr if the i isn't larger than localeArray length
-                    i += i < localeArray.Length - 1 ? 1 : 0;
-
-                    // Reading from the start of msgstr, until the msgid is reached
-                    for (int a = i; !localeArray[a].StartsWith("msgid"); a++)
-                    {
-                        // Making sure that the a won't be larger than localeArray length
-                        if (a >= localeArray.Length - 1)
-                        {
-                            string m = localeArray[a];
-                            m = m.Remove(0, m.IndexOf("\"") + 1);
-                            m = m.Remove(m.LastIndexOf("\""));
-                            m = m.Replace("\\n", "\n");
-                            str += m;
-                            break;
-                        }
-
-                        string n = localeArray[a];
-                        n = n.Remove(0, n.IndexOf("\"") + 1);
-                        n = n.Remove(n.LastIndexOf("\""));
-                        n = n.Replace("\\n", "\n");
-                        if (n == "" ) continue;
-                        str += n;
-                        i = a;
-                    }
-
-                    // Adding new dictionary item
-                    localeFileContent.Add(id, str);
+                    string n = GetContent(localeArray[a]);
+                    if (n == "") continue;
+                    id += n;
+                    i = a;
                 }
+
+                // Adding plus one to read the msgstr if the i isn't larger than localeArray length
+                i += i < localeArray.Length - 1 ? 1 : 0;
+
+                // Reading from the start of msgstr, until the msgid is reached
+                for (int a = i; !localeArray[a].StartsWith("msgid"); a++)
+                {
+                    // Making sure that the 'a' won't be larger than localeArray length
+                    if (a >= localeArray.Length - 1)
+                    {
+                        str += GetContent(localeArray[a]);
+                        break;
+                    }
+
+                    string n = GetContent(localeArray[a]);
+                    if (n == "") continue;
+                    str += n;
+                    i = a;
+                }
+
+                // Adding new dictionary item
+                localeFileContent.Add(id, str);
             }
+        }
+
+        /// <summary>
+        /// Removes quotation marks (") on the beginning and end and replacing \\n with \n
+        /// </summary>
+        /// <param name="msgid"></param>
+        /// <returns></returns>
+        static string GetContent(string msgid)
+        {
+            string output = msgid.Remove(0, msgid.IndexOf("\"") + 1);
+            output = output.Remove(output.LastIndexOf("\""));
+            output = output.Replace("\\n", "\n");
+            return output;
+        }
+
+        /// <summary>
+        /// Creates error log and saves it into log/locales_errors
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
+        static void DumpError(string id, object[] args)
+        {
+            string errorMessage = $"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\nCouldn't find id in dictionary.\n\n" +
+                $"ID: {id}\nLanguage: {Settings.Language}\n\nArgs:\n\n";
+
+            foreach (object arg in args)
+                errorMessage += arg.ToString() + ", ";
+
+            errorMessage += "\n\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
+
+            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} " +
+                    $"{DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+
+            Directory.CreateDirectory("log");
+            Directory.CreateDirectory("log\\locale_errors");
+            File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
         }
     }
 }

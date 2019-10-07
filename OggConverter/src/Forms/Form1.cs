@@ -40,7 +40,6 @@ namespace OggConverter
         /// </summary>
         public string CurrentFolder
         {
-            //get => selectedFolder.Text;
             get
             {
                 if (selectedFolder.InvokeRequired)
@@ -108,6 +107,9 @@ namespace OggConverter
             btnPlaySong.Left = btnPlaySong.CenterHorizontally(panel1) - btnPlaySong.Width / 2 - 2;
             btnStop.Left = btnStop.CenterHorizontally(panel1) + btnStop.Width / 2 + 2;
             selectedFolder.Left = selectedFolder.CenterHorizontally(panel1);
+
+            songListRight = tabs.Left - songList.Right;
+            songListBottom = panel1.Bottom - songList.Bottom;
 
             // Removing temporary or unused files
             Utilities.Cleanup();
@@ -323,15 +325,17 @@ namespace OggConverter
             {
                 menuTool.Enabled = state;
                 btnDirectory.Enabled = state;
+                btnHelp.Enabled = state;
             }
         }
 
+        /// <summary>
+        /// Loads the locale translations to UI elements
+        /// </summary>
         void Localize()
         {
             foreach (ToolStripMenuItem c in menu.Items)
-            {
                 c.Text = Localisation.Get(c.Text);
-            }
 
             btnLastLog.Text = Localisation.Get("Open History");
             btnLogFolder.Text = Localisation.Get("Open Log Folder");
@@ -350,8 +354,7 @@ namespace OggConverter
                 btn.Text = Localisation.Get(btn.Text);
                 if (btn.Text.Length > 7) 
                     btn.Font = new Font("Microsoft Sans Serif", 7);
-
-                if (btn.Text.Length > 8)
+                else if (btn.Text.Length > 8)
                     btn.Text = btn.Text.Substring(0, 6) + "...";
             }
 
@@ -400,6 +403,41 @@ namespace OggConverter
         }
 
         /// <summary>
+        /// Write text to youtube-dl log
+        /// </summary>
+        /// <param name="value"></param>
+        public void YoutubeDlLog(string value)
+        {
+            value = value.Replace("\n", Environment.NewLine);
+            value += Environment.NewLine;
+
+            if (ytdlOutput.InvokeRequired)
+            {
+                ytdlOutput.Invoke(new Action(delegate ()
+                {
+                    ytdlOutput.Text += value;
+                    ytdlOutput.SelectionStart = ytdlOutput.TextLength;
+                    ytdlOutput.ScrollToCaret();
+                }));
+                return;
+            }
+
+            ytdlOutput.Text += value;
+            ytdlOutput.SelectionStart = ytdlOutput.TextLength;
+            ytdlOutput.ScrollToCaret();
+        }
+
+        /// <summary>
+        /// Clear youtube-dl log
+        /// </summary>
+        public void ClearYtLog() => ytdlOutput.Text = "";
+
+        /// <summary>
+        /// Return text from youtube-dl log
+        /// </summary>
+        public string GetYtDlLog { get => ytdlOutput.Text; }
+
+        /// <summary>
         /// Updates song list used for player
         /// </summary>
         public void UpdateSongList()
@@ -415,14 +453,16 @@ namespace OggConverter
             List<string> newTrackList = new List<string>();
             Player.WorkingSongList.Clear();
 
-            for (int i = 1; i <= 99; i++)
-                if (File.Exists($"{path}\\track{i}.ogg"))
-                {
-                    string s = MetaData.GetName($"track{i}");
-                    newTrackList.Add(s);
-                    Player.WorkingSongList.Add(new Tuple<string, string>($"track{i}", s));
-                    howManySongs++;
-                }
+            DirectoryInfo di = new DirectoryInfo(path);
+            var files = di.GetFileSystemInfos("track*.ogg").OrderBy(f => int.Parse(f.Name.Replace("track", "").Split('.')[0]));
+            foreach (FileInfo file in files)
+            {
+                if (file.Name == "songnames.xml") continue;
+                string s = MetaData.GetName(file.Name.Split('.')[0]);
+                newTrackList.Add(s);
+                Player.WorkingSongList.Add(new Tuple<string, string>(file.Name.Split('.')[0], s));
+                howManySongs++;
+            }
 
             songList.Items.Clear();
             songList.Items.AddRange(newTrackList.ToArray());
@@ -621,14 +661,7 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-
-            int[] domains = songList.SelectedIndices.OfType<int>().ToArray();
-            List<string> deleteList = new List<string>();
-
-            foreach (int i in domains)
-                deleteList.Add(Player.WorkingSongList[i].Item1.ToString());
-
-            Player.Delete(CurrentFolder, deleteList.ToArray());
+            Player.Delete(CurrentFolder, Utilities.GetSelectedItemsToArray(songList));
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -710,14 +743,7 @@ namespace OggConverter
             if (songList.SelectedIndex == -1) return;
 
             Player.Stop();
-
-            int[] domains = songList.SelectedIndices.OfType<int>().ToArray();
-            List<string> moveList = new List<string>();
-
-            foreach (int i in domains)
-                moveList.Add(Player.WorkingSongList[i].Item1.ToString());
-
-            MoveTo moveTo = new MoveTo(moveList.ToArray(), CurrentFolder);
+            MoveTo moveTo = new MoveTo(Utilities.GetSelectedItemsToArray(songList), CurrentFolder);
             moveTo.ShowDialog();
         }
 
@@ -785,25 +811,35 @@ namespace OggConverter
             string url = txtboxVideo.Text;
             string forcedName = null;
 
-            if (!url.StartsWith("https://") || !url.StartsWith("http://"))
+            if (url.IsValidUrl())
             {
-                if (url == "")
+                if (!url.Contains("youtube.com/watch?v="))
                 {
+                    MessageBox.Show(Localisation.Get("Url is not a YouTube link."),
+                        Localisation.Get("Error"),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     RestrictedMode(false);
                     return;
                 }
 
-                txtboxVideo.Text = txtboxVideo.Text.Replace('"', '\0');
-                url = $"ytsearch:\"{txtboxVideo.Text}\"";
-                forcedName = txtboxVideo.Text;
+                url = url.Trim();
             }
             else
             {
-                url = url.Trim();
+                if (url == "")
+                {
+                    MessageBox.Show(Localisation.Get("Url is not valid and is empty."));
+                    RestrictedMode(false);
+                    return;
+                }
+
+                string searchTerm = txtboxVideo.Text.Replace('"', '\0');
+                url = $"ytsearch:\"{searchTerm}\"";
+                forcedName = searchTerm;
             }
 
             await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
-
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
         }
@@ -922,20 +958,25 @@ namespace OggConverter
             if (e.Control && e.KeyCode == Keys.X)
                 btnMoveSong.PerformClick();
 
-            // Delete selected item (Del)
+            // Delete selected item(s) (Del)
             if (e.KeyCode == Keys.Delete)
                 btnDel.PerformClick();
 
             // Play or stop playing the song (Enter)
             if (e.KeyCode == Keys.Enter)
             {
-                if (labNowPlaying.Visible && labNowPlaying.Text.Contains(Player.WorkingSongList[songList.SelectedIndex].Item2))
+                string labNowPlayingText = labNowPlaying.Text.Contains("...") 
+                    ? labNowPlaying.Text.Replace("...", "").Trim() 
+                    : labNowPlaying.Text.Trim();
+
+                if (labNowPlaying.Visible && Player.WorkingSongList[songList.SelectedIndex].Item2.Contains(labNowPlayingText))
                     btnStop.PerformClick();
                 else
                     btnPlaySong.PerformClick();
             }
         }
 
+        bool debugToggle = false;
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // If the songlist is not focused and user presses up or down arrow - it will focus on song list and select the first song
@@ -944,6 +985,12 @@ namespace OggConverter
                 songList.SelectedIndex = songList.Items.Count > 0 ? 0 : -1; // Makes sure that songList isn't empty
                 songList.Select();
                 songList.Focus();
+            }
+
+            if (e.Control && e.KeyCode == Keys.Oem3)
+            {
+                debugToggle ^= true;
+                RestrictedMode(debugToggle, true);
             }
         }
 
@@ -985,6 +1032,49 @@ namespace OggConverter
             // Select all items on songlist
             for (int i = 0; i < songList.Items.Count; i++)
                 songList.SelectedItem = songList.Items[i];
+        }
+
+        int tabsDefaultX = 340;
+        int panelDefaultY = 58;
+        int songListRight = -1;
+        int songListBottom = -1;
+
+        void ResizeForm()
+        {
+            tabs.Size = new Size(this.Width - tabs.Location.X - 16, this.Height - tabs.Location.Y - 46);
+            tabs.ItemSize = new Size((tabs.Width / tabs.TabCount) - 2, 0);
+            double d = tabsDefaultX + (Math.Pow(this.Width, 0.95) - tabsDefaultX * 2) - 34;
+            d = Math.Round(d);
+            tabs.Location = new Point((int)d, tabs.Location.Y);
+
+            panel1.Width = tabs.Location.X + 1;
+            panel1.Height = this.Height - panelDefaultY - 46;
+
+            labCounter.Location = new Point(labCounter.Location.X, panel1.Height - labCounter.Height - 5);
+            songList.Width = tabs.Left - songListRight - songList.Left;
+            songList.Height = panel1.Bottom - songListBottom - 20;
+
+            btnUp.Left = songList.Right + 4;
+            btnDown.Left = btnUp.Left;
+            btnSort.Left = btnUp.Left;
+            btnMoveSong.Left = btnUp.Left;
+            btnCloneSong.Left = btnUp.Left;
+            btnDel.Left = btnUp.Left;
+            btnShuffle.Left = btnUp.Left;
+
+            labNowPlaying.Top = songList.Bottom;
+            btnPlaySong.Top = labNowPlaying.Bottom;
+            btnStop.Top = labNowPlaying.Bottom;
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            ResizeForm();
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            ResizeForm();
         }
     }
 }

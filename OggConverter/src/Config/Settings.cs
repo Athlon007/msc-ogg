@@ -22,69 +22,102 @@ namespace OggConverter
 {
     class Settings
     {
-        // Default MSCMM registry key
+        /// <summary>
+        /// Default MSCMM registry key
+        /// </summary>
 #if DEBUG
         const string key = "SOFTWARE\\MSCOGG_DEBUG";
 #else
         const string key = "SOFTWARE\\MSCOGG";
 #endif
 
-        // Should MSCMM remove source song files after conversion?
+        /// <summary>
+        /// Should MSCMM remove source song files after conversion?
+        /// </summary>
         public static bool RemoveMP3 { get => Get("RemoveMP3", false); set => Set("RemoveMP3", value); }
 
-        // Should the game be started without steam?
+        /// <summary>
+        /// Should the game be started without steam?
+        /// </summary>
         public static bool NoSteam { get => Get("NoSteam", false); set => Set("NoSteam", value); }
 
-        // Should the tool NOT check for update?
+        /// <summary>
+        /// Should the tool NOT check for update?
+        /// </summary>
         public static bool NoUpdates { get => Get("NoUpdates", false); set => Set("NoUpdates", value); }
 
-        // Should the tool also check preview update channel?
+        /// <summary>
+        /// Should the tool also check preview update channel?
+        /// </summary>
         public static bool Preview { get => Get("Preview", false); set => Set("Preview", value); }
 
-        // Should the tool dump the crash logs to LOG folder?
+        /// <summary>
+        /// Should the tool dump the crash logs to LOG folder?
+        /// </summary>
         public static bool Logs { get => Get("Logs", true); set => Set("Logs", value); }
 
-        // Should the tool automatically sort songs after moving/removing song?
+        /// <summary>
+        /// Should the tool automatically sort songs after moving/removing song?
+        /// </summary>
         public static bool AutoSort { get => Get("AutoSort", true); set => Set("AutoSort", value); }
 
-        // Should the tool save all files operations to history.txt?
+        /// <summary>
+        /// Should the tool save all files operations to history.txt?
+        /// </summary>
         public static bool History { get => Get("History", true); set => Set("History", value); }
 
+        /// <summary>
         /// Forces MSCMM to use old song name reading, instead of one using metafiles (planned to be removed in future updates)
+        /// </summary>
         public static bool DisableMetaFiles { get => Get("DisableMetaFiles", false); set => Set("DisableMetaFiles", value); }
 
-        // My Summer Car directory path
+        /// <summary>
+        /// My Summer Car directory path
+        /// </summary>
         public static string GamePath { get => Get("MSC Path", GetMSCPath()); set => Set("MSC Path", value); }
 
-        // How often youtube-dl updates are being checked for
-        //
-        // 0 - Upon launch
-        // 1 - Daily
-        // 2 - Once a week
-        // 3 - Once a month
+        /// <summary>
+        /// How often youtube-dl updates are being checked for
+        /// <para />
+        /// <para>0 - Upon launch</para>
+        /// <para>1 - Daily</para>
+        /// <para>2 - Once a week</para>
+        /// <para>3 - Once a month</para>
+        /// <para>Any other - Never</para>
+        /// </summary>
         public static int YouTubeDlUpdateFrequency
         {
             get => Get("YouTubeDlUpdateFrequency", 1);
             set => Set("YouTubeDlUpdateFrequency", value);
         }
 
-        /// Stores the set language by user
+        /// <summary>
+        /// Stores the language file name set by user
+        /// </summary>
         public static string Language { get => Get("Language", "English (UK)"); set => Set("Language", value); }
 
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////
 
-        // Stores last build used.
+        /// <summary>
+        /// Stores last build used.
+        /// </summary>
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }
 
-        // Disables or hides features (used mostly for screenshots)
+        /// <summary>
+        /// Disables or hides features (used mostly for screenshots)
+        /// </summary>
         public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
 
-        // Stores what was the last crash log file
+        /// <summary>
+        /// Stores what was the last crash log file
+        /// </summary>
         public static string LastCrashLogFile { get => Get("LastCrashLogFile", ""); set => Set("LastCrashLogFile", value); }
 
-        // Stores the last time when the MSCMM checked for youtube-dl update
+        /// <summary>
+        /// Stores the last time when the MSCMM checked for youtube-dl update
+        /// </summary>
         public static DateTime LastYTDLUpdateCheck
         {
             get => Get("LastYTDLUpdateCheck", new DateTime(1970, 1, 1, 1, 0, 0));
@@ -119,7 +152,11 @@ namespace OggConverter
         /// <summary>
         /// Removes all settings.
         /// </summary>
-        public static void WipeAll() { Registry.CurrentUser.DeleteSubKeyTree(key); LatestVersion = Updates.version; }
+        public static void WipeAll()
+        {
+            Registry.CurrentUser.DeleteSubKeyTree(key);
+            LatestVersion = Updates.version;
+        }
 
         /// <summary>
         /// Checks registry key validity - if it exists and if the game path is correct.
@@ -128,14 +165,7 @@ namespace OggConverter
         public static bool AreSettingsValid()
         {
             GamePath = GetMSCPath();
-            //return GamePath == null || GamePath != "invalid";
-            if (GamePath == null || GamePath == "")
-                return false;
-
-            if (GamePath == "invalid")
-                return false;
-
-            return true;
+            return !(String.IsNullOrEmpty(GamePath));
         }
 
         // If you're reading this - I hope you had a better day than me fixing that fucking error fixed in 2.5.2...
@@ -151,7 +181,7 @@ namespace OggConverter
             using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(key, true))
             {
                 if (Key != null && Key.GetValue("MSC Path") != null)
-                    return Key.GetValue("MSC Path", "invalid").ToString();
+                    return Key.GetValue("MSC Path", "").ToString();
             }
 
             // My Summer Car path is not saved. Now we're trying to find it in Steam root folder

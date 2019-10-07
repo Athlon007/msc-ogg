@@ -1,5 +1,24 @@
 # Changelog
 
+## Preview 2.7.0.0 (xx.10.2019)
+
+### Added
+
+- Added live output of youtube-dl when downloading
+- MSCMM will get song name if it's downloaded via the link
+
+### Changes
+
+- Player will now load all .ogg files found in folder, instead of first 99 files
+  - Same goes for sorting files
+- Code optimization and improvements
+
+### Bug Fixes
+
+- Fixed Error message window not initializing localization script
+- Fixed link checking for downloader
+- The player will pause the song uppon pressing enter, if the song name has been trimmed
+
 ## 2.6 (30.09.2019)
 
 ### Added
