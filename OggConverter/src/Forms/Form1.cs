@@ -55,7 +55,11 @@ namespace OggConverter
                 return selectedFolder.Text;
             }
         }
-        private int SongsLimit { get => CurrentFolder.StartsWith("CD") ? 15 : 99; }
+
+        /// <summary>
+        /// Gets song limit in folder according to the folder name
+        /// </summary>
+        private int SongsLimit => CurrentFolder.StartsWith("CD") ? 15 : 99; 
 
         // Stores last selected item on songList. Set to -1 by default so nothing's checked
         int lastSelected = -1;
@@ -129,6 +133,8 @@ namespace OggConverter
                 return;
             }
 
+            // If provided directory or mysummercar.exe in that folder don't exist
+            // That means that folder is invalid
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
             {
                 MessageBox.Show(Localisation.Get("Couldn't find mysummercar.exe.\n\nPlease set the correct game path."), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -138,9 +144,7 @@ namespace OggConverter
                 return;
             }
 
-            //Log($"Game Folder: {Settings.GamePath}");
             Log(Localisation.Get("Game Folder: {0}", Settings.GamePath));
-
 
             // Checks if ffmpeg or ffplay are missing
             // If so, they will be downloaded and the tool will be restarted.

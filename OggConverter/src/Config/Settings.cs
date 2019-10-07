@@ -195,6 +195,7 @@ namespace OggConverter
                 }
             }
             
+            // Check only if steamFolder is not empty
             if (steamFolder != "")
             {
                 // MSC is installed in root Steam folder
