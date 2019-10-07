@@ -100,9 +100,7 @@ namespace OggConverter
 
                 // Forced name is empty? Try to get the name from link
                 if (String.IsNullOrEmpty(forcedName))
-                {
                     forcedName = GetTitleFromYouTube(url);
-                }
 
                 await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName, true);
 

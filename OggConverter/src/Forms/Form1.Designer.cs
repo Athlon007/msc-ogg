@@ -70,6 +70,7 @@
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.tabDownload = new System.Windows.Forms.TabPage();
+            this.ytdlOutput = new System.Windows.Forms.TextBox();
             this.btnCancelDownload = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
@@ -86,7 +87,6 @@
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.ytdlOutput = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -523,6 +523,19 @@
             this.tabDownload.TabIndex = 1;
             this.tabDownload.Text = "Download";
             // 
+            // ytdlOutput
+            // 
+            this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
+            this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ytdlOutput.Location = new System.Drawing.Point(11, 130);
+            this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4);
+            this.ytdlOutput.Multiline = true;
+            this.ytdlOutput.Name = "ytdlOutput";
+            this.ytdlOutput.ReadOnly = true;
+            this.ytdlOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ytdlOutput.Size = new System.Drawing.Size(621, 223);
+            this.ytdlOutput.TabIndex = 17;
+            // 
             // btnCancelDownload
             // 
             this.btnCancelDownload.Enabled = false;
@@ -682,19 +695,6 @@
             this.contextAll.Size = new System.Drawing.Size(192, 24);
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
-            // 
-            // ytdlOutput
-            // 
-            this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
-            this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ytdlOutput.Location = new System.Drawing.Point(11, 130);
-            this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4);
-            this.ytdlOutput.Multiline = true;
-            this.ytdlOutput.Name = "ytdlOutput";
-            this.ytdlOutput.ReadOnly = true;
-            this.ytdlOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ytdlOutput.Size = new System.Drawing.Size(621, 223);
-            this.ytdlOutput.TabIndex = 17;
             // 
             // Form1
             // 
