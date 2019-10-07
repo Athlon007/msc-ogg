@@ -6,6 +6,8 @@
 
 - Added live output of youtube-dl when downloading
 - MSCMM will get song name if it's downloaded via the link
+- You can now quickly change working folder by clicking Ctrl+Up/Down arrow
+- You can use Shift+Up/Down arrows to move songs up or down
 
 ### Changes
 

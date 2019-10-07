@@ -118,22 +118,21 @@ namespace OggConverter
             }
         }
 
+        /// <summary>
+        /// Cancels download. Kills youtube-dl and ffmpeg processes and removes downloads.
+        /// </summary>
         public static void Cancel()
         {
             if (!IsBusy) return;
 
             CancelDownload = true;
-
             IsBusy = false;
+
             foreach (var process in Process.GetProcessesByName("youtube-dl"))
-            {
                 process.Kill();
-            }
 
             foreach (var process in Process.GetProcessesByName("ffmpeg"))
-            {
                 process.Kill();
-            }
 
             DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
             FileInfo[] files = di.GetFiles("download*");
@@ -185,10 +184,8 @@ namespace OggConverter
             string[] youtubeDlOutput = process.StandardOutput.ReadToEnd().Split('\n');
             process.WaitForExit();
 
-            while (!process.HasExited)
-            {
-                Application.DoEvents();
-            }
+            // Added this so the program won't freeze when getting the song name
+            while (!process.HasExited) { Application.DoEvents(); }
 
             string id = url.Split('=')[1];
             return youtubeDlOutput[0].Replace(id, "").Replace("-.mp4", "");

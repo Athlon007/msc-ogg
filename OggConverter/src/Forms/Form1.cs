@@ -945,6 +945,14 @@ namespace OggConverter
 
         private void SongList_KeyDown(object sender, KeyEventArgs e)
         {
+            // Move song Down (Alt+Down Arrow)
+            if (e.Alt && e.KeyCode == Keys.Down)
+                Player.ChangeOrder(songList, CurrentFolder, false);
+
+            // Move song Up (Alt+Up Arrow)
+            if (e.Alt && e.KeyCode == Keys.Up)
+                Player.ChangeOrder(songList, CurrentFolder, true);
+
             // Select all items on songlist (Ctrl+A)
             if (e.Control && e.KeyCode == Keys.A)
                 for (int i = 0; i < songList.Items.Count; i++)
@@ -992,23 +1000,32 @@ namespace OggConverter
                 debugToggle ^= true;
                 RestrictedMode(debugToggle, true);
             }
+
+            // Change folder Down (Ctrl+Down Arrow)
+            if (e.Control && e.KeyCode == Keys.Down)
+                selectedFolder.SelectedIndex = selectedFolder.SelectedIndex < selectedFolder.Items.Count - 1
+                    ? (selectedFolder.SelectedIndex + 1) : 0;
+
+            // Change folder Up (Ctrl+Up Arrow)
+            if (e.Control && e.KeyCode == Keys.Up)
+                selectedFolder.SelectedIndex = selectedFolder.SelectedIndex > 0
+                    ? (selectedFolder.SelectedIndex - 1) : selectedFolder.Items.Count - 1;
         }
 
         private void SongList_MouseDown(object sender, MouseEventArgs e)
         {
+            // Right click menu on SongList
             if (e.Button == MouseButtons.Right)
             {
-                songListContext.Show(Cursor.Position);
+                songListContext.Show(Cursor.Position); // Show song at cursor position
                 if (songList.SelectedIndices.Count < 2)
-                songList.SelectedIndex = -1;
+                    songList.SelectedIndex = -1;
                 songList.SelectedIndex = songList.IndexFromPoint(e.X, e.Y);
 
-
-                bool singleSongRelated = songList.SelectedIndex != -1;
-
-                contextCopy.Enabled = singleSongRelated;
-                contextDelete.Enabled = singleSongRelated;
-                contextMove.Enabled = singleSongRelated;
+                bool anySongSelected = songList.SelectedIndex != -1;
+                contextCopy.Enabled = anySongSelected;
+                contextDelete.Enabled = anySongSelected;
+                contextMove.Enabled = anySongSelected;
             }
         }
 
