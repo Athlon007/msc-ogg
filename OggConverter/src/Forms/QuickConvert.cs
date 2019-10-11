@@ -40,7 +40,7 @@ namespace OggConverter
         {
             InitializeComponent();
 
-            Localize();
+            Localise();
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));            
 
             if (!Settings.AreSettingsValid())
@@ -124,7 +124,7 @@ namespace OggConverter
             Application.Exit();
         }
 
-        void Localize()
+        void Localise()
         {
             btnApply.Text = Localisation.Get("Apply");
             btnExit.Text = Localisation.Get("Exit");

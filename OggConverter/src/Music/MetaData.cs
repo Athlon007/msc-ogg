@@ -44,11 +44,14 @@ namespace OggConverter
 
             foreach (string s in ffmpegOut)
             {
-                if (s.ToLower().Contains("artist") && artist == null) artist = s.Split(':')[1].Trim();
-                else if (s.ToLower().Contains("title") && title == null) title = s.Split(':')[1].Trim();
+                if (s.ToLower().Contains("artist") && artist == null)
+                    artist = s.Split(':')[1].Trim();
+                else if (s.ToLower().Contains("title") && title == null)
+                    title = s.Split(':')[1].Trim();
 
                 // Artist and title found? Break out of the loop
-                if (artist != null && title != null) break;
+                if (artist != null && title != null)
+                    break;
             }
 
             return ((artist != null) && (title != null)) ? $"{artist} - {title}" : "";
@@ -66,25 +69,24 @@ namespace OggConverter
 
             try
             {
-                for (int i = 1; i <= 99; i++)
+                DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+                var files = di.GetFileSystemInfos("track*.ogg").OrderBy(f => int.Parse(f.Name.Replace("track", "").Split('.')[0]));
+                foreach (FileInfo file in files)
                 {
-                    if (File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg") && !IsInDatabase($"track{i}.ogg"))
+                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\{file.Name}\"")
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{i}.ogg\"")
-                        {
-                            RedirectStandardError = true,
-                            CreateNoWindow = true,
-                            UseShellExecute = false
-                        };
+                        RedirectStandardError = true,
+                        CreateNoWindow = true,
+                        UseShellExecute = false
+                    };
 
-                        Process process = null;
-                        await Task.Run(() => process = Process.Start(psi));
+                    Process process = null;
+                    await Task.Run(() => process = Process.Start(psi));
 
-                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        string songName = GetFromOutput(ffmpegOut);
+                    string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                    string songName = GetFromOutput(ffmpegOut);
 
-                        AddOrEdit($"track{i}", songName);
-                    }
+                    AddOrEdit($"{file.Name.Split('.')[0]}", songName);
                 }
             }
             catch (Exception ex)
@@ -100,14 +102,14 @@ namespace OggConverter
         /// <param name="folder">Working folder</param>
         public static void ConvertFromMscmm(string folder)
         {
-            if (Settings.DisableMetaFiles) return;
-            if (Settings.GamePath == null || Settings.GamePath == "" || Settings.GamePath == "invalid") return;
+            if (Settings.DisableMetaFiles || String.IsNullOrEmpty(Settings.GamePath) || Settings.GamePath == "invalid") return;
 
             try
             {
                 string xFilePath = $"{Settings.GamePath}//{folder}//songnames.xml";
-                XDocument doc;
-                doc = File.Exists(xFilePath) && File.ReadAllText(xFilePath) != "" ? XDocument.Load(xFilePath) : new XDocument(new XElement("songs"));
+                XDocument doc = File.Exists(xFilePath) && File.ReadAllText(xFilePath) != "" ? 
+                    XDocument.Load(xFilePath) : 
+                    new XDocument(new XElement("songs"));
 
                 DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
                 FileInfo[] fi = di.GetFiles("*.mscmm");
@@ -183,7 +185,7 @@ namespace OggConverter
         {
             try
             {
-                value = value == null || value == "" ? name : value;
+                value = String.IsNullOrEmpty(value) ? name : value;
 
                 string documentPath = XmlFilePath();
                 XDocument doc = XDocument.Load(documentPath);
@@ -239,8 +241,9 @@ namespace OggConverter
         {
             try
             {
-                if (File.Exists($"{Settings.GamePath}\\{folder}\\songnames.xml"))
-                    File.Delete($"{Settings.GamePath}\\{folder}\\songnames.xml");
+                string filePath = $"{Settings.GamePath}\\{folder}\\songnames.xml";
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
             }
             catch (Exception ex)
             {

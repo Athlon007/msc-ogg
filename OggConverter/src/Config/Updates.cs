@@ -35,7 +35,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19412;
+        public const int version = 19413;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -84,16 +84,17 @@ namespace OggConverter
         /// </summary>
         static async Task LookForAnUpdate(bool getPreview)
         {
-            if (Settings.DemoMode || !Utilities.IsOnline()) return;
-            if (!getPreview && newPreviewReady) return;
+            if (Settings.DemoMode || !Utilities.IsOnline() || (!getPreview && newPreviewReady)) return;
 
             if (newUpdateReady)
             {
-                DialogResult res = MessageBox.Show(Localisation.Get("There's a new update ready to download. Would you like to download it now?"), 
+                DialogResult res = MessageBox.Show(Localisation.Get("There's a new update ready to download. " +
+                    "Would you like to download it now?"), 
                     Localisation.Get("Update"), 
                     MessageBoxButtons.YesNo, 
                     MessageBoxIcon.Information);
                 Form1.instance.Log(Localisation.Get("\nThere's an update ready to download!"));
+
                 if (res == DialogResult.Yes)
                     DownloadUpdate(getPreview);
 
@@ -113,7 +114,8 @@ namespace OggConverter
 
                         if (latest > version)
                         {
-                            string msg = Settings.Preview && !getPreview ? Localisation.Get("There's a newer stable version available to download than yours Preview. Would you like to download the update?") :
+                            string msg = Settings.Preview && !getPreview ? Localisation.Get("There's a newer stable version available to " +
+                                "download than yours Preview. Would you like to download the update?") :
                                 Localisation.Get("There's a new update ready to download. Would you like to download it now?");
                             msg += Localisation.Get("\n\nYour version: {0}\nNewest version: {1}", version, latest);
                             DialogResult res = MessageBox.Show(msg, Localisation.Get("Update"), MessageBoxButtons.YesNo, MessageBoxIcon.Information);

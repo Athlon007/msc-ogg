@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboLang = new System.Windows.Forms.ComboBox();
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
@@ -83,6 +84,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.label6);
             this.tabGeneral.Controls.Add(this.label2);
             this.tabGeneral.Controls.Add(this.comboLang);
             this.tabGeneral.Controls.Add(this.chkNoSteam);
@@ -93,6 +95,15 @@
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 194);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 17);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "youtube-dl:";
             // 
             // label2
             // 
@@ -248,7 +259,7 @@
             this.cbYoutubeDlUpdateFrequency.Name = "cbYoutubeDlUpdateFrequency";
             this.cbYoutubeDlUpdateFrequency.Size = new System.Drawing.Size(160, 24);
             this.cbYoutubeDlUpdateFrequency.TabIndex = 24;
-            this.cbYoutubeDlUpdateFrequency.SelectedIndexChanged += new System.EventHandler(this.CbYoutubeDlUpdateFrequency_SelectedIndexChanged);
+            this.cbYoutubeDlUpdateFrequency.SelectionChangeCommitted += new System.EventHandler(this.CbYoutubeDlUpdateFrequency_SelectionChangeCommitted);
             // 
             // label1
             // 
@@ -470,5 +481,6 @@
         private System.Windows.Forms.Button btnDelLogs;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
     }
 }

@@ -43,13 +43,6 @@ namespace OggConverter
                 Form1.instance.Log(Localisation.Get("Downloaded youtube-dl successfully!"));
                 Form1.instance.DownloadProgress.Visible = false;
 
-                if (!url.ContainsAny("https://www.youtube.com/watch?v=", "https://youtube.com/watch?v=", "ytsearch:"))
-                {
-                    MessageBox.Show(Localisation.Get("Not a valid URL. Currently only YouTube is suported."), 
-                        Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 IsBusy = true;
 
                 if (File.Exists("download.aac"))
@@ -73,11 +66,15 @@ namespace OggConverter
                     return;
                 }
 
+                process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+                Form1.instance.ClearYtLog();
+
                 await Task.Run(() => process.Start());
-                string[] youtubeDllOutput = null;
-                await Task.Run(() => youtubeDllOutput = process.StandardOutput.ReadToEnd().Split('\n'));
+                process.BeginOutputReadLine();
                 await Task.Run(() => process.WaitForExit());
-                Logs.History("-- youtube-dl output: --\n" + string.Join("\n", youtubeDllOutput));
+
+                Logs.History("-- youtube-dl output: --\n" + Form1.instance.GetYtDlLog);
+                Form1.instance.YoutubeDlLog("\n\n====================================\nDone!");
 
                 // File wasn't downloaded?
                 if (!File.Exists("download.mp3"))
@@ -101,6 +98,10 @@ namespace OggConverter
                     return;
                 }
 
+                // Forced name is empty? Try to get the name from link
+                if (String.IsNullOrEmpty(forcedName))
+                    forcedName = GetTitleFromYouTube(url);
+
                 await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName, true);
 
                 File.Delete("download.mp3");
@@ -115,30 +116,90 @@ namespace OggConverter
             }
         }
 
+        /// <summary>
+        /// Cancels download. Kills youtube-dl and ffmpeg processes and removes downloads.
+        /// </summary>
         public static void Cancel()
         {
             if (!IsBusy) return;
 
             CancelDownload = true;
-
             IsBusy = false;
+
             foreach (var process in Process.GetProcessesByName("youtube-dl"))
-            {
                 process.Kill();
-            }
 
             foreach (var process in Process.GetProcessesByName("ffmpeg"))
-            {
                 process.Kill();
-            }
 
             DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
             FileInfo[] files = di.GetFiles("download*");
             foreach (FileInfo file in files)
             {
+                while (!Utilities.IsFileReady(file.FullName)) { }
                 if (File.Exists(file.FullName))
                     File.Delete(file.FullName);
             }
+        }
+
+        /// <summary>
+        /// Redirects the output from youtube-dl to YouTubeDlLog void in Form1
+        /// </summary>
+        /// <param name="sendingProcess"></param>
+        /// <param name="outLine"></param>
+        public static void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
+            try
+            {
+                string value = outLine.Data.ToString();
+                Form1.instance.YoutubeDlLog(value);
+
+                // Only read lines that contain percentage
+                if (value.Contains("%"))
+                {
+                    string percentage = value.Split(']')[1].Split('%')[0].Trim();
+                    if (percentage.Contains("."))
+                        percentage = percentage.Split('.')[0];
+
+                    string downloadSpeed = value.Split('t')[1].Trim();
+
+                    Form1.instance.YtDownloadProgress(int.Parse(percentage), downloadSpeed);
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Gets song title from link.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string GetTitleFromYouTube(string url)
+        {
+            Process process = new Process();
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+
+            // Setup executable and parameters
+            process.StartInfo.FileName = "youtube-dl.exe";
+            process.StartInfo.Arguments = $"--get-filename {url}";
+
+            if (CancelDownload)
+            {
+                CancelDownload = true;
+                return null;
+            }
+
+            process.Start();
+            string[] youtubeDlOutput = process.StandardOutput.ReadToEnd().Split('\n');
+            process.WaitForExit();
+
+            // Added this so the program won't freeze when getting the song name
+            while (!process.HasExited) { Application.DoEvents(); }
+
+            string id = url.Split('=')[1];
+            return youtubeDlOutput[0].Replace(id, "").Replace("-.mp4", "");
         }
     }
 }

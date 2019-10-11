@@ -27,7 +27,13 @@ namespace OggConverter
         /// <summary>
         /// Dumps operations on the file to history.txt
         /// </summary>
-        public static void History(string value) { if (!Settings.History) return; File.AppendAllText("history.txt", $"({DateTime.Now.ToString()}) {value}\n"); }
+        public static void History(string value)
+        {
+            if (!Settings.History)
+                return;
+
+            File.AppendAllText("history.txt", $"({DateTime.Now.ToString()}) {value}\n");
+        }
 
         /// <summary>
         /// Dumps the crash log to the file.
@@ -37,9 +43,11 @@ namespace OggConverter
         public static void CrashLog(string log, bool silent = false)
         {
             // Logs disabled? Don't save it
-            if (!Settings.Logs) return;
+            if (!Settings.Logs)
+                return;
 
-            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} {DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} " +
+                $"{DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
             string thisVersion = Application.ProductVersion;
             string fileName = $"LOG\\{date}.txt";
 
@@ -52,12 +60,13 @@ namespace OggConverter
                 $"// GAME DIRECTORY: {Settings.GamePath}\n" +
                 $"// TIME OF CRASH: {DateTime.Now}\n" +
                 $"// LANGUAGE: {Settings.Language}\n\n" +
-                $"// {GetWittyComment()} \n\n" +
+                $"// {GetWittyComment()}\n\n" +
                 $"{log}");
 
             Settings.LastCrashLogFile = $"{date}.txt";
 
-            if (silent) return;
+            if (silent)
+                return;
 
             DialogResult dl = MessageBox.Show(Localisation.Get("An error has occured. Log has been saved into LOG folder. " +
                 "Would you like to open it now?"), Localisation.Get("Error"), MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -78,8 +87,9 @@ namespace OggConverter
 
         static string GetWittyComment()
         {
-            string[] messages = new String[] { "Oops!", "My bad", ":(", "Sorry :(", "Well this is awkwkard...", "A team of higly trained monkeys have been dispatched!",
-            "D'oh!", "What, what, what, what, what, what, what, what, what?", "Move along, move along...", "I'm sorry Dave"};
+            string[] messages = new String[] { "Oops!", "My bad", ":(", "Sorry :(", "Well this is awkwkard...",
+                "A team of higly trained monkeys have been dispatched!", "D'oh!",
+                "What, what, what, what, what, what, what, what, what?", "Move along, move along...", "I'm sorry Dave"};
             var random = new Random();
             int index = random.Next(messages.Length);
             return messages[index];

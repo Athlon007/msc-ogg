@@ -42,7 +42,7 @@ Available translations:
 | 🇬🇧 | English (UK) | Konrad Figura | 100%       |
 | 🇵🇱 | Polski       | Konrad Figura | 100%       |
 
-Note: translations fixes are also welcome :)
+Note: translation corrections are also welcome :)
 
 ## Download
 

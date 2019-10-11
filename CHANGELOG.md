@@ -1,5 +1,32 @@
 # Changelog
 
+## Preview 2.7.0.0 (11.10.2019)
+
+### Added
+
+- Added live output of youtube-dl when downloading
+- MSCMM will get song name if it's downloaded via the link
+- You can now quickly change working folder by clicking Ctrl+Up/Down arrow
+- You can use Shift+Up/Down arrows to move songs up or down
+- Added progress bar for when song is downloaded
+- Added ETA and download speed info
+
+### Changes
+
+- Player will now load all .ogg files found in folder, instead of first 99 files
+  - Same goes for sorting files
+- Code optimization and improvements
+
+### Bug Fixes
+
+- Fixed Error message window not initializing localization script
+- Fixed link checking for downloader
+- The player will pause the song uppon pressing enter, if the song name has been trimmed
+
+### Known issues
+
+- After moving MSC to other folder, the program won't start
+
 ## 2.6 (30.09.2019)
 
 ### Added

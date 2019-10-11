@@ -20,6 +20,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OggConverter
 {
@@ -56,9 +58,10 @@ namespace OggConverter
         }
 
         public static string AboutNotice = Localisation.Get("MSC Music Manager {0} ({1})\nCopyright (C) 2019 Athlon\n\n" +
-                $"This program comes with ABSOLUTELY NO WARRANTY.\n" +
-                $"This is free software, and you are welcome to redistribute it, as long as you include original copyright, state changes and include license.\n\n" +
-                $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.", Application.ProductVersion, Updates.version);
+            $"This program comes with ABSOLUTELY NO WARRANTY.\n" +
+            $"This is free software, and you are welcome to redistribute it, " +
+            $"as long as you include original copyright, state changes and include license.\n\n" +
+            $"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license.", Application.ProductVersion, Updates.version);
 
         /// <summary>
         /// Checks if file is being used by some other process.
@@ -112,7 +115,14 @@ namespace OggConverter
         /// Checks if any 'long taking' operations are busy.
         /// </summary>
         /// <returns></returns>
-        public static bool IsToolBusy() { return Downloader.IsBusy || Converter.IsBusy || Updates.IsYoutubeDlUpdating || Updates.IsBusy || Player.IsBusy; }
+        public static bool IsToolBusy()
+        {
+            return Downloader.IsBusy || 
+                Converter.IsBusy || 
+                Updates.IsYoutubeDlUpdating || 
+                Updates.IsBusy || 
+                Player.IsBusy;
+        }
 
         /// <summary>
         /// Centers horizontally the sender according to reference control
@@ -125,9 +135,13 @@ namespace OggConverter
         /// <summary>
         /// Launches the game - either with Steam or directly from mysummercar.exe
         /// </summary>
-        public static void LaunchGame() { Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750"); }
+        public static void LaunchGame()
+        {
+            Process.Start(Settings.NoSteam ? $"{Settings.GamePath}\\mysummercar.exe" : "steam://rungameid/516750");
+        }
 
-        // Prevents 'Looks like you're offline.' message from appearing twice if user's using Preview update channel (and prevents useless network traffic)
+        // Prevents 'Looks like you're offline.' message from appearing twice,
+        // if user's using Preview update channel (and prevents useless network traffic)
         static bool isOffline;
 
         /// <summary>
@@ -154,6 +168,35 @@ namespace OggConverter
                 isOffline = true;
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Gets all items from ListBox and returns them into an array.
+        /// </summary>
+        /// <param name="listBox">songList</param>
+        /// <returns>Array of all selected items</returns>
+        public static string[] GetSelectedItemsToArray(ListBox listBox)
+        {
+            int[] domains = listBox.SelectedIndices.OfType<int>().ToArray();
+            List<string> selectedItemsList = new List<string>();
+
+            foreach (int i in domains)
+                selectedItemsList.Add(Player.WorkingSongList[i].Item1.ToString());
+
+            string[] selectedItemsArray = selectedItemsList.ToArray();
+            return selectedItemsArray;
+        }
+
+        /// <summary>
+        /// Checks if provided link is a valid https or http Url.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static bool IsValidUrl(this string url)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(url, UriKind.Absolute, out uriResult) 
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
     }
 }
