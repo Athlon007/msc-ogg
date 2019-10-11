@@ -87,6 +87,8 @@
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.proYt = new System.Windows.Forms.ProgressBar();
+            this.labProgress = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -301,7 +303,7 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 24);
+            this.menuTool.Size = new System.Drawing.Size(58, 26);
             this.menuTool.Text = "Tools";
             // 
             // btnLastLog
@@ -382,14 +384,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 24);
+            this.menuSettings.Size = new System.Drawing.Size(76, 26);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -406,14 +408,14 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 28);
+            this.menu.Size = new System.Drawing.Size(991, 30);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 24);
+            this.btnHelp.Size = new System.Drawing.Size(55, 26);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
@@ -509,6 +511,8 @@
             // tabDownload
             // 
             this.tabDownload.BackColor = System.Drawing.Color.White;
+            this.tabDownload.Controls.Add(this.labProgress);
+            this.tabDownload.Controls.Add(this.proYt);
             this.tabDownload.Controls.Add(this.ytdlOutput);
             this.tabDownload.Controls.Add(this.btnCancelDownload);
             this.tabDownload.Controls.Add(this.label6);
@@ -527,13 +531,13 @@
             // 
             this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
             this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ytdlOutput.Location = new System.Drawing.Point(11, 130);
+            this.ytdlOutput.Location = new System.Drawing.Point(11, 179);
             this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4);
             this.ytdlOutput.Multiline = true;
             this.ytdlOutput.Name = "ytdlOutput";
             this.ytdlOutput.ReadOnly = true;
             this.ytdlOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ytdlOutput.Size = new System.Drawing.Size(621, 223);
+            this.ytdlOutput.Size = new System.Drawing.Size(621, 174);
             this.ytdlOutput.TabIndex = 17;
             // 
             // btnCancelDownload
@@ -696,6 +700,24 @@
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
+            // proYt
+            // 
+            this.proYt.Location = new System.Drawing.Point(11, 126);
+            this.proYt.Margin = new System.Windows.Forms.Padding(4);
+            this.proYt.Name = "proYt";
+            this.proYt.Size = new System.Drawing.Size(621, 28);
+            this.proYt.TabIndex = 20;
+            // 
+            // labProgress
+            // 
+            this.labProgress.AutoSize = true;
+            this.labProgress.Location = new System.Drawing.Point(8, 158);
+            this.labProgress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labProgress.Name = "labProgress";
+            this.labProgress.Size = new System.Drawing.Size(159, 17);
+            this.labProgress.TabIndex = 21;
+            this.labProgress.Text = "0% 0.00 KiB/s ETA 0:00";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -802,6 +824,8 @@
         private System.Windows.Forms.ToolStripMenuItem contextDelete;
         private System.Windows.Forms.ToolStripMenuItem contextMove;
         private System.Windows.Forms.TextBox ytdlOutput;
+        private System.Windows.Forms.Label labProgress;
+        private System.Windows.Forms.ProgressBar proYt;
     }
 }
 

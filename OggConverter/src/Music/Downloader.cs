@@ -136,7 +136,7 @@ namespace OggConverter
             FileInfo[] files = di.GetFiles("download*");
             foreach (FileInfo file in files)
             {
-                while (Utilities.IsFileReady(file.FullName)) { }
+                while (!Utilities.IsFileReady(file.FullName)) { }
                 if (File.Exists(file.FullName))
                     File.Delete(file.FullName);
             }
@@ -151,7 +151,20 @@ namespace OggConverter
         {
             try
             {
-                Form1.instance.YoutubeDlLog(outLine.Data.ToString());
+                string value = outLine.Data.ToString();
+                Form1.instance.YoutubeDlLog(value);
+
+                // Only read lines that contain percentage
+                if (value.Contains("%"))
+                {
+                    string percentage = value.Split(']')[1].Split('%')[0].Trim();
+                    if (percentage.Contains("."))
+                        percentage = percentage.Split('.')[0];
+
+                    string downloadSpeed = value.Split('t')[1].Trim();
+
+                    Form1.instance.YtDownloadProgress(int.Parse(percentage), downloadSpeed);
+                }
             }
             catch { }
         }

@@ -442,6 +442,31 @@ namespace OggConverter
         public string GetYtDlLog { get => ytdlOutput.Text; }
 
         /// <summary>
+        /// Dumps the download speed from youtube-dl into label and progress bar.
+        /// </summary>
+        public void YtDownloadProgress(int percent, string speed)
+        {
+            // Progress bar
+            if (proYt.InvokeRequired)
+                proYt.Invoke(new Action(delegate ()
+                {
+                    proYt.Value = percent;
+                }));
+            else
+                proYt.Value = percent;
+
+            // Label
+            if (labProgress.InvokeRequired)
+                labProgress.Invoke(new Action(delegate ()
+                {
+                    labProgress.Text = percent.ToString() + "% " + speed;
+                }));
+            else
+                labProgress.Text = percent.ToString() + "% " + speed;
+        }
+
+
+        /// <summary>
         /// Updates song list used for player
         /// </summary>
         public void UpdateSongList()
@@ -939,6 +964,7 @@ namespace OggConverter
             Downloader.Cancel();
             RestrictedMode(false);
             btnCancelDownload.Enabled = false;
+            YtDownloadProgress(0, "0.00 KiB/s ETA 0:00");
         }
 
         private void MenuSettings_Click(object sender, EventArgs e)
