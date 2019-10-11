@@ -203,7 +203,6 @@ namespace OggConverter
 
                 Logs.History(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
                 Form1.instance.Log(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
-
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 # Changelog
 
-## Preview 2.7.0.0 (xx.10.2019)
+## Preview 2.7.0.0 (11.10.2019)
 
 ### Added
 
