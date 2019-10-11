@@ -165,8 +165,20 @@ namespace OggConverter
         public static bool AreSettingsValid()
         {
             GamePath = GetMSCPath();
-            return !(String.IsNullOrEmpty(GamePath));
+
+            if (String.IsNullOrEmpty(GamePath))
+                return false;
+
+            if (!Directory.Exists(GamePath))
+                return false;
+
+            return true;
         }
+
+        /// <summary>
+        /// Is set to true, after the settings have been checked succesfully
+        /// </summary>
+        public static bool SettingsChecked { get; set; }
 
         // If you're reading this - I hope you had a better day than me fixing that fucking error fixed in 2.5.2...
         // ~ Athlon

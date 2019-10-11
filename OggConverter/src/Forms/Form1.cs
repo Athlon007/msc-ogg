@@ -133,6 +133,8 @@ namespace OggConverter
                 return;
             }
 
+            Settings.SettingsChecked = true;
+
             // If provided directory or mysummercar.exe in that folder don't exist
             // That means that folder is invalid
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
@@ -471,7 +473,7 @@ namespace OggConverter
         /// </summary>
         public void UpdateSongList()
         {
-            if (firstLoad) return;
+            if (firstLoad || !Settings.SettingsChecked) return;
 
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
             int howManySongs = 0;

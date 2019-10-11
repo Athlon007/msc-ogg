@@ -1,5 +1,11 @@
 # Changelog
 
+## Preview 2.7.0.1 (xx.10.2019)
+
+### Bug Fixes
+
+- Fixed bug in which the program would not start, if the directory of the game didn't exist
+
 ## Preview 2.7.0.0 (11.10.2019)
 
 ### Added
