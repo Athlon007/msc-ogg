@@ -47,6 +47,11 @@ namespace OggConverter
         public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma", ".ogg" };
 
         /// <summary>
+        /// Stores the output of ffmpeg.
+        /// </summary>
+        static string FfmpegOutput { get; set; }
+
+        /// <summary>
         /// Starts the conversion of every found file in Radio or CD
         /// </summary>
         public static async void StartConversion()
@@ -129,7 +134,7 @@ namespace OggConverter
             Form1.instance.Log(Localisation.Get("Initializing {0} conversion...\n", folder));
             string path = $"{Settings.GamePath}\\{folder}";
 
-            ffmpegOutput = "";
+            FfmpegOutput = "";
 
             if (!Directory.Exists(path))
             {
@@ -191,7 +196,7 @@ namespace OggConverter
                     string songName = null;
                     string argument = $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"";
 
-                    // If the file is already in OGG format - skip conversion and just rename it accordingly.
+                    // If the file is already in OGG format - rename file, and start FFmpeg in order to try and find the name
                     if (file.Name.EndsWith(".ogg") && !file.Name.StartsWith("track"))
                     {
                         File.Move($"{path}\\{file.Name}", $"{path}\\track{inGame}.ogg");
@@ -210,7 +215,7 @@ namespace OggConverter
                     process.BeginErrorReadLine();
                     await Task.Run(() => process.WaitForExit());
 
-                    songName = MetaData.GetFromOutput(ffmpegOutput.Split('\n'));
+                    songName = MetaData.GetFromOutput(FfmpegOutput.Split('\n'));
                     songName = String.IsNullOrEmpty(songName) ? file.Name.Split('.')[0] : songName;
                     MetaData.AddOrEdit($"track{inGame}", songName);
 
@@ -266,7 +271,7 @@ namespace OggConverter
             if (Form1.instance != null)
                 Form1.instance.Log(Localisation.Get("\nConverting '{0}'\n", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
 
-            ffmpegOutput = "";
+            FfmpegOutput = "";
 
             try
             {
@@ -318,7 +323,7 @@ namespace OggConverter
 
                 if (altName == null)
                 {
-                    string[] ffmpegOut = ffmpegOutput.Split('\n');
+                    string[] ffmpegOut = FfmpegOutput.Split('\n');
                     songName = MetaData.GetFromOutput(ffmpegOut);
                     if ((songName == " - " || songName == "") && altName != "")
                         songName = altName;
@@ -386,13 +391,11 @@ namespace OggConverter
             try
             {
                 string value = outLine.Data.ToString();
-                ffmpegOutput += value + "\n";
+                FfmpegOutput += value + "\n";
                 if (Settings.ShowFfmpegOutput)
                     Form1.instance.Log(value);
             }
             catch { }
         }
-
-        static string ffmpegOutput;
     }
 }

@@ -418,7 +418,7 @@
             // chkShowFfmpegOutput
             // 
             this.chkShowFfmpegOutput.AutoSize = true;
-            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(466, 35);
+            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 194);
             this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
             this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
             this.chkShowFfmpegOutput.TabIndex = 28;
