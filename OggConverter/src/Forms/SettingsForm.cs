@@ -53,6 +53,7 @@ namespace OggConverter
             cbYoutubeDlUpdateFrequency.SelectedIndex = Settings.YouTubeDlUpdateFrequency;
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
+            chkShowFfmpegOutput.Checked = Settings.ShowFfmpegOutput;
 
             if (Directory.Exists("locales"))
             {
@@ -307,12 +308,19 @@ namespace OggConverter
             tabLogging.Text = Localisation.Get("Logging & Privacy");
 
             this.Text = Localisation.Get("Settings");
+
+            chkShowFfmpegOutput.Text = Localisation.Get("Show ffmpeg output");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
         {
             bool isLastSelected = cbYoutubeDlUpdateFrequency.SelectedIndex + 1 == cbYoutubeDlUpdateFrequency.Items.Count;
             Settings.YouTubeDlUpdateFrequency = isLastSelected ? -1 : cbYoutubeDlUpdateFrequency.SelectedIndex;
+        }
+
+        private void ChkShowFfmpegOutput_Click(object sender, EventArgs e)
+        {
+            Settings.ShowFfmpegOutput ^= true;
         }
     }
 }

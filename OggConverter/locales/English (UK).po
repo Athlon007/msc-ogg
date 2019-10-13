@@ -694,3 +694,6 @@ msgstr ""
 
 msgid "Url is not valid and is empty."
 msgstr ""
+
+msgid "Show ffmpeg output"
+msgstr ""

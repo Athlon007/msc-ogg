@@ -34,7 +34,7 @@ namespace OggConverter
         /// <summary>
         /// Should MSCMM remove source song files after conversion?
         /// </summary>
-        public static bool RemoveMP3 { get => Get("RemoveMP3", false); set => Set("RemoveMP3", value); }
+        public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }
 
         /// <summary>
         /// Should the game be started without steam?
@@ -95,6 +95,11 @@ namespace OggConverter
         /// Stores the language file name set by user
         /// </summary>
         public static string Language { get => Get("Language", "English (UK)"); set => Set("Language", value); }
+
+        /// <summary>
+        /// If true, uppon any conversion the 
+        /// </summary>
+        public static bool ShowFfmpegOutput { get => Get("ShowFfmpegOutput", false); set => Set("ShowFfmpegOutput", value); }
 
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
