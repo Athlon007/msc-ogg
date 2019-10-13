@@ -62,12 +62,11 @@ def junk_cleaner(folder):
     if os.path.isdir("LOG"):
         shutil.rmtree("LOG")
 
-    print('Done!')
+    print('Junk cleaning of {0} done!'.format(folder))
 
 
 junk_cleaner('Release')
 junk_cleaner('Debug')
 
-print("Done!")
 print("Quitting...")
 quit()
