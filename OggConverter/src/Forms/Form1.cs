@@ -133,6 +133,8 @@ namespace OggConverter
                 return;
             }
 
+            Settings.SettingsChecked = true;
+
             // If provided directory or mysummercar.exe in that folder don't exist
             // That means that folder is invalid
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
@@ -471,7 +473,7 @@ namespace OggConverter
         /// </summary>
         public void UpdateSongList()
         {
-            if (firstLoad) return;
+            if (firstLoad || !Settings.SettingsChecked) return;
 
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
             int howManySongs = 0;
@@ -712,13 +714,13 @@ namespace OggConverter
         private void BtnUp_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.ChangeOrder(songList, CurrentFolder, true);
+            Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Up);
         }
 
         private void BtnDown_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.ChangeOrder(songList, CurrentFolder, false);
+            Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Down);
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -977,11 +979,11 @@ namespace OggConverter
         {
             // Move song Down (Alt+Down Arrow)
             if (e.Alt && e.KeyCode == Keys.Down)
-                Player.ChangeOrder(songList, CurrentFolder, false);
+                Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Down);
 
             // Move song Up (Alt+Up Arrow)
             if (e.Alt && e.KeyCode == Keys.Up)
-                Player.ChangeOrder(songList, CurrentFolder, true);
+                Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Up);
 
             // Select all items on songlist (Ctrl+A)
             if (e.Control && e.KeyCode == Keys.A)

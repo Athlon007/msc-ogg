@@ -796,3 +796,6 @@ msgstr "Link nie jest linkiem YouTube'a."
 
 msgid "Url is not valid and is empty."
 msgstr "Link jest niepoprawny i jest pusty."
+
+msgid "Show ffmpeg output"
+msgstr "Pokaż dane wyjściowe ffmpeg"

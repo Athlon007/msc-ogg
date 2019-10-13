@@ -1,5 +1,21 @@
 # Changelog
 
+## Preview 2.7.0.1 (13.10.2019)
+
+### Added
+
+- If the files in folders are converted, the program will now get the name from file, if it didn't found it in metadata
+- Added ffmpeg output. In order to enable it, go into Settings -> General -> Show ffmpeg output
+
+## Changes
+
+- Optimization of Coverter.cs
+
+### Bug Fixes
+
+- Fixed bug in which the program would not start, if the directory of the game didn't exist if it used to earlier
+- Fixed "Converted {0} file(s) in total" translation not working
+
 ## Preview 2.7.0.0 (11.10.2019)
 
 ### Added
