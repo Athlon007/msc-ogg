@@ -60,6 +60,7 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
+            this.chkShowFfmpegOutput = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -83,6 +84,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.chkShowFfmpegOutput);
             this.tabGeneral.Controls.Add(this.label2);
             this.tabGeneral.Controls.Add(this.comboLang);
             this.tabGeneral.Controls.Add(this.chkNoSteam);
@@ -248,7 +250,7 @@
             this.cbYoutubeDlUpdateFrequency.Name = "cbYoutubeDlUpdateFrequency";
             this.cbYoutubeDlUpdateFrequency.Size = new System.Drawing.Size(160, 24);
             this.cbYoutubeDlUpdateFrequency.TabIndex = 24;
-            this.cbYoutubeDlUpdateFrequency.SelectedIndexChanged += new System.EventHandler(this.CbYoutubeDlUpdateFrequency_SelectedIndexChanged);
+            this.cbYoutubeDlUpdateFrequency.SelectionChangeCommitted += new System.EventHandler(this.CbYoutubeDlUpdateFrequency_SelectionChangeCommitted);
             // 
             // label1
             // 
@@ -413,6 +415,17 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
+            // chkShowFfmpegOutput
+            // 
+            this.chkShowFfmpegOutput.AutoSize = true;
+            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 194);
+            this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
+            this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
+            this.chkShowFfmpegOutput.TabIndex = 28;
+            this.chkShowFfmpegOutput.Text = "Show ffmpeg output";
+            this.chkShowFfmpegOutput.UseVisualStyleBackColor = true;
+            this.chkShowFfmpegOutput.Click += new System.EventHandler(this.ChkShowFfmpegOutput_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -470,5 +483,6 @@
         private System.Windows.Forms.Button btnDelLogs;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox chkShowFfmpegOutput;
     }
 }

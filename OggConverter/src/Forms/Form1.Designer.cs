@@ -70,6 +70,7 @@
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabLog = new System.Windows.Forms.TabPage();
             this.tabDownload = new System.Windows.Forms.TabPage();
+            this.ytdlOutput = new System.Windows.Forms.TextBox();
             this.btnCancelDownload = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnDownload = new System.Windows.Forms.Button();
@@ -86,6 +87,8 @@
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.proYt = new System.Windows.Forms.ProgressBar();
+            this.labProgress = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -508,6 +511,9 @@
             // tabDownload
             // 
             this.tabDownload.BackColor = System.Drawing.Color.White;
+            this.tabDownload.Controls.Add(this.labProgress);
+            this.tabDownload.Controls.Add(this.proYt);
+            this.tabDownload.Controls.Add(this.ytdlOutput);
             this.tabDownload.Controls.Add(this.btnCancelDownload);
             this.tabDownload.Controls.Add(this.label6);
             this.tabDownload.Controls.Add(this.btnDownload);
@@ -520,6 +526,19 @@
             this.tabDownload.Size = new System.Drawing.Size(645, 405);
             this.tabDownload.TabIndex = 1;
             this.tabDownload.Text = "Download";
+            // 
+            // ytdlOutput
+            // 
+            this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
+            this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ytdlOutput.Location = new System.Drawing.Point(11, 179);
+            this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4);
+            this.ytdlOutput.Multiline = true;
+            this.ytdlOutput.Name = "ytdlOutput";
+            this.ytdlOutput.ReadOnly = true;
+            this.ytdlOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ytdlOutput.Size = new System.Drawing.Size(621, 174);
+            this.ytdlOutput.TabIndex = 17;
             // 
             // btnCancelDownload
             // 
@@ -681,6 +700,24 @@
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
+            // proYt
+            // 
+            this.proYt.Location = new System.Drawing.Point(11, 126);
+            this.proYt.Margin = new System.Windows.Forms.Padding(4);
+            this.proYt.Name = "proYt";
+            this.proYt.Size = new System.Drawing.Size(621, 28);
+            this.proYt.TabIndex = 20;
+            // 
+            // labProgress
+            // 
+            this.labProgress.AutoSize = true;
+            this.labProgress.Location = new System.Drawing.Point(8, 158);
+            this.labProgress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labProgress.Name = "labProgress";
+            this.labProgress.Size = new System.Drawing.Size(159, 17);
+            this.labProgress.TabIndex = 21;
+            this.labProgress.Text = "0% 0.00 KiB/s ETA 0:00";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -704,10 +741,12 @@
             this.Text = "MSC Music Manager";
             this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.DragLeave += new System.EventHandler(this.Form1_DragLeave);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menu.ResumeLayout(false);
@@ -784,6 +823,9 @@
         private System.Windows.Forms.ToolStripMenuItem contextAll;
         private System.Windows.Forms.ToolStripMenuItem contextDelete;
         private System.Windows.Forms.ToolStripMenuItem contextMove;
+        private System.Windows.Forms.TextBox ytdlOutput;
+        private System.Windows.Forms.Label labProgress;
+        private System.Windows.Forms.ProgressBar proYt;
     }
 }
 

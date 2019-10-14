@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.7 (xx.10.2019)
+
+### Added
+
+- Multiple changes and additions to Download!
+  - Added live output of youtube-dl
+  - MSCMM will try to find the song name
+  - Added song download progress bar
+  - Added ETA and download speed info
+- New player keyboard shorcuts:
+  - You can now quickly change working folder by clicking Ctrl+Up/Down arrow
+  - You can use Alt+Up/Down arrows to move songs up or down
+- Songs that are converted by MSCMM finding files in Radio or CDs folders, will now use file name, if there isn't one in metadata of these songs
+- Added ffmpeg output. In order to enable it, go into Settings -> General -> Show ffmpeg output
+- Added useful keyboard shortcuts list in Help window
+
+### Changes
+
+- Player will now load all .ogg files found in folder, instead of first 99 files
+  - Same goes for sorting files
+- Optimization of Coverter.cs
+- Code optimization and improvements
+
+### Bug Fixes
+
+- Fixed Error message window not initializing localization script
+- Fixed link validity checking for downloader
+- Fixed bugs regarding stopping song playback when the song name was longer than 51 characters
+- Fixed bug in which the program would not start, if the directory of the game didn't exist, or the MSC was moved. Now the program will try to find the game fodler again
+- Fixed "Converted {0} file(s) in total" translation not working
+
 ## 2.6 (30.09.2019)
 
 ### Added

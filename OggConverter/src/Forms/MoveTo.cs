@@ -29,7 +29,7 @@ namespace OggConverter
         {
             InitializeComponent();
 
-            Localize();
+            Localise();
             Message = Localisation.Get("Where do you want to move {0} file(s)?", files.Length);
 
             this.files = files;
@@ -66,9 +66,7 @@ namespace OggConverter
         private void BtnApply_Click(object sender, EventArgs e)
         {
             foreach (string file in files)
-            {
                 Player.MoveTo(file, sourceFolder, selectedFolder.Text);
-            }
 
             if (Settings.AutoSort)
                 Player.Sort(sourceFolder);
@@ -76,7 +74,7 @@ namespace OggConverter
             this.Close();
         }
 
-        void Localize ()
+        void Localise ()
         {
             btnApply.Text = Localisation.Get("Apply");
             this.Text = Localisation.Get("Move");

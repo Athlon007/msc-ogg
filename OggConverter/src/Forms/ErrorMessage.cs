@@ -26,9 +26,8 @@ namespace OggConverter
     {
         string FileName { get; set; }
 
-        int DEFAULT_Y = -1;
-        int EXTENDED_Y = -1;
-
+        int defaultHeight = -1;
+        int extendedHeight = -1;
         bool isExtended;
 
         public static ErrorMessage instance;
@@ -40,8 +39,10 @@ namespace OggConverter
             if (instance != null)
                 return;
 
-            DEFAULT_Y = this.Height;
-            EXTENDED_Y = logOutput.Location.Y + logOutput.Height + 50;
+            Localise();
+
+            defaultHeight = this.Height;
+            extendedHeight = logOutput.Location.Y + logOutput.Height + 50;
 
             instance = this;
 
@@ -58,7 +59,7 @@ namespace OggConverter
             btnMoreDetail.Text = (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));
         }
 
-        void LoadLanguage()
+        void Localise()
         {
             btnExit.Text = Localisation.Get("Exit");
             btnLog.Text = Localisation.Get("Open Log");
@@ -78,7 +79,7 @@ namespace OggConverter
         private void BtnMoreDetail_Click(object sender, EventArgs e)
         {
             isExtended ^= true;
-            this.Size = new Size(this.Size.Width, isExtended ? EXTENDED_Y : DEFAULT_Y);
+            this.Size = new Size(this.Size.Width, isExtended ? extendedHeight : defaultHeight);
             btnMoreDetail.Text = isExtended ? (char.ConvertFromUtf32(0x2191) + " " + Localisation.Get("Hide More Info")) 
                 : (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));
             string file = File.ReadAllText($"LOG\\{FileName}.txt");

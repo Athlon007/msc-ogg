@@ -29,12 +29,13 @@ namespace OggConverter
         {
             InitializeComponent();
 
-            Localize();
+            Localise();
             labVer.Text = Localisation.Get("Your Version: {0}\n" +
                 "Build: {1}", Utilities.GetVersion(true), Updates.version);
 
             tabControl.ItemSize = new Size((tabControl.Width / tabControl.TabCount) - 1, 0);
 
+            // Adding already translates elementr to youtube-dl update frequency setting
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Upon every start"));
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Daily"));
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Weekly"));
@@ -52,6 +53,7 @@ namespace OggConverter
             cbYoutubeDlUpdateFrequency.SelectedIndex = Settings.YouTubeDlUpdateFrequency;
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
+            chkShowFfmpegOutput.Checked = Settings.ShowFfmpegOutput;
 
             if (Directory.Exists("locales"))
             {
@@ -193,7 +195,6 @@ namespace OggConverter
 
         private void CbYoutubeDlUpdateFrequency_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.YouTubeDlUpdateFrequency = cbYoutubeDlUpdateFrequency.SelectedIndex;
         }
 
         private void BtnCheckUpdate_Click(object sender, EventArgs e)
@@ -275,7 +276,7 @@ namespace OggConverter
             }
         }
 
-        void Localize()
+        void Localise()
         {
             chkShortcut.Text = Localisation.Get("Desktop shortcut");
             chkNoSteam.Text = Localisation.Get("Start the game without Steam");
@@ -307,6 +308,19 @@ namespace OggConverter
             tabLogging.Text = Localisation.Get("Logging & Privacy");
 
             this.Text = Localisation.Get("Settings");
+
+            chkShowFfmpegOutput.Text = Localisation.Get("Show ffmpeg output");
+        }
+
+        private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            bool isLastSelected = cbYoutubeDlUpdateFrequency.SelectedIndex + 1 == cbYoutubeDlUpdateFrequency.Items.Count;
+            Settings.YouTubeDlUpdateFrequency = isLastSelected ? -1 : cbYoutubeDlUpdateFrequency.SelectedIndex;
+        }
+
+        private void ChkShowFfmpegOutput_Click(object sender, EventArgs e)
+        {
+            Settings.ShowFfmpegOutput ^= true;
         }
     }
 }

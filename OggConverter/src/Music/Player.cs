@@ -99,41 +99,38 @@ namespace OggConverter
 
             Stop();
 
-            int skipped = 0;
-
             try
             {
-                for (int i = 1; i <= 99; i++)
+                int lastFileNumber = 0;
+                // Getting directory info from file and saving only files that are named track*.ogg into var file
+                DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\{folder}");
+                var files = di.GetFileSystemInfos("track*.ogg").OrderBy(f => int.Parse(f.Name.Replace("track", "").Split('.')[0]));
+                for (int i = 0; i < files.Count(); i++)
                 {
-                    // File doesn't exist? Skipping the value
-                    if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
+                    int thisFileNumber = int.Parse(files.ToArray()[i].Name.Replace("track", "").Split('.')[0]);
+                    // If the difference between last checked file and the current one is only 1
+                    if (thisFileNumber - lastFileNumber == 1)
                     {
-                        skipped++;
+                        // Save that file as the last one and continue
+                        lastFileNumber = thisFileNumber;
+                        continue;
                     }
-                    else
-                    {
-                        // If nothing was skipped, there is no point of moving file
-                        if (skipped == 0) continue;
 
-                        // Waiting for file to be free
-                        while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\track{i}.ogg")) { }
+                    // Calculates the new file number
+                    int newNumber = thisFileNumber - (thisFileNumber - lastFileNumber) + 1;
+                    // Waiting for file to be free
+                    while (!Utilities.IsFileReady($"{Settings.GamePath}\\{folder}\\track{thisFileNumber}.ogg")) { }
 
-                        // Moving the file
-                        File.Move($"{Settings.GamePath}\\{folder}\\track{i}.ogg", $"{Settings.GamePath}\\{folder}\\track{i - skipped}.ogg");
+                    // Moving the file
+                    File.Move($"{Settings.GamePath}\\{folder}\\track{thisFileNumber}.ogg",
+                        $"{Settings.GamePath}\\{folder}\\track{newNumber}.ogg");
 
-                        Logs.History(Localisation.Get("Sorting: moved 'track{0}' to 'track{1}' in {2}", i, i - skipped, folder));
-                        Form1.instance.Log(Localisation.Get("Sorting: moved 'track{0}' to 'track{1}' in {2}", i, i - skipped, folder));
+                    Logs.History(Localisation.Get("Sorting: moved 'track{0}' to 'track{1}' in {2}", thisFileNumber, newNumber, folder));
+                    Form1.instance.Log(Localisation.Get("Sorting: moved 'track{0}' to 'track{1}' in {2}", thisFileNumber, newNumber, folder));
 
-                        MetaData.AddOrEdit($"track{i - skipped}", MetaData.GetName($"track{i}"));
-                        MetaData.Remove($"track{i}");
-
-                        // Adjusting the i value by skipped
-                        if (skipped != 0)
-                            i -= skipped;
-
-                        // Reseting skipped value
-                        skipped = 0;
-                    }
+                    MetaData.AddOrEdit($"track{newNumber}", MetaData.GetName($"track{thisFileNumber}"));
+                    MetaData.Remove($"track{thisFileNumber}");
+                    lastFileNumber = newNumber;
                 }
             }
             catch (Exception ex)
@@ -148,16 +145,21 @@ namespace OggConverter
             }
         }
 
+        public enum Direction { Up, Down }
+
         /// <summary>
         /// Allows to change the folder of song
         /// </summary>
         /// <param name="songList">Form1 songList</param>
         /// <param name="folder">Working folder</param>
         /// <param name="moveUp">false - file is moved down, true - file is moved up</param>
-        public static void ChangeOrder(ListBox songList, string folder, bool moveUp)
+        public static void ChangeOrder(ListBox songList, string folder, Direction direction)
         {
             int selectedIndex = songList.SelectedIndex;
-            if ((songList.SelectedIndex == -1) || (selectedIndex == 0 && moveUp) || (selectedIndex == songList.Items.Count - 1 && !moveUp)) return;
+            if ((songList.SelectedIndex == -1) || 
+                (selectedIndex == 0 && direction == Direction.Up) || 
+                (selectedIndex == songList.Items.Count - 1 && direction == Direction.Down))
+                return;
 
             if (Utilities.IsToolBusy())
             {
@@ -171,7 +173,7 @@ namespace OggConverter
             try
             {
                 string oldName = Player.WorkingSongList[selectedIndex].Item1;
-                string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
+                string newName = $"track{selectedIndex + (direction == Direction.Up ? 0 : 2)}";
 
                 string trackTemp = "";
 
@@ -203,7 +205,6 @@ namespace OggConverter
 
                 Logs.History(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
                 Form1.instance.Log(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
-
             }
             catch (Exception ex)
             {
@@ -215,7 +216,7 @@ namespace OggConverter
                 IsBusy = false;
                 Form1.instance.UpdateSongList();
                 songList.SelectedIndex = -1;
-                songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
+                songList.SelectedIndex = selectedIndex + (direction == Direction.Up ? -1 : 1);
             }
         }
 
@@ -281,14 +282,11 @@ namespace OggConverter
             try
             {
                 // Getting a new name for cloned song
-                for (int i = 1; i <= 99; i++)
-                {
-                    if (!File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"))
-                    {
-                        newName = $"track{i}";
-                        break;
-                    }
-                }
+                int newNumber = 1;
+                for (int i = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{newNumber}.ogg"); i++)
+                    newNumber++;
+
+                newName = $"track{newNumber}";
 
                 string pathToFile = $"{Settings.GamePath}\\{folder}\\{fileName}"; // Path to file to be cloned with it's name
 
