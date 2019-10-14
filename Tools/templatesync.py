@@ -1,6 +1,6 @@
 # MSC Music Manager Template Sync
 # Quickly sync locale files with Template Translation
-# Script version: 1.0 (07.10.2019)
+# Script version: 1.1 (14.10.2019)
 #
 # This file is distributed under the same license as the MSCMM is.
 
@@ -63,8 +63,11 @@ LOCALES = []
 LOCALES = os.listdir('locales')
 
 for locale in LOCALES:
-    print(' - ' + locale)
-    locale_file = open("locales\\" + locale, 'a')
-    locale_file.write(NEW_CONTENT)
+    if locale.endswith(".po"):
+        print(' - ' + locale)
+        locale_file = open("locales\\" + locale, 'a')
+        locale_file.write(NEW_CONTENT)
+    else:
+        os.remove("locales\\" + locale)
 
-print('\n\nFINISHED')
+print('\n\nSUCCESSFULLY FINISHED')

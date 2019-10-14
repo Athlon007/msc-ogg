@@ -1,6 +1,6 @@
 # MSC Music Manager Locale Sync
 # Quickly sync locale files from /OggConverter/locales/ with /OggConverter/bin/Debug/locales/ and /OggConverter/bin/Release/locales/
-# Script version: 1.0 (06.10.2019)
+# Script version: 1.1 (14.10.2019)
 #
 # This file is distributed under the same license as the MSCMM is.
 
@@ -30,10 +30,13 @@ LOCALES = []
 LOCALES = os.listdir('locales')
 
 for locale in LOCALES:
-    print(' - ' + locale)
-    copyfile('locales\\' + locale,
-             'bin\\Debug\\locales\\' + locale)
-    copyfile('locales\\' + locale,
-             'bin\\Release\\locales\\' + locale)
+    if locale.endswith(".po"):
+        print(' - ' + locale)
+        copyfile('locales\\' + locale,
+                 'bin\\Debug\\locales\\' + locale)
+        copyfile('locales\\' + locale,
+                 'bin\\Release\\locales\\' + locale)
+    else:
+        os.remove('locales\\' + locale)
 
 print('\n\nFINISHED')

@@ -14,6 +14,7 @@
   - You can use Alt+Up/Down arrows to move songs up or down
 - Songs that are converted by MSCMM finding files in Radio or CDs folders, will now use file name, if there isn't one in metadata of these songs
 - Added ffmpeg output. In order to enable it, go into Settings -> General -> Show ffmpeg output
+- Added useful keyboard shortcuts list in Help window
 
 ### Changes
 

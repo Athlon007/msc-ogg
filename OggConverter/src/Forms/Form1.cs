@@ -893,15 +893,15 @@ namespace OggConverter
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-            MessageBox.Show(Localisation.Get("Useful keyboard shurtcuts:\n\n" +
+            MessageBox.Show(Localisation.Get("Useful keyboard shortcuts:\n\n" +
                 "Player:\n" +
-                "   - Enter - when song is selected, it will play or stop the song playback\n" +
-                "   - Delete - when song is selected, will remove the selected song\n" +
-                "   - Ctrl + A - select all songs\n" +
-                "   - Ctrl + Up/Down arrows - move selected song up or down\n" +
-                "   - Alt + Up/Down - toggle between Radio and CD folders\n" +
-                "   - Ctrl + C - clone selected song\n" +
-                "   - Cltr + X - move selected song to a different folder"),
+                "- Enter - when song is selected, it will play or stop the song playback\n" +
+                "- Delete - when song is selected, will remove the selected song\n" +
+                "- Ctrl + A - select all songs\n" +
+                "- Ctrl + Up/Down arrows - move selected song up or down\n" +
+                "- Alt + Up/Down - toggle between Radio and CD folders\n" +
+                "- Ctrl + C - clone selected song\n" +
+                "- Cltr + X - move selected song to a different folder"),
                 Localisation.Get("Help"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
@@ -1045,19 +1045,28 @@ namespace OggConverter
                 songList.Select();
                 songList.Focus();
             }
+#if DEBUG
+            // DEBUG TOOLS
+            // Toggle restricted mode
+            if (e.Control && e.Alt && e.KeyCode == Keys.D1)
+            {
+                debugToggle ^= true;
+                RestrictedMode(debugToggle);
+            }
 
-            if (e.Control && e.KeyCode == Keys.Oem3)
+            // Toggle restricted mode (total)
+            if (e.Control && e.Alt && e.KeyCode == Keys.D2)
             {
                 debugToggle ^= true;
                 RestrictedMode(debugToggle, true);
             }
-
-            // Change folder Down (Ctrl+Down Arrow)
+#endif
+            // Change folder Down (Alt+Down Arrow)
             if (e.Alt && e.KeyCode == Keys.Down)
                 selectedFolder.SelectedIndex = selectedFolder.SelectedIndex < selectedFolder.Items.Count - 1
                     ? (selectedFolder.SelectedIndex + 1) : 0;
 
-            // Change folder Up (Ctrl+Up Arrow)
+            // Change folder Up (Alt+Up Arrow)
             if (e.Alt && e.KeyCode == Keys.Up)
                 selectedFolder.SelectedIndex = selectedFolder.SelectedIndex > 0
                     ? (selectedFolder.SelectedIndex - 1) : selectedFolder.Items.Count - 1;
