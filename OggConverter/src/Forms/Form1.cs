@@ -892,6 +892,19 @@ namespace OggConverter
                 Localisation.Get("Help"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+
+            MessageBox.Show(Localisation.Get("Useful keyboard shortcuts:\n\n" +
+                "Player:\n" +
+                "- Enter - when song is selected, it will play or stop the song playback\n" +
+                "- Delete - when song is selected, will remove the selected song\n" +
+                "- Ctrl + A - select all songs\n" +
+                "- Ctrl + Up/Down arrows - move selected song up or down\n" +
+                "- Alt + Up/Down - toggle between Radio and CD folders\n" +
+                "- Ctrl + C - clone selected song\n" +
+                "- Cltr + X - move selected song to a different folder"),
+                Localisation.Get("Help"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void SongList_SelectedIndexChanged(object sender, EventArgs e)
@@ -977,13 +990,19 @@ namespace OggConverter
 
         private void SongList_KeyDown(object sender, KeyEventArgs e)
         {
-            // Move song Down (Alt+Down Arrow)
-            if (e.Alt && e.KeyCode == Keys.Down)
+            // Move song Down (Ctrl+Down Arrow)
+            if (e.Control && e.KeyCode == Keys.Down)
+            {
                 Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Down);
+                songList.SelectedIndex--;
+            }
 
-            // Move song Up (Alt+Up Arrow)
-            if (e.Alt && e.KeyCode == Keys.Up)
+            // Move song Up (Ctrl+Up Arrow)
+            if (e.Control && e.KeyCode == Keys.Up)
+            {
                 Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Up);
+                songList.SelectedIndex++;
+            }
 
             // Select all items on songlist (Ctrl+A)
             if (e.Control && e.KeyCode == Keys.A)
@@ -1026,20 +1045,29 @@ namespace OggConverter
                 songList.Select();
                 songList.Focus();
             }
+#if DEBUG
+            // DEBUG TOOLS
+            // Toggle restricted mode
+            if (e.Control && e.Alt && e.KeyCode == Keys.D1)
+            {
+                debugToggle ^= true;
+                RestrictedMode(debugToggle);
+            }
 
-            if (e.Control && e.KeyCode == Keys.Oem3)
+            // Toggle restricted mode (total)
+            if (e.Control && e.Alt && e.KeyCode == Keys.D2)
             {
                 debugToggle ^= true;
                 RestrictedMode(debugToggle, true);
             }
-
-            // Change folder Down (Ctrl+Down Arrow)
-            if (e.Control && e.KeyCode == Keys.Down)
+#endif
+            // Change folder Down (Alt+Down Arrow)
+            if (e.Alt && e.KeyCode == Keys.Down)
                 selectedFolder.SelectedIndex = selectedFolder.SelectedIndex < selectedFolder.Items.Count - 1
                     ? (selectedFolder.SelectedIndex + 1) : 0;
 
-            // Change folder Up (Ctrl+Up Arrow)
-            if (e.Control && e.KeyCode == Keys.Up)
+            // Change folder Up (Alt+Up Arrow)
+            if (e.Alt && e.KeyCode == Keys.Up)
                 selectedFolder.SelectedIndex = selectedFolder.SelectedIndex > 0
                     ? (selectedFolder.SelectedIndex - 1) : selectedFolder.Items.Count - 1;
         }

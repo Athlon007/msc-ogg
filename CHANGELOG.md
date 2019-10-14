@@ -1,47 +1,35 @@
 # Changelog
 
-## Preview 2.7.0.1 (13.10.2019)
+## 2.7 (xx.10.2019)
 
 ### Added
 
-- If the files in folders are converted, the program will now get the name from file, if it didn't found it in metadata
+- Multiple changes and additions to Download!
+  - Added live output of youtube-dl
+  - MSCMM will try to find the song name
+  - Added song download progress bar
+  - Added ETA and download speed info
+- New player keyboard shorcuts:
+  - You can now quickly change working folder by clicking Ctrl+Up/Down arrow
+  - You can use Alt+Up/Down arrows to move songs up or down
+- Songs that are converted by MSCMM finding files in Radio or CDs folders, will now use file name, if there isn't one in metadata of these songs
 - Added ffmpeg output. In order to enable it, go into Settings -> General -> Show ffmpeg output
-
-## Changes
-
-- Optimization of Coverter.cs
-
-### Bug Fixes
-
-- Fixed bug in which the program would not start, if the directory of the game didn't exist if it used to earlier
-- Fixed "Converted {0} file(s) in total" translation not working
-
-## Preview 2.7.0.0 (11.10.2019)
-
-### Added
-
-- Added live output of youtube-dl when downloading
-- MSCMM will get song name if it's downloaded via the link
-- You can now quickly change working folder by clicking Ctrl+Up/Down arrow
-- You can use Shift+Up/Down arrows to move songs up or down
-- Added progress bar for when song is downloaded
-- Added ETA and download speed info
+- Added useful keyboard shortcuts list in Help window
 
 ### Changes
 
 - Player will now load all .ogg files found in folder, instead of first 99 files
   - Same goes for sorting files
+- Optimization of Coverter.cs
 - Code optimization and improvements
 
 ### Bug Fixes
 
 - Fixed Error message window not initializing localization script
-- Fixed link checking for downloader
-- The player will pause the song uppon pressing enter, if the song name has been trimmed
-
-### Known issues
-
-- After moving MSC to other folder, the program won't start
+- Fixed link validity checking for downloader
+- Fixed bugs regarding stopping song playback when the song name was longer than 51 characters
+- Fixed bug in which the program would not start, if the directory of the game didn't exist, or the MSC was moved. Now the program will try to find the game fodler again
+- Fixed "Converted {0} file(s) in total" translation not working
 
 ## 2.6 (30.09.2019)
 

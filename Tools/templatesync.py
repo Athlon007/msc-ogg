@@ -1,6 +1,6 @@
 # MSC Music Manager Template Sync
 # Quickly sync locale files with Template Translation
-# Script version: 1.0 (07.10.2019)
+# Script version: 1.1 (14.10.2019)
 #
 # This file is distributed under the same license as the MSCMM is.
 
@@ -37,7 +37,23 @@ ENGLISH_LOCALE = remove_poedit_tags(ENGLISH_LOCALE)
 NEW_CONTENT = TEMPLATE_FILE.replace(ENGLISH_LOCALE, '')
 
 if not ENGLISH_LOCALE in TEMPLATE_FILE:
-    print('Template file does not containt some strings as English (UK) does. Fix that first.')
+    print('Template file does not contain some strings as English (UK) does. Fix that first.\n')
+    print("\n\n========================================")
+    DIFFERENCE = ""
+    TEMPLATE_ARRAY = TEMPLATE_FILE.splitlines()
+    ENGLISH_ARRAY = ENGLISH_LOCALE.splitlines()
+    for i in ENGLISH_ARRAY:
+        if i not in TEMPLATE_ARRAY:
+            DIFFERENCE += i + "\n"
+
+    print("Difference in English.py:\n\n" + DIFFERENCE)
+    print("\n\n========================================")
+    DIFFERENCE = ""
+    for i in TEMPLATE_ARRAY:
+        if i not in ENGLISH_ARRAY:
+            DIFFERENCE += i + "\n"
+
+    print("\n\nDifference in TemplateTranslation.py:\n\n" + DIFFERENCE)
     quit()
 
 print('New translations: ' + NEW_CONTENT + '\n\nLocales:\n')
@@ -47,8 +63,11 @@ LOCALES = []
 LOCALES = os.listdir('locales')
 
 for locale in LOCALES:
-    print(' - ' + locale)
-    locale_file = open("locales\\" + locale, 'a')
-    locale_file.write(NEW_CONTENT)
+    if locale.endswith(".po"):
+        print(' - ' + locale)
+        locale_file = open("locales\\" + locale, 'a')
+        locale_file.write(NEW_CONTENT)
+    else:
+        os.remove("locales\\" + locale)
 
-print('\n\nFINISHED')
+print('\n\nSUCCESSFULLY FINISHED')
