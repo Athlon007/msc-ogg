@@ -693,7 +693,7 @@ msgid "Url is not a YouTube link."
 msgstr ""
 
 msgid "Url is not valid and is empty."
-msgstr ""
+msgstr ""z
 
 msgid "Show ffmpeg output"
 msgstr ""

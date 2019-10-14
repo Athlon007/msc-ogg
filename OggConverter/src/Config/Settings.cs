@@ -198,7 +198,11 @@ namespace OggConverter
             using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(key, true))
             {
                 if (Key != null && Key.GetValue("MSC Path") != null)
-                    return Key.GetValue("MSC Path", "").ToString();
+                {
+                    string path = Key.GetValue("MSC Path", "").ToString();
+                    if (Directory.Exists(path))
+                        return Key.GetValue("MSC Path", "").ToString();
+                }
             }
 
             // My Summer Car path is not saved. Now we're trying to find it in Steam root folder

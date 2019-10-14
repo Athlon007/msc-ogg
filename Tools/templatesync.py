@@ -37,7 +37,23 @@ ENGLISH_LOCALE = remove_poedit_tags(ENGLISH_LOCALE)
 NEW_CONTENT = TEMPLATE_FILE.replace(ENGLISH_LOCALE, '')
 
 if not ENGLISH_LOCALE in TEMPLATE_FILE:
-    print('Template file does not containt some strings as English (UK) does. Fix that first.')
+    print('Template file does not contain some strings as English (UK) does. Fix that first.\n')
+    print("\n\n========================================")
+    DIFFERENCE = ""
+    TEMPLATE_ARRAY = TEMPLATE_FILE.splitlines()
+    ENGLISH_ARRAY = ENGLISH_LOCALE.splitlines()
+    for i in ENGLISH_ARRAY:
+        if i not in TEMPLATE_ARRAY:
+            DIFFERENCE += i + "\n"
+
+    print("Difference in English.py:\n\n" + DIFFERENCE)
+    print("\n\n========================================")
+    DIFFERENCE = ""
+    for i in TEMPLATE_ARRAY:
+        if i not in ENGLISH_ARRAY:
+            DIFFERENCE += i + "\n"
+
+    print("\n\nDifference in TemplateTranslation.py:\n\n" + DIFFERENCE)
     quit()
 
 print('New translations: ' + NEW_CONTENT + '\n\nLocales:\n')
