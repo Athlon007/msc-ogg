@@ -129,6 +129,11 @@ namespace OggConverter
             set => Set("LastYTDLUpdateCheck", value);
         }
 
+        /// <summary>
+        /// Is set to true, if the version currently installed is from Preview ring
+        /// </summary>
+        public static bool ThisPreview { get => Get("ThisPreview", false); set => Set("ThisPreview", value); }
+
 
         /// <summary>
         /// Gets the value of setting from registry

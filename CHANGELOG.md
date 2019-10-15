@@ -1,6 +1,12 @@
 # Changelog
 
-## 2.7 (xx.10.2019)
+## Preview 2.8.0.0 (xx.10.2019)
+
+### Added
+
+- If you have the newer version downloaded than the currenty available in server, the program won't try to downgrade itself
+
+## 2.7 (15.10.2019)
 
 ### Added
 

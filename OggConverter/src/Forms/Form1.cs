@@ -193,6 +193,10 @@ namespace OggConverter
                     // Displaying the changelog
                     Log("\n" + Properties.Resources.changelog);
 
+                    // Is the update coming from Preview ring?
+                    // If so, save that to the settings
+                    Settings.ThisPreview = Settings.Preview;
+
                     // If the version is older than 2.1 (18151)
                     if (Settings.LatestVersion <= 18151)
                     {
