@@ -158,6 +158,8 @@ namespace OggConverter
             Directory.CreateDirectory("log");
             Directory.CreateDirectory("log\\locale_errors");
             File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
+
+            Form1.instance.Log(String.Format("An error has occured with current localisation. The problem has been saved into {0}.txt", date));
         }
     }
 }
