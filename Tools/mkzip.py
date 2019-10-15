@@ -1,7 +1,7 @@
 # MSC Music Manager Packing Zip
 # This script let's you quickly compress new release to .zip file.
 # It also removes logs and history from folder.
-# Script version: 2.1 (03.10.2019)
+# Script version: 2.1.1 (14.10.2019)
 #
 # This file is distributed under the same license as the MSCMM is.
 
@@ -62,12 +62,11 @@ def junk_cleaner(folder):
     if os.path.isdir("LOG"):
         shutil.rmtree("LOG")
 
-    print('Done!')
+    print('Junk cleaning of {0} done!'.format(folder))
 
 
 junk_cleaner('Release')
 junk_cleaner('Debug')
 
-print("Done!")
 print("Quitting...")
 quit()

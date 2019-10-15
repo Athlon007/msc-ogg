@@ -34,7 +34,7 @@ namespace OggConverter
         /// <summary>
         /// Should MSCMM remove source song files after conversion?
         /// </summary>
-        public static bool RemoveMP3 { get => Get("RemoveMP3", false); set => Set("RemoveMP3", value); }
+        public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }
 
         /// <summary>
         /// Should the game be started without steam?
@@ -95,6 +95,11 @@ namespace OggConverter
         /// Stores the language file name set by user
         /// </summary>
         public static string Language { get => Get("Language", "English (UK)"); set => Set("Language", value); }
+
+        /// <summary>
+        /// If true, uppon any conversion the 
+        /// </summary>
+        public static bool ShowFfmpegOutput { get => Get("ShowFfmpegOutput", false); set => Set("ShowFfmpegOutput", value); }
 
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
@@ -165,8 +170,20 @@ namespace OggConverter
         public static bool AreSettingsValid()
         {
             GamePath = GetMSCPath();
-            return !(String.IsNullOrEmpty(GamePath));
+
+            if (String.IsNullOrEmpty(GamePath))
+                return false;
+
+            if (!Directory.Exists(GamePath))
+                return false;
+
+            return true;
         }
+
+        /// <summary>
+        /// Is set to true, after the settings have been checked succesfully
+        /// </summary>
+        public static bool SettingsChecked { get; set; }
 
         // If you're reading this - I hope you had a better day than me fixing that fucking error fixed in 2.5.2...
         // ~ Athlon
@@ -181,7 +198,11 @@ namespace OggConverter
             using (RegistryKey Key = Registry.CurrentUser.OpenSubKey(key, true))
             {
                 if (Key != null && Key.GetValue("MSC Path") != null)
-                    return Key.GetValue("MSC Path", "").ToString();
+                {
+                    string path = Key.GetValue("MSC Path", "").ToString();
+                    if (Directory.Exists(path))
+                        return Key.GetValue("MSC Path", "").ToString();
+                }
             }
 
             // My Summer Car path is not saved. Now we're trying to find it in Steam root folder
@@ -195,6 +216,7 @@ namespace OggConverter
                 }
             }
             
+            // Check only if steamFolder is not empty
             if (steamFolder != "")
             {
                 // MSC is installed in root Steam folder

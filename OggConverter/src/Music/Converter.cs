@@ -47,6 +47,11 @@ namespace OggConverter
         public static string[] extensions = new[] { ".mp3", ".wav", ".aac", ".m4a", ".wma", ".ogg" };
 
         /// <summary>
+        /// Stores the output of ffmpeg.
+        /// </summary>
+        static string FfmpegOutput { get; set; }
+
+        /// <summary>
         /// Starts the conversion of every found file in Radio or CD
         /// </summary>
         public static async void StartConversion()
@@ -87,7 +92,7 @@ namespace OggConverter
                 if (Converter.Skipped != 4)
                 {
                     Form1.instance.Log(Localisation.Get("\nDone!"));
-                    Form1.instance.Log(Localisation.Get("Converted {0} file(s)in total", Converter.TotalConversions));
+                    Form1.instance.Log(Localisation.Get("Converted {0} file(s) in total", Converter.TotalConversions));
                     Form1.instance.Log(Localisation.Get("Conversion log was saved to history.txt"));
                 }
                 else
@@ -128,6 +133,8 @@ namespace OggConverter
 
             Form1.instance.Log(Localisation.Get("Initializing {0} conversion...\n", folder));
             string path = $"{Settings.GamePath}\\{folder}";
+
+            FfmpegOutput = "";
 
             if (!Directory.Exists(path))
             {
@@ -187,42 +194,30 @@ namespace OggConverter
                     Form1.instance.Log(Localisation.Get("Converting {0}", file.Name));
 
                     string songName = null;
+                    string argument = $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"";
 
-                    // If the file is already in OGG format - skip conversion and just rename it accordingly.
+                    // If the file is already in OGG format - rename file, and start FFmpeg in order to try and find the name
                     if (file.Name.EndsWith(".ogg") && !file.Name.StartsWith("track"))
                     {
                         File.Move($"{path}\\{file.Name}", $"{path}\\track{inGame}.ogg");
-                        ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{path}\\track{inGame}.ogg\"")
-                        {
-                            UseShellExecute = false,
-                            RedirectStandardError = true,
-                            CreateNoWindow = true
-                        };
-
-                        var process = Process.Start(psi);
-
-                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        songName = MetaData.GetFromOutput(ffmpegOut);
-                        await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
+                        argument = $"-i \"{path}\\track{inGame}.ogg\"";
                     }
-                    else
-                    {
-                        ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"")
-                        {
-                            UseShellExecute = false,
-                            RedirectStandardError = true,
-                            RedirectStandardOutput = true,
-                            CreateNoWindow = true
-                        };
 
-                        Process process = null;
-                        await Task.Run(() => process = Process.Start(psi));
+                    Process process = new Process();
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.RedirectStandardError = true;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.FileName = "ffmpeg.exe";
+                    process.StartInfo.Arguments = argument;
+                    process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+                    await Task.Run(() => process.Start());
+                    process.BeginErrorReadLine();
+                    await Task.Run(() => process.WaitForExit());
 
-                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        await Task.Run(() => process.WaitForExit());
-                        songName = MetaData.GetFromOutput(ffmpegOut);
-                        await Task.Factory.StartNew(() => MetaData.AddOrEdit($"track{inGame}", songName));
-                    }
+                    songName = MetaData.GetFromOutput(FfmpegOutput.Split('\n'));
+                    songName = String.IsNullOrEmpty(songName) ? file.Name.Split('.')[0] : songName;
+                    MetaData.AddOrEdit($"track{inGame}", songName);
 
                     Form1.instance.Log(Localisation.Get("Finished {0} as track{1}.ogg", file.Name, inGame));
 
@@ -276,6 +271,8 @@ namespace OggConverter
             if (Form1.instance != null)
                 Form1.instance.Log(Localisation.Get("\nConverting '{0}'\n", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
 
+            FfmpegOutput = "";
+
             try
             {
                 MetaData.AlternateFolder = folder;
@@ -303,55 +300,40 @@ namespace OggConverter
                 }
 
                 string songName = "";
+                string arguments = $"-i \"{filePath}\" -acodec libvorbis \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"";
 
                 // If it's just OGG file - instead of converting, simply rename it
                 if (filePath.EndsWith(".ogg"))
                 {
                     File.Move(filePath, $"{Settings.GamePath}\\{folder}\\track{inGame}.ogg");
+                    arguments = $"-i \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"";
+                }
 
-                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"")
-                    {
-                        UseShellExecute = false,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
+                Process process = new Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.FileName = "ffmpeg.exe";
+                process.StartInfo.Arguments = arguments;
+                process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+                await Task.Run(() => process.Start());
+                process.BeginErrorReadLine();
+                await Task.Run(() => process.WaitForExit());
 
-                    var process = Process.Start(psi);
-
-                    string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
+                if (altName == null)
+                {
+                    string[] ffmpegOut = FfmpegOutput.Split('\n');
                     songName = MetaData.GetFromOutput(ffmpegOut);
-
-                    MetaData.AddOrEdit($"track{inGame}", songName);
+                    if ((songName == " - " || songName == "") && altName != "")
+                        songName = altName;
                 }
                 else
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo("ffmpeg.exe", $"-i \"{filePath}\" -acodec libvorbis \"{Settings.GamePath}\\{folder}\\track{inGame}.ogg\"")
-                    {
-                        UseShellExecute = false,
-                        RedirectStandardError = true,
-                        RedirectStandardOutput = true,
-                        CreateNoWindow = true
-                    };
-
-                    Process process = null;
-                    await Task.Run(() => process = Process.Start(psi));
-
-                    if (altName == null)
-                    {
-                        string[] ffmpegOut = process.StandardError.ReadToEnd().Split('\n');
-                        songName = MetaData.GetFromOutput(ffmpegOut);
-                        if ((songName == " - " || songName == "") && altName != "")
-                            songName = altName;
-                    }
-                    else
-                    {
-                        songName = altName;
-                    }
-
-                    MetaData.AddOrEdit($"track{inGame}", songName);
-
-                    await Task.Run(() => process.WaitForExit());
+                    songName = altName;
                 }
+
+                MetaData.AddOrEdit($"track{inGame}", songName);
 
                 Logs.History(Localisation.Get("Added '{0}' (track{1}.ogg) in {2}", songName, inGame, folder));
 
@@ -397,6 +379,23 @@ namespace OggConverter
             return Converter.FilesWaitingForConversion("Radio") || Converter.FilesWaitingForConversion("CD") || 
                 Converter.FilesWaitingForConversion("CD1") || Converter.FilesWaitingForConversion("CD2") || 
                 Converter.FilesWaitingForConversion("CD3");
+        }
+
+        /// <summary>
+        /// Redirects the output from youtube-dl to YouTubeDlLog void in Form1
+        /// </summary>
+        /// <param name="sendingProcess"></param>
+        /// <param name="outLine"></param>
+        public static void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
+            try
+            {
+                string value = outLine.Data.ToString();
+                FfmpegOutput += value + "\n";
+                if (Settings.ShowFfmpegOutput)
+                    Form1.instance.Log(value);
+            }
+            catch { }
         }
     }
 }

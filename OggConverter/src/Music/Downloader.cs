@@ -100,9 +100,7 @@ namespace OggConverter
 
                 // Forced name is empty? Try to get the name from link
                 if (String.IsNullOrEmpty(forcedName))
-                {
                     forcedName = GetTitleFromYouTube(url);
-                }
 
                 await Converter.ConvertFile($"{Directory.GetCurrentDirectory()}\\download.mp3", folder, limit, forcedName, true);
 
@@ -118,28 +116,27 @@ namespace OggConverter
             }
         }
 
+        /// <summary>
+        /// Cancels download. Kills youtube-dl and ffmpeg processes and removes downloads.
+        /// </summary>
         public static void Cancel()
         {
             if (!IsBusy) return;
 
             CancelDownload = true;
-
             IsBusy = false;
+
             foreach (var process in Process.GetProcessesByName("youtube-dl"))
-            {
                 process.Kill();
-            }
 
             foreach (var process in Process.GetProcessesByName("ffmpeg"))
-            {
                 process.Kill();
-            }
 
             DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
             FileInfo[] files = di.GetFiles("download*");
             foreach (FileInfo file in files)
             {
-                while (Utilities.IsFileReady(file.FullName)) { }
+                while (!Utilities.IsFileReady(file.FullName)) { }
                 if (File.Exists(file.FullName))
                     File.Delete(file.FullName);
             }
@@ -154,7 +151,20 @@ namespace OggConverter
         {
             try
             {
-                Form1.instance.YoutubeDlLog(outLine.Data.ToString());
+                string value = outLine.Data.ToString();
+                Form1.instance.YoutubeDlLog(value);
+
+                // Only read lines that contain percentage
+                if (value.Contains("%"))
+                {
+                    string percentage = value.Split(']')[1].Split('%')[0].Trim();
+                    if (percentage.Contains("."))
+                        percentage = percentage.Split('.')[0];
+
+                    string downloadSpeed = value.Split('t')[1].Trim();
+
+                    Form1.instance.YtDownloadProgress(int.Parse(percentage), downloadSpeed);
+                }
             }
             catch { }
         }
@@ -185,10 +195,8 @@ namespace OggConverter
             string[] youtubeDlOutput = process.StandardOutput.ReadToEnd().Split('\n');
             process.WaitForExit();
 
-            while (!process.HasExited)
-            {
-                Application.DoEvents();
-            }
+            // Added this so the program won't freeze when getting the song name
+            while (!process.HasExited) { Application.DoEvents(); }
 
             string id = url.Split('=')[1];
             return youtubeDlOutput[0].Replace(id, "").Replace("-.mp4", "");

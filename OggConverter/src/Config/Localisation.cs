@@ -24,6 +24,7 @@ namespace OggConverter
     class Localisation
     {
         static Dictionary<string, string> localeFileContent;
+        public static Dictionary<string, string> LocaleFileContent { get => localeFileContent; set => localeFileContent = value; }
 
         /// <summary>
         /// Get translated by ID from localeFileContent.
@@ -45,13 +46,13 @@ namespace OggConverter
 
             // Locale file doesn't contain the ID?
             // Return the id
-            if (!localeFileContent.ContainsKey(id))
+            if (!LocaleFileContent.ContainsKey(id))
             {
                 DumpError(id, args);
                 return String.Format(id, args);
             }
 
-            string output = localeFileContent[id];
+            string output = LocaleFileContent[id];
             return output == "" ? String.Format(id, args) : String.Format(output, args);
         }
 
@@ -70,7 +71,7 @@ namespace OggConverter
                 return;
 
             // Wipes the dictionary
-            localeFileContent = new Dictionary<string, string>();
+            LocaleFileContent = new Dictionary<string, string>();
 
             // Reading locale file and skipping comments, and Poedit configurations to array
             string[] forbiddenElements = new string[] { "#", "Project-Id-Version: ", "POT-Creation-Date: ", "PO-Revision-Date: ",
@@ -119,7 +120,7 @@ namespace OggConverter
                 }
 
                 // Adding new dictionary item
-                localeFileContent.Add(id, str);
+                LocaleFileContent.Add(id, str);
             }
         }
 

@@ -145,18 +145,20 @@ namespace OggConverter
             }
         }
 
+        public enum Direction { Up, Down }
+
         /// <summary>
         /// Allows to change the folder of song
         /// </summary>
         /// <param name="songList">Form1 songList</param>
         /// <param name="folder">Working folder</param>
         /// <param name="moveUp">false - file is moved down, true - file is moved up</param>
-        public static void ChangeOrder(ListBox songList, string folder, bool moveUp)
+        public static void ChangeOrder(ListBox songList, string folder, Direction direction)
         {
             int selectedIndex = songList.SelectedIndex;
             if ((songList.SelectedIndex == -1) || 
-                (selectedIndex == 0 && moveUp) || 
-                (selectedIndex == songList.Items.Count - 1 && !moveUp))
+                (selectedIndex == 0 && direction == Direction.Up) || 
+                (selectedIndex == songList.Items.Count - 1 && direction == Direction.Down))
                 return;
 
             if (Utilities.IsToolBusy())
@@ -171,7 +173,7 @@ namespace OggConverter
             try
             {
                 string oldName = Player.WorkingSongList[selectedIndex].Item1;
-                string newName = $"track{selectedIndex + (moveUp ? 0 : 2)}";
+                string newName = $"track{selectedIndex + (direction == Direction.Up ? 0 : 2)}";
 
                 string trackTemp = "";
 
@@ -203,7 +205,6 @@ namespace OggConverter
 
                 Logs.History(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
                 Form1.instance.Log(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
-
             }
             catch (Exception ex)
             {
@@ -215,7 +216,7 @@ namespace OggConverter
                 IsBusy = false;
                 Form1.instance.UpdateSongList();
                 songList.SelectedIndex = -1;
-                songList.SelectedIndex = selectedIndex + (moveUp ? -1 : 1);
+                songList.SelectedIndex = selectedIndex + (direction == Direction.Up ? -1 : 1);
             }
         }
 

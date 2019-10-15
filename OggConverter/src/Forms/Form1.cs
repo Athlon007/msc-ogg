@@ -55,7 +55,11 @@ namespace OggConverter
                 return selectedFolder.Text;
             }
         }
-        private int SongsLimit { get => CurrentFolder.StartsWith("CD") ? 15 : 99; }
+
+        /// <summary>
+        /// Gets song limit in folder according to the folder name
+        /// </summary>
+        private int SongsLimit => CurrentFolder.StartsWith("CD") ? 15 : 99; 
 
         // Stores last selected item on songList. Set to -1 by default so nothing's checked
         int lastSelected = -1;
@@ -129,6 +133,10 @@ namespace OggConverter
                 return;
             }
 
+            Settings.SettingsChecked = true;
+
+            // If provided directory or mysummercar.exe in that folder don't exist
+            // That means that folder is invalid
             if ((!Directory.Exists(Settings.GamePath)) || (!File.Exists($"{Settings.GamePath}\\mysummercar.exe")))
             {
                 MessageBox.Show(Localisation.Get("Couldn't find mysummercar.exe.\n\nPlease set the correct game path."), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -138,9 +146,7 @@ namespace OggConverter
                 return;
             }
 
-            //Log($"Game Folder: {Settings.GamePath}");
             Log(Localisation.Get("Game Folder: {0}", Settings.GamePath));
-
 
             // Checks if ffmpeg or ffplay are missing
             // If so, they will be downloaded and the tool will be restarted.
@@ -438,11 +444,36 @@ namespace OggConverter
         public string GetYtDlLog { get => ytdlOutput.Text; }
 
         /// <summary>
+        /// Dumps the download speed from youtube-dl into label and progress bar.
+        /// </summary>
+        public void YtDownloadProgress(int percent, string speed)
+        {
+            // Progress bar
+            if (proYt.InvokeRequired)
+                proYt.Invoke(new Action(delegate ()
+                {
+                    proYt.Value = percent;
+                }));
+            else
+                proYt.Value = percent;
+
+            // Label
+            if (labProgress.InvokeRequired)
+                labProgress.Invoke(new Action(delegate ()
+                {
+                    labProgress.Text = percent.ToString() + "% " + speed;
+                }));
+            else
+                labProgress.Text = percent.ToString() + "% " + speed;
+        }
+
+
+        /// <summary>
         /// Updates song list used for player
         /// </summary>
         public void UpdateSongList()
         {
-            if (firstLoad) return;
+            if (firstLoad || !Settings.SettingsChecked) return;
 
             string path = $"{Settings.GamePath}\\{(CurrentFolder)}";
             int howManySongs = 0;
@@ -683,13 +714,13 @@ namespace OggConverter
         private void BtnUp_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.ChangeOrder(songList, CurrentFolder, true);
+            Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Up);
         }
 
         private void BtnDown_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.ChangeOrder(songList, CurrentFolder, false);
+            Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Down);
         }
 
         private void Form1_DragEnter(object sender, DragEventArgs e)
@@ -861,6 +892,19 @@ namespace OggConverter
                 Localisation.Get("Help"),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+
+            MessageBox.Show(Localisation.Get("Useful keyboard shortcuts:\n\n" +
+                "Player:\n" +
+                "- Enter - when song is selected, it will play or stop the song playback\n" +
+                "- Delete - when song is selected, will remove the selected song\n" +
+                "- Ctrl + A - select all songs\n" +
+                "- Ctrl + Up/Down arrows - move selected song up or down\n" +
+                "- Alt + Up/Down - toggle between Radio and CD folders\n" +
+                "- Ctrl + C - clone selected song\n" +
+                "- Cltr + X - move selected song to a different folder"),
+                Localisation.Get("Help"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void SongList_SelectedIndexChanged(object sender, EventArgs e)
@@ -935,6 +979,7 @@ namespace OggConverter
             Downloader.Cancel();
             RestrictedMode(false);
             btnCancelDownload.Enabled = false;
+            YtDownloadProgress(0, "0.00 KiB/s ETA 0:00");
         }
 
         private void MenuSettings_Click(object sender, EventArgs e)
@@ -945,6 +990,20 @@ namespace OggConverter
 
         private void SongList_KeyDown(object sender, KeyEventArgs e)
         {
+            // Move song Down (Ctrl+Down Arrow)
+            if (e.Control && e.KeyCode == Keys.Down)
+            {
+                Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Down);
+                songList.SelectedIndex--;
+            }
+
+            // Move song Up (Ctrl+Up Arrow)
+            if (e.Control && e.KeyCode == Keys.Up)
+            {
+                Player.ChangeOrder(songList, CurrentFolder, Player.Direction.Up);
+                songList.SelectedIndex++;
+            }
+
             // Select all items on songlist (Ctrl+A)
             if (e.Control && e.KeyCode == Keys.A)
                 for (int i = 0; i < songList.Items.Count; i++)
@@ -986,29 +1045,47 @@ namespace OggConverter
                 songList.Select();
                 songList.Focus();
             }
+#if DEBUG
+            // DEBUG TOOLS
+            // Toggle restricted mode
+            if (e.Control && e.Alt && e.KeyCode == Keys.D1)
+            {
+                debugToggle ^= true;
+                RestrictedMode(debugToggle);
+            }
 
-            if (e.Control && e.KeyCode == Keys.Oem3)
+            // Toggle restricted mode (total)
+            if (e.Control && e.Alt && e.KeyCode == Keys.D2)
             {
                 debugToggle ^= true;
                 RestrictedMode(debugToggle, true);
             }
+#endif
+            // Change folder Down (Alt+Down Arrow)
+            if (e.Alt && e.KeyCode == Keys.Down)
+                selectedFolder.SelectedIndex = selectedFolder.SelectedIndex < selectedFolder.Items.Count - 1
+                    ? (selectedFolder.SelectedIndex + 1) : 0;
+
+            // Change folder Up (Alt+Up Arrow)
+            if (e.Alt && e.KeyCode == Keys.Up)
+                selectedFolder.SelectedIndex = selectedFolder.SelectedIndex > 0
+                    ? (selectedFolder.SelectedIndex - 1) : selectedFolder.Items.Count - 1;
         }
 
         private void SongList_MouseDown(object sender, MouseEventArgs e)
         {
+            // Right click menu on SongList
             if (e.Button == MouseButtons.Right)
             {
-                songListContext.Show(Cursor.Position);
+                songListContext.Show(Cursor.Position); // Show song at cursor position
                 if (songList.SelectedIndices.Count < 2)
-                songList.SelectedIndex = -1;
+                    songList.SelectedIndex = -1;
                 songList.SelectedIndex = songList.IndexFromPoint(e.X, e.Y);
 
-
-                bool singleSongRelated = songList.SelectedIndex != -1;
-
-                contextCopy.Enabled = singleSongRelated;
-                contextDelete.Enabled = singleSongRelated;
-                contextMove.Enabled = singleSongRelated;
+                bool anySongSelected = songList.SelectedIndex != -1;
+                contextCopy.Enabled = anySongSelected;
+                contextDelete.Enabled = anySongSelected;
+                contextMove.Enabled = anySongSelected;
             }
         }
 
