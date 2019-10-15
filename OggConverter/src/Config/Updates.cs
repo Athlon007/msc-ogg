@@ -131,7 +131,7 @@ namespace OggConverter
                             Form1.instance.ButtonGetUpdate.Visible = true;
                             return;
                         }
-                        else if ((latest < version) && (!Settings.Preview))
+                        else if ((latest < version) && (!Settings.Preview) && Settings.ThisPreview)
                         {
                             // DOWNGRADE MODE
                             downgrade = true;
