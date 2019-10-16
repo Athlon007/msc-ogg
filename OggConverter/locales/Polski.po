@@ -822,3 +822,30 @@ msgstr ""
 "- Alt + Strzałki góra/dół - przełącz się pomiędzy folderami Radio i CD\n"
 "- Ctrl +C - sklonuj zaznaczoną piosenkę\n"
 "- Ctrl + X - przenieś zaznaczoną piosenkę do innego folderu"
+
+msgid "Moved '{0}' ({1}) from {2} to recycle bin"
+msgstr "Przeniesiono '{0}' ({1}) z {2} do kosza"
+
+msgid "Recycle Bin"
+msgstr "Kosz"
+
+msgid "Restore"
+msgstr "Przywróć"
+
+msgid "Restored '{0}' from the recycle bin"
+msgstr "Przywrócono '{0}' z kosza"
+
+msgid "Recycle bin is empty"
+msgstr "Kosz jest pusty"
+
+msgid "There are {0} files in recycle bin"
+msgstr "Jest {0} plik(ów) w koszu"
+
+msgid "Delete all"
+msgstr "Opróżnij"
+
+msgid "Are you sure you want to delete all {0} files?"
+msgstr "Czy na pewno chcesz usunąć wszystkie {0} plik(ów)?"
+
+msgid "Remove"
+msgstr "Usuń"

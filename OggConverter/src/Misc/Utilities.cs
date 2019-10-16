@@ -170,21 +170,28 @@ namespace OggConverter
             }
         }
 
+        public enum ArrayReturnValueSource { SongList, Name }
+
         /// <summary>
         /// Gets all items from ListBox and returns them into an array.
         /// </summary>
         /// <param name="listBox">songList</param>
         /// <returns>Array of all selected items</returns>
-        public static string[] GetSelectedItemsToArray(ListBox listBox)
+        public static string[] GetSelectedItemsToArray(ListBox listBox, ArrayReturnValueSource arrayReturnValueSource)
         {
             int[] domains = listBox.SelectedIndices.OfType<int>().ToArray();
             List<string> selectedItemsList = new List<string>();
 
             foreach (int i in domains)
-                selectedItemsList.Add(Player.WorkingSongList[i].Item1.ToString());
+            {
+                string output = arrayReturnValueSource == ArrayReturnValueSource.SongList
+                                ? Player.WorkingSongList[i].Item1.ToString()
+                                : listBox.Items[i].ToString();
 
-            string[] selectedItemsArray = selectedItemsList.ToArray();
-            return selectedItemsArray;
+                selectedItemsList.Add(output);
+            }
+
+            return selectedItemsList.ToArray();
         }
 
         /// <summary>

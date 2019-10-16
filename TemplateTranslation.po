@@ -2,12 +2,11 @@
 # Copyright (C) YEAR Your Name
 # This file is distributed under GNU General Public License v3
 # FIRST NAME, <your@email.com> YEAR
-
 msgid ""
 msgstr ""
 "Project-Id-Version: MSCMM 2\n"
 "POT-Creation-Date: 2019-09-24 22:13+0200\n"
-"PO-Revision-Date: 2019-10-14 15:20+0200\n"
+"PO-Revision-Date: 2019-10-16 12:44+0200\n"
 "Last-Translator: Konrad Figura <aathlon@outlook.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -713,4 +712,31 @@ msgid ""
 "- Alt + Up/Down - toggle between Radio and CD folders\n"
 "- Ctrl + C - clone selected song\n"
 "- Cltr + X - move selected song to a different folder"
+msgstr ""
+
+msgid "Moved '{0}' ({1}) from {2} to recycle bin"
+msgstr ""
+
+msgid "Recycle Bin"
+msgstr ""
+
+msgid "Restore"
+msgstr ""
+
+msgid "Restored '{0}' from the recycle bin"
+msgstr ""
+
+msgid "Recycle bin is empty"
+msgstr ""
+
+msgid "There are {0} files in recycle bin"
+msgstr ""
+
+msgid "Delete all"
+msgstr ""
+
+msgid "Are you sure you want to delete all {0} files?"
+msgstr ""
+
+msgid "Remove"
 msgstr ""

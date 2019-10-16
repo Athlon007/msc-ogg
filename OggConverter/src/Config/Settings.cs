@@ -62,7 +62,7 @@ namespace OggConverter
         public static bool History { get => Get("History", true); set => Set("History", value); }
 
         /// <summary>
-        /// Forces MSCMM to use old song name reading, instead of one using metafiles (planned to be removed in future updates)
+        /// Forces MSCMM to use old song name reading, instead of one using metafiles
         /// </summary>
         public static bool DisableMetaFiles { get => Get("DisableMetaFiles", false); set => Set("DisableMetaFiles", value); }
 
@@ -106,7 +106,7 @@ namespace OggConverter
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }
 
         /// <summary>
-        /// Disables or hides features (used mostly for screenshots)
+        /// Disables or hides features (used for screenshots)
         /// </summary>
         public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
 
@@ -136,7 +136,7 @@ namespace OggConverter
         /// <param name="name">Name of value</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns>Returns the value (either as string, int or bool)</returns>
-        static dynamic Get<Object>(string name, Object defaultValue)
+        internal static dynamic Get<Object>(string name, Object defaultValue)
         {
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))
                 return Convert.ChangeType(Key.GetValue(name, defaultValue), typeof(Object));
@@ -147,7 +147,7 @@ namespace OggConverter
         /// </summary>
         /// <param name="name">Name of value</param>
         /// <param name="value">Value to set</param>
-        static void Set<T>(string name, T value)
+        internal static void Set<T>(string name, T value)
         {
             if (value != null)
                 using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))

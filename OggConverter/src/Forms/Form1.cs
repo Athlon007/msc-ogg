@@ -362,7 +362,7 @@ namespace OggConverter
             foreach (Button btn in btns)
             {
                 btn.Text = Localisation.Get(btn.Text);
-                if (btn.Text.Length > 7) 
+                if (btn.Text.Length >= 5) 
                     btn.Font = new Font("Microsoft Sans Serif", 7);
                 else if (btn.Text.Length > 8)
                     btn.Text = btn.Text.Substring(0, 6) + "...";
@@ -382,6 +382,10 @@ namespace OggConverter
             label2.Text = Localisation.Get("Select song from the list to the left and edit it's displayed name.");
             label1.Text = Localisation.Get("Name:");
             btnSetName.Text = Localisation.Get("Save");
+            tabRecycle.Text = Localisation.Get("Recycle Bin");
+            btnRecycleDelete.Text = Localisation.Get("Delete");
+            btnRestore.Text = Localisation.Get("Restore");
+            btnEmptyAll.Text = Localisation.Get("Delete all");
         }
 
         /// <summary>
@@ -507,6 +511,25 @@ namespace OggConverter
 
             if (songList.Items.Count > lastSelected)
                 songList.SelectedIndex = lastSelected;
+
+            UpdateRecycleBinList();
+        }
+
+        void UpdateRecycleBinList()
+        {
+            if (!Directory.Exists($"{Settings.GamePath}\\Recycle Bin")) return;
+            DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\Recycle Bin");
+            FileInfo[] files = di.GetFiles("*.ogg");
+            trashList.Items.Clear();
+
+            foreach (var file in files)
+                trashList.Items.Add(file.Name.Replace(".ogg", ""));
+
+            labRecycle.Text = files.Length == 0 
+                ? Localisation.Get("Recycle bin is empty")
+                : Localisation.Get("There are {0} files in recycle bin", files.Length);
+
+            tabRecycle.Text = files.Length > 0 ? Localisation.Get("Recycle Bin") + $" ({files.Length})" : Localisation.Get("Recycle Bin");
         }
 
         private void Log_TextChanged(object sender, EventArgs e)
@@ -696,7 +719,7 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.Delete(CurrentFolder, Utilities.GetSelectedItemsToArray(songList));
+            Player.Remove(CurrentFolder, Utilities.GetSelectedItemsToArray(songList, Utilities.ArrayReturnValueSource.SongList));
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -778,7 +801,7 @@ namespace OggConverter
             if (songList.SelectedIndex == -1) return;
 
             Player.Stop();
-            MoveTo moveTo = new MoveTo(Utilities.GetSelectedItemsToArray(songList), CurrentFolder);
+            MoveTo moveTo = new MoveTo(Utilities.GetSelectedItemsToArray(songList, Utilities.ArrayReturnValueSource.SongList), CurrentFolder);
             moveTo.ShowDialog();
         }
 
@@ -925,10 +948,15 @@ namespace OggConverter
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || tabs.SelectedIndex != 2)
-                return;
-
-            txtSongName.Text = songList.SelectedItem.ToString();
+            switch (songList.SelectedIndex)
+            {
+                case 2:
+                    txtSongName.Text = songList.SelectedItem.ToString();
+                    break;
+                case 3:
+                    UpdateRecycleBinList();
+                    break;
+            }
         }
 
         private void BtnSetName_Click(object sender, EventArgs e)
@@ -1156,6 +1184,23 @@ namespace OggConverter
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             ResizeForm();
+        }
+
+        private void BtnRestore_Click(object sender, EventArgs e)
+        {
+            if (trashList.SelectedIndex == -1) return;
+            Player.Restore(CurrentFolder, Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+        }
+
+        private void BtnRecycleDelete_Click(object sender, EventArgs e)
+        {
+            if (trashList.SelectedIndex == -1) return;
+            Player.Delete(CurrentFolder + "\\Recycle Bin", Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+        }
+
+        private void BtnEmptyAll_Click(object sender, EventArgs e)
+        {
+            Player.DeleteAll();
         }
     }
 }

@@ -4,6 +4,10 @@
 
 ### Added
 
+- Added recycle bin!
+  - From now on, all deleted files will land there first
+  - You can access the recycle bin in the new Recycle Bin tab
+  - Recycle bin is inside My Summer Car folder in the new "Trash" folder
 - If you have the newer version downloaded than the currenty available in server, the program won't try to downgrade itself
 
 ### Changes

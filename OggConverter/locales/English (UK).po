@@ -713,3 +713,30 @@ msgid ""
 "- Ctrl + C - clone selected song\n"
 "- Cltr + X - move selected song to a different folder"
 msgstr ""
+
+msgid "Moved '{0}' ({1}) from {2} to recycle bin"
+msgstr ""
+
+msgid "Recycle Bin"
+msgstr ""
+
+msgid "Restore"
+msgstr ""
+
+msgid "Restored '{0}' from the recycle bin"
+msgstr ""
+
+msgid "Recycle bin is empty"
+msgstr ""
+
+msgid "There are {0} files in recycle bin"
+msgstr ""
+
+msgid "Delete all"
+msgstr ""
+
+msgid "Are you sure you want to delete all {0} files?"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
