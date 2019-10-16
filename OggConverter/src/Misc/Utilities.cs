@@ -34,7 +34,7 @@ namespace OggConverter
         /// <param name="needles">Extensions that we want to check if they are in the file name.</param>
         /// <returns></returns>
         public static bool ContainsAny(this string haystack, params string[] needles)
-        {
+        { 
             foreach (string needle in needles)
                 if (haystack.Contains(needle))
                     return true;

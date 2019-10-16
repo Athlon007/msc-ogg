@@ -68,12 +68,13 @@ namespace OggConverter
             {
                 if (!file.ContainsAny(Converter.extensions))
                 {
-                    MessageBox.Show(Localisation.Get("One or more files are not supported music file formats. Exiting now."), 
+                    MessageBox.Show(Localisation.Get("One or more files are not supported music file formats. Exiting now."),
                         Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                     this.Close();
                     return;
                 }
+
             }
 
             this.files = files;

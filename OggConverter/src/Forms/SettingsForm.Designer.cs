@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkShowFfmpegOutput = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboLang = new System.Windows.Forms.ComboBox();
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
@@ -38,7 +39,6 @@
             this.tabFiles = new System.Windows.Forms.TabPage();
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
-            this.chkRemoveSource = new System.Windows.Forms.CheckBox();
             this.tabUpdates = new System.Windows.Forms.TabPage();
             this.btnCheckYTDLUpdates = new System.Windows.Forms.Button();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
@@ -60,7 +60,6 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.chkShowFfmpegOutput = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -95,6 +94,17 @@
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // chkShowFfmpegOutput
+            // 
+            this.chkShowFfmpegOutput.AutoSize = true;
+            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 194);
+            this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
+            this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
+            this.chkShowFfmpegOutput.TabIndex = 28;
+            this.chkShowFfmpegOutput.Text = "Show ffmpeg output";
+            this.chkShowFfmpegOutput.UseVisualStyleBackColor = true;
+            this.chkShowFfmpegOutput.Click += new System.EventHandler(this.ChkShowFfmpegOutput_Click);
             // 
             // label2
             // 
@@ -142,7 +152,6 @@
             // 
             this.tabFiles.Controls.Add(this.chkNoMetafiles);
             this.tabFiles.Controls.Add(this.chkAutoSort);
-            this.tabFiles.Controls.Add(this.chkRemoveSource);
             this.tabFiles.Location = new System.Drawing.Point(4, 25);
             this.tabFiles.Name = "tabFiles";
             this.tabFiles.Padding = new System.Windows.Forms.Padding(3);
@@ -154,7 +163,7 @@
             // chkNoMetafiles
             // 
             this.chkNoMetafiles.AutoSize = true;
-            this.chkNoMetafiles.Location = new System.Drawing.Point(29, 89);
+            this.chkNoMetafiles.Location = new System.Drawing.Point(29, 62);
             this.chkNoMetafiles.Name = "chkNoMetafiles";
             this.chkNoMetafiles.Size = new System.Drawing.Size(178, 21);
             this.chkNoMetafiles.TabIndex = 2;
@@ -165,24 +174,13 @@
             // chkAutoSort
             // 
             this.chkAutoSort.AutoSize = true;
-            this.chkAutoSort.Location = new System.Drawing.Point(29, 62);
+            this.chkAutoSort.Location = new System.Drawing.Point(29, 35);
             this.chkAutoSort.Name = "chkAutoSort";
             this.chkAutoSort.Size = new System.Drawing.Size(191, 21);
             this.chkAutoSort.TabIndex = 1;
             this.chkAutoSort.Text = "Sort files after conversion";
             this.chkAutoSort.UseVisualStyleBackColor = true;
             this.chkAutoSort.Click += new System.EventHandler(this.ChkAutoSort_Click);
-            // 
-            // chkRemoveSource
-            // 
-            this.chkRemoveSource.AutoSize = true;
-            this.chkRemoveSource.Location = new System.Drawing.Point(29, 35);
-            this.chkRemoveSource.Name = "chkRemoveSource";
-            this.chkRemoveSource.Size = new System.Drawing.Size(264, 21);
-            this.chkRemoveSource.TabIndex = 0;
-            this.chkRemoveSource.Text = "Remove source files after conversion";
-            this.chkRemoveSource.UseVisualStyleBackColor = true;
-            this.chkRemoveSource.Click += new System.EventHandler(this.ChkRemoveSource_Click);
             // 
             // tabUpdates
             // 
@@ -415,17 +413,6 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // chkShowFfmpegOutput
-            // 
-            this.chkShowFfmpegOutput.AutoSize = true;
-            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 194);
-            this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
-            this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
-            this.chkShowFfmpegOutput.TabIndex = 28;
-            this.chkShowFfmpegOutput.Text = "Show ffmpeg output";
-            this.chkShowFfmpegOutput.UseVisualStyleBackColor = true;
-            this.chkShowFfmpegOutput.Click += new System.EventHandler(this.ChkShowFfmpegOutput_Click);
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -456,7 +443,6 @@
         private System.Windows.Forms.TabPage tabFiles;
         private System.Windows.Forms.TabPage tabUpdates;
         private System.Windows.Forms.TabPage tabLogging;
-        private System.Windows.Forms.CheckBox chkRemoveSource;
         private System.Windows.Forms.CheckBox chkAutoSort;
         private System.Windows.Forms.CheckBox chkNoMetafiles;
         private System.Windows.Forms.CheckBox chkAutoUpdates;

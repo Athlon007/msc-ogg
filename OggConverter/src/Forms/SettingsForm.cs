@@ -42,7 +42,6 @@ namespace OggConverter
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Monthly"));
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Never"));
 
-            chkRemoveSource.Checked = Settings.RemoveMP3;
             chkAutoSort.Checked = Settings.AutoSort;
             chkNoMetafiles.Checked = Settings.DisableMetaFiles;
             chkAutoUpdates.Checked = !Settings.NoUpdates;
@@ -85,11 +84,6 @@ namespace OggConverter
             toolTip.SetToolTip(chkHistory, Localisation.Get("All operations on songs will be saved into history file - converting, moving, deleting and more."));
             toolTip.SetToolTip(chkShortcut, Localisation.Get("Create desktop shortcut to MSCMM."));
             toolTip.SetToolTip(chkNoSteam, Localisation.Get("Uppon pressing 'Launch Game', the program won't use Steam, and rather start the game through exe."));
-        }
-
-        private void ChkRemoveSource_Click(object sender, EventArgs e)
-        {
-            Settings.RemoveMP3 ^= true;
         }
 
         private void ChkAutoSort_Click(object sender, EventArgs e)

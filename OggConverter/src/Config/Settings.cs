@@ -32,11 +32,6 @@ namespace OggConverter
 #endif
 
         /// <summary>
-        /// Should MSCMM remove source song files after conversion?
-        /// </summary>
-        public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }
-
-        /// <summary>
         /// Should the game be started without steam?
         /// </summary>
         public static bool NoSteam { get => Get("NoSteam", false); set => Set("NoSteam", value); }

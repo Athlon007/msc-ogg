@@ -56,7 +56,6 @@ namespace OggConverter
             return output == "" ? String.Format(id, args) : String.Format(output, args);
         }
 
-
         /// <summary>
         /// Loads the locale file from .po file
         /// </summary>
@@ -77,9 +76,10 @@ namespace OggConverter
             string[] forbiddenElements = new string[] { "#", "Project-Id-Version: ", "POT-Creation-Date: ", "PO-Revision-Date: ",
             "Last-Translator: ", "Language-Team: ", "MIME-Version: ", "Content-Type: ", "Content-Transfer-Encoding: ", "X-Generator: ",
             "X-Poedit-Basepath: ", "Plural-Forms: ", "Language: "};
+
             string[] localeArray = File.ReadLines(localeFilePath)
                 .Where(line => line.Length > 0).Where(line => line.StartsWith("msg") || line.StartsWith("\""))
-                .Where(line => !line.ContainsAny(forbiddenElements))
+                //.Where(line => !line.ContainsAny(forbiddenElements))
                 .ToArray();
 
             // Reading array one by one

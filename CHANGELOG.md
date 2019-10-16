@@ -6,6 +6,14 @@
 
 - If you have the newer version downloaded than the currenty available in server, the program won't try to downgrade itself
 
+### Changes
+
+- Small UI changes
+
+### Removed
+
+- Removed "remove source file" function. The program will now delete files that have been pasted into Radio or CD folder, and not when user converted song by drag & dropping file
+
 ## 2.7 (15.10.2019)
 
 ### Added

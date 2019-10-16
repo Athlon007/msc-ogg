@@ -221,8 +221,7 @@ namespace OggConverter
 
                     Form1.instance.Log(Localisation.Get("Finished {0} as track{1}.ogg", file.Name, inGame));
 
-                    if (Settings.RemoveMP3)
-                        File.Delete($"{path}\\{file.Name}");
+                    File.Delete($"{path}\\{file.Name}");
 
                     Logs.History(Localisation.Get("Added '{0}' (track{1}.ogg) in {2}", songName, inGame, folder));
 
