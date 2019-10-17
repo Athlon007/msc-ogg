@@ -1067,7 +1067,9 @@ namespace OggConverter
             }
         }
 
+#if DEBUG
         bool debugToggle = false;
+#endif
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // If the songlist is not focused and user presses up or down arrow - it will focus on song list and select the first song

@@ -1,6 +1,6 @@
 # Changelog
 
-## Preview 2.8.0.0 (xx.10.2019)
+## Preview 2.8.0.0 (17.10.2019)
 
 ### Added
 
@@ -16,7 +16,7 @@
 
 ### Removed
 
-- Removed "remove source file" function. The program will now delete files that have been pasted into Radio or CD folder, and not when user converted song by drag & dropping file
+- Removed "remove source file" function. The program will now delete files that have been pasted into Radio or CD folder, and not when user converted song by drag & dropping file, preventing the infinite conversion loop
 
 ## 2.7 (15.10.2019)
 
