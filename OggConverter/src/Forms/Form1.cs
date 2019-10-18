@@ -115,6 +115,10 @@ namespace OggConverter
             songListRight = tabs.Left - songList.Right;
             songListBottom = panel1.Bottom - songList.Bottom;
 
+            //panel1.Dock = DockStyle.Fill;
+            //btnDirectory.Dock = DockStyle.Top;
+            //btnOpenGameDir.Dock = DockStyle.Top;
+
             // Removing temporary or unused files
             Utilities.Cleanup();
 
@@ -1094,6 +1098,13 @@ namespace OggConverter
                 debugToggle ^= true;
                 RestrictedMode(debugToggle, true);
             }
+
+            // Toggle sizable window
+            if (e.Control && e.Alt && e.KeyCode == Keys.D3)
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.MaximizeBox = true;
+            }
 #endif
             // Change folder Down (Alt+Down Arrow)
             if (e.Alt && e.KeyCode == Keys.Down)
@@ -1152,14 +1163,14 @@ namespace OggConverter
 
         void ResizeForm()
         {
+            panel1.Width = this.Width / 2 - 164;
+            panel1.Height = this.Height - panelDefaultY - 46;
+
             tabs.Size = new Size(this.Width - tabs.Location.X - 16, this.Height - tabs.Location.Y - 46);
             tabs.ItemSize = new Size((tabs.Width / tabs.TabCount) - 2, 0);
             double d = tabsDefaultX + (Math.Pow(this.Width, 0.95) - tabsDefaultX * 2) - 34;
             d = Math.Round(d);
-            tabs.Location = new Point((int)d, tabs.Location.Y);
-
-            panel1.Width = tabs.Location.X + 1;
-            panel1.Height = this.Height - panelDefaultY - 46;
+            tabs.Location = new Point(panel1.Width, tabs.Location.Y);
 
             labCounter.Location = new Point(labCounter.Location.X, panel1.Height - labCounter.Height - 5);
             songList.Width = tabs.Left - songListRight - songList.Left;
@@ -1173,9 +1184,14 @@ namespace OggConverter
             btnDel.Left = btnUp.Left;
             btnShuffle.Left = btnUp.Left;
 
+            labNowPlaying.Left = labNowPlaying.CenterHorizontally(panel1);
             labNowPlaying.Top = songList.Bottom;
             btnPlaySong.Top = labNowPlaying.Bottom;
-            btnStop.Top = labNowPlaying.Bottom;
+            btnStop.Top = btnPlaySong.Top;
+
+            btnDirectory.Size = new Size(tabs.Left / 2, btnDirectory.Height);
+            btnOpenGameDir.Location = new Point(btnDirectory.Right, btnOpenGameDir.Location.Y);
+            btnOpenGameDir.Width = btnDirectory.Width;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
