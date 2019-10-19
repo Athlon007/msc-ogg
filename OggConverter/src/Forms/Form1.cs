@@ -346,10 +346,16 @@ namespace OggConverter
         /// <summary>
         /// Loads the locale translations to UI elements
         /// </summary>
-        void Localize()
+        public void Localize()
         {
-            foreach (ToolStripMenuItem c in menu.Items)
-                c.Text = Localisation.Get(c.Text);
+            //foreach (ToolStripMenuItem c in menu.Items)
+            //    c.Text = Localisation.Get(c.Text);
+
+            menuTool.Text = Localisation.Get("Tools");
+            menuSettings.Text = Localisation.Get("Settings");
+            btnLaunchGame.Text = Localisation.Get("Launch Game");
+            btnHelp.Text = Localisation.Get("Help");
+            btnDownloadUpdate.Text = Localisation.Get("Get Update Now!");
 
             btnLastLog.Text = Localisation.Get("Open History");
             btnLogFolder.Text = Localisation.Get("Open Log Folder");
@@ -361,11 +367,16 @@ namespace OggConverter
             btnDirectory.Text = Localisation.Get("Set Game Folder");
             btnOpenGameDir.Text = Localisation.Get("Open in Explorer");
 
+            btnSort.Text = Localisation.Get("Sort");
+            btnMoveSong.Text = Localisation.Get("Move");
+            btnCloneSong.Text = Localisation.Get("Clone");
+            btnDel.Text = Localisation.Get("Remove");
+            btnShuffle.Text = Localisation.Get("Shuffle");
+
             // Player
             Button[] btns = new Button[] { btnSort, btnMoveSong, btnCloneSong, btnDel, btnShuffle };
             foreach (Button btn in btns)
             {
-                btn.Text = Localisation.Get(btn.Text);
                 if (btn.Text.Length >= 5) 
                     btn.Font = new Font("Microsoft Sans Serif", 7);
                 else if (btn.Text.Length > 8)
@@ -529,11 +540,18 @@ namespace OggConverter
             foreach (var file in files)
                 trashList.Items.Add(file.Name.Replace(".ogg", ""));
 
-            labRecycle.Text = files.Length == 0 
+            bool noFiles = files.Length == 0;
+
+            labRecycle.Text = noFiles 
                 ? Localisation.Get("Recycle bin is empty")
                 : Localisation.Get("There are {0} files in recycle bin", files.Length);
 
-            tabRecycle.Text = files.Length > 0 ? Localisation.Get("Recycle Bin") + $" ({files.Length})" : Localisation.Get("Recycle Bin");
+            tabRecycle.Text = !noFiles ? Localisation.Get("Recycle Bin") + $" ({files.Length})" : Localisation.Get("Recycle Bin");
+
+            btnRecycleDelete.Enabled = !noFiles;
+            btnEmptyAll.Enabled = !noFiles;
+            btnRestore.Enabled = !noFiles;
+            
         }
 
         private void Log_TextChanged(object sender, EventArgs e)

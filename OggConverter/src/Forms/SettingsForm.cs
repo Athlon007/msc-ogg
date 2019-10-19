@@ -242,8 +242,15 @@ namespace OggConverter
 
         private void ComboLang_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            Settings.Language = comboLang.Text;
+            // Ignore setting change, if the value selected is the same
+            if (comboLang.Text == Settings.Language) return;
 
+            Settings.Language = comboLang.Text;
+            Localisation.LoadLocaleFile();
+            Form1.instance.Localize();
+            this.Localise();
+
+            /*
             DialogResult dl = MessageBox.Show(
                 Localisation.Get("In order to apply the change, you need to restart MSCMM. Would you like to do that now?"),
                 Localisation.Get("Question"),
@@ -264,6 +271,7 @@ namespace OggConverter
                 process.Start();
                 Application.Exit();
             }
+            */
         }
 
         void Localise()

@@ -1,5 +1,15 @@
 # Changelog
 
+## Preview 2.8.0.1 (xx.10.2019)
+
+### Added
+
+- Language can now be changed without program having to restart
+
+### Changes
+
+- Recycle bin buttons will now be disabled, if the bin is empty
+
 ## Preview 2.8.0.0 (17.10.2019)
 
 ### Added
