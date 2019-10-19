@@ -348,9 +348,6 @@ namespace OggConverter
         /// </summary>
         public void Localize()
         {
-            //foreach (ToolStripMenuItem c in menu.Items)
-            //    c.Text = Localisation.Get(c.Text);
-
             menuTool.Text = Localisation.Get("Tools");
             menuSettings.Text = Localisation.Get("Settings");
             btnLaunchGame.Text = Localisation.Get("Launch Game");
@@ -848,7 +845,7 @@ namespace OggConverter
 
         private async void BtnDownload_Click(object sender, EventArgs e)
         {
-            if (!Utilities.IsOnline() || txtboxVideo.Text == "") return;
+            if (!Utilities.IsOnline() || String.IsNullOrEmpty(txtboxVideo.Text)) return;
 
             btnCancelDownload.Enabled = true;
 

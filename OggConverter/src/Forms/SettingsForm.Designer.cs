@@ -60,6 +60,7 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
+            this.chkIgnoreLimits = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -150,6 +151,7 @@
             // 
             // tabFiles
             // 
+            this.tabFiles.Controls.Add(this.chkIgnoreLimits);
             this.tabFiles.Controls.Add(this.chkNoMetafiles);
             this.tabFiles.Controls.Add(this.chkAutoSort);
             this.tabFiles.Location = new System.Drawing.Point(4, 25);
@@ -413,6 +415,17 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
+            // chkIgnoreLimits
+            // 
+            this.chkIgnoreLimits.AutoSize = true;
+            this.chkIgnoreLimits.Location = new System.Drawing.Point(29, 89);
+            this.chkIgnoreLimits.Name = "chkIgnoreLimits";
+            this.chkIgnoreLimits.Size = new System.Drawing.Size(199, 21);
+            this.chkIgnoreLimits.TabIndex = 3;
+            this.chkIgnoreLimits.Text = "Ignore song limit limitations";
+            this.chkIgnoreLimits.UseVisualStyleBackColor = true;
+            this.chkIgnoreLimits.Click += new System.EventHandler(this.chkIgnoreLimits_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -470,5 +483,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chkShowFfmpegOutput;
+        private System.Windows.Forms.CheckBox chkIgnoreLimits;
     }
 }

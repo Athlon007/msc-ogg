@@ -4,11 +4,14 @@
 
 ### Added
 
-- Language can now be changed without program having to restart
+- Added ability to disable the message when user is converting song over the limit of the current folder
 
 ### Changes
 
 - Recycle bin buttons will now be disabled, if the bin is empty
+- Move To window will now appear next to the cursor
+- Language can now be changed without program having to restart
+- Code optimization and improvements
 
 ## Preview 2.8.0.0 (17.10.2019)
 

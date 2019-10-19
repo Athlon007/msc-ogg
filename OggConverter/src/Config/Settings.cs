@@ -96,6 +96,11 @@ namespace OggConverter
         /// </summary>
         public static bool ShowFfmpegOutput { get => Get("ShowFfmpegOutput", false); set => Set("ShowFfmpegOutput", value); }
 
+        /// <summary>
+        /// If true, the program won't show the question, when user is converting songs over folder limit.
+        /// </summary>
+        public static bool IgnoreLimitations { get => Get("IgnoreLimitations", false); set => Set("IgnoreLimitations", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////

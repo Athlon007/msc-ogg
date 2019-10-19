@@ -205,5 +205,19 @@ namespace OggConverter
             return Uri.TryCreate(url, UriKind.Absolute, out uriResult) 
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
         }
+
+        /// <summary>
+        /// Counts the files inside of folder and number for a file
+        /// </summary>
+        /// <param name="folder">Workind directory</param>
+        /// <returns></returns>
+        public static int GetNewFileNumber(string folder)
+        {
+            int newNumber = 1;
+            for (int i = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"); i++)
+                newNumber++;
+
+            return newNumber;
+        }
     }
 }

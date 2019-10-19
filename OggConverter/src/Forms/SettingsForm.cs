@@ -53,6 +53,7 @@ namespace OggConverter
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
             chkShowFfmpegOutput.Checked = Settings.ShowFfmpegOutput;
+            chkIgnoreLimits.Checked = Settings.IgnoreLimitations;
 
             if (Directory.Exists("locales"))
             {
@@ -319,6 +320,11 @@ namespace OggConverter
         private void ChkShowFfmpegOutput_Click(object sender, EventArgs e)
         {
             Settings.ShowFfmpegOutput ^= true;
+        }
+
+        private void chkIgnoreLimits_Click(object sender, EventArgs e)
+        {
+            Settings.IgnoreLimitations ^= true;
         }
     }
 }

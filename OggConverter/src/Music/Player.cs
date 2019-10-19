@@ -37,15 +37,6 @@ namespace OggConverter
 
         public static bool IsBusy { get; set; }
 
-        public static int GetNewFileNumber(string folder)
-        {
-            int newNumber = 1;
-            for (int i = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"); i++)
-                newNumber++;
-
-            return newNumber;
-        }
-
         /// <summary>
         /// Plays selected song using ffplay.exe
         /// </summary>
@@ -248,7 +239,7 @@ namespace OggConverter
 
             try
             {
-                int newNumber = GetNewFileNumber(destination);
+                int newNumber = Utilities.GetNewFileNumber(destination);
 
                 // Waiting for file to be free
                 while (!Utilities.IsFileReady($"{Settings.GamePath}\\{source}\\{fileName}.ogg")) { }
@@ -289,7 +280,7 @@ namespace OggConverter
             try
             {
                 // Getting a new name for cloned song
-                int newNumber = GetNewFileNumber("folder");
+                int newNumber = Utilities.GetNewFileNumber("folder");
 
                 newName = $"track{newNumber}";
 
@@ -442,7 +433,7 @@ namespace OggConverter
                     {
                         while (!Utilities.IsFileReady(filePath)) { }
 
-                        string newFileName = $"track{GetNewFileNumber(folder)}";
+                        string newFileName = $"track{Utilities.GetNewFileNumber(folder)}";
                         File.Move(filePath, $"{Settings.GamePath}\\{folder}\\{newFileName}.ogg");
                         MetaData.AddOrEdit(newFileName, file);
                         

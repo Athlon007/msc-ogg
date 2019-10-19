@@ -160,11 +160,8 @@ namespace OggConverter
                     return;
                 }
 
-                int inGame = 1; // Counts how many files there are in game + after that variable new files are named
-
-                // Counting how many OGG files there are already
-                for (int c = 1; File.Exists($"{path}\\track{c}.ogg"); c++)
-                    inGame++;
+                // Counts how many files there are in game + after that variable new files are named
+                int inGame = Utilities.GetNewFileNumber(folder); 
 
                 // Starting the conversion of all found files
                 foreach (FileInfo file in files)
@@ -174,7 +171,7 @@ namespace OggConverter
                         inGame++;
 
                     // If the limit of files per folder is applied, checks if it isn't over it
-                    if ((limit != 0) && (inGame > limit))
+                    if ((limit != 0) && (inGame > limit) && (!Settings.IgnoreLimitations))
                     {
                         DialogResult res = MessageBox.Show(
                             Localisation.Get("There's over {0} files in {1} already converted. " +
@@ -266,7 +263,7 @@ namespace OggConverter
                 return;
             }
 
-            int inGame = 1;
+            int inGame = Utilities.GetNewFileNumber(folder);
             if (Form1.instance != null)
                 Form1.instance.Log(Localisation.Get("\nConverting '{0}'\n", filePath.Substring(filePath.LastIndexOf('\\') + 1)));
 
@@ -276,11 +273,7 @@ namespace OggConverter
             {
                 MetaData.AlternateFolder = folder;
 
-                //Counting how many OGG files there are already
-                for (int c = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{c}.ogg"); c++)
-                    inGame++;
-
-                if ((limit != 0) && (inGame > limit))
+                if ((limit != 0) && (inGame > limit) && (!Settings.IgnoreLimitations))
                 {
                     DialogResult res = MessageBox.Show(
                         Localisation.Get("There's over {0} files in {1} already converted. " +
