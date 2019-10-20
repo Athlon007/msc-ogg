@@ -1,6 +1,6 @@
 # Changelog
 
-## Preview 2.8.0.1 (xx.10.2019)
+## Preview 2.8.0.1 (20.10.2019)
 
 ### Added
 

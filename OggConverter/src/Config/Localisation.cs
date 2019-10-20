@@ -23,8 +23,7 @@ namespace OggConverter
 {
     class Localisation
     {
-        static Dictionary<string, string> localeFileContent;
-        public static Dictionary<string, string> LocaleFileContent { get => localeFileContent; set => localeFileContent = value; }
+        public static Dictionary<string, string> LocaleFileContent { get; set; }
 
         /// <summary>
         /// Get translated by ID from localeFileContent.
