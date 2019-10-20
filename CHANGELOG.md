@@ -11,7 +11,13 @@
 - Recycle bin buttons will now be disabled, if the bin is empty
 - Move To window will now appear next to the cursor
 - Language can now be changed without program having to restart
+- Small changes in updating of song list
 - Code optimization and improvements
+
+### Bug Fixes
+
+- Fixed not working "Changing Order: moved '{0}' to '{1}', and '{1}' to '{0}'" translation
+- Fixed the tab changing not loading the song name in Edit tab and not updating recycle bin list in Recycle Bin tab
 
 ## Preview 2.8.0.0 (17.10.2019)
 

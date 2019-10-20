@@ -83,18 +83,18 @@
             this.btnSetName = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
+            this.tabRecycle = new System.Windows.Forms.TabPage();
+            this.btnEmptyAll = new System.Windows.Forms.Button();
+            this.labRecycle = new System.Windows.Forms.Label();
+            this.btnRestore = new System.Windows.Forms.Button();
+            this.btnRecycleDelete = new System.Windows.Forms.Button();
+            this.trashList = new System.Windows.Forms.ListBox();
             this.downloadProgress = new System.Windows.Forms.ProgressBar();
             this.songListContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabRecycle = new System.Windows.Forms.TabPage();
-            this.trashList = new System.Windows.Forms.ListBox();
-            this.btnRecycleDelete = new System.Windows.Forms.Button();
-            this.btnRestore = new System.Windows.Forms.Button();
-            this.labRecycle = new System.Windows.Forms.Label();
-            this.btnEmptyAll = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -102,8 +102,8 @@
             this.tabLog.SuspendLayout();
             this.tabDownload.SuspendLayout();
             this.tabMeta.SuspendLayout();
-            this.songListContext.SuspendLayout();
             this.tabRecycle.SuspendLayout();
+            this.songListContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // logOutput
@@ -673,6 +673,76 @@
             this.txtSongName.TabIndex = 2;
             this.txtSongName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSongName_KeyDown);
             // 
+            // tabRecycle
+            // 
+            this.tabRecycle.Controls.Add(this.btnEmptyAll);
+            this.tabRecycle.Controls.Add(this.labRecycle);
+            this.tabRecycle.Controls.Add(this.btnRestore);
+            this.tabRecycle.Controls.Add(this.btnRecycleDelete);
+            this.tabRecycle.Controls.Add(this.trashList);
+            this.tabRecycle.Location = new System.Drawing.Point(4, 25);
+            this.tabRecycle.Name = "tabRecycle";
+            this.tabRecycle.Size = new System.Drawing.Size(645, 405);
+            this.tabRecycle.TabIndex = 3;
+            this.tabRecycle.Text = "Recycle Bin";
+            this.tabRecycle.UseVisualStyleBackColor = true;
+            // 
+            // btnEmptyAll
+            // 
+            this.btnEmptyAll.Location = new System.Drawing.Point(156, 357);
+            this.btnEmptyAll.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEmptyAll.Name = "btnEmptyAll";
+            this.btnEmptyAll.Size = new System.Drawing.Size(132, 44);
+            this.btnEmptyAll.TabIndex = 28;
+            this.btnEmptyAll.Text = "Empty All";
+            this.btnEmptyAll.UseVisualStyleBackColor = true;
+            this.btnEmptyAll.Click += new System.EventHandler(this.BtnEmptyAll_Click);
+            // 
+            // labRecycle
+            // 
+            this.labRecycle.AutoSize = true;
+            this.labRecycle.Location = new System.Drawing.Point(13, 6);
+            this.labRecycle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labRecycle.Name = "labRecycle";
+            this.labRecycle.Size = new System.Drawing.Size(137, 17);
+            this.labRecycle.TabIndex = 27;
+            this.labRecycle.Text = "Recycle bin is empty";
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.Location = new System.Drawing.Point(497, 358);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(132, 44);
+            this.btnRestore.TabIndex = 26;
+            this.btnRestore.Text = "Restore";
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.BtnRestore_Click);
+            // 
+            // btnRecycleDelete
+            // 
+            this.btnRecycleDelete.Location = new System.Drawing.Point(16, 357);
+            this.btnRecycleDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRecycleDelete.Name = "btnRecycleDelete";
+            this.btnRecycleDelete.Size = new System.Drawing.Size(132, 44);
+            this.btnRecycleDelete.TabIndex = 25;
+            this.btnRecycleDelete.Text = "Delete";
+            this.btnRecycleDelete.UseVisualStyleBackColor = true;
+            this.btnRecycleDelete.Click += new System.EventHandler(this.BtnRecycleDelete_Click);
+            // 
+            // trashList
+            // 
+            this.trashList.FormattingEnabled = true;
+            this.trashList.HorizontalScrollbar = true;
+            this.trashList.ItemHeight = 16;
+            this.trashList.Location = new System.Drawing.Point(16, 25);
+            this.trashList.Margin = new System.Windows.Forms.Padding(4);
+            this.trashList.Name = "trashList";
+            this.trashList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.trashList.Size = new System.Drawing.Size(613, 324);
+            this.trashList.Sorted = true;
+            this.trashList.TabIndex = 24;
+            // 
             // downloadProgress
             // 
             this.downloadProgress.Location = new System.Drawing.Point(515, 1);
@@ -726,76 +796,6 @@
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
-            // tabRecycle
-            // 
-            this.tabRecycle.Controls.Add(this.btnEmptyAll);
-            this.tabRecycle.Controls.Add(this.labRecycle);
-            this.tabRecycle.Controls.Add(this.btnRestore);
-            this.tabRecycle.Controls.Add(this.btnRecycleDelete);
-            this.tabRecycle.Controls.Add(this.trashList);
-            this.tabRecycle.Location = new System.Drawing.Point(4, 25);
-            this.tabRecycle.Name = "tabRecycle";
-            this.tabRecycle.Size = new System.Drawing.Size(645, 405);
-            this.tabRecycle.TabIndex = 3;
-            this.tabRecycle.Text = "Recycle Bin";
-            this.tabRecycle.UseVisualStyleBackColor = true;
-            // 
-            // trashList
-            // 
-            this.trashList.FormattingEnabled = true;
-            this.trashList.HorizontalScrollbar = true;
-            this.trashList.ItemHeight = 16;
-            this.trashList.Location = new System.Drawing.Point(16, 25);
-            this.trashList.Margin = new System.Windows.Forms.Padding(4);
-            this.trashList.Name = "trashList";
-            this.trashList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.trashList.Size = new System.Drawing.Size(613, 324);
-            this.trashList.Sorted = true;
-            this.trashList.TabIndex = 24;
-            // 
-            // btnRecycleDelete
-            // 
-            this.btnRecycleDelete.Location = new System.Drawing.Point(16, 357);
-            this.btnRecycleDelete.Margin = new System.Windows.Forms.Padding(4);
-            this.btnRecycleDelete.Name = "btnRecycleDelete";
-            this.btnRecycleDelete.Size = new System.Drawing.Size(132, 44);
-            this.btnRecycleDelete.TabIndex = 25;
-            this.btnRecycleDelete.Text = "Delete";
-            this.btnRecycleDelete.UseVisualStyleBackColor = true;
-            this.btnRecycleDelete.Click += new System.EventHandler(this.BtnRecycleDelete_Click);
-            // 
-            // btnRestore
-            // 
-            this.btnRestore.Location = new System.Drawing.Point(497, 358);
-            this.btnRestore.Margin = new System.Windows.Forms.Padding(4);
-            this.btnRestore.Name = "btnRestore";
-            this.btnRestore.Size = new System.Drawing.Size(132, 44);
-            this.btnRestore.TabIndex = 26;
-            this.btnRestore.Text = "Restore";
-            this.btnRestore.UseVisualStyleBackColor = true;
-            this.btnRestore.Click += new System.EventHandler(this.BtnRestore_Click);
-            // 
-            // labRecycle
-            // 
-            this.labRecycle.AutoSize = true;
-            this.labRecycle.Location = new System.Drawing.Point(13, 6);
-            this.labRecycle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labRecycle.Name = "labRecycle";
-            this.labRecycle.Size = new System.Drawing.Size(137, 17);
-            this.labRecycle.TabIndex = 27;
-            this.labRecycle.Text = "Recycle bin is empty";
-            // 
-            // btnEmptyAll
-            // 
-            this.btnEmptyAll.Location = new System.Drawing.Point(156, 357);
-            this.btnEmptyAll.Margin = new System.Windows.Forms.Padding(4);
-            this.btnEmptyAll.Name = "btnEmptyAll";
-            this.btnEmptyAll.Size = new System.Drawing.Size(132, 44);
-            this.btnEmptyAll.TabIndex = 28;
-            this.btnEmptyAll.Text = "Empty All";
-            this.btnEmptyAll.UseVisualStyleBackColor = true;
-            this.btnEmptyAll.Click += new System.EventHandler(this.BtnEmptyAll_Click);
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -838,9 +838,9 @@
             this.tabDownload.PerformLayout();
             this.tabMeta.ResumeLayout(false);
             this.tabMeta.PerformLayout();
-            this.songListContext.ResumeLayout(false);
             this.tabRecycle.ResumeLayout(false);
             this.tabRecycle.PerformLayout();
+            this.songListContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

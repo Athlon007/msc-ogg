@@ -203,8 +203,8 @@ namespace OggConverter
                 if (File.Exists($"{Settings.GamePath}\\{folder}\\trackTemp.ogg"))
                     File.Move($"{Settings.GamePath}\\{folder}\\trackTemp.ogg", $"{Settings.GamePath}\\{folder}\\{oldName}.ogg");
 
-                Logs.History(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
-                Form1.instance.Log(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{0}' to '{1}'", newName, oldName));
+                Logs.History(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{1}' to '{0}'", newName, oldName));
+                Form1.instance.Log(Localisation.Get("Changing Order: moved '{0}' to '{1}', and '{1}' to '{0}'", newName, oldName));
             }
             catch (Exception ex)
             {

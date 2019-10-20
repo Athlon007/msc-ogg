@@ -515,8 +515,7 @@ namespace OggConverter
                 howManySongs++;
             }
 
-            songList.Items.Clear();
-            songList.Items.AddRange(newTrackList.ToArray());
+            songList.DataSource = newTrackList;
 
             labCounter.Text = Localisation.Get("Songs: {0}/{1}", howManySongs, SongsLimit);
             labCounter.ForeColor = howManySongs > SongsLimit ? Color.Red : Color.Black;
@@ -532,8 +531,8 @@ namespace OggConverter
             if (!Directory.Exists($"{Settings.GamePath}\\Recycle Bin")) return;
             DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\Recycle Bin");
             FileInfo[] files = di.GetFiles("*.ogg");
+            
             trashList.Items.Clear();
-
             foreach (var file in files)
                 trashList.Items.Add(file.Name.Replace(".ogg", ""));
 
@@ -967,7 +966,7 @@ namespace OggConverter
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (songList.SelectedIndex)
+            switch (tabs.SelectedIndex)
             {
                 case 2:
                     txtSongName.Text = songList.SelectedItem.ToString();
