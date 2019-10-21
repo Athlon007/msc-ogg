@@ -1,13 +1,20 @@
 # Changelog
 
-## Preview 2.8.0.1 (20.10.2019)
+## 2.8 (xx.10.2019)
 
 ### Added
 
-- Added ability to disable the message when user is converting song over the limit of the current folder
+- Added recycle bin!
+  - From now on, all deleted files will land there first
+  - You can access the recycle bin in the new Recycle Bin tab
+  - Recycle bin is inside My Summer Car folder in the new "Trash" folder
+- If you have the newer version downloaded than the currenty available in server, the program won't try to downgrade itself
+- Added ability to disable the message which appears when user is converting song over the limit of the current folder
+- Added some more bugs to fix later ;)
 
 ### Changes
 
+- Small UI changes
 - Recycle bin buttons will now be disabled, if the bin is empty
 - Move To window will now appear next to the cursor
 - Language can now be changed without program having to restart
@@ -17,21 +24,6 @@
 ### Bug Fixes
 
 - Fixed not working "Changing Order: moved '{0}' to '{1}', and '{1}' to '{0}'" translation
-- Fixed the tab changing not loading the song name in Edit tab and not updating recycle bin list in Recycle Bin tab
-
-## Preview 2.8.0.0 (17.10.2019)
-
-### Added
-
-- Added recycle bin!
-  - From now on, all deleted files will land there first
-  - You can access the recycle bin in the new Recycle Bin tab
-  - Recycle bin is inside My Summer Car folder in the new "Trash" folder
-- If you have the newer version downloaded than the currenty available in server, the program won't try to downgrade itself
-
-### Changes
-
-- Small UI changes
 
 ### Removed
 

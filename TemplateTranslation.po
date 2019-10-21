@@ -740,3 +740,9 @@ msgstr ""
 
 msgid "Remove"
 msgstr ""
+
+msgid "Ignore limitation of songs in folder"
+msgstr ""
+
+msgid "Normally the program will show a warning during conversion, when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, it will be ignored."
+msgstr ""

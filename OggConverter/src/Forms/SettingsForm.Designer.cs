@@ -37,6 +37,7 @@
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
             this.tabFiles = new System.Windows.Forms.TabPage();
+            this.chkIgnoreLimits = new System.Windows.Forms.CheckBox();
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
             this.tabUpdates = new System.Windows.Forms.TabPage();
@@ -60,7 +61,6 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.chkIgnoreLimits = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -161,6 +161,17 @@
             this.tabFiles.TabIndex = 0;
             this.tabFiles.Text = "Files";
             this.tabFiles.UseVisualStyleBackColor = true;
+            // 
+            // chkIgnoreLimits
+            // 
+            this.chkIgnoreLimits.AutoSize = true;
+            this.chkIgnoreLimits.Location = new System.Drawing.Point(29, 89);
+            this.chkIgnoreLimits.Name = "chkIgnoreLimits";
+            this.chkIgnoreLimits.Size = new System.Drawing.Size(232, 21);
+            this.chkIgnoreLimits.TabIndex = 3;
+            this.chkIgnoreLimits.Text = "Ignore song limit folder limitation";
+            this.chkIgnoreLimits.UseVisualStyleBackColor = true;
+            this.chkIgnoreLimits.Click += new System.EventHandler(this.chkIgnoreLimits_Click);
             // 
             // chkNoMetafiles
             // 
@@ -414,17 +425,6 @@
             this.chkCrashLog.Text = "Create logs after crash";
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
-            // 
-            // chkIgnoreLimits
-            // 
-            this.chkIgnoreLimits.AutoSize = true;
-            this.chkIgnoreLimits.Location = new System.Drawing.Point(29, 89);
-            this.chkIgnoreLimits.Name = "chkIgnoreLimits";
-            this.chkIgnoreLimits.Size = new System.Drawing.Size(199, 21);
-            this.chkIgnoreLimits.TabIndex = 3;
-            this.chkIgnoreLimits.Text = "Ignore song limit limitations";
-            this.chkIgnoreLimits.UseVisualStyleBackColor = true;
-            this.chkIgnoreLimits.Click += new System.EventHandler(this.chkIgnoreLimits_Click);
             // 
             // SettingsForm
             // 

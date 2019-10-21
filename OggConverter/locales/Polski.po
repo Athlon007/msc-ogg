@@ -849,3 +849,9 @@ msgstr "Czy na pewno chcesz usunąć wszystkie {0} plik(ów)?"
 
 msgid "Remove"
 msgstr "Usuń"
+
+msgid "Ignore limitation of songs in folder"
+msgstr "Ignoruj limitację piosenek w folderze"
+
+msgid "Normally the program will show a warning during conversion, when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, it will be ignored."
+msgstr "Normalnie program pokaże ostrzeżenie podczas konwersji, gdy jest więcej plików niż folder na to zezwala (99 dla Radio, 15 dla CD). Jeżeli ta opcja jest włączona, to ostrzeżenie będzie ignorowane."

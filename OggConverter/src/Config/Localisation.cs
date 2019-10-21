@@ -35,7 +35,7 @@ namespace OggConverter
         {
             string localFile = $"locales\\{Settings.Language}.po";
 
-            // locales folder doens't exists? Create it now
+            // locales folder doesn't exists? Create it now
             if (!Directory.Exists("locales"))
                 Directory.CreateDirectory("locales");
 
