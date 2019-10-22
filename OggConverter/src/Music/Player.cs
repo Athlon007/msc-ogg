@@ -518,7 +518,7 @@ namespace OggConverter
             }
             finally
             {
-                if (Settings.AutoSort)
+                if (Settings.AutoSort && folder != "Recycle Bin")
                     Player.Sort(folder);
 
                 Form1.instance.UpdateSongList();

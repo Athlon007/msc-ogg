@@ -1227,7 +1227,7 @@ namespace OggConverter
         private void BtnRecycleDelete_Click(object sender, EventArgs e)
         {
             if (trashList.SelectedIndex == -1) return;
-            Player.Delete(CurrentFolder + "\\Recycle Bin", Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+            Player.Delete("Recycle Bin", Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
         }
 
         private void BtnEmptyAll_Click(object sender, EventArgs e)
