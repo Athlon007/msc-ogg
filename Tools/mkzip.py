@@ -60,7 +60,7 @@ def junk_cleaner(folder):
         os.remove("history.txt")
 
     if os.path.isdir("LOG"):
-        shutil.rmtree("LOG")
+        shutil.rmtree("LOG", True)
 
     print('Junk cleaning of {0} done!'.format(folder))
 

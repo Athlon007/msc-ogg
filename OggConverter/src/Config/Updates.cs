@@ -35,7 +35,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19420;
+        public const int version = 19430;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -131,7 +131,7 @@ namespace OggConverter
                             Form1.instance.ButtonGetUpdate.Visible = true;
                             return;
                         }
-                        else if ((latest < version) && (!Settings.Preview))
+                        else if ((latest < version) && (!Settings.Preview) && Settings.ThisPreview)
                         {
                             // DOWNGRADE MODE
                             downgrade = true;

@@ -36,9 +36,10 @@
             // 
             // btnApply
             // 
-            this.btnApply.Location = new System.Drawing.Point(138, 31);
+            this.btnApply.Location = new System.Drawing.Point(184, 38);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(75, 23);
+            this.btnApply.Size = new System.Drawing.Size(100, 28);
             this.btnApply.TabIndex = 28;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
@@ -54,37 +55,41 @@
             "CD1",
             "CD2",
             "CD3"});
-            this.selectedFolder.Location = new System.Drawing.Point(11, 32);
+            this.selectedFolder.Location = new System.Drawing.Point(15, 39);
+            this.selectedFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.selectedFolder.Name = "selectedFolder";
-            this.selectedFolder.Size = new System.Drawing.Size(121, 21);
+            this.selectedFolder.Size = new System.Drawing.Size(160, 24);
             this.selectedFolder.TabIndex = 27;
             this.selectedFolder.SelectedIndexChanged += new System.EventHandler(this.SelectedFolder_SelectedIndexChanged);
             // 
             // strMessage
             // 
             this.strMessage.AutoSize = true;
-            this.strMessage.Location = new System.Drawing.Point(13, 8);
+            this.strMessage.Location = new System.Drawing.Point(17, 10);
+            this.strMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.strMessage.Name = "strMessage";
-            this.strMessage.Size = new System.Drawing.Size(181, 13);
+            this.strMessage.Size = new System.Drawing.Size(238, 17);
             this.strMessage.TabIndex = 26;
             this.strMessage.Text = "Where do you want to move {i} files?";
             this.strMessage.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // MoveTo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(220, 63);
+            this.ClientSize = new System.Drawing.Size(293, 78);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.selectedFolder);
             this.Controls.Add(this.strMessage);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MoveTo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Move to";
+            this.Load += new System.EventHandler(this.MoveTo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

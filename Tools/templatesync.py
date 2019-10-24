@@ -58,6 +58,9 @@ if not ENGLISH_LOCALE in TEMPLATE_FILE:
 
 print('New translations: ' + NEW_CONTENT + '\n\nLocales:\n')
 
+if os.path.isfile('TemplateTranslation.mo'):
+    os.remove('TemplateTranslation.mo')
+
 os.chdir('OggConverter')
 LOCALES = []
 LOCALES = os.listdir('locales')

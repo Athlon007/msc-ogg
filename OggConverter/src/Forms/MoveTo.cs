@@ -49,6 +49,11 @@ namespace OggConverter
             }
         }
 
+        private void MoveTo_Load(object sender, EventArgs e)
+        {
+            this.SetDesktopLocation(Cursor.Position.X, Cursor.Position.Y);
+        }
+
         private string Message
         {
             set

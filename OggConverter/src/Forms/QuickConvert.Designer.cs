@@ -49,7 +49,7 @@
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(97, 41);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(100, 28);
             this.btnExit.TabIndex = 3;
@@ -68,7 +68,7 @@
             "CD2",
             "CD3"});
             this.selectedFolder.Location = new System.Drawing.Point(16, 41);
-            this.selectedFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.selectedFolder.Margin = new System.Windows.Forms.Padding(4);
             this.selectedFolder.Name = "selectedFolder";
             this.selectedFolder.Size = new System.Drawing.Size(160, 24);
             this.selectedFolder.TabIndex = 24;
@@ -76,7 +76,7 @@
             // btnApply
             // 
             this.btnApply.Location = new System.Drawing.Point(181, 41);
-            this.btnApply.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnApply.Margin = new System.Windows.Forms.Padding(4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(100, 28);
             this.btnApply.TabIndex = 25;
@@ -94,7 +94,7 @@
             this.Controls.Add(this.btnExit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "QuickConvert";

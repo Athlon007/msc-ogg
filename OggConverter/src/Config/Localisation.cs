@@ -23,8 +23,7 @@ namespace OggConverter
 {
     class Localisation
     {
-        static Dictionary<string, string> localeFileContent;
-        public static Dictionary<string, string> LocaleFileContent { get => localeFileContent; set => localeFileContent = value; }
+        public static Dictionary<string, string> LocaleFileContent { get; set; }
 
         /// <summary>
         /// Get translated by ID from localeFileContent.
@@ -36,7 +35,7 @@ namespace OggConverter
         {
             string localFile = $"locales\\{Settings.Language}.po";
 
-            // locales folder doens't exists? Create it now
+            // locales folder doesn't exists? Create it now
             if (!Directory.Exists("locales"))
                 Directory.CreateDirectory("locales");
 
@@ -55,7 +54,6 @@ namespace OggConverter
             string output = LocaleFileContent[id];
             return output == "" ? String.Format(id, args) : String.Format(output, args);
         }
-
 
         /// <summary>
         /// Loads the locale file from .po file
@@ -77,9 +75,10 @@ namespace OggConverter
             string[] forbiddenElements = new string[] { "#", "Project-Id-Version: ", "POT-Creation-Date: ", "PO-Revision-Date: ",
             "Last-Translator: ", "Language-Team: ", "MIME-Version: ", "Content-Type: ", "Content-Transfer-Encoding: ", "X-Generator: ",
             "X-Poedit-Basepath: ", "Plural-Forms: ", "Language: "};
+
             string[] localeArray = File.ReadLines(localeFilePath)
                 .Where(line => line.Length > 0).Where(line => line.StartsWith("msg") || line.StartsWith("\""))
-                .Where(line => !line.ContainsAny(forbiddenElements))
+                //.Where(line => !line.ContainsAny(forbiddenElements))
                 .ToArray();
 
             // Reading array one by one
@@ -158,6 +157,8 @@ namespace OggConverter
             Directory.CreateDirectory("log");
             Directory.CreateDirectory("log\\locale_errors");
             File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
+
+            Form1.instance.Log(String.Format("An error has occured with current localisation. The problem has been saved into {0}.txt", date));
         }
     }
 }

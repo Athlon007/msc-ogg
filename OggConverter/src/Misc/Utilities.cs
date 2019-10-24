@@ -34,7 +34,7 @@ namespace OggConverter
         /// <param name="needles">Extensions that we want to check if they are in the file name.</param>
         /// <returns></returns>
         public static bool ContainsAny(this string haystack, params string[] needles)
-        {
+        { 
             foreach (string needle in needles)
                 if (haystack.Contains(needle))
                     return true;
@@ -170,21 +170,28 @@ namespace OggConverter
             }
         }
 
+        public enum ArrayReturnValueSource { SongList, Name }
+
         /// <summary>
         /// Gets all items from ListBox and returns them into an array.
         /// </summary>
         /// <param name="listBox">songList</param>
         /// <returns>Array of all selected items</returns>
-        public static string[] GetSelectedItemsToArray(ListBox listBox)
+        public static string[] GetSelectedItemsToArray(ListBox listBox, ArrayReturnValueSource arrayReturnValueSource)
         {
             int[] domains = listBox.SelectedIndices.OfType<int>().ToArray();
             List<string> selectedItemsList = new List<string>();
 
             foreach (int i in domains)
-                selectedItemsList.Add(Player.WorkingSongList[i].Item1.ToString());
+            {
+                string output = arrayReturnValueSource == ArrayReturnValueSource.SongList
+                                ? Player.WorkingSongList[i].Item1.ToString()
+                                : listBox.Items[i].ToString();
 
-            string[] selectedItemsArray = selectedItemsList.ToArray();
-            return selectedItemsArray;
+                selectedItemsList.Add(output);
+            }
+
+            return selectedItemsList.ToArray();
         }
 
         /// <summary>
@@ -197,6 +204,20 @@ namespace OggConverter
             Uri uriResult;
             return Uri.TryCreate(url, UriKind.Absolute, out uriResult) 
                 && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
+
+        /// <summary>
+        /// Counts the files inside of folder and number for a file
+        /// </summary>
+        /// <param name="folder">Workind directory</param>
+        /// <returns></returns>
+        public static int GetNewFileNumber(string folder)
+        {
+            int newNumber = 1;
+            for (int i = 1; File.Exists($"{Settings.GamePath}\\{folder}\\track{i}.ogg"); i++)
+                newNumber++;
+
+            return newNumber;
         }
     }
 }

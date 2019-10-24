@@ -1,0 +1,748 @@
+# TITLE
+# Copyright (C) YEAR Your Name
+# This file is distributed under GNU General Public License v3
+# FIRST NAME, <your@email.com> YEAR
+msgid ""
+msgstr ""
+"Project-Id-Version: MSCMM 2\n"
+"POT-Creation-Date: 2019-09-24 22:13+0200\n"
+"PO-Revision-Date: 2019-09-25 19:13+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en_GB\n"
+
+msgid "Game Folder: {0}"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Launch Game"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Open History"
+msgstr ""
+
+msgid "Open Log Folder"
+msgstr ""
+
+msgid "Website"
+msgstr ""
+
+msgid "GitLab repository"
+msgstr ""
+
+msgid "Steam Community discussion"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Updates"
+msgstr ""
+
+msgid "Logging & Privacy"
+msgstr ""
+
+msgid "Desktop shortcut"
+msgstr ""
+
+msgid "Start the game without Steam"
+msgstr ""
+
+msgid "Remove source files after conversion"
+msgstr ""
+
+msgid "Sort files after conversion"
+msgstr ""
+
+msgid "Don't save song names"
+msgstr ""
+
+msgid "Automatically look for updates"
+msgstr ""
+
+msgid "Update Channel:"
+msgstr ""
+
+msgid "Official"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
+msgid "Check for Update"
+msgstr ""
+
+msgid "Check for youtube-dl updates:"
+msgstr ""
+
+msgid "Upon every start"
+msgstr ""
+
+msgid "Daily"
+msgstr ""
+
+msgid "Weekly"
+msgstr ""
+
+msgid "Monthly"
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid ""
+"Your Version: {0}\n"
+"Build: {1}"
+msgstr ""
+
+msgid "Create logs after crash"
+msgstr ""
+
+msgid "Save usage into history"
+msgstr ""
+
+msgid "Open history"
+msgstr ""
+
+msgid "Delete history"
+msgstr ""
+
+msgid "Open last log"
+msgstr ""
+
+msgid "Delete all logs"
+msgstr ""
+
+msgid ""
+"Notice: not a single log or any info is sent from your computer.\n"
+"Everything that is being logged is saved on Your computer."
+msgstr ""
+
+msgid "Set Game Folder"
+msgstr ""
+
+msgid "Open in Explorer"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Move"
+msgstr ""
+
+msgid "Clone"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Shuffle"
+msgstr ""
+
+msgid "Songs: {0}/{1}"
+msgstr ""
+
+msgid "Search Term/Video Link:"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Select song from the list to the left and edit it's displayed name."
+msgstr ""
+
+msgid "Name:"
+msgstr ""
+
+msgid ""
+"Note:\n"
+"The autor of this tool doesn't take any responsibility for the way how that tool is used."
+msgstr ""
+
+msgid "There's a new update ready to download. Would you like to download it now?"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid ""
+"\n"
+"There's an update ready to download!"
+msgstr ""
+
+msgid "There's a newer stable version available to download than yours Preview. Would you like to download the update?"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"Your version: {0}\n"
+"Newest version: {1}"
+msgstr ""
+
+msgid ""
+"Looks like you use a preview release and you disable preview update channel. Do you want to downgrade now?\n"
+"\n"
+"WARNING: In order to keep things still working, all settings will be reset.\n"
+"\n"
+"Your version: {0}\n"
+"Newest version: {1}"
+msgstr ""
+
+msgid "Question"
+msgstr ""
+
+msgid ""
+"\n"
+"You can downgrade now."
+msgstr ""
+
+msgid ""
+"\n"
+"Tool is up-to-date"
+msgstr ""
+
+msgid ""
+"\n"
+"Couldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n"
+"In case the problem still occures, a new crash log has been created.\n"
+msgstr ""
+
+msgid ""
+"\n"
+"Downloading an update..."
+msgstr ""
+
+msgid "Extracting..."
+msgstr ""
+
+msgid "Installing..."
+msgstr ""
+
+msgid ""
+"\n"
+"Downloading youtube-dl..."
+msgstr ""
+
+msgid "youtube-dl downloaded successfully!"
+msgstr ""
+
+msgid "Couldn't download youtube-dl. Crash log has been created."
+msgstr ""
+
+msgid "Looking for youtube-dl updates..."
+msgstr ""
+
+msgid "youtube-dl is up-to-date!"
+msgstr ""
+
+msgid ""
+"\n"
+"Downloading ffmpeg and ffplay..."
+msgstr ""
+
+msgid "Looks like there was some kind of problem with downloading the FFmpeg pack. You'll be taken to the website from which you'll download the ffpack.zip. Unzip it into the root folder of MSCMM."
+msgstr ""
+
+msgid ""
+"An error has occured and the info has been saved to {0}.\n"
+"If it happens again, please send the log to the MSCMM developer."
+msgstr ""
+
+msgid "Show More Info"
+msgstr ""
+
+msgid "Open Log"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid ""
+"An error has occured and the info has been saved to {0} inside of LOG folder.\n"
+"If it happens again, please send the log to the MSCMM developer."
+msgstr ""
+
+msgid ""
+"Looks like you installed Music Manager into My Summer Car root path. While nothing should happen, I'm not not responsible for any damages done to you/your computer/your game/Satsuma/Teimo/or anything other at all!\n"
+"\n"
+"I'll also bother you with this message until you move Music Manager somewhere else every time you start the tool ;)"
+msgstr ""
+
+msgid ""
+"Hello there! I've asked Teimo nicely where My Summer Car is installed, but he wouldn't tell me at all!.\n"
+"\n"
+"Please select where the game is installed :)"
+msgstr ""
+
+msgid ""
+"\n"
+"Select My Summer Car Directory\n"
+"Ex. C:\\Steam\\steamapps\\common\\My Summer Car\\."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid ""
+"\n"
+"Couldn't find mysummercar.exe. Please set the correct game path."
+msgstr ""
+
+msgid ""
+"Hi there! In order to this tool to work, the ffmpeg and ffplay need to be downloaded.\n"
+"The tool will now download it and restart itself."
+msgstr ""
+
+msgid "Info"
+msgstr ""
+
+msgid ""
+"Found temp song file in {0}, possibly due to the crash\n"
+"Trying to fix it..."
+msgstr ""
+
+msgid "Converted {0} folder from .MSCMM to XML database."
+msgstr ""
+
+msgid ""
+"Would you like MSC Music Manager to get song names from already existing songs?\n"
+"\n"
+"(It may take a while, depending on how many songs you have)."
+msgstr ""
+
+msgid "Do you want to create desktop shortcut?"
+msgstr ""
+
+msgid ""
+"Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. All songs from the original CD have to be imported to the new CD1 folder in order to be read by My Summer Car. Press OK to do that now, or Cancel to exit.\n"
+"\n"
+"WARNING: This will override currently existing files in CD1!"
+msgstr ""
+
+msgid "Succesfully imported CD songs to new CD1 folder!"
+msgstr ""
+
+msgid "YOU ARE USING PREVIEW VERSION"
+msgstr ""
+
+msgid ""
+"\n"
+"Updates are disabled"
+msgstr ""
+
+msgid "Sorts all songs so there are no gaps between songs (ex. if there's track1 and track3, the track3 will be renamed to track2)."
+msgstr ""
+
+msgid "Move selected song one up."
+msgstr ""
+
+msgid "Move selected song one down."
+msgstr ""
+
+msgid "Move selected songs to selected folder."
+msgstr ""
+
+msgid "Clones selected song with it's displayed name."
+msgstr ""
+
+msgid "Deletes selected song."
+msgstr ""
+
+msgid "Randomizes songs order in chosen folder."
+msgstr ""
+
+msgid "Opens My Summer Car folder in Explorer."
+msgstr ""
+
+msgid "Lets you change My Summer Car folder."
+msgstr ""
+
+msgid "My Summer Car folder loaded successfully!"
+msgstr ""
+
+msgid "Operation canceled"
+msgstr ""
+
+msgid "Couldn't find mysummercar.exe. Make sure you've selected the game's ROOT folder (ex. C:\\Steam\\steamapps\\common\\My Summer Car) and NOT Radio or CD!"
+msgstr ""
+
+msgid "Set the game path first."
+msgstr ""
+
+msgid "Program is busy."
+msgstr ""
+
+msgid "History file doesn't exist."
+msgstr ""
+
+msgid "Would you like to remove history file?"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Would you like to remove all logs?"
+msgstr ""
+
+msgid "Logs are disabled"
+msgstr ""
+
+msgid "Log folder doesn't exist"
+msgstr ""
+
+msgid "Convert {0} file(s)?"
+msgstr ""
+
+msgid "youtube-dl is now updating or looking for the update. You'll be notified on Log panel when it's done :)"
+msgstr ""
+
+msgid "Stop"
+msgstr ""
+
+msgid "In order to download the song, the tool requires youtube-dl to be downloaded. Press 'Yes' to download it now"
+msgstr ""
+
+msgid ""
+"How to use:\n"
+"\n"
+"- Drag and drop music files on the program's window or executable to quickly convert one or more songs\n"
+"- Paste songs into Radio or CD folder in My Summer Car folder and click on the program's window - the program will detect new songs automatically\n"
+"- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term\n"
+"\n"
+"Use Shuffle to randomize songs order.\n"
+"In Edit tab you can change song's displayed name."
+msgstr ""
+
+msgid "Where do you want to move {0} file(s)?"
+msgstr ""
+
+msgid "Couldn't find My Summer Car path. Set it up first!"
+msgstr ""
+
+msgid "FFmpeg needs to be downloaded first. Start the program to download it now."
+msgstr ""
+
+msgid "One or more files are not supported music file formats. Exiting now."
+msgstr ""
+
+msgid "Where do you want to convert {0} file(s)?"
+msgstr ""
+
+msgid "Converting now..."
+msgstr ""
+
+msgid ""
+"Converting\n"
+"{0}"
+msgstr ""
+
+msgid "Done!"
+msgstr ""
+
+msgid ""
+"Disabling metafiles will result in MSC Music Manager using file names, instead of saved song names.\n"
+"Are you sure you want to continue?"
+msgstr ""
+
+msgid "Would you like to remove ALL meta files?"
+msgstr ""
+
+msgid "Would you like the MSCMM to get song names directly from files now? (It may take some time, depending on how many songs you have)"
+msgstr ""
+
+msgid ""
+"\n"
+"Forcing the update..."
+msgstr ""
+
+msgid "Are you sure you want to remove entire history?"
+msgstr ""
+
+msgid "Are you sure you want to delete all logs?"
+msgstr ""
+
+msgid "Add, Remove and Download Songs!"
+msgstr ""
+
+msgid "An error has occured. Log has been saved into LOG folder. Would you like to open it now?"
+msgstr ""
+
+msgid ""
+"MSC Music Manager {0} ({1})\n"
+"Copyright (C) 2019 Athlon\n"
+"\n"
+"This program comes with ABSOLUTELY NO WARRANTY.\n"
+"This is free software, and you are welcome to redistribute it, as long as you include original copyright, state changes and include license.\n"
+"\n"
+"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license."
+msgstr ""
+
+msgid "Looks like you're offline. Can't check for the update availability"
+msgstr ""
+
+msgid "Select the game path first."
+msgstr ""
+
+msgid ""
+"\n"
+"Done!"
+msgstr ""
+
+msgid "Converted {0} file(s) in total"
+msgstr ""
+
+msgid "Conversion log was saved to history.txt"
+msgstr ""
+
+msgid "Conversion log will not be saved, because both Radio and CDs were skipped"
+msgstr ""
+
+msgid "FFmpeg.exe is missing! Try to re-download MSC Music Manager."
+msgstr ""
+
+msgid "Initializing {0} conversion...\n"
+msgstr ""
+
+msgid "Skipping {0} because it doesn't exist..."
+msgstr ""
+
+msgid "Couldn't find any file to convert in {0}"
+msgstr ""
+
+msgid "Aborted {0} conversion."
+msgstr ""
+
+msgid "Finished {0} as track{1}.ogg"
+msgstr ""
+
+msgid "Added '{0}' (track{1}.ogg) in {2}"
+msgstr ""
+
+msgid "Converted {0} file(s) in {1}"
+msgstr ""
+
+msgid "'{0}' is not a recognizable music file, so it will be skipped."
+msgstr ""
+
+msgid ""
+"\n"
+"Converting '{0}'\n"
+msgstr ""
+
+msgid "There's over {0} files in {1} already converted. My Summer Car allows max {0} files for {1} and any file above that will be ignored. Would you like to continue?"
+msgstr ""
+
+msgid "Finished '{0}' as 'track{1}.ogg'"
+msgstr ""
+
+msgid "Downloaded youtube-dl successfully!"
+msgstr ""
+
+msgid "Not a valid URL. Currently only YouTube is suported."
+msgstr ""
+
+msgid "Downloader: Downloading song from '{0}'"
+msgstr ""
+
+msgid ""
+"Couldn't donwnload the song.\n"
+"If you canceled the download, then everything's fine.\n"
+"If not, check if there's a youtube-dl update, in settings.\n"
+"Also please check if youtube-dl supports the link that you use: https://ytdl-org.github.io/youtube-dl/supportedsites.html.\n"
+"If it's going to happen again, please send the history.txt file content to developer on Steam, or via mail."
+msgstr ""
+
+msgid "Canceled!"
+msgstr ""
+
+msgid "FFplay is missing! Try to re-download MSC Music Manager."
+msgstr ""
+
+msgid "Sorting: moved 'track{0}' to 'track{1}' in {2}"
+msgstr ""
+
+msgid "Changing Order: moved '{0}' to '{1}', and '{1}' to '{0}'"
+msgstr ""
+
+msgid "File Moving: moved '{0}' from '{1}' to '{2}' as 'track{3}'"
+msgstr ""
+
+msgid "Cloned '{0}' to '{1}' in {2}"
+msgstr ""
+
+msgid "Shuffling!"
+msgstr ""
+
+msgid ""
+"Are you sure you want to delete\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"...and {0} more?"
+msgstr ""
+
+msgid "Removed '{0}' ({1}) from {2}"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+msgid "History"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Removes the original files that the song is converted from."
+msgstr ""
+
+msgid "After each file change, all songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3)."
+msgstr ""
+
+msgid "Disables song name saving into songnames.xml. Only file name will be used."
+msgstr ""
+
+msgid "On each start, the program will connect to the server and check if the new updates are available."
+msgstr ""
+
+msgid "Official update channel is the most stable one and is recommended for most users."
+msgstr ""
+
+msgid "Preview update channel offers you an early access to new updates and improvements. Only for advanced users."
+msgstr ""
+
+msgid "Set how often does youtube-dl start in order to check for updates."
+msgstr ""
+
+msgid "The program after each crash causing error will try to save the crash info to log folder."
+msgstr ""
+
+msgid "All operations on songs will be saved into history file - converting, moving, deleting and more."
+msgstr ""
+
+msgid "Create desktop shortcut to MSCMM."
+msgstr ""
+
+msgid "Uppon pressing 'Launch Game', the program won't use Steam, and rather start the game through exe."
+msgstr ""
+
+msgid "In order to apply the change, you need to restart MSCMM. Would you like to do that now?"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "All your settings have been wiped. Restart the MSCMM without 'wipe' argument."
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "Hide More Info"
+msgstr ""
+
+msgid ""
+"Convert {0} file(s) to {1}?\n"
+"\n"
+"(Drop to Confirm)"
+msgstr ""
+
+msgid "Get Update Now!"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Quick Convert"
+msgstr ""
+
+msgid "Url is not a YouTube link."
+msgstr ""
+
+msgid "Url is not valid and is empty."
+msgstr ""
+
+msgid "Show ffmpeg output"
+msgstr ""
+
+msgid ""
+"Useful keyboard shortcuts:\n"
+"\n"
+"Player:\n"
+"- Enter - when song is selected, it will play or stop the song playback\n"
+"- Delete - when song is selected, will remove the selected song\n"
+"- Ctrl + A - select all songs\n"
+"- Ctrl + Up/Down arrows - move selected song up or down\n"
+"- Alt + Up/Down - toggle between Radio and CD folders\n"
+"- Ctrl + C - clone selected song\n"
+"- Cltr + X - move selected song to a different folder"
+msgstr ""
+
+msgid "Moved '{0}' ({1}) from {2} to recycle bin"
+msgstr ""
+
+msgid "Recycle Bin"
+msgstr ""
+
+msgid "Restore"
+msgstr ""
+
+msgid "Restored '{0}' from the recycle bin"
+msgstr ""
+
+msgid "Recycle bin is empty"
+msgstr ""
+
+msgid "There are {0} files in recycle bin"
+msgstr ""
+
+msgid "Delete all"
+msgstr ""
+
+msgid "Are you sure you want to delete all {0} files?"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Ignore limitation of songs in folder"
+msgstr ""
+
+msgid "Normally the program will show a warning during conversion, when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, it will be ignored."
+msgstr ""

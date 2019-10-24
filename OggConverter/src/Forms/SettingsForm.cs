@@ -42,7 +42,6 @@ namespace OggConverter
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Monthly"));
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Never"));
 
-            chkRemoveSource.Checked = Settings.RemoveMP3;
             chkAutoSort.Checked = Settings.AutoSort;
             chkNoMetafiles.Checked = Settings.DisableMetaFiles;
             chkAutoUpdates.Checked = !Settings.NoUpdates;
@@ -54,6 +53,7 @@ namespace OggConverter
             chkShortcut.Checked = DesktopShortcut.Exists();
             chkNoSteam.Checked = Settings.NoSteam;
             chkShowFfmpegOutput.Checked = Settings.ShowFfmpegOutput;
+            chkIgnoreLimits.Checked = Settings.IgnoreLimitations;
 
             if (Directory.Exists("locales"))
             {
@@ -74,7 +74,7 @@ namespace OggConverter
                 ShowAlways = true
             };
 
-            toolTip.SetToolTip(chkRemoveSource, Localisation.Get("Removes the original files that the song is converted from."));
+            //toolTip.SetToolTip(chkRemoveSource, Localisation.Get("Removes the original files that the song is converted from."));
             toolTip.SetToolTip(chkAutoSort, Localisation.Get("After each file change, all songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3)."));
             toolTip.SetToolTip(chkNoMetafiles, Localisation.Get("Disables song name saving into songnames.xml. Only file name will be used."));
             toolTip.SetToolTip(chkAutoUpdates, Localisation.Get("On each start, the program will connect to the server and check if the new updates are available."));
@@ -85,11 +85,9 @@ namespace OggConverter
             toolTip.SetToolTip(chkHistory, Localisation.Get("All operations on songs will be saved into history file - converting, moving, deleting and more."));
             toolTip.SetToolTip(chkShortcut, Localisation.Get("Create desktop shortcut to MSCMM."));
             toolTip.SetToolTip(chkNoSteam, Localisation.Get("Uppon pressing 'Launch Game', the program won't use Steam, and rather start the game through exe."));
-        }
-
-        private void ChkRemoveSource_Click(object sender, EventArgs e)
-        {
-            Settings.RemoveMP3 ^= true;
+            toolTip.SetToolTip(chkIgnoreLimits, Localisation.Get("Normally the program will show a warning during conversion, " +
+                "when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, " +
+                "it will be ignored."));
         }
 
         private void ChkAutoSort_Click(object sender, EventArgs e)
@@ -193,10 +191,6 @@ namespace OggConverter
                 Process.Start("LOG");
         }
 
-        private void CbYoutubeDlUpdateFrequency_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
         private void BtnCheckUpdate_Click(object sender, EventArgs e)
         {
             // Force download and install update
@@ -252,28 +246,13 @@ namespace OggConverter
 
         private void ComboLang_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            // Ignore setting change, if the value selected is the same
+            if (comboLang.Text == Settings.Language) return;
+
             Settings.Language = comboLang.Text;
-
-            DialogResult dl = MessageBox.Show(
-                Localisation.Get("In order to apply the change, you need to restart MSCMM. Would you like to do that now?"),
-                Localisation.Get("Question"),
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (dl == DialogResult.Yes)
-            {
-                const string restartScript = "@echo off\n" +
-                    "TASKKILL /IM \"MSC Music Manager.exe\"\n" +
-                    "start \"\" \"MSC Music Manager.exe\"\n" +
-                    "exit";
-                File.WriteAllText("restart.bat", restartScript);
-
-                Process process = new Process();
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.StartInfo.FileName = "restart.bat";
-                process.Start();
-                Application.Exit();
-            }
+            Localisation.LoadLocaleFile();
+            Form1.instance.Localize();
+            this.Localise();
         }
 
         void Localise()
@@ -281,7 +260,6 @@ namespace OggConverter
             chkShortcut.Text = Localisation.Get("Desktop shortcut");
             chkNoSteam.Text = Localisation.Get("Start the game without Steam");
             label2.Text = Localisation.Get("Language");
-            chkRemoveSource.Text = Localisation.Get("Remove source files after conversion");
             chkAutoSort.Text = Localisation.Get("Sort files after conversion");
             chkNoMetafiles.Text = Localisation.Get("Don't save song names");
             chkAutoUpdates.Text = Localisation.Get("Automatically look for updates");
@@ -310,6 +288,7 @@ namespace OggConverter
             this.Text = Localisation.Get("Settings");
 
             chkShowFfmpegOutput.Text = Localisation.Get("Show ffmpeg output");
+            chkIgnoreLimits.Text = Localisation.Get("Ignore limitation of songs in folder");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -321,6 +300,11 @@ namespace OggConverter
         private void ChkShowFfmpegOutput_Click(object sender, EventArgs e)
         {
             Settings.ShowFfmpegOutput ^= true;
+        }
+
+        private void chkIgnoreLimits_Click(object sender, EventArgs e)
+        {
+            Settings.IgnoreLimitations ^= true;
         }
     }
 }

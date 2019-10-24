@@ -32,11 +32,6 @@ namespace OggConverter
 #endif
 
         /// <summary>
-        /// Should MSCMM remove source song files after conversion?
-        /// </summary>
-        public static bool RemoveMP3 { get => Get("RemoveMP3", true); set => Set("RemoveMP3", value); }
-
-        /// <summary>
         /// Should the game be started without steam?
         /// </summary>
         public static bool NoSteam { get => Get("NoSteam", false); set => Set("NoSteam", value); }
@@ -67,7 +62,7 @@ namespace OggConverter
         public static bool History { get => Get("History", true); set => Set("History", value); }
 
         /// <summary>
-        /// Forces MSCMM to use old song name reading, instead of one using metafiles (planned to be removed in future updates)
+        /// Forces MSCMM to use old song name reading, instead of one using metafiles
         /// </summary>
         public static bool DisableMetaFiles { get => Get("DisableMetaFiles", false); set => Set("DisableMetaFiles", value); }
 
@@ -101,6 +96,11 @@ namespace OggConverter
         /// </summary>
         public static bool ShowFfmpegOutput { get => Get("ShowFfmpegOutput", false); set => Set("ShowFfmpegOutput", value); }
 
+        /// <summary>
+        /// If true, the program won't show the question, when user is converting songs over folder limit.
+        /// </summary>
+        public static bool IgnoreLimitations { get => Get("IgnoreLimitations", false); set => Set("IgnoreLimitations", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////
@@ -111,7 +111,7 @@ namespace OggConverter
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }
 
         /// <summary>
-        /// Disables or hides features (used mostly for screenshots)
+        /// Disables or hides features (used for screenshots)
         /// </summary>
         public static bool DemoMode { get => Get("DemoMode", false); set => Set("DemoMode", value); }
 
@@ -129,6 +129,11 @@ namespace OggConverter
             set => Set("LastYTDLUpdateCheck", value);
         }
 
+        /// <summary>
+        /// Is set to true, if the version currently installed is from Preview ring
+        /// </summary>
+        public static bool ThisPreview { get => Get("ThisPreview", false); set => Set("ThisPreview", value); }
+
 
         /// <summary>
         /// Gets the value of setting from registry
@@ -136,7 +141,7 @@ namespace OggConverter
         /// <param name="name">Name of value</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns>Returns the value (either as string, int or bool)</returns>
-        static dynamic Get<Object>(string name, Object defaultValue)
+        internal static dynamic Get<Object>(string name, Object defaultValue)
         {
             using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))
                 return Convert.ChangeType(Key.GetValue(name, defaultValue), typeof(Object));
@@ -147,7 +152,7 @@ namespace OggConverter
         /// </summary>
         /// <param name="name">Name of value</param>
         /// <param name="value">Value to set</param>
-        static void Set<T>(string name, T value)
+        internal static void Set<T>(string name, T value)
         {
             if (value != null)
                 using (RegistryKey Key = Registry.CurrentUser.CreateSubKey(key))

@@ -115,6 +115,10 @@ namespace OggConverter
             songListRight = tabs.Left - songList.Right;
             songListBottom = panel1.Bottom - songList.Bottom;
 
+            //panel1.Dock = DockStyle.Fill;
+            //btnDirectory.Dock = DockStyle.Top;
+            //btnOpenGameDir.Dock = DockStyle.Top;
+
             // Removing temporary or unused files
             Utilities.Cleanup();
 
@@ -192,6 +196,10 @@ namespace OggConverter
                 {
                     // Displaying the changelog
                     Log("\n" + Properties.Resources.changelog);
+
+                    // Is the update coming from Preview ring?
+                    // If so, save that to the settings
+                    Settings.ThisPreview = Settings.Preview;
 
                     // If the version is older than 2.1 (18151)
                     if (Settings.LatestVersion <= 18151)
@@ -338,10 +346,13 @@ namespace OggConverter
         /// <summary>
         /// Loads the locale translations to UI elements
         /// </summary>
-        void Localize()
+        public void Localize()
         {
-            foreach (ToolStripMenuItem c in menu.Items)
-                c.Text = Localisation.Get(c.Text);
+            menuTool.Text = Localisation.Get("Tools");
+            menuSettings.Text = Localisation.Get("Settings");
+            btnLaunchGame.Text = Localisation.Get("Launch Game");
+            btnHelp.Text = Localisation.Get("Help");
+            btnDownloadUpdate.Text = Localisation.Get("Get Update Now!");
 
             btnLastLog.Text = Localisation.Get("Open History");
             btnLogFolder.Text = Localisation.Get("Open Log Folder");
@@ -353,12 +364,17 @@ namespace OggConverter
             btnDirectory.Text = Localisation.Get("Set Game Folder");
             btnOpenGameDir.Text = Localisation.Get("Open in Explorer");
 
+            btnSort.Text = Localisation.Get("Sort");
+            btnMoveSong.Text = Localisation.Get("Move");
+            btnCloneSong.Text = Localisation.Get("Clone");
+            btnDel.Text = Localisation.Get("Remove");
+            btnShuffle.Text = Localisation.Get("Shuffle");
+
             // Player
             Button[] btns = new Button[] { btnSort, btnMoveSong, btnCloneSong, btnDel, btnShuffle };
             foreach (Button btn in btns)
             {
-                btn.Text = Localisation.Get(btn.Text);
-                if (btn.Text.Length > 7) 
+                if (btn.Text.Length >= 5) 
                     btn.Font = new Font("Microsoft Sans Serif", 7);
                 else if (btn.Text.Length > 8)
                     btn.Text = btn.Text.Substring(0, 6) + "...";
@@ -378,6 +394,10 @@ namespace OggConverter
             label2.Text = Localisation.Get("Select song from the list to the left and edit it's displayed name.");
             label1.Text = Localisation.Get("Name:");
             btnSetName.Text = Localisation.Get("Save");
+            tabRecycle.Text = Localisation.Get("Recycle Bin");
+            btnRecycleDelete.Text = Localisation.Get("Delete");
+            btnRestore.Text = Localisation.Get("Restore");
+            btnEmptyAll.Text = Localisation.Get("Delete all");
         }
 
         /// <summary>
@@ -495,14 +515,39 @@ namespace OggConverter
                 howManySongs++;
             }
 
-            songList.Items.Clear();
-            songList.Items.AddRange(newTrackList.ToArray());
+            songList.DataSource = newTrackList;
 
             labCounter.Text = Localisation.Get("Songs: {0}/{1}", howManySongs, SongsLimit);
             labCounter.ForeColor = howManySongs > SongsLimit ? Color.Red : Color.Black;
 
             if (songList.Items.Count > lastSelected)
                 songList.SelectedIndex = lastSelected;
+
+            UpdateRecycleBinList();
+        }
+
+        void UpdateRecycleBinList()
+        {
+            if (!Directory.Exists($"{Settings.GamePath}\\Recycle Bin")) return;
+            DirectoryInfo di = new DirectoryInfo($"{Settings.GamePath}\\Recycle Bin");
+            FileInfo[] files = di.GetFiles("*.ogg");
+            
+            trashList.Items.Clear();
+            foreach (var file in files)
+                trashList.Items.Add(file.Name.Replace(".ogg", ""));
+
+            bool noFiles = files.Length == 0;
+
+            labRecycle.Text = noFiles 
+                ? Localisation.Get("Recycle bin is empty")
+                : Localisation.Get("There are {0} files in recycle bin", files.Length);
+
+            tabRecycle.Text = !noFiles ? Localisation.Get("Recycle Bin") + $" ({files.Length})" : Localisation.Get("Recycle Bin");
+
+            btnRecycleDelete.Enabled = !noFiles;
+            btnEmptyAll.Enabled = !noFiles;
+            btnRestore.Enabled = !noFiles;
+            
         }
 
         private void Log_TextChanged(object sender, EventArgs e)
@@ -692,7 +737,7 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.Delete(CurrentFolder, Utilities.GetSelectedItemsToArray(songList));
+            Player.Remove(CurrentFolder, Utilities.GetSelectedItemsToArray(songList, Utilities.ArrayReturnValueSource.SongList));
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -774,7 +819,7 @@ namespace OggConverter
             if (songList.SelectedIndex == -1) return;
 
             Player.Stop();
-            MoveTo moveTo = new MoveTo(Utilities.GetSelectedItemsToArray(songList), CurrentFolder);
+            MoveTo moveTo = new MoveTo(Utilities.GetSelectedItemsToArray(songList, Utilities.ArrayReturnValueSource.SongList), CurrentFolder);
             moveTo.ShowDialog();
         }
 
@@ -799,7 +844,7 @@ namespace OggConverter
 
         private async void BtnDownload_Click(object sender, EventArgs e)
         {
-            if (!Utilities.IsOnline() || txtboxVideo.Text == "") return;
+            if (!Utilities.IsOnline() || String.IsNullOrEmpty(txtboxVideo.Text)) return;
 
             btnCancelDownload.Enabled = true;
 
@@ -921,10 +966,15 @@ namespace OggConverter
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (songList.SelectedIndex == -1 || tabs.SelectedIndex != 2)
-                return;
-
-            txtSongName.Text = songList.SelectedItem.ToString();
+            switch (tabs.SelectedIndex)
+            {
+                case 2:
+                    txtSongName.Text = songList.SelectedItem.ToString();
+                    break;
+                case 3:
+                    UpdateRecycleBinList();
+                    break;
+            }
         }
 
         private void BtnSetName_Click(object sender, EventArgs e)
@@ -1035,7 +1085,9 @@ namespace OggConverter
             }
         }
 
+#if DEBUG
         bool debugToggle = false;
+#endif
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             // If the songlist is not focused and user presses up or down arrow - it will focus on song list and select the first song
@@ -1059,6 +1111,13 @@ namespace OggConverter
             {
                 debugToggle ^= true;
                 RestrictedMode(debugToggle, true);
+            }
+
+            // Toggle sizable window
+            if (e.Control && e.Alt && e.KeyCode == Keys.D3)
+            {
+                this.FormBorderStyle = FormBorderStyle.Sizable;
+                this.MaximizeBox = true;
             }
 #endif
             // Change folder Down (Alt+Down Arrow)
@@ -1118,14 +1177,14 @@ namespace OggConverter
 
         void ResizeForm()
         {
+            panel1.Width = this.Width / 2 - 164;
+            panel1.Height = this.Height - panelDefaultY - 46;
+
             tabs.Size = new Size(this.Width - tabs.Location.X - 16, this.Height - tabs.Location.Y - 46);
             tabs.ItemSize = new Size((tabs.Width / tabs.TabCount) - 2, 0);
             double d = tabsDefaultX + (Math.Pow(this.Width, 0.95) - tabsDefaultX * 2) - 34;
             d = Math.Round(d);
-            tabs.Location = new Point((int)d, tabs.Location.Y);
-
-            panel1.Width = tabs.Location.X + 1;
-            panel1.Height = this.Height - panelDefaultY - 46;
+            tabs.Location = new Point(panel1.Width, tabs.Location.Y);
 
             labCounter.Location = new Point(labCounter.Location.X, panel1.Height - labCounter.Height - 5);
             songList.Width = tabs.Left - songListRight - songList.Left;
@@ -1139,9 +1198,14 @@ namespace OggConverter
             btnDel.Left = btnUp.Left;
             btnShuffle.Left = btnUp.Left;
 
+            labNowPlaying.Left = labNowPlaying.CenterHorizontally(panel1);
             labNowPlaying.Top = songList.Bottom;
             btnPlaySong.Top = labNowPlaying.Bottom;
-            btnStop.Top = labNowPlaying.Bottom;
+            btnStop.Top = btnPlaySong.Top;
+
+            btnDirectory.Size = new Size(tabs.Left / 2, btnDirectory.Height);
+            btnOpenGameDir.Location = new Point(btnDirectory.Right, btnOpenGameDir.Location.Y);
+            btnOpenGameDir.Width = btnDirectory.Width;
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -1152,6 +1216,23 @@ namespace OggConverter
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             ResizeForm();
+        }
+
+        private void BtnRestore_Click(object sender, EventArgs e)
+        {
+            if (trashList.SelectedIndex == -1) return;
+            Player.Restore(CurrentFolder, Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+        }
+
+        private void BtnRecycleDelete_Click(object sender, EventArgs e)
+        {
+            if (trashList.SelectedIndex == -1) return;
+            Player.Delete("Recycle Bin", Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+        }
+
+        private void BtnEmptyAll_Click(object sender, EventArgs e)
+        {
+            Player.DeleteAll();
         }
     }
 }
