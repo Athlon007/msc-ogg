@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.8.1 (25.10.2019)
+
+### Bug Fixes
+
+- Fixed crash on minimizing
+
 ## 2.8 (22.10.2019)
 
 ### Added

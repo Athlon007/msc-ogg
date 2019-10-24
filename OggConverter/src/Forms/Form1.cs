@@ -1177,6 +1177,7 @@ namespace OggConverter
 
         void ResizeForm()
         {
+            if (this.WindowState == FormWindowState.Minimized && FormBorderStyle == FormBorderStyle.FixedSingle) return;
             panel1.Width = this.Width / 2 - 164;
             panel1.Height = this.Height - panelDefaultY - 46;
 
