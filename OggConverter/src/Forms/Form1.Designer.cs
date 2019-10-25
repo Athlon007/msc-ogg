@@ -61,6 +61,7 @@
             this.btnLaunchGame = new System.Windows.Forms.ToolStripMenuItem();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.btnHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDonate = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDownloadUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOpenGameDir = new System.Windows.Forms.Button();
@@ -95,6 +96,8 @@
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOpenWithAudacity = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -310,7 +313,7 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 26);
+            this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
             // 
             // btnLastLog
@@ -391,14 +394,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 26);
+            this.menuSettings.Size = new System.Drawing.Size(76, 24);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -411,20 +414,28 @@
             this.menuSettings,
             this.btnLaunchGame,
             this.btnHelp,
+            this.btnDonate,
             this.btnDownloadUpdate});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 30);
+            this.menu.Size = new System.Drawing.Size(991, 28);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 26);
+            this.btnHelp.Size = new System.Drawing.Size(55, 24);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
+            // 
+            // btnDonate
+            // 
+            this.btnDonate.Name = "btnDonate";
+            this.btnDonate.Size = new System.Drawing.Size(122, 24);
+            this.btnDonate.Text = "Buy Me a Pizza";
+            this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
             // btnDownloadUpdate
             // 
@@ -621,6 +632,8 @@
             // 
             // tabMeta
             // 
+            this.tabMeta.Controls.Add(this.label3);
+            this.tabMeta.Controls.Add(this.btnOpenWithAudacity);
             this.tabMeta.Controls.Add(this.label2);
             this.tabMeta.Controls.Add(this.btnSetName);
             this.tabMeta.Controls.Add(this.label1);
@@ -796,6 +809,27 @@
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
+            // btnOpenWithAudacity
+            // 
+            this.btnOpenWithAudacity.Location = new System.Drawing.Point(8, 194);
+            this.btnOpenWithAudacity.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenWithAudacity.Name = "btnOpenWithAudacity";
+            this.btnOpenWithAudacity.Size = new System.Drawing.Size(132, 44);
+            this.btnOpenWithAudacity.TabIndex = 19;
+            this.btnOpenWithAudacity.Text = "Open with Audacity";
+            this.btnOpenWithAudacity.UseVisualStyleBackColor = true;
+            this.btnOpenWithAudacity.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 173);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(112, 17);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Modify the song:";
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -912,6 +946,9 @@
         private System.Windows.Forms.Button btnRestore;
         private System.Windows.Forms.Label labRecycle;
         private System.Windows.Forms.Button btnEmptyAll;
+        private System.Windows.Forms.ToolStripMenuItem btnDonate;
+        private System.Windows.Forms.Button btnOpenWithAudacity;
+        private System.Windows.Forms.Label label3;
     }
 }
 

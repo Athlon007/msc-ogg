@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.9.0.0 (xx.11.2019)
+
+### Added
+
+- Added donate button
+- Added "view all changelogs" button
+- You can now change download quality of a song - best, average, or compressed
+
 ## 2.8.1 (25.10.2019)
 
 ### Bug Fixes

@@ -746,3 +746,36 @@ msgstr ""
 
 msgid "Normally the program will show a warning during conversion, when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, it will be ignored."
 msgstr ""
+
+msgid "Audacity Executable:"
+msgstr ""
+
+msgid "Music Download Quality:"
+msgstr ""
+
+msgid "Best"
+msgstr ""
+
+msgid "Average"
+msgstr ""
+
+msgid "Compressed"
+msgstr ""
+
+msgid "View All Changelogs"
+msgstr ""
+
+msgid "Select the audacity folder."
+msgstr ""
+
+msgid "Audacity install path hasn't been set. Go to settings to change that."
+msgstr ""
+
+msgid "Buy Me a Pizza"
+msgstr ""
+
+msgid "Modify the song:"
+msgstr ""
+
+msgid "Open with Audacity"
+msgstr ""

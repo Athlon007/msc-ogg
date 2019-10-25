@@ -58,6 +58,7 @@ namespace OggConverter
 
                 // Setup executable and parameters
                 process.StartInfo.FileName = "youtube-dl.exe";
+                int audioQuality = GetAudioQuality();
                 process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality 0 -o \"download.%(ext)s\" {url}";
 
                 if (CancelDownload)
@@ -200,6 +201,21 @@ namespace OggConverter
 
             string id = url.Split('=')[1];
             return youtubeDlOutput[0].Replace(id, "").Replace("-.mp4", "");
+        }
+
+        static int GetAudioQuality()
+        {
+            switch (Settings.YoutubeDlDownloadQuality)
+            {
+                default:
+                    return 5;
+                case 0:
+                    return 0;
+                case 1:
+                    return 5;
+                case 2:
+                    return 9;
+            }
         }
     }
 }

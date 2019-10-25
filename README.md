@@ -40,7 +40,7 @@ Available translations:
 |    | Language     | Translator(s) | % Complete |
 |----|--------------|---------------|------------|
 | 🇬🇧 | English (UK) | Konrad Figura | 100%       |
-| 🇵🇱 | Polski       | Konrad Figura | 100%       |
+| 🇵🇱 | Polski       | Konrad Figura | 95%       |
 
 Note: translation corrections are also welcome :)
 

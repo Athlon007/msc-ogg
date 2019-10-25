@@ -55,6 +55,12 @@ namespace OggConverter
             chkShowFfmpegOutput.Checked = Settings.ShowFfmpegOutput;
             chkIgnoreLimits.Checked = Settings.IgnoreLimitations;
 
+            radQualityBest.Checked = Settings.YoutubeDlDownloadQuality == 0;
+            radQualityAverage.Checked = Settings.YoutubeDlDownloadQuality == 1;
+            radQualityCompressed.Checked = Settings.YoutubeDlDownloadQuality == 2;
+
+            txtAudacity.Text = Settings.AudacityPath;
+
             if (Directory.Exists("locales"))
             {
                 DirectoryInfo di = new DirectoryInfo("locales");
@@ -289,6 +295,12 @@ namespace OggConverter
 
             chkShowFfmpegOutput.Text = Localisation.Get("Show ffmpeg output");
             chkIgnoreLimits.Text = Localisation.Get("Ignore limitation of songs in folder");
+            labAudacity.Text = Localisation.Get("Audacity Executable:");
+            label6.Text = Localisation.Get("Music Download Quality:");
+            radQualityBest.Text = Localisation.Get("Best");
+            radQualityAverage.Text = Localisation.Get("Average");
+            radQualityCompressed.Text = Localisation.Get("Compressed");
+            btnChangelogHistory.Text = Localisation.Get("View All Changelogs");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -305,6 +317,45 @@ namespace OggConverter
         private void chkIgnoreLimits_Click(object sender, EventArgs e)
         {
             Settings.IgnoreLimitations ^= true;
+        }
+
+        private void btnChangelogHistory_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://gitlab.com/aathlon/msc-ogg/blob/master/CHANGELOG.md");
+        }
+
+        private void radQualityBest_Click(object sender, EventArgs e)
+        {
+            Settings.YoutubeDlDownloadQuality = 0;
+        }
+
+        private void radQualityAverage_Click(object sender, EventArgs e)
+        {
+            Settings.YoutubeDlDownloadQuality = 1;
+        }
+
+        private void radQualityCompressed_Click(object sender, EventArgs e)
+        {
+            Settings.YoutubeDlDownloadQuality = 2;
+        }
+
+        private void btnAudacity_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = Localisation.Get("Select the audacity folder.");
+                openFileDialog.FileName= "audacity.exe";
+                openFileDialog.Filter = "Executable (*.exe)|*.exe";
+                openFileDialog.InitialDirectory = Directory.Exists("C:\\Program Files (x86)\\Audacity") 
+                    ? "C:\\Program Files (x86)\\Audacity" 
+                    : "C:\\Program Files (x86)";
+                var dialog = openFileDialog.ShowDialog();
+                if (dialog == DialogResult.OK && openFileDialog.FileName.EndsWith("audacity.exe"))
+                {
+                    Settings.AudacityPath = openFileDialog.FileName;
+                    txtAudacity.Text = Settings.AudacityPath;
+                }
+            }
         }
     }
 }

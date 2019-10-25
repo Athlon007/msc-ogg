@@ -398,6 +398,9 @@ namespace OggConverter
             btnRecycleDelete.Text = Localisation.Get("Delete");
             btnRestore.Text = Localisation.Get("Restore");
             btnEmptyAll.Text = Localisation.Get("Delete all");
+            btnDonate.Text = Localisation.Get("Buy Me a Pizza");
+            label3.Text = Localisation.Get("Modify the song:");
+            btnOpenWithAudacity.Text = Localisation.Get("Open with Audacity");
         }
 
         /// <summary>
@@ -1177,7 +1180,7 @@ namespace OggConverter
 
         void ResizeForm()
         {
-            if (this.WindowState == FormWindowState.Minimized && FormBorderStyle == FormBorderStyle.FixedSingle) return;
+            if (this.WindowState == FormWindowState.Minimized && FormBorderStyle == FormBorderStyle.FixedSingle     ) return;
             panel1.Width = this.Width / 2 - 164;
             panel1.Height = this.Height - panelDefaultY - 46;
 
@@ -1234,6 +1237,22 @@ namespace OggConverter
         private void BtnEmptyAll_Click(object sender, EventArgs e)
         {
             Player.DeleteAll();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(Settings.AudacityPath) || !File.Exists(Settings.AudacityPath))
+            {
+                MessageBox.Show(Localisation.Get("Audacity install path hasn't been set. Go to settings to change that."),
+                    Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Process.Start(Settings.AudacityPath, $"\"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg\"");
+        }
+
+        private void btnDonate_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://paypal.me/figurakonrad");
         }
     }
 }

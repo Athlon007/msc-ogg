@@ -41,6 +41,7 @@
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
             this.tabUpdates = new System.Windows.Forms.TabPage();
+            this.btnChangelogHistory = new System.Windows.Forms.Button();
             this.btnCheckYTDLUpdates = new System.Windows.Forms.Button();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
             this.labVer = new System.Windows.Forms.Label();
@@ -61,6 +62,13 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
+            this.radQualityAverage = new System.Windows.Forms.RadioButton();
+            this.radQualityBest = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.radQualityCompressed = new System.Windows.Forms.RadioButton();
+            this.txtAudacity = new System.Windows.Forms.TextBox();
+            this.labAudacity = new System.Windows.Forms.Label();
+            this.btnAudacity = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -84,6 +92,9 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.btnAudacity);
+            this.tabGeneral.Controls.Add(this.labAudacity);
+            this.tabGeneral.Controls.Add(this.txtAudacity);
             this.tabGeneral.Controls.Add(this.chkShowFfmpegOutput);
             this.tabGeneral.Controls.Add(this.label2);
             this.tabGeneral.Controls.Add(this.comboLang);
@@ -151,6 +162,10 @@
             // 
             // tabFiles
             // 
+            this.tabFiles.Controls.Add(this.radQualityCompressed);
+            this.tabFiles.Controls.Add(this.label6);
+            this.tabFiles.Controls.Add(this.radQualityAverage);
+            this.tabFiles.Controls.Add(this.radQualityBest);
             this.tabFiles.Controls.Add(this.chkIgnoreLimits);
             this.tabFiles.Controls.Add(this.chkNoMetafiles);
             this.tabFiles.Controls.Add(this.chkAutoSort);
@@ -197,6 +212,7 @@
             // 
             // tabUpdates
             // 
+            this.tabUpdates.Controls.Add(this.btnChangelogHistory);
             this.tabUpdates.Controls.Add(this.btnCheckYTDLUpdates);
             this.tabUpdates.Controls.Add(this.btnCheckUpdate);
             this.tabUpdates.Controls.Add(this.labVer);
@@ -213,6 +229,16 @@
             this.tabUpdates.TabIndex = 1;
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
+            // 
+            // btnChangelogHistory
+            // 
+            this.btnChangelogHistory.Location = new System.Drawing.Point(26, 350);
+            this.btnChangelogHistory.Name = "btnChangelogHistory";
+            this.btnChangelogHistory.Size = new System.Drawing.Size(132, 44);
+            this.btnChangelogHistory.TabIndex = 29;
+            this.btnChangelogHistory.Text = "View All Changelogs";
+            this.btnChangelogHistory.UseVisualStyleBackColor = true;
+            this.btnChangelogHistory.Click += new System.EventHandler(this.btnChangelogHistory_Click);
             // 
             // btnCheckYTDLUpdates
             // 
@@ -426,6 +452,77 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
+            // radQualityAverage
+            // 
+            this.radQualityAverage.AutoSize = true;
+            this.radQualityAverage.Location = new System.Drawing.Point(29, 204);
+            this.radQualityAverage.Name = "radQualityAverage";
+            this.radQualityAverage.Size = new System.Drawing.Size(82, 21);
+            this.radQualityAverage.TabIndex = 5;
+            this.radQualityAverage.TabStop = true;
+            this.radQualityAverage.Text = "Average";
+            this.radQualityAverage.UseVisualStyleBackColor = true;
+            this.radQualityAverage.Click += new System.EventHandler(this.radQualityAverage_Click);
+            // 
+            // radQualityBest
+            // 
+            this.radQualityBest.AutoSize = true;
+            this.radQualityBest.Location = new System.Drawing.Point(29, 177);
+            this.radQualityBest.Name = "radQualityBest";
+            this.radQualityBest.Size = new System.Drawing.Size(57, 21);
+            this.radQualityBest.TabIndex = 4;
+            this.radQualityBest.TabStop = true;
+            this.radQualityBest.Text = "Best";
+            this.radQualityBest.UseVisualStyleBackColor = true;
+            this.radQualityBest.Click += new System.EventHandler(this.radQualityBest_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 157);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(162, 17);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Music Download Quality:";
+            // 
+            // radQualityCompressed
+            // 
+            this.radQualityCompressed.AutoSize = true;
+            this.radQualityCompressed.Location = new System.Drawing.Point(29, 231);
+            this.radQualityCompressed.Name = "radQualityCompressed";
+            this.radQualityCompressed.Size = new System.Drawing.Size(108, 21);
+            this.radQualityCompressed.TabIndex = 7;
+            this.radQualityCompressed.TabStop = true;
+            this.radQualityCompressed.Text = "Compressed";
+            this.radQualityCompressed.UseVisualStyleBackColor = true;
+            this.radQualityCompressed.Click += new System.EventHandler(this.radQualityCompressed_Click);
+            // 
+            // txtAudacity
+            // 
+            this.txtAudacity.Location = new System.Drawing.Point(29, 280);
+            this.txtAudacity.Name = "txtAudacity";
+            this.txtAudacity.Size = new System.Drawing.Size(420, 22);
+            this.txtAudacity.TabIndex = 29;
+            // 
+            // labAudacity
+            // 
+            this.labAudacity.AutoSize = true;
+            this.labAudacity.Location = new System.Drawing.Point(27, 260);
+            this.labAudacity.Name = "labAudacity";
+            this.labAudacity.Size = new System.Drawing.Size(139, 17);
+            this.labAudacity.TabIndex = 30;
+            this.labAudacity.Text = "Audacity Executable:";
+            // 
+            // btnAudacity
+            // 
+            this.btnAudacity.Location = new System.Drawing.Point(455, 269);
+            this.btnAudacity.Name = "btnAudacity";
+            this.btnAudacity.Size = new System.Drawing.Size(44, 44);
+            this.btnAudacity.TabIndex = 31;
+            this.btnAudacity.Text = "...";
+            this.btnAudacity.UseVisualStyleBackColor = true;
+            this.btnAudacity.Click += new System.EventHandler(this.btnAudacity_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -484,5 +581,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chkShowFfmpegOutput;
         private System.Windows.Forms.CheckBox chkIgnoreLimits;
+        private System.Windows.Forms.Button btnChangelogHistory;
+        private System.Windows.Forms.RadioButton radQualityCompressed;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.RadioButton radQualityAverage;
+        private System.Windows.Forms.RadioButton radQualityBest;
+        private System.Windows.Forms.Button btnAudacity;
+        private System.Windows.Forms.Label labAudacity;
+        private System.Windows.Forms.TextBox txtAudacity;
     }
 }

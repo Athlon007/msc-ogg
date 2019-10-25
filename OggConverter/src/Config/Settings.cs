@@ -101,13 +101,27 @@ namespace OggConverter
         /// </summary>
         public static bool IgnoreLimitations { get => Get("IgnoreLimitations", false); set => Set("IgnoreLimitations", value); }
 
+        /// <summary>
+        /// Quality of downloaded songs with youtube-dl
+        /// <para />
+        /// <para>0 - Best (0 in ytdl)</para>
+        /// <para>1 - Average (5 in ytdl)</para>
+        /// <para>2 - Compressed (9 in ytdl)</para>
+        /// </summary>
+        public static int YoutubeDlDownloadQuality { get => Get("YoutubeDlDownloadQuality", 1); set => Set("YoutubeDlDownloadQuality", value); }
+
+        /// <summary>
+        /// Path to the Audacity
+        /// </summary>
+        public static string AudacityPath { get => Get("AudacityPath", ""); set => Set("AudacityPath", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////
 
-        /// <summary>
-        /// Stores last build used.
-        /// </summary>
+            /// <summary>
+            /// Stores last build used.
+            /// </summary>
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }
 
         /// <summary>
