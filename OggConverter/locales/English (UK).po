@@ -777,5 +777,5 @@ msgstr ""
 msgid "Modify the song:"
 msgstr ""
 
-msgid "Open with Audacity"
+msgid "Edit with Audacity"
 msgstr ""

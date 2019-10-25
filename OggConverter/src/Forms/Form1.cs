@@ -400,7 +400,7 @@ namespace OggConverter
             btnEmptyAll.Text = Localisation.Get("Delete all");
             btnDonate.Text = Localisation.Get("Buy Me a Pizza");
             label3.Text = Localisation.Get("Modify the song:");
-            btnOpenWithAudacity.Text = Localisation.Get("Open with Audacity");
+            btnOpenWithAudacity.Text = Localisation.Get("Edit with Audacity");
         }
 
         /// <summary>

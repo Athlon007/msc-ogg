@@ -7,6 +7,7 @@
 - Added donate button
 - Added "view all changelogs" button
 - You can now change download quality of a song - best, average, or compressed
+- Added "Edit with Audacity" button
 
 ## 2.8.1 (25.10.2019)
 
