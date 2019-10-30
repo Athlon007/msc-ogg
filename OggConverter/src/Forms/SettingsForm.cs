@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using System.Drawing;
+using System.Net;
 
 namespace OggConverter
 {
@@ -94,6 +95,9 @@ namespace OggConverter
             toolTip.SetToolTip(chkIgnoreLimits, Localisation.Get("Normally the program will show a warning during conversion, " +
                 "when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, " +
                 "it will be ignored."));
+
+            txtChangelog.Text = Properties.Resources.changelog;
+            btnAudacity.Text = char.ConvertFromUtf32(0x1F4C1);
         }
 
         private void ChkAutoSort_Click(object sender, EventArgs e)
@@ -300,7 +304,7 @@ namespace OggConverter
             radQualityBest.Text = Localisation.Get("Best");
             radQualityAverage.Text = Localisation.Get("Average");
             radQualityCompressed.Text = Localisation.Get("Compressed");
-            btnChangelogHistory.Text = Localisation.Get("View All Changelogs");
+            btnChangelogHistory.Text = Localisation.Get("View Changelog History");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -319,9 +323,32 @@ namespace OggConverter
             Settings.IgnoreLimitations ^= true;
         }
 
-        private void btnChangelogHistory_Click(object sender, EventArgs e)
+        private async void btnChangelogHistory_Click(object sender, EventArgs e)
         {
-            Process.Start("https://gitlab.com/aathlon/msc-ogg/blob/master/CHANGELOG.md");
+            //Process.Start("https://gitlab.com/aathlon/msc-ogg/blob/master/CHANGELOG.md");
+            await Task.Run(() => GetChangelog());
+        }
+
+        async void GetChangelog()
+        {
+            using (WebClient client = new WebClient())
+            {
+                await Task.Run(() => client.DownloadStringAsync(new Uri("https://gitlab.com/aathlon/msc-ogg/raw/master/CHANGELOG.md")));
+                client.DownloadStringCompleted += (s, e) =>
+                {
+                    if (txtChangelog.InvokeRequired)
+                    {
+                        txtChangelog.Invoke(new Action(delegate ()
+                        {
+                            txtChangelog.Text = e.Result;
+                        }));
+                    }
+                    else
+                    {
+                        txtChangelog.Text = e.Result;
+                    }
+                };
+            }
         }
 
         private void radQualityBest_Click(object sender, EventArgs e)

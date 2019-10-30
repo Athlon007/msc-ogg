@@ -1,6 +1,19 @@
 # Changelog
 
-## 2.9.0.0 (25.11.2019)
+## Preview 2.9.0.1 (30.10.2019)
+
+### Added
+
+- Added changelog view in the Settings
+- You can now load full changelog directly from the settings
+
+### Changes
+
+- Replaces the Audacity path select button text with an icon
+- Changed button text from "View All Changelogs" to "View Changelog History"
+- Small UI chnages
+
+## Preview 2.9.0.0 (25.11.2019)
 
 ### Added
 

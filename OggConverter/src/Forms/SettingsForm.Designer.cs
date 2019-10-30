@@ -31,12 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.btnAudacity = new System.Windows.Forms.Button();
+            this.labAudacity = new System.Windows.Forms.Label();
+            this.txtAudacity = new System.Windows.Forms.TextBox();
             this.chkShowFfmpegOutput = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboLang = new System.Windows.Forms.ComboBox();
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
             this.tabFiles = new System.Windows.Forms.TabPage();
+            this.radQualityCompressed = new System.Windows.Forms.RadioButton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.radQualityAverage = new System.Windows.Forms.RadioButton();
+            this.radQualityBest = new System.Windows.Forms.RadioButton();
             this.chkIgnoreLimits = new System.Windows.Forms.CheckBox();
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
@@ -62,13 +69,7 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.radQualityAverage = new System.Windows.Forms.RadioButton();
-            this.radQualityBest = new System.Windows.Forms.RadioButton();
-            this.label6 = new System.Windows.Forms.Label();
-            this.radQualityCompressed = new System.Windows.Forms.RadioButton();
-            this.txtAudacity = new System.Windows.Forms.TextBox();
-            this.labAudacity = new System.Windows.Forms.Label();
-            this.btnAudacity = new System.Windows.Forms.Button();
+            this.txtChangelog = new System.Windows.Forms.RichTextBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -107,10 +108,38 @@
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // btnAudacity
+            // 
+            this.btnAudacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.btnAudacity.Location = new System.Drawing.Point(455, 263);
+            this.btnAudacity.Name = "btnAudacity";
+            this.btnAudacity.Size = new System.Drawing.Size(44, 44);
+            this.btnAudacity.TabIndex = 31;
+            this.btnAudacity.Text = "...";
+            this.btnAudacity.UseVisualStyleBackColor = true;
+            this.btnAudacity.Click += new System.EventHandler(this.btnAudacity_Click);
+            // 
+            // labAudacity
+            // 
+            this.labAudacity.AutoSize = true;
+            this.labAudacity.Location = new System.Drawing.Point(27, 254);
+            this.labAudacity.Name = "labAudacity";
+            this.labAudacity.Size = new System.Drawing.Size(139, 17);
+            this.labAudacity.TabIndex = 30;
+            this.labAudacity.Text = "Audacity Executable:";
+            // 
+            // txtAudacity
+            // 
+            this.txtAudacity.Location = new System.Drawing.Point(29, 274);
+            this.txtAudacity.Name = "txtAudacity";
+            this.txtAudacity.ReadOnly = true;
+            this.txtAudacity.Size = new System.Drawing.Size(420, 22);
+            this.txtAudacity.TabIndex = 29;
+            // 
             // chkShowFfmpegOutput
             // 
             this.chkShowFfmpegOutput.AutoSize = true;
-            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 194);
+            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 191);
             this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
             this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
             this.chkShowFfmpegOutput.TabIndex = 28;
@@ -177,6 +206,51 @@
             this.tabFiles.Text = "Files";
             this.tabFiles.UseVisualStyleBackColor = true;
             // 
+            // radQualityCompressed
+            // 
+            this.radQualityCompressed.AutoSize = true;
+            this.radQualityCompressed.Location = new System.Drawing.Point(29, 231);
+            this.radQualityCompressed.Name = "radQualityCompressed";
+            this.radQualityCompressed.Size = new System.Drawing.Size(108, 21);
+            this.radQualityCompressed.TabIndex = 7;
+            this.radQualityCompressed.TabStop = true;
+            this.radQualityCompressed.Text = "Compressed";
+            this.radQualityCompressed.UseVisualStyleBackColor = true;
+            this.radQualityCompressed.Click += new System.EventHandler(this.radQualityCompressed_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 157);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(162, 17);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Music Download Quality:";
+            // 
+            // radQualityAverage
+            // 
+            this.radQualityAverage.AutoSize = true;
+            this.radQualityAverage.Location = new System.Drawing.Point(29, 204);
+            this.radQualityAverage.Name = "radQualityAverage";
+            this.radQualityAverage.Size = new System.Drawing.Size(82, 21);
+            this.radQualityAverage.TabIndex = 5;
+            this.radQualityAverage.TabStop = true;
+            this.radQualityAverage.Text = "Average";
+            this.radQualityAverage.UseVisualStyleBackColor = true;
+            this.radQualityAverage.Click += new System.EventHandler(this.radQualityAverage_Click);
+            // 
+            // radQualityBest
+            // 
+            this.radQualityBest.AutoSize = true;
+            this.radQualityBest.Location = new System.Drawing.Point(29, 177);
+            this.radQualityBest.Name = "radQualityBest";
+            this.radQualityBest.Size = new System.Drawing.Size(57, 21);
+            this.radQualityBest.TabIndex = 4;
+            this.radQualityBest.TabStop = true;
+            this.radQualityBest.Text = "Best";
+            this.radQualityBest.UseVisualStyleBackColor = true;
+            this.radQualityBest.Click += new System.EventHandler(this.radQualityBest_Click);
+            // 
             // chkIgnoreLimits
             // 
             this.chkIgnoreLimits.AutoSize = true;
@@ -212,6 +286,7 @@
             // 
             // tabUpdates
             // 
+            this.tabUpdates.Controls.Add(this.txtChangelog);
             this.tabUpdates.Controls.Add(this.btnChangelogHistory);
             this.tabUpdates.Controls.Add(this.btnCheckYTDLUpdates);
             this.tabUpdates.Controls.Add(this.btnCheckUpdate);
@@ -236,7 +311,7 @@
             this.btnChangelogHistory.Name = "btnChangelogHistory";
             this.btnChangelogHistory.Size = new System.Drawing.Size(132, 44);
             this.btnChangelogHistory.TabIndex = 29;
-            this.btnChangelogHistory.Text = "View All Changelogs";
+            this.btnChangelogHistory.Text = "View Changelog History";
             this.btnChangelogHistory.UseVisualStyleBackColor = true;
             this.btnChangelogHistory.Click += new System.EventHandler(this.btnChangelogHistory_Click);
             // 
@@ -267,7 +342,7 @@
             this.labVer.Name = "labVer";
             this.labVer.Size = new System.Drawing.Size(155, 34);
             this.labVer.TabIndex = 26;
-            this.labVer.Text = "Your Version: 0.0.0.0 \r\nInternal Version: 19405";
+            this.labVer.Text = "Your Version: 0.0.0.0 \r\nInternal Version: 00000";
             // 
             // label3
             // 
@@ -452,76 +527,16 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // radQualityAverage
+            // txtChangelog
             // 
-            this.radQualityAverage.AutoSize = true;
-            this.radQualityAverage.Location = new System.Drawing.Point(29, 204);
-            this.radQualityAverage.Name = "radQualityAverage";
-            this.radQualityAverage.Size = new System.Drawing.Size(82, 21);
-            this.radQualityAverage.TabIndex = 5;
-            this.radQualityAverage.TabStop = true;
-            this.radQualityAverage.Text = "Average";
-            this.radQualityAverage.UseVisualStyleBackColor = true;
-            this.radQualityAverage.Click += new System.EventHandler(this.radQualityAverage_Click);
-            // 
-            // radQualityBest
-            // 
-            this.radQualityBest.AutoSize = true;
-            this.radQualityBest.Location = new System.Drawing.Point(29, 177);
-            this.radQualityBest.Name = "radQualityBest";
-            this.radQualityBest.Size = new System.Drawing.Size(57, 21);
-            this.radQualityBest.TabIndex = 4;
-            this.radQualityBest.TabStop = true;
-            this.radQualityBest.Text = "Best";
-            this.radQualityBest.UseVisualStyleBackColor = true;
-            this.radQualityBest.Click += new System.EventHandler(this.radQualityBest_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(26, 157);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(162, 17);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Music Download Quality:";
-            // 
-            // radQualityCompressed
-            // 
-            this.radQualityCompressed.AutoSize = true;
-            this.radQualityCompressed.Location = new System.Drawing.Point(29, 231);
-            this.radQualityCompressed.Name = "radQualityCompressed";
-            this.radQualityCompressed.Size = new System.Drawing.Size(108, 21);
-            this.radQualityCompressed.TabIndex = 7;
-            this.radQualityCompressed.TabStop = true;
-            this.radQualityCompressed.Text = "Compressed";
-            this.radQualityCompressed.UseVisualStyleBackColor = true;
-            this.radQualityCompressed.Click += new System.EventHandler(this.radQualityCompressed_Click);
-            // 
-            // txtAudacity
-            // 
-            this.txtAudacity.Location = new System.Drawing.Point(29, 280);
-            this.txtAudacity.Name = "txtAudacity";
-            this.txtAudacity.Size = new System.Drawing.Size(420, 22);
-            this.txtAudacity.TabIndex = 29;
-            // 
-            // labAudacity
-            // 
-            this.labAudacity.AutoSize = true;
-            this.labAudacity.Location = new System.Drawing.Point(27, 260);
-            this.labAudacity.Name = "labAudacity";
-            this.labAudacity.Size = new System.Drawing.Size(139, 17);
-            this.labAudacity.TabIndex = 30;
-            this.labAudacity.Text = "Audacity Executable:";
-            // 
-            // btnAudacity
-            // 
-            this.btnAudacity.Location = new System.Drawing.Point(455, 269);
-            this.btnAudacity.Name = "btnAudacity";
-            this.btnAudacity.Size = new System.Drawing.Size(44, 44);
-            this.btnAudacity.TabIndex = 31;
-            this.btnAudacity.Text = "...";
-            this.btnAudacity.UseVisualStyleBackColor = true;
-            this.btnAudacity.Click += new System.EventHandler(this.btnAudacity_Click);
+            this.txtChangelog.BackColor = System.Drawing.Color.White;
+            this.txtChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtChangelog.Location = new System.Drawing.Point(269, 88);
+            this.txtChangelog.Name = "txtChangelog";
+            this.txtChangelog.ReadOnly = true;
+            this.txtChangelog.Size = new System.Drawing.Size(515, 325);
+            this.txtChangelog.TabIndex = 30;
+            this.txtChangelog.Text = "";
             // 
             // SettingsForm
             // 
@@ -589,5 +604,6 @@
         private System.Windows.Forms.Button btnAudacity;
         private System.Windows.Forms.Label labAudacity;
         private System.Windows.Forms.TextBox txtAudacity;
+        private System.Windows.Forms.RichTextBox txtChangelog;
     }
 }

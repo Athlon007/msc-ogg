@@ -762,7 +762,7 @@ msgstr ""
 msgid "Compressed"
 msgstr ""
 
-msgid "View All Changelogs"
+msgid "View Changelog History"
 msgstr ""
 
 msgid "Select the audacity folder."
