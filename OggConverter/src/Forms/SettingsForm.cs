@@ -61,6 +61,7 @@ namespace OggConverter
             radQualityCompressed.Checked = Settings.YoutubeDlDownloadQuality == 2;
 
             txtAudacity.Text = Settings.AudacityPath;
+            chkRecommendedFrequency.Checked = Settings.UseRecommendedFrequency;
 
             if (Directory.Exists("locales"))
             {
@@ -305,6 +306,7 @@ namespace OggConverter
             radQualityAverage.Text = Localisation.Get("Average");
             radQualityCompressed.Text = Localisation.Get("Compressed");
             btnChangelogHistory.Text = Localisation.Get("View Changelog History");
+            chkRecommendedFrequency.Text = Localisation.Get("Set the music frequency to recomended 22050 Hz frequency");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -383,6 +385,11 @@ namespace OggConverter
                     txtAudacity.Text = Settings.AudacityPath;
                 }
             }
+        }
+
+        private void chkRecommendedFrequency_Click(object sender, EventArgs e)
+        {
+            Settings.UseRecommendedFrequency ^= true;
         }
     }
 }

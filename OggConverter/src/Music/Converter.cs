@@ -191,7 +191,9 @@ namespace OggConverter
                     Form1.instance.Log(Localisation.Get("Converting {0}", file.Name));
 
                     string songName = null;
-                    string argument = $"-i \"{path}\\{file.Name}\" -acodec libvorbis \"{path}\\track{inGame}.ogg\"";
+                    string argument = $"-i \"{path}\\{file.Name}\" -acodec libvorbis" 
+                        + (Settings.UseRecommendedFrequency ? " -ar 22050" : "")
+                        + " \"{path}\\track{inGame}.ogg\"";
 
                     // If the file is already in OGG format - rename file, and start FFmpeg in order to try and find the name
                     if (file.Name.EndsWith(".ogg") && !file.Name.StartsWith("track"))

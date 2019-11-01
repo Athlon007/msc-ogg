@@ -305,6 +305,10 @@ namespace OggConverter
             toolTip.SetToolTip(btnShuffle, Localisation.Get("Randomizes songs order in chosen folder."));
             toolTip.SetToolTip(btnOpenGameDir, Localisation.Get("Opens My Summer Car folder in Explorer."));
             toolTip.SetToolTip(btnDirectory, Localisation.Get("Lets you change My Summer Car folder."));
+
+            // Loads font used in preview
+            labCurrentFont.Text = Settings.CoverArtFont;
+            labCurrentFont.Font = new Font(Settings.CoverArtFont, 10);
         }
 
         /// <summary>
@@ -401,6 +405,13 @@ namespace OggConverter
             btnDonate.Text = Localisation.Get("Buy Me a Pizza");
             label3.Text = Localisation.Get("Modify the song:");
             btnOpenWithAudacity.Text = Localisation.Get("Edit with Audacity");
+
+            btnCoverArtImage.Text = File.Exists("coverart.png") ? Localisation.Get("CD cover is in use") : Localisation.Get("No CD cover found");
+            label4.Text = Localisation.Get("Text on CD:");
+            btnSelectFont.Text = Localisation.Get("Choose the font");
+            label7.Text = Localisation.Get("Use the default cover art image with no text added for best result.");
+            btnCreateCoverArt.Text = Localisation.Get("Create new cover art");
+            tabCoverArt.Text = Localisation.Get("Cover Art");
         }
 
         /// <summary>
@@ -527,6 +538,10 @@ namespace OggConverter
                 songList.SelectedIndex = lastSelected;
 
             UpdateRecycleBinList();
+
+            btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");
+            picCoverArt.Image = File.Exists("coverart.png") ? Image.FromFile("coverart.png") : null;
+
         }
 
         void UpdateRecycleBinList()
@@ -974,7 +989,7 @@ namespace OggConverter
                 case 2:
                     txtSongName.Text = songList.SelectedItem.ToString();
                     break;
-                case 3:
+                case 4:
                     UpdateRecycleBinList();
                     break;
             }
@@ -1253,6 +1268,41 @@ namespace OggConverter
         private void btnDonate_Click(object sender, EventArgs e)
         {
             Process.Start("http://paypal.me/figurakonrad");
+        }
+
+        private void btnSelectFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Settings.CoverArtFont = fontDialog1.Font.Name;
+                labCurrentFont.Text = Settings.CoverArtFont;
+                labCurrentFont.Font = new Font(Settings.CoverArtFont, 10);
+            }
+        }
+
+        private void btnCreateCoverArt_Click(object sender, EventArgs e)
+        {
+            Cover cover = new Cover();
+            cover.New(txtCdText.Text, CurrentFolder);
+        }
+
+        private void btnCoverArtImage_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = Localisation.Get("Select the cover art.");
+                openFileDialog.FileName = "audacity.exe";
+                openFileDialog.Filter = "PNG (*.png)|*.png";
+                openFileDialog.InitialDirectory = Settings.GamePath;
+                var dialog = openFileDialog.ShowDialog();
+                if (dialog == DialogResult.OK)
+                {
+                    File.Copy(openFileDialog.FileName, "coverart.png");
+                    btnCoverArtImage.Text = Localisation.Get("CD cover is in use");
+                    btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");
+                    picCoverArt.Image = Image.FromFile("coverart.png");
+                }
+            }
         }
     }
 }

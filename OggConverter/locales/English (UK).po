@@ -779,3 +779,36 @@ msgstr ""
 
 msgid "Edit with Audacity"
 msgstr ""
+
+msgid "Set the music frequency to recomended 22050 Hz frequency"
+msgstr ""
+
+msgid "Text on CD:"
+msgstr ""
+
+msgid "Choose the font"
+msgstr ""
+
+msgid "No CD cover found"
+msgstr ""
+
+msgid "CD cover is in use"
+msgstr ""
+
+msgid "Use the default cover art image with no text added for best result."
+msgstr ""
+
+msgid "Create new cover art"
+msgstr ""
+
+msgid "Select the cover art."
+msgstr ""
+
+msgid "Creating new cover art for {0}..."
+msgstr ""
+
+msgid "Created CD cover art successfully!"
+msgstr ""
+
+msgid "Cover Art"
+msgstr ""

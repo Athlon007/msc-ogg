@@ -115,13 +115,23 @@ namespace OggConverter
         /// </summary>
         public static string AudacityPath { get => Get("AudacityPath", ""); set => Set("AudacityPath", value); }
 
+        /// <summary>
+        /// If true, the program will convert the audio frequency of file to 22050 Hz
+        /// </summary>
+        public static bool UseRecommendedFrequency { get => Get("UseRecommendedFrequency", false); set => Set("UseRecommendedFrequency", value); }
+
+        /// <summary>
+        /// Font used in cover art text
+        /// </summary>
+        public static string CoverArtFont { get => Get("CoverArtFont", "Arial"); set => Set("CoverArtFont", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////
 
-            /// <summary>
-            /// Stores last build used.
-            /// </summary>
+        /// <summary>
+        /// Stores last build used.
+        /// </summary>
         public static int LatestVersion { get => Get("LatestVersion", 0); set => Set("LatestVersion", value); }
 
         /// <summary>

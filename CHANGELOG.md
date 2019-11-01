@@ -1,5 +1,12 @@
 # Changelog
 
+## Preview 2.9.0.2 (01.11.2019)
+
+### Added
+
+- Added cover art generator! The program will automatically generate a new cover art with the list of first 11 songs on the back of the cover, and your text on CD! You can change the font type too!
+- The program can now set the music frequency to 22050 Hz while converting
+
 ## Preview 2.9.0.1 (30.10.2019)
 
 ### Added

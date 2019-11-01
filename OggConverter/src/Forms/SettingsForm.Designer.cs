@@ -40,6 +40,7 @@
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
             this.tabFiles = new System.Windows.Forms.TabPage();
+            this.chkRecommendedFrequency = new System.Windows.Forms.CheckBox();
             this.radQualityCompressed = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
             this.radQualityAverage = new System.Windows.Forms.RadioButton();
@@ -48,6 +49,7 @@
             this.chkNoMetafiles = new System.Windows.Forms.CheckBox();
             this.chkAutoSort = new System.Windows.Forms.CheckBox();
             this.tabUpdates = new System.Windows.Forms.TabPage();
+            this.txtChangelog = new System.Windows.Forms.RichTextBox();
             this.btnChangelogHistory = new System.Windows.Forms.Button();
             this.btnCheckYTDLUpdates = new System.Windows.Forms.Button();
             this.btnCheckUpdate = new System.Windows.Forms.Button();
@@ -69,7 +71,6 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.txtChangelog = new System.Windows.Forms.RichTextBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -191,6 +192,7 @@
             // 
             // tabFiles
             // 
+            this.tabFiles.Controls.Add(this.chkRecommendedFrequency);
             this.tabFiles.Controls.Add(this.radQualityCompressed);
             this.tabFiles.Controls.Add(this.label6);
             this.tabFiles.Controls.Add(this.radQualityAverage);
@@ -205,6 +207,17 @@
             this.tabFiles.TabIndex = 0;
             this.tabFiles.Text = "Files";
             this.tabFiles.UseVisualStyleBackColor = true;
+            // 
+            // chkRecommendedFrequency
+            // 
+            this.chkRecommendedFrequency.AutoSize = true;
+            this.chkRecommendedFrequency.Location = new System.Drawing.Point(29, 116);
+            this.chkRecommendedFrequency.Name = "chkRecommendedFrequency";
+            this.chkRecommendedFrequency.Size = new System.Drawing.Size(413, 21);
+            this.chkRecommendedFrequency.TabIndex = 27;
+            this.chkRecommendedFrequency.Text = "Set the music frequency to recomended 22050 Hz frequency";
+            this.chkRecommendedFrequency.UseVisualStyleBackColor = true;
+            this.chkRecommendedFrequency.Click += new System.EventHandler(this.chkRecommendedFrequency_Click);
             // 
             // radQualityCompressed
             // 
@@ -304,6 +317,17 @@
             this.tabUpdates.TabIndex = 1;
             this.tabUpdates.Text = "Updates";
             this.tabUpdates.UseVisualStyleBackColor = true;
+            // 
+            // txtChangelog
+            // 
+            this.txtChangelog.BackColor = System.Drawing.Color.White;
+            this.txtChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtChangelog.Location = new System.Drawing.Point(269, 88);
+            this.txtChangelog.Name = "txtChangelog";
+            this.txtChangelog.ReadOnly = true;
+            this.txtChangelog.Size = new System.Drawing.Size(515, 325);
+            this.txtChangelog.TabIndex = 30;
+            this.txtChangelog.Text = "";
             // 
             // btnChangelogHistory
             // 
@@ -527,17 +551,6 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // txtChangelog
-            // 
-            this.txtChangelog.BackColor = System.Drawing.Color.White;
-            this.txtChangelog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtChangelog.Location = new System.Drawing.Point(269, 88);
-            this.txtChangelog.Name = "txtChangelog";
-            this.txtChangelog.ReadOnly = true;
-            this.txtChangelog.Size = new System.Drawing.Size(515, 325);
-            this.txtChangelog.TabIndex = 30;
-            this.txtChangelog.Text = "";
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -605,5 +618,6 @@
         private System.Windows.Forms.Label labAudacity;
         private System.Windows.Forms.TextBox txtAudacity;
         private System.Windows.Forms.RichTextBox txtChangelog;
+        private System.Windows.Forms.CheckBox chkRecommendedFrequency;
     }
 }

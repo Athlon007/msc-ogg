@@ -35,7 +35,7 @@ namespace OggConverter
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19440;
+        public const int version = 19441;
 
         static bool newUpdateReady;
         static bool newPreviewReady;

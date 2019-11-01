@@ -80,10 +80,20 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtboxVideo = new System.Windows.Forms.TextBox();
             this.tabMeta = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnOpenWithAudacity = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSetName = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
+            this.tabCoverArt = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnCoverArtImage = new System.Windows.Forms.Button();
+            this.labCurrentFont = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtCdText = new System.Windows.Forms.TextBox();
+            this.btnSelectFont = new System.Windows.Forms.Button();
+            this.btnCreateCoverArt = new System.Windows.Forms.Button();
             this.tabRecycle = new System.Windows.Forms.TabPage();
             this.btnEmptyAll = new System.Windows.Forms.Button();
             this.labRecycle = new System.Windows.Forms.Label();
@@ -96,8 +106,8 @@
             this.contextDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOpenWithAudacity = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.picCoverArt = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -105,8 +115,10 @@
             this.tabLog.SuspendLayout();
             this.tabDownload.SuspendLayout();
             this.tabMeta.SuspendLayout();
+            this.tabCoverArt.SuspendLayout();
             this.tabRecycle.SuspendLayout();
             this.songListContext.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).BeginInit();
             this.SuspendLayout();
             // 
             // logOutput
@@ -313,7 +325,7 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 26);
+            this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
             // 
             // btnLastLog
@@ -394,14 +406,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 26);
+            this.menuSettings.Size = new System.Drawing.Size(76, 24);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -419,21 +431,21 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 30);
+            this.menu.Size = new System.Drawing.Size(991, 28);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 26);
+            this.btnHelp.Size = new System.Drawing.Size(55, 24);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // btnDonate
             // 
             this.btnDonate.Name = "btnDonate";
-            this.btnDonate.Size = new System.Drawing.Size(122, 26);
+            this.btnDonate.Size = new System.Drawing.Size(122, 24);
             this.btnDonate.Text = "Buy Me a Pizza";
             this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
@@ -502,6 +514,7 @@
             this.tabs.Controls.Add(this.tabLog);
             this.tabs.Controls.Add(this.tabDownload);
             this.tabs.Controls.Add(this.tabMeta);
+            this.tabs.Controls.Add(this.tabCoverArt);
             this.tabs.Controls.Add(this.tabRecycle);
             this.tabs.HotTrack = true;
             this.tabs.Location = new System.Drawing.Point(340, 33);
@@ -646,6 +659,27 @@
             this.tabMeta.Text = "Edit";
             this.tabMeta.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 173);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(112, 17);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Modify the song:";
+            // 
+            // btnOpenWithAudacity
+            // 
+            this.btnOpenWithAudacity.Location = new System.Drawing.Point(8, 194);
+            this.btnOpenWithAudacity.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenWithAudacity.Name = "btnOpenWithAudacity";
+            this.btnOpenWithAudacity.Size = new System.Drawing.Size(132, 44);
+            this.btnOpenWithAudacity.TabIndex = 19;
+            this.btnOpenWithAudacity.Text = "Edit with Audacity";
+            this.btnOpenWithAudacity.UseVisualStyleBackColor = true;
+            this.btnOpenWithAudacity.Click += new System.EventHandler(this.button1_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -685,6 +719,95 @@
             this.txtSongName.Size = new System.Drawing.Size(624, 22);
             this.txtSongName.TabIndex = 2;
             this.txtSongName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSongName_KeyDown);
+            // 
+            // tabCoverArt
+            // 
+            this.tabCoverArt.Controls.Add(this.picCoverArt);
+            this.tabCoverArt.Controls.Add(this.label7);
+            this.tabCoverArt.Controls.Add(this.btnCoverArtImage);
+            this.tabCoverArt.Controls.Add(this.labCurrentFont);
+            this.tabCoverArt.Controls.Add(this.label4);
+            this.tabCoverArt.Controls.Add(this.txtCdText);
+            this.tabCoverArt.Controls.Add(this.btnSelectFont);
+            this.tabCoverArt.Controls.Add(this.btnCreateCoverArt);
+            this.tabCoverArt.Location = new System.Drawing.Point(4, 25);
+            this.tabCoverArt.Name = "tabCoverArt";
+            this.tabCoverArt.Size = new System.Drawing.Size(645, 405);
+            this.tabCoverArt.TabIndex = 4;
+            this.tabCoverArt.Text = "Cover Art";
+            this.tabCoverArt.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(149, 141);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(419, 17);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "Use the default cover art image with no text added for best result.";
+            // 
+            // btnCoverArtImage
+            // 
+            this.btnCoverArtImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.btnCoverArtImage.Location = new System.Drawing.Point(11, 130);
+            this.btnCoverArtImage.Name = "btnCoverArtImage";
+            this.btnCoverArtImage.Size = new System.Drawing.Size(132, 44);
+            this.btnCoverArtImage.TabIndex = 34;
+            this.btnCoverArtImage.Text = "No CD cover found";
+            this.btnCoverArtImage.UseVisualStyleBackColor = true;
+            this.btnCoverArtImage.Click += new System.EventHandler(this.btnCoverArtImage_Click);
+            // 
+            // labCurrentFont
+            // 
+            this.labCurrentFont.AutoSize = true;
+            this.labCurrentFont.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labCurrentFont.Location = new System.Drawing.Point(151, 79);
+            this.labCurrentFont.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labCurrentFont.Name = "labCurrentFont";
+            this.labCurrentFont.Size = new System.Drawing.Size(42, 19);
+            this.labCurrentFont.TabIndex = 30;
+            this.labCurrentFont.Text = "Arial";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 9);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(82, 17);
+            this.label4.TabIndex = 29;
+            this.label4.Text = "Text on CD:";
+            // 
+            // txtCdText
+            // 
+            this.txtCdText.Location = new System.Drawing.Point(11, 29);
+            this.txtCdText.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCdText.MaxLength = 8;
+            this.txtCdText.Name = "txtCdText";
+            this.txtCdText.Size = new System.Drawing.Size(623, 22);
+            this.txtCdText.TabIndex = 28;
+            // 
+            // btnSelectFont
+            // 
+            this.btnSelectFont.Location = new System.Drawing.Point(11, 65);
+            this.btnSelectFont.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSelectFont.Name = "btnSelectFont";
+            this.btnSelectFont.Size = new System.Drawing.Size(132, 44);
+            this.btnSelectFont.TabIndex = 27;
+            this.btnSelectFont.Text = "Choose the font";
+            this.btnSelectFont.UseVisualStyleBackColor = true;
+            this.btnSelectFont.Click += new System.EventHandler(this.btnSelectFont_Click);
+            // 
+            // btnCreateCoverArt
+            // 
+            this.btnCreateCoverArt.Location = new System.Drawing.Point(11, 195);
+            this.btnCreateCoverArt.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCreateCoverArt.Name = "btnCreateCoverArt";
+            this.btnCreateCoverArt.Size = new System.Drawing.Size(132, 44);
+            this.btnCreateCoverArt.TabIndex = 16;
+            this.btnCreateCoverArt.Text = "Create new cover art";
+            this.btnCreateCoverArt.UseVisualStyleBackColor = true;
+            this.btnCreateCoverArt.Click += new System.EventHandler(this.btnCreateCoverArt_Click);
             // 
             // tabRecycle
             // 
@@ -809,26 +932,21 @@
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
-            // btnOpenWithAudacity
+            // fontDialog1
             // 
-            this.btnOpenWithAudacity.Location = new System.Drawing.Point(8, 194);
-            this.btnOpenWithAudacity.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOpenWithAudacity.Name = "btnOpenWithAudacity";
-            this.btnOpenWithAudacity.Size = new System.Drawing.Size(132, 44);
-            this.btnOpenWithAudacity.TabIndex = 19;
-            this.btnOpenWithAudacity.Text = "Edit with Audacity";
-            this.btnOpenWithAudacity.UseVisualStyleBackColor = true;
-            this.btnOpenWithAudacity.Click += new System.EventHandler(this.button1_Click);
+            this.fontDialog1.Font = new System.Drawing.Font("Arial", 10F);
+            this.fontDialog1.MaxSize = 10;
+            this.fontDialog1.MinSize = 10;
+            this.fontDialog1.ShowEffects = false;
             // 
-            // label3
+            // picCoverArt
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(8, 173);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(112, 17);
-            this.label3.TabIndex = 20;
-            this.label3.Text = "Modify the song:";
+            this.picCoverArt.Location = new System.Drawing.Point(454, 216);
+            this.picCoverArt.Name = "picCoverArt";
+            this.picCoverArt.Size = new System.Drawing.Size(180, 180);
+            this.picCoverArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCoverArt.TabIndex = 36;
+            this.picCoverArt.TabStop = false;
             // 
             // Form1
             // 
@@ -872,9 +990,12 @@
             this.tabDownload.PerformLayout();
             this.tabMeta.ResumeLayout(false);
             this.tabMeta.PerformLayout();
+            this.tabCoverArt.ResumeLayout(false);
+            this.tabCoverArt.PerformLayout();
             this.tabRecycle.ResumeLayout(false);
             this.tabRecycle.PerformLayout();
             this.songListContext.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -949,6 +1070,16 @@
         private System.Windows.Forms.ToolStripMenuItem btnDonate;
         private System.Windows.Forms.Button btnOpenWithAudacity;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage tabCoverArt;
+        private System.Windows.Forms.Button btnCreateCoverArt;
+        private System.Windows.Forms.Button btnSelectFont;
+        private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtCdText;
+        private System.Windows.Forms.Label labCurrentFont;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnCoverArtImage;
+        private System.Windows.Forms.PictureBox picCoverArt;
     }
 }
 
