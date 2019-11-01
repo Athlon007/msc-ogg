@@ -402,7 +402,7 @@ namespace OggConverter
             btnRecycleDelete.Text = Localisation.Get("Delete");
             btnRestore.Text = Localisation.Get("Restore");
             btnEmptyAll.Text = Localisation.Get("Delete all");
-            btnDonate.Text = Localisation.Get("Buy Me a Pizza");
+            btnDonate.Text = Localisation.Get("Support the project");
             label3.Text = Localisation.Get("Modify the song:");
             btnOpenWithAudacity.Text = Localisation.Get("Edit with Audacity");
 
@@ -1297,6 +1297,19 @@ namespace OggConverter
                 var dialog = openFileDialog.ShowDialog();
                 if (dialog == DialogResult.OK)
                 {
+                    // Checking file validity
+                    Bitmap coverArt = (Bitmap)Image.FromFile(openFileDialog.FileName);
+                    if (coverArt.Width != coverArt.Height)
+                    {
+                        MessageBox.Show(Localisation.Get("File is not in 1:1 ratio."), 
+                            Localisation.Get("Error"), 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // File is valid!
+
                     File.Copy(openFileDialog.FileName, "coverart.png");
                     btnCoverArtImage.Text = Localisation.Get("CD cover is in use");
                     btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");

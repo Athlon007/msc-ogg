@@ -6,13 +6,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSCMM 2\n"
 "POT-Creation-Date: 2019-09-24 22:13+0200\n"
-"PO-Revision-Date: 2019-09-26 15:14+0200\n"
+"PO-Revision-Date: 2019-11-01 13:59+0100\n"
 "Last-Translator: Konrad Figura <aathlon@outlook.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Language: pl\n"
@@ -857,67 +857,70 @@ msgid "Normally the program will show a warning during conversion, when there ar
 msgstr "Normalnie program pokaże ostrzeżenie podczas konwersji, gdy jest więcej plików niż folder na to zezwala (99 dla Radio, 15 dla CD). Jeżeli ta opcja jest włączona, to ostrzeżenie będzie ignorowane."
 
 msgid "Audacity Executable:"
-msgstr ""
+msgstr "Plik wykonywalny Audacity:"
 
 msgid "Music Download Quality:"
-msgstr ""
+msgstr "Jakość pobieranej muzyki:"
 
 msgid "Best"
-msgstr ""
+msgstr "Najlepsza"
 
 msgid "Average"
-msgstr ""
+msgstr "Średnia"
 
 msgid "Compressed"
-msgstr ""
+msgstr "Skompresowana"
 
 msgid "View Changelog History"
-msgstr ""
+msgstr "Zobacz historię zmian"
 
 msgid "Select the audacity folder."
-msgstr ""
+msgstr "Wybierz folder Audacity."
 
 msgid "Audacity install path hasn't been set. Go to settings to change that."
-msgstr ""
+msgstr "Nie wskazano miejsca instalacji Audacity. Wejdź do ustawień, aby to zmienić."
 
-msgid "Buy Me a Pizza"
-msgstr ""
+msgid "Support the project"
+msgstr "Wesprzyj projekt"
 
 msgid "Modify the song:"
-msgstr ""
+msgstr "Zmodyfikuj piosenkę:"
 
 msgid "Edit with Audacity"
-msgstr ""
+msgstr "Edytuj z Audacity"
 
 msgid "Set the music frequency to recomended 22050 Hz frequency"
-msgstr ""
+msgstr "Ustaw częstotliwość piosenek do rekomendowanych 22050 Hz"
 
 msgid "Text on CD:"
-msgstr ""
+msgstr "Tekst na płycie CD:"
 
 msgid "Choose the font"
-msgstr ""
+msgstr "Wybierz czcionkę"
 
-msgid "No CD cover found"
-msgstr ""
+msgid "No CD cover file found"
+msgstr "Nie odnaleziono pliku okładki CD"
 
 msgid "CD cover is in use"
-msgstr ""
+msgstr "Okładka CD jest w użyciu"
 
 msgid "Use the default cover art image with no text added for best result."
-msgstr ""
+msgstr "Użyj domyślnego obrazu CD bez żadnego tekstu dla najlepszego rezultatu."
 
 msgid "Create new cover art"
-msgstr ""
+msgstr "Utwórz nową okładkę"
 
 msgid "Select the cover art."
-msgstr ""
+msgstr "Wybierz okładkę"
 
 msgid "Creating new cover art for {0}..."
-msgstr ""
+msgstr "Tworzenie nowej okładki dla {0}..."
 
 msgid "Created CD cover art successfully!"
-msgstr ""
+msgstr "Utworzono okładkę CD!"
 
 msgid "Cover Art"
-msgstr ""
+msgstr "Okładka CD"
+
+msgid "File is not in 1:1 ratio."
+msgstr "Plik nie ma rozdzielczości w stosunku 1:1."

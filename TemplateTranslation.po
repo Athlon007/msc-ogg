@@ -771,7 +771,7 @@ msgstr ""
 msgid "Audacity install path hasn't been set. Go to settings to change that."
 msgstr ""
 
-msgid "Buy Me a Pizza"
+msgid "Support the project"
 msgstr ""
 
 msgid "Modify the song:"
@@ -789,7 +789,7 @@ msgstr ""
 msgid "Choose the font"
 msgstr ""
 
-msgid "No CD cover found"
+msgid "No CD cover file found"
 msgstr ""
 
 msgid "CD cover is in use"
@@ -811,4 +811,7 @@ msgid "Created CD cover art successfully!"
 msgstr ""
 
 msgid "Cover Art"
+msgstr ""
+
+msgid "File is not in 1:1 ratio."
 msgstr ""

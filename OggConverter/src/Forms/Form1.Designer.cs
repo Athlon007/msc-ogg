@@ -87,6 +87,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
             this.tabCoverArt = new System.Windows.Forms.TabPage();
+            this.picCoverArt = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnCoverArtImage = new System.Windows.Forms.Button();
             this.labCurrentFont = new System.Windows.Forms.Label();
@@ -107,7 +108,6 @@
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.picCoverArt = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -116,9 +116,9 @@
             this.tabDownload.SuspendLayout();
             this.tabMeta.SuspendLayout();
             this.tabCoverArt.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).BeginInit();
             this.tabRecycle.SuspendLayout();
             this.songListContext.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).BeginInit();
             this.SuspendLayout();
             // 
             // logOutput
@@ -445,8 +445,8 @@
             // btnDonate
             // 
             this.btnDonate.Name = "btnDonate";
-            this.btnDonate.Size = new System.Drawing.Size(122, 24);
-            this.btnDonate.Text = "Buy Me a Pizza";
+            this.btnDonate.Size = new System.Drawing.Size(152, 24);
+            this.btnDonate.Text = "Support the project";
             this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
             // btnDownloadUpdate
@@ -737,6 +737,15 @@
             this.tabCoverArt.Text = "Cover Art";
             this.tabCoverArt.UseVisualStyleBackColor = true;
             // 
+            // picCoverArt
+            // 
+            this.picCoverArt.Location = new System.Drawing.Point(454, 216);
+            this.picCoverArt.Name = "picCoverArt";
+            this.picCoverArt.Size = new System.Drawing.Size(180, 180);
+            this.picCoverArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picCoverArt.TabIndex = 36;
+            this.picCoverArt.TabStop = false;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -939,15 +948,6 @@
             this.fontDialog1.MinSize = 10;
             this.fontDialog1.ShowEffects = false;
             // 
-            // picCoverArt
-            // 
-            this.picCoverArt.Location = new System.Drawing.Point(454, 216);
-            this.picCoverArt.Name = "picCoverArt";
-            this.picCoverArt.Size = new System.Drawing.Size(180, 180);
-            this.picCoverArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCoverArt.TabIndex = 36;
-            this.picCoverArt.TabStop = false;
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -992,10 +992,10 @@
             this.tabMeta.PerformLayout();
             this.tabCoverArt.ResumeLayout(false);
             this.tabCoverArt.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).EndInit();
             this.tabRecycle.ResumeLayout(false);
             this.tabRecycle.PerformLayout();
             this.songListContext.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
