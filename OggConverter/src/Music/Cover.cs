@@ -28,6 +28,11 @@ namespace OggConverter
         /// </summary>
         public double ScaleValue { get; set; }
 
+        /// <summary>
+        /// Creates new cover art based of saved coverart.png
+        /// </summary>
+        /// <param name="cdText"></param>
+        /// <param name="folder"></param>
         public void New(string cdText, string folder)
         {
             Form1.instance.Log(Localisation.Get("Creating new cover art for {0}...", folder));

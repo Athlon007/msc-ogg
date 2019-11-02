@@ -1,33 +1,21 @@
 # Changelog
 
-## Preview 2.9.0.2 (01.11.2019)
+## 2.9 (04.11.2019)
 
 ### Added
 
 - Added cover art generator! The program will automatically generate a new cover art with the list of first 11 songs on the back of the cover, and your text on CD! You can change the font type too!
-- The program can now set the music frequency to 22050 Hz while converting
-
-## Preview 2.9.0.1 (30.10.2019)
-
-### Added
-
+- Added donate button
 - Added changelog view in the Settings
-- You can now load full changelog directly from the settings
+- Added "view all changelogs" button
+  - You can now load full changelog directly from the settings
+- You can now change download quality of a song - best, average, or compressed
+- Added "Edit with Audacity" button
+- The program can now set the music frequency to 22050 Hz while converting
 
 ### Changes
 
-- Replaces the Audacity path select button text with an icon
-- Changed button text from "View All Changelogs" to "View Changelog History"
 - Small UI chnages
-
-## Preview 2.9.0.0 (25.11.2019)
-
-### Added
-
-- Added donate button
-- Added "view all changelogs" button
-- You can now change download quality of a song - best, average, or compressed
-- Added "Edit with Audacity" button
 
 ## 2.8.1 (25.10.2019)
 
