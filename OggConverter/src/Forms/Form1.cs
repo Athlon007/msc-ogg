@@ -406,7 +406,7 @@ namespace OggConverter
             label3.Text = Localisation.Get("Modify the song:");
             btnOpenWithAudacity.Text = Localisation.Get("Edit with Audacity");
 
-            btnCoverArtImage.Text = File.Exists("coverart.png") ? Localisation.Get("CD cover is in use") : Localisation.Get("No CD cover found");
+            btnCoverArtImage.Text = File.Exists("coverart.png") ? Localisation.Get("CD cover is in use") : Localisation.Get("No CD cover file found");
             label4.Text = Localisation.Get("Text on CD:");
             btnSelectFont.Text = Localisation.Get("Choose the font");
             label7.Text = Localisation.Get("Use the default cover art image with no text added for best result.");

@@ -1,6 +1,16 @@
 What's new in this release?
 
-Bug Fixes:
-- Fixed crash on minimizing
+Added:
+- Added cover art generator! The program will automatically generate a new cover art with the list of first 11 songs on the back of the cover, and your text on CD! You can change the font type too!
+- Added donate button
+- Added changelog view in the Settings
+- Added "view all changelogs" button
+  - You can now load full changelog directly from the settings
+- You can now change download quality of a song - best, average, or compressed
+- Added "Edit with Audacity" button
+- The program can now set the music frequency to 22050 Hz while converting
+
+Changes:
+- Small UI chnages
 
 For more, visit https://gitlab.com/aathlon/msc-ogg
