@@ -74,8 +74,8 @@ msgstr "Uruchom grę bez Steam"
 msgid "Remove source files after conversion"
 msgstr "Usuń pliki źródłowe po konwersji"
 
-msgid "Sort files after conversion"
-msgstr "Sortuj pliki po konwersji"
+msgid "Automatically rearrange file order"
+msgstr "Automatycznie przearanżuj kolejność plików"
 
 msgid "Don't save song names"
 msgstr "Nie zapisuj nazw piosenek"
@@ -924,3 +924,14 @@ msgstr "Okładka CD"
 
 msgid "File is not in 1:1 ratio."
 msgstr "Plik nie ma rozdzielczości w stosunku 1:1."
+
+msgid ""
+"Resolution: {0}x{1}\n"
+"Scale: {2}x"
+msgstr ""
+
+msgid "Conversion:"
+msgstr ""
+
+msgid "Convert song to mono channel"
+msgstr ""

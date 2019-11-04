@@ -1,5 +1,21 @@
 # Changelog
 
+## Preview 2.x.x.x (xx.11.2019)
+
+### Added
+
+- Added cover art file info
+- You can now convert song to mono channel while converting to .OGG
+
+### Changes
+
+- Cover art load optimization
+- Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
+
+### Removed
+
+- Removed "Open History" and "Open Log Folder" from "Tools" in main form, because it was doubling the functionality of the same function in Settings
+
 ## 2.9 (04.11.2019)
 
 ### Added

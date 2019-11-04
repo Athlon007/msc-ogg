@@ -62,6 +62,7 @@ namespace OggConverter
 
             txtAudacity.Text = Settings.AudacityPath;
             chkRecommendedFrequency.Checked = Settings.UseRecommendedFrequency;
+            chkMono.Checked = Settings.ConvertToMono;
 
             if (Directory.Exists("locales"))
             {
@@ -271,7 +272,7 @@ namespace OggConverter
             chkShortcut.Text = Localisation.Get("Desktop shortcut");
             chkNoSteam.Text = Localisation.Get("Start the game without Steam");
             label2.Text = Localisation.Get("Language");
-            chkAutoSort.Text = Localisation.Get("Sort files after conversion");
+            chkAutoSort.Text = Localisation.Get("Automatically rearrange file order");
             chkNoMetafiles.Text = Localisation.Get("Don't save song names");
             chkAutoUpdates.Text = Localisation.Get("Automatically look for updates");
             label1.Text = Localisation.Get("Update Channel:");
@@ -295,9 +296,7 @@ namespace OggConverter
             tabFiles.Text = Localisation.Get("Files");
             tabUpdates.Text = Localisation.Get("Updates");
             tabLogging.Text = Localisation.Get("Logging & Privacy");
-
             this.Text = Localisation.Get("Settings");
-
             chkShowFfmpegOutput.Text = Localisation.Get("Show ffmpeg output");
             chkIgnoreLimits.Text = Localisation.Get("Ignore limitation of songs in folder");
             labAudacity.Text = Localisation.Get("Audacity Executable:");
@@ -307,6 +306,8 @@ namespace OggConverter
             radQualityCompressed.Text = Localisation.Get("Compressed");
             btnChangelogHistory.Text = Localisation.Get("View Changelog History");
             chkRecommendedFrequency.Text = Localisation.Get("Set the music frequency to recomended 22050 Hz frequency");
+            chkMono.Text = Localisation.Get("Convert song to mono channel");
+            label7.Text = Localisation.Get("Conversion:");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -390,6 +391,11 @@ namespace OggConverter
         private void chkRecommendedFrequency_Click(object sender, EventArgs e)
         {
             Settings.UseRecommendedFrequency ^= true;
+        }
+
+        private void chkMono_Click(object sender, EventArgs e)
+        {
+            Settings.ConvertToMono ^= true;
         }
     }
 }

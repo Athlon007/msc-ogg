@@ -193,6 +193,7 @@ namespace OggConverter
                     string songName = null;
                     string argument = $"-i \"{path}\\{file.Name}\" -acodec libvorbis" 
                         + (Settings.UseRecommendedFrequency ? " -ar 22050" : "")
+                        + (Settings.ConvertToMono ? " -ac 1" : "")
                         + " \"{path}\\track{inGame}.ogg\"";
 
                     // If the file is already in OGG format - rename file, and start FFmpeg in order to try and find the name

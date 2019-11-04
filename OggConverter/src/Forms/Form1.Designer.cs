@@ -46,9 +46,6 @@
             this.btnSort = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.menuTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLastLog = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLogFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGitLab = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,6 +105,7 @@
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.labImageInfo = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -315,9 +313,6 @@
             // 
             this.menuTool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnLastLog,
-            this.btnLogFolder,
-            this.toolStripSeparator1,
             this.btnWebsite,
             this.btnGitLab,
             this.btnSteam,
@@ -327,25 +322,6 @@
             this.menuTool.Name = "menuTool";
             this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
-            // 
-            // btnLastLog
-            // 
-            this.btnLastLog.Name = "btnLastLog";
-            this.btnLastLog.Size = new System.Drawing.Size(285, 26);
-            this.btnLastLog.Text = "Open History";
-            this.btnLastLog.Click += new System.EventHandler(this.OpenLastConversionToolStripMenuItem_Click);
-            // 
-            // btnLogFolder
-            // 
-            this.btnLogFolder.Name = "btnLogFolder";
-            this.btnLogFolder.Size = new System.Drawing.Size(285, 26);
-            this.btnLogFolder.Text = "Open Log Folder";
-            this.btnLogFolder.Click += new System.EventHandler(this.BtnLogFolder_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(282, 6);
             // 
             // btnWebsite
             // 
@@ -722,6 +698,7 @@
             // 
             // tabCoverArt
             // 
+            this.tabCoverArt.Controls.Add(this.labImageInfo);
             this.tabCoverArt.Controls.Add(this.picCoverArt);
             this.tabCoverArt.Controls.Add(this.label7);
             this.tabCoverArt.Controls.Add(this.btnCoverArtImage);
@@ -948,6 +925,16 @@
             this.fontDialog1.MinSize = 10;
             this.fontDialog1.ShowEffects = false;
             // 
+            // labImageInfo
+            // 
+            this.labImageInfo.AutoSize = true;
+            this.labImageInfo.Location = new System.Drawing.Point(307, 358);
+            this.labImageInfo.Name = "labImageInfo";
+            this.labImageInfo.Size = new System.Drawing.Size(105, 34);
+            this.labImageInfo.TabIndex = 37;
+            this.labImageInfo.Text = "Resolution: 0x0\r\nScale: 0x";
+            this.labImageInfo.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -1012,9 +999,6 @@
         private System.Windows.Forms.Button btnSort;
         private System.Windows.Forms.Button btnMoveSong;
         private System.Windows.Forms.ToolStripMenuItem menuTool;
-        private System.Windows.Forms.ToolStripMenuItem btnLogFolder;
-        private System.Windows.Forms.ToolStripMenuItem btnLastLog;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem btnGitLab;
         private System.Windows.Forms.ToolStripMenuItem btnSteam;
         private System.Windows.Forms.ToolStripMenuItem btnAbout;
@@ -1080,6 +1064,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnCoverArtImage;
         private System.Windows.Forms.PictureBox picCoverArt;
+        private System.Windows.Forms.Label labImageInfo;
     }
 }
 

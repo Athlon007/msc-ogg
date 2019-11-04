@@ -309,6 +309,15 @@ namespace OggConverter
             // Loads font used in preview
             labCurrentFont.Text = Settings.CoverArtFont;
             labCurrentFont.Font = new Font(Settings.CoverArtFont, 10);
+
+            // Loading coverart image preview
+            if (File.Exists("coverart.png"))
+            {
+                Image coverImg = Image.FromFile("coverart.png");
+                picCoverArt.Image = coverImg;
+                Cover cover = new Cover();
+                labImageInfo.Text = cover.GetImageInfo(coverImg);
+            }
         }
 
         /// <summary>
@@ -358,8 +367,6 @@ namespace OggConverter
             btnHelp.Text = Localisation.Get("Help");
             btnDownloadUpdate.Text = Localisation.Get("Get Update Now!");
 
-            btnLastLog.Text = Localisation.Get("Open History");
-            btnLogFolder.Text = Localisation.Get("Open Log Folder");
             btnWebsite.Text = Localisation.Get("Website");
             btnGitLab.Text = Localisation.Get("GitLab repository");
             btnSteam.Text = Localisation.Get("Steam Community discussion");
@@ -540,8 +547,6 @@ namespace OggConverter
             UpdateRecycleBinList();
 
             btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");
-            picCoverArt.Image = File.Exists("coverart.png") ? Image.FromFile("coverart.png") : null;
-
         }
 
         void UpdateRecycleBinList()
@@ -635,26 +640,6 @@ namespace OggConverter
             Player.Stop();
         }
 
-        private void OpenLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!File.Exists("history.txt"))
-            {
-                Log(Localisation.Get("History file doesn't exist."));
-                return;
-            }
-
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                DialogResult dl = MessageBox.Show(Localisation.Get("Would you like to remove history file?"), Localisation.Get("Question"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dl == DialogResult.Yes)
-                    File.Delete("history.txt");
-
-                return;
-            }
-
-            Process.Start("history.txt");
-        }
-
         private void LaunchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ModifierKeys.HasFlag(Keys.Shift))
@@ -723,32 +708,6 @@ namespace OggConverter
             Player.Stop();
         }
 
-        private void BtnLogFolder_Click(object sender, EventArgs e)
-        {
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                DialogResult dl = MessageBox.Show(Localisation.Get("Would you like to remove all logs?"), Localisation.Get("Question"), 
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dl == DialogResult.Yes)
-                    Directory.Delete("LOG", true);
-
-                return;
-            }
-
-            if (!Settings.Logs)
-            {
-                Log(Localisation.Get("Logs are disabled"));
-                return;
-            }
-
-            if (!Directory.Exists("Log"))
-            {
-                Log(Localisation.Get("Log folder doesn't exist"));
-                return;
-            }
-
-            Process.Start(@"Log");
-        }
         /// <summary>
         /// Removes selected file on player
         /// </summary>
@@ -1284,6 +1243,7 @@ namespace OggConverter
         {
             Cover cover = new Cover();
             cover.New(txtCdText.Text, CurrentFolder);
+            cover.GetImageInfo();
         }
 
         private void btnCoverArtImage_Click(object sender, EventArgs e)
