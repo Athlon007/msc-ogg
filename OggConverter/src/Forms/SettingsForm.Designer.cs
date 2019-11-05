@@ -40,6 +40,8 @@
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
             this.tabFiles = new System.Windows.Forms.TabPage();
+            this.chkMono = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.chkRecommendedFrequency = new System.Windows.Forms.CheckBox();
             this.radQualityCompressed = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
@@ -71,8 +73,6 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.chkMono = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -212,6 +212,26 @@
             this.tabFiles.Text = "Files";
             this.tabFiles.UseVisualStyleBackColor = true;
             // 
+            // chkMono
+            // 
+            this.chkMono.AutoSize = true;
+            this.chkMono.Location = new System.Drawing.Point(29, 319);
+            this.chkMono.Name = "chkMono";
+            this.chkMono.Size = new System.Drawing.Size(223, 21);
+            this.chkMono.TabIndex = 29;
+            this.chkMono.Text = "Convert song to mono channel";
+            this.chkMono.UseVisualStyleBackColor = true;
+            this.chkMono.Click += new System.EventHandler(this.chkMono_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 272);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 17);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "Conversion:";
+            // 
             // chkRecommendedFrequency
             // 
             this.chkRecommendedFrequency.AutoSize = true;
@@ -335,7 +355,7 @@
             // 
             // btnChangelogHistory
             // 
-            this.btnChangelogHistory.Location = new System.Drawing.Point(26, 350);
+            this.btnChangelogHistory.Location = new System.Drawing.Point(29, 207);
             this.btnChangelogHistory.Name = "btnChangelogHistory";
             this.btnChangelogHistory.Size = new System.Drawing.Size(132, 44);
             this.btnChangelogHistory.TabIndex = 29;
@@ -345,7 +365,7 @@
             // 
             // btnCheckYTDLUpdates
             // 
-            this.btnCheckYTDLUpdates.Location = new System.Drawing.Point(26, 268);
+            this.btnCheckYTDLUpdates.Location = new System.Drawing.Point(29, 336);
             this.btnCheckYTDLUpdates.Name = "btnCheckYTDLUpdates";
             this.btnCheckYTDLUpdates.Size = new System.Drawing.Size(132, 44);
             this.btnCheckYTDLUpdates.TabIndex = 28;
@@ -375,7 +395,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 216);
+            this.label3.Location = new System.Drawing.Point(26, 284);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(198, 17);
             this.label3.TabIndex = 25;
@@ -385,10 +405,10 @@
             // 
             this.cbYoutubeDlUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbYoutubeDlUpdateFrequency.FormattingEnabled = true;
-            this.cbYoutubeDlUpdateFrequency.Location = new System.Drawing.Point(29, 237);
+            this.cbYoutubeDlUpdateFrequency.Location = new System.Drawing.Point(29, 305);
             this.cbYoutubeDlUpdateFrequency.Margin = new System.Windows.Forms.Padding(4);
             this.cbYoutubeDlUpdateFrequency.Name = "cbYoutubeDlUpdateFrequency";
-            this.cbYoutubeDlUpdateFrequency.Size = new System.Drawing.Size(160, 24);
+            this.cbYoutubeDlUpdateFrequency.Size = new System.Drawing.Size(195, 24);
             this.cbYoutubeDlUpdateFrequency.TabIndex = 24;
             this.cbYoutubeDlUpdateFrequency.SelectionChangeCommitted += new System.EventHandler(this.CbYoutubeDlUpdateFrequency_SelectionChangeCommitted);
             // 
@@ -554,26 +574,6 @@
             this.chkCrashLog.Text = "Create logs after crash";
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(26, 272);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 17);
-            this.label7.TabIndex = 28;
-            this.label7.Text = "Conversion:";
-            // 
-            // chkMono
-            // 
-            this.chkMono.AutoSize = true;
-            this.chkMono.Location = new System.Drawing.Point(29, 319);
-            this.chkMono.Name = "chkMono";
-            this.chkMono.Size = new System.Drawing.Size(223, 21);
-            this.chkMono.TabIndex = 29;
-            this.chkMono.Text = "Convert song to mono channel";
-            this.chkMono.UseVisualStyleBackColor = true;
-            this.chkMono.Click += new System.EventHandler(this.chkMono_Click);
             // 
             // SettingsForm
             // 

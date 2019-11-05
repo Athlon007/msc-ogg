@@ -9,8 +9,9 @@
 
 ### Changes
 
-- Cover art load optimization
+- Cover art preview loading optimization
 - Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
+- Replaced the default context menu for text boxes
 
 ### Removed
 

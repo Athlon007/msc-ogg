@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ErrorMessage));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -37,7 +38,11 @@
             this.logOutput = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnExit = new System.Windows.Forms.Button();
+            this.defaultContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextDefaultCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.defaultContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -99,6 +104,7 @@
             // 
             this.logOutput.BackColor = System.Drawing.SystemColors.Control;
             this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.logOutput.ContextMenuStrip = this.defaultContext;
             this.logOutput.Location = new System.Drawing.Point(16, 212);
             this.logOutput.Margin = new System.Windows.Forms.Padding(4);
             this.logOutput.Multiline = true;
@@ -130,6 +136,32 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
+            // defaultContext
+            // 
+            this.defaultContext.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.defaultContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextDefaultCopy,
+            this.contextDefaultSelectAll});
+            this.defaultContext.Name = "songListContext";
+            this.defaultContext.Size = new System.Drawing.Size(211, 80);
+            // 
+            // contextDefaultCopy
+            // 
+            this.contextDefaultCopy.Name = "contextDefaultCopy";
+            this.contextDefaultCopy.ShortcutKeyDisplayString = "";
+            this.contextDefaultCopy.Size = new System.Drawing.Size(210, 24);
+            this.contextDefaultCopy.Text = "Copy";
+            this.contextDefaultCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.contextDefaultCopy.Click += new System.EventHandler(this.contextDefaultCopy_Click);
+            // 
+            // contextDefaultSelectAll
+            // 
+            this.contextDefaultSelectAll.Name = "contextDefaultSelectAll";
+            this.contextDefaultSelectAll.ShortcutKeyDisplayString = "";
+            this.contextDefaultSelectAll.Size = new System.Drawing.Size(210, 24);
+            this.contextDefaultSelectAll.Text = "Select All";
+            this.contextDefaultSelectAll.Click += new System.EventHandler(this.contextDefaultSelectAll_Click);
+            // 
             // ErrorMessage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -152,6 +184,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Oopsie!";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.defaultContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,5 +200,8 @@
         private System.Windows.Forms.TextBox logOutput;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ContextMenuStrip defaultContext;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultCopy;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultSelectAll;
     }
 }

@@ -100,6 +100,8 @@ namespace OggConverter
 
             txtChangelog.Text = Properties.Resources.changelog;
             btnAudacity.Text = char.ConvertFromUtf32(0x1F4C1);
+
+            txtAudacity.ContextMenu = new ContextMenu();
         }
 
         private void ChkAutoSort_Click(object sender, EventArgs e)

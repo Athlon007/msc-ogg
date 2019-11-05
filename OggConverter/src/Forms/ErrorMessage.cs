@@ -64,6 +64,8 @@ namespace OggConverter
             btnExit.Text = Localisation.Get("Exit");
             btnLog.Text = Localisation.Get("Open Log");
             btnClose.Text = Localisation.Get("Close");
+            contextDefaultCopy.Text = Localisation.Get("Copy");
+            contextDefaultSelectAll.Text = Localisation.Get("Select All");
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -90,6 +92,16 @@ namespace OggConverter
         private void BtnExit_Click(object sender, EventArgs e)
         {
             Process.GetCurrentProcess().Kill();
+        }
+
+        private void contextDefaultCopy_Click(object sender, EventArgs e)
+        {
+            logOutput.Copy();
+        }
+
+        private void contextDefaultSelectAll_Click(object sender, EventArgs e)
+        {
+            logOutput.SelectAll();
         }
     }
 }

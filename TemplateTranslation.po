@@ -826,3 +826,12 @@ msgstr ""
 
 msgid "Convert song to mono channel"
 msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Paste"
+msgstr ""
+
+msgid "Undo"
+msgstr ""

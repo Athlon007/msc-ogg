@@ -419,6 +419,10 @@ namespace OggConverter
             label7.Text = Localisation.Get("Use the default cover art image with no text added for best result.");
             btnCreateCoverArt.Text = Localisation.Get("Create new cover art");
             tabCoverArt.Text = Localisation.Get("Cover Art");
+            contextDefaultCopy.Text = Localisation.Get("Copy");
+            contextDefaultPaste.Text = Localisation.Get("Paste");
+            contextDefaultSelectAll.Text = Localisation.Get("Select All");
+            contextDefaultUndo.Text = Localisation.Get("Undo");
         }
 
         /// <summary>
@@ -1276,6 +1280,39 @@ namespace OggConverter
                     picCoverArt.Image = Image.FromFile("coverart.png");
                 }
             }
+        }
+
+        private void contextDefaultUndo_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).Undo(); 
+        }
+
+        private void contextDefaultCopy_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).Copy();
+        }
+
+        private void contextDefaultPaste_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).Paste();
+        }
+
+        private void contextDefaultSelectAll_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).SelectAll();
+        }
+
+        private void defaultContext_Opened(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)sender).SourceControl;
+            TextBox parentTextBox = control as TextBox;
+
+            defaultContext.Items[0].Enabled = !parentTextBox.ReadOnly;
+            defaultContext.Items[2].Enabled = !parentTextBox.ReadOnly;
         }
     }
 }
