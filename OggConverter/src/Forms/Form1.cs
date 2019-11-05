@@ -398,7 +398,7 @@ namespace OggConverter
 
             tabDownload.Text = Localisation.Get("Download");
             tabMeta.Text = Localisation.Get("Edit");
-            label5.Text = Localisation.Get("Search Term/Video Link:");
+            label5.Text = Localisation.Get("Search Term/Video Link/Playlist Link:");
             btnDownload.Text = Localisation.Get("Download");
             btnCancelDownload.Text = Localisation.Get("Cancel");
             label6.Text = Localisation.Get("Note:\nThe autor of this tool doesn't take any responsibility for the way how that tool is used.");
@@ -896,7 +896,15 @@ namespace OggConverter
                 forcedName = searchTerm;
             }
 
-            await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
+            if (url.Contains("&list="))
+            {
+                await Downloader.DownloadPlaylist(url, CurrentFolder, SongsLimit);
+            }
+            else
+            {
+                await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
+            }
+
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
         }

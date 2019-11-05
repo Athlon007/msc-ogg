@@ -4,6 +4,7 @@
 
 ### Added
 
+- You can now download entire playlists from YouTube!
 - Added cover art file info
 - You can now convert song to mono channel while converting to .OGG
 
@@ -16,6 +17,8 @@
 ### Removed
 
 - Removed "Open History" and "Open Log Folder" from "Tools" in main form, because it was doubling the functionality of the same function in Settings
+
+## 2.9.1 (05.11.2019)
 
 ### Bug Fixes
 

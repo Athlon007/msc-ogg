@@ -169,8 +169,8 @@ msgstr "Losuj"
 msgid "Songs: {0}/{1}"
 msgstr "Piosenki: {0}/{1}"
 
-msgid "Search Term/Video Link:"
-msgstr "Fraza Wyszukiwania/Link do Filmu:"
+msgid "Search Term/Video Link/Playlist Link:"
+msgstr "Fraza Wyszukiwania/Link do Filmu/Link do listy odtwarzania:"
 
 msgid "Download"
 msgstr "Pobierz"
@@ -943,4 +943,12 @@ msgid "Paste"
 msgstr ""
 
 msgid "Undo"
+msgstr ""
+
+msgid ""
+"\n"
+"Downloading playlist..."
+msgstr ""
+
+msgid "Downloader: Downloading playlist from '{0}'"
 msgstr ""

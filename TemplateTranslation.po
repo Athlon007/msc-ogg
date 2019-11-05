@@ -165,7 +165,7 @@ msgstr ""
 msgid "Songs: {0}/{1}"
 msgstr ""
 
-msgid "Search Term/Video Link:"
+msgid "Search Term/Video Link/Playlist Link:"
 msgstr ""
 
 msgid "Download"
@@ -834,4 +834,12 @@ msgid "Paste"
 msgstr ""
 
 msgid "Undo"
+msgstr ""
+
+msgid ""
+"\n"
+"Downloading playlist..."
+msgstr ""
+
+msgid "Downloader: Downloading playlist from '{0}'"
 msgstr ""
