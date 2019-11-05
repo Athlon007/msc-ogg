@@ -1,6 +1,6 @@
 # Changelog
 
-## Preview 2.x.x.x (xx.11.2019)
+## Preview 2.10.0.0 (xx.11.2019)
 
 ### Added
 
@@ -17,6 +17,10 @@
 
 - Removed "Open History" and "Open Log Folder" from "Tools" in main form, because it was doubling the functionality of the same function in Settings
 
+### Bug Fixes
+
+- Fixed download audio quality setting not working properly
+
 ## 2.9 (04.11.2019)
 
 ### Added
@@ -32,7 +36,7 @@
 
 ### Changes
 
-- Small UI chnages
+- Small UI changes
 
 ## 2.8.1 (25.10.2019)
 

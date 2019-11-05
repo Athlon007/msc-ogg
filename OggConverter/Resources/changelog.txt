@@ -1,16 +1,15 @@
 What's new in this release?
 
 Added:
-- Added cover art generator! The program will automatically generate a new cover art with the list of first 11 songs on the back of the cover, and your text on CD! You can change the font type too!
-- Added donate button
-- Added changelog view in the Settings
-- Added "view all changelogs" button
-  - You can now load full changelog directly from the settings
-- You can now change download quality of a song - best, average, or compressed
-- Added "Edit with Audacity" button
-- The program can now set the music frequency to 22050 Hz while converting
+- Added cover art file info
+- You can now convert song to mono channel while converting to .OGG
 
 Changes:
-- Small UI chnages
+- Cover art preview loading optimization
+- Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
+- Replaced the default context menu for text boxes
+
+Removed:
+- Removed "Open History" and "Open Log Folder" from "Tools" in main form, because it was doubling the functionality of the same function in Settings
 
 For more, visit https://gitlab.com/aathlon/msc-ogg

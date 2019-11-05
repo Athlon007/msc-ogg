@@ -59,7 +59,7 @@ namespace OggConverter
                 // Setup executable and parameters
                 process.StartInfo.FileName = "youtube-dl.exe";
                 int audioQuality = GetAudioQuality();
-                process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality 0 -o \"download.%(ext)s\" {url}";
+                process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality {audioQuality} -o \"download.%(ext)s\" {url}";
 
                 if (CancelDownload)
                 {
