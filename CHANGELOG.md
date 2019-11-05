@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.9.1 (05.11.2019)
+
+### Bug Fixes
+
+- Fixed download audio quality setting not working properly
+
 ## 2.9 (04.11.2019)
 
 ### Added
