@@ -31,6 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.logOutput = new System.Windows.Forms.TextBox();
+            this.defaultContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextDefaultUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.songList = new System.Windows.Forms.ListBox();
             this.btnPlaySong = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
@@ -106,11 +111,7 @@
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
-            this.contextDefaultCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDefaultSelectAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.defaultContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextDefaultUndo = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDefaultPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.defaultContext.SuspendLayout();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -122,7 +123,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.picCoverArt)).BeginInit();
             this.tabRecycle.SuspendLayout();
             this.songListContext.SuspendLayout();
-            this.defaultContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // logOutput
@@ -139,6 +139,49 @@
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logOutput.Size = new System.Drawing.Size(637, 397);
             this.logOutput.TabIndex = 2;
+            // 
+            // defaultContext
+            // 
+            this.defaultContext.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.defaultContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextDefaultUndo,
+            this.contextDefaultCopy,
+            this.contextDefaultPaste,
+            this.contextDefaultSelectAll});
+            this.defaultContext.Name = "songListContext";
+            this.defaultContext.Size = new System.Drawing.Size(141, 100);
+            this.defaultContext.Opened += new System.EventHandler(this.defaultContext_Opened);
+            // 
+            // contextDefaultUndo
+            // 
+            this.contextDefaultUndo.Name = "contextDefaultUndo";
+            this.contextDefaultUndo.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultUndo.Text = "Undo";
+            this.contextDefaultUndo.Click += new System.EventHandler(this.contextDefaultUndo_Click);
+            // 
+            // contextDefaultCopy
+            // 
+            this.contextDefaultCopy.Name = "contextDefaultCopy";
+            this.contextDefaultCopy.ShortcutKeyDisplayString = "";
+            this.contextDefaultCopy.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultCopy.Text = "Copy";
+            this.contextDefaultCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.contextDefaultCopy.Click += new System.EventHandler(this.contextDefaultCopy_Click);
+            // 
+            // contextDefaultPaste
+            // 
+            this.contextDefaultPaste.Name = "contextDefaultPaste";
+            this.contextDefaultPaste.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultPaste.Text = "Paste";
+            this.contextDefaultPaste.Click += new System.EventHandler(this.contextDefaultPaste_Click);
+            // 
+            // contextDefaultSelectAll
+            // 
+            this.contextDefaultSelectAll.Name = "contextDefaultSelectAll";
+            this.contextDefaultSelectAll.ShortcutKeyDisplayString = "";
+            this.contextDefaultSelectAll.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultSelectAll.Text = "Select All";
+            this.contextDefaultSelectAll.Click += new System.EventHandler(this.contextDefaultSelectAll_Click);
             // 
             // songList
             // 
@@ -599,6 +642,7 @@
             // 
             // btnDownload
             // 
+            this.btnDownload.Enabled = false;
             this.btnDownload.Location = new System.Drawing.Point(8, 65);
             this.btnDownload.Margin = new System.Windows.Forms.Padding(4);
             this.btnDownload.Name = "btnDownload";
@@ -626,6 +670,7 @@
             this.txtboxVideo.Name = "txtboxVideo";
             this.txtboxVideo.Size = new System.Drawing.Size(624, 22);
             this.txtboxVideo.TabIndex = 1;
+            this.txtboxVideo.TextChanged += new System.EventHandler(this.txtboxVideo_TextChanged);
             this.txtboxVideo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtboxVideo_KeyDown);
             // 
             // tabMeta
@@ -704,6 +749,7 @@
             this.txtSongName.Name = "txtSongName";
             this.txtSongName.Size = new System.Drawing.Size(624, 22);
             this.txtSongName.TabIndex = 2;
+            this.txtSongName.TextChanged += new System.EventHandler(this.txtSongName_TextChanged);
             this.txtSongName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSongName_KeyDown);
             // 
             // tabCoverArt
@@ -885,6 +931,7 @@
             this.trashList.Size = new System.Drawing.Size(613, 324);
             this.trashList.Sorted = true;
             this.trashList.TabIndex = 24;
+            this.trashList.SelectedIndexChanged += new System.EventHandler(this.trashList_SelectedIndexChanged);
             // 
             // downloadProgress
             // 
@@ -946,49 +993,6 @@
             this.fontDialog1.MinSize = 10;
             this.fontDialog1.ShowEffects = false;
             // 
-            // contextDefaultCopy
-            // 
-            this.contextDefaultCopy.Name = "contextDefaultCopy";
-            this.contextDefaultCopy.ShortcutKeyDisplayString = "";
-            this.contextDefaultCopy.Size = new System.Drawing.Size(140, 24);
-            this.contextDefaultCopy.Text = "Copy";
-            this.contextDefaultCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.contextDefaultCopy.Click += new System.EventHandler(this.contextDefaultCopy_Click);
-            // 
-            // contextDefaultSelectAll
-            // 
-            this.contextDefaultSelectAll.Name = "contextDefaultSelectAll";
-            this.contextDefaultSelectAll.ShortcutKeyDisplayString = "";
-            this.contextDefaultSelectAll.Size = new System.Drawing.Size(140, 24);
-            this.contextDefaultSelectAll.Text = "Select All";
-            this.contextDefaultSelectAll.Click += new System.EventHandler(this.contextDefaultSelectAll_Click);
-            // 
-            // defaultContext
-            // 
-            this.defaultContext.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.defaultContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextDefaultUndo,
-            this.contextDefaultCopy,
-            this.contextDefaultPaste,
-            this.contextDefaultSelectAll});
-            this.defaultContext.Name = "songListContext";
-            this.defaultContext.Size = new System.Drawing.Size(141, 100);
-            this.defaultContext.Opened += new System.EventHandler(this.defaultContext_Opened);
-            // 
-            // contextDefaultUndo
-            // 
-            this.contextDefaultUndo.Name = "contextDefaultUndo";
-            this.contextDefaultUndo.Size = new System.Drawing.Size(140, 24);
-            this.contextDefaultUndo.Text = "Undo";
-            this.contextDefaultUndo.Click += new System.EventHandler(this.contextDefaultUndo_Click);
-            // 
-            // contextDefaultPaste
-            // 
-            this.contextDefaultPaste.Name = "contextDefaultPaste";
-            this.contextDefaultPaste.Size = new System.Drawing.Size(140, 24);
-            this.contextDefaultPaste.Text = "Paste";
-            this.contextDefaultPaste.Click += new System.EventHandler(this.contextDefaultPaste_Click);
-            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -1018,6 +1022,7 @@
             this.DragLeave += new System.EventHandler(this.Form1_DragLeave);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            this.defaultContext.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menu.ResumeLayout(false);
@@ -1037,7 +1042,6 @@
             this.tabRecycle.ResumeLayout(false);
             this.tabRecycle.PerformLayout();
             this.songListContext.ResumeLayout(false);
-            this.defaultContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

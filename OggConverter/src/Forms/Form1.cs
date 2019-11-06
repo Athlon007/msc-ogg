@@ -571,9 +571,9 @@ namespace OggConverter
 
             tabRecycle.Text = !noFiles ? Localisation.Get("Recycle Bin") + $" ({files.Length})" : Localisation.Get("Recycle Bin");
 
-            btnRecycleDelete.Enabled = !noFiles;
+            btnRecycleDelete.Enabled = !noFiles && trashList.SelectedIndex != -1;
             btnEmptyAll.Enabled = !noFiles;
-            btnRestore.Enabled = !noFiles;
+            btnRestore.Enabled = !noFiles && trashList.SelectedIndex != -1;
             
         }
 
@@ -831,17 +831,14 @@ namespace OggConverter
 
             if (Updates.IsYoutubeDlUpdating)
             {
-                MessageBox.Show(Localisation.Get("youtube-dl is now updating or looking for the update. " +
-                    "You'll be notified on Log panel when it's done :)"),
-                    Localisation.Get("Stop"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Stop);
+                YoutubeDlLog(Localisation.Get("youtube-dl is now updating or looking for the update. " +
+                    "You'll be notified on Log panel when it's done :)"));
                 return;
             }
 
             if (Utilities.IsToolBusy())
             {
-                Log(Localisation.Get("Program is busy."));
+                YoutubeDlLog(Localisation.Get("Program is busy."));
                 return;
             }
 
@@ -872,10 +869,7 @@ namespace OggConverter
             {
                 if (!url.Contains("youtube.com/watch?v="))
                 {
-                    MessageBox.Show(Localisation.Get("Url is not a YouTube link."),
-                        Localisation.Get("Error"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    YoutubeDlLog(Localisation.Get("Url is not a YouTube link."));
                     RestrictedMode(false);
                     return;
                 }
@@ -886,7 +880,7 @@ namespace OggConverter
             {
                 if (url == "")
                 {
-                    MessageBox.Show(Localisation.Get("Url is not valid and is empty."));
+                    YoutubeDlLog(Localisation.Get("Url is not valid and is empty."));
                     RestrictedMode(false);
                     return;
                 }
@@ -1321,6 +1315,26 @@ namespace OggConverter
 
             defaultContext.Items[0].Enabled = !parentTextBox.ReadOnly;
             defaultContext.Items[2].Enabled = !parentTextBox.ReadOnly;
+        }
+
+        private void txtboxVideo_TextChanged(object sender, EventArgs e)
+        {
+            string text = txtboxVideo.Text;
+            btnDownload.Enabled = text.Length > 0;
+        }
+
+        private void txtSongName_TextChanged(object sender, EventArgs e)
+        {
+            string text = txtSongName.Text;
+            btnSetName.Enabled = text != Player.WorkingSongList[songList.SelectedIndex].Item2;
+        }
+
+        private void trashList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool noFiles = trashList.Items.Count == 0;
+            btnRecycleDelete.Enabled = !noFiles && trashList.SelectedIndex != -1;
+            btnEmptyAll.Enabled = !noFiles;
+            btnRestore.Enabled = !noFiles && trashList.SelectedIndex != -1;
         }
     }
 }

@@ -40,7 +40,6 @@ namespace OggConverter
             {
                 CancelDownload = false;
 
-                Form1.instance.Log(Localisation.Get("Downloaded youtube-dl successfully!"));
                 Form1.instance.DownloadProgress.Visible = false;
 
                 IsBusy = true;
@@ -48,7 +47,7 @@ namespace OggConverter
                 if (File.Exists("download.aac"))
                     File.Delete("download.aac");
 
-                Form1.instance.Log(Localisation.Get("\nDownloading song..."));
+                Form1.instance.YoutubeDlLog(Localisation.Get("\nDownloading song..."));
                 Logs.History(Localisation.Get("Downloader: Downloading song from '{0}'", url));
 
                 Process process = new Process();
@@ -80,7 +79,7 @@ namespace OggConverter
                 // File wasn't downloaded?
                 if (!File.Exists("download.mp3"))
                 {
-                    Form1.instance.Log(Localisation.Get("Couldn't donwnload the song.\n" +
+                    Form1.instance.YoutubeDlLog(Localisation.Get("Couldn't donwnload the song.\n" +
                         "If you canceled the download, then everything's fine.\n" +
                         "If not, check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n" +
                         "Also please check if youtube-dl supports the link that you use: " +
@@ -91,7 +90,7 @@ namespace OggConverter
                     return;
                 }
 
-                Form1.instance.Log(Localisation.Get("Converting..."));
+                Form1.instance.YoutubeDlLog(Localisation.Get("Converting..."));
 
                 if (CancelDownload)
                 {
@@ -113,7 +112,7 @@ namespace OggConverter
             }
             catch (Exception) when (CancelDownload)
             {
-                Form1.instance.Log(Localisation.Get("Canceled!"));
+                Form1.instance.YoutubeDlLog(Localisation.Get("Canceled!"));
             }
         }
 
@@ -138,7 +137,7 @@ namespace OggConverter
 
                 Directory.CreateDirectory("downloads");
 
-                Form1.instance.Log(Localisation.Get("\nDownloading playlist..."));
+                Form1.instance.YoutubeDlLog(Localisation.Get("\nDownloading playlist..."));
                 Logs.History(Localisation.Get("Downloader: Downloading playlist from '{0}'", url));
 
                 Process process = new Process();
@@ -170,7 +169,7 @@ namespace OggConverter
                 // File wasn't downloaded?
                 if (!File.Exists("download.mp3"))
                 {
-                    Form1.instance.Log(Localisation.Get("Couldn't donwnload the song.\n" +
+                    Form1.instance.YoutubeDlLog(Localisation.Get("Couldn't donwnload the song.\n" +
                         "If you canceled the download, then everything's fine.\n" +
                         "If not, check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n" +
                         "Also please check if youtube-dl supports the link that you use: " +
@@ -181,7 +180,7 @@ namespace OggConverter
                     return;
                 }
 
-                Form1.instance.Log(Localisation.Get("Converting..."));
+                Form1.instance.YoutubeDlLog(Localisation.Get("Converting..."));
 
                 if (CancelDownload)
                 {
@@ -206,7 +205,7 @@ namespace OggConverter
             }
             catch (Exception) when (CancelDownload)
             {
-                Form1.instance.Log(Localisation.Get("Canceled!"));
+                Form1.instance.YoutubeDlLog(Localisation.Get("Canceled!"));
             }
         }
 
