@@ -773,7 +773,7 @@
             // labImageInfo
             // 
             this.labImageInfo.AutoSize = true;
-            this.labImageInfo.Location = new System.Drawing.Point(307, 358);
+            this.labImageInfo.Location = new System.Drawing.Point(317, 358);
             this.labImageInfo.Name = "labImageInfo";
             this.labImageInfo.Size = new System.Drawing.Size(105, 34);
             this.labImageInfo.TabIndex = 37;

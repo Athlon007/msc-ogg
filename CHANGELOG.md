@@ -1,10 +1,10 @@
 # Changelog
 
-## Preview 2.10.0.1 (xx.11.2019)
+## Preview 2.10.0.1 (07.11.2019)
 
 ### Changes
 
-- All downloader messages will now appear in downloader log window, instead of the global one
+- All downloader messages will now appear in downloader log window, instead of the global log
 - Minor UI changes and touches
 
 ## Preview 2.10.0.0 (06.11.2019)

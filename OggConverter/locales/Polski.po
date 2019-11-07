@@ -931,24 +931,26 @@ msgid ""
 msgstr ""
 
 msgid "Conversion:"
-msgstr ""
+msgstr "Konwersja:"
 
 msgid "Convert song to mono channel"
-msgstr ""
+msgstr "Konwertuj piosenki do kanału mono"
 
 msgid "Copy"
-msgstr ""
+msgstr "Kopiuj"
 
 msgid "Paste"
-msgstr ""
+msgstr "Wklej"
 
 msgid "Undo"
-msgstr ""
+msgstr "Cofnij"
 
 msgid ""
 "\n"
 "Downloading playlist..."
 msgstr ""
+"\n"
+"Pobieranie playlisty..."
 
 msgid "Downloader: Downloading playlist from '{0}'"
-msgstr ""
+msgstr "Pobieranie: Pobieranie listy odtwarzania z '{0}'"

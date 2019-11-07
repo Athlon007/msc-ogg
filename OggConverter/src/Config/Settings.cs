@@ -127,7 +127,7 @@ namespace OggConverter
 
         /// <summary>
         /// If true, the program will convert the song file to mono channel.
-        /// </summary>
+        /// </summary> 
         public static bool ConvertToMono { get => Get("ConvertToMono", false); set => Set("ConvertToMono", value); }
 
         //////////////////////////////////////////////

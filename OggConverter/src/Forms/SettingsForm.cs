@@ -83,7 +83,6 @@ namespace OggConverter
                 ShowAlways = true
             };
 
-            //toolTip.SetToolTip(chkRemoveSource, Localisation.Get("Removes the original files that the song is converted from."));
             toolTip.SetToolTip(chkAutoSort, Localisation.Get("After each file change, all songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3)."));
             toolTip.SetToolTip(chkNoMetafiles, Localisation.Get("Disables song name saving into songnames.xml. Only file name will be used."));
             toolTip.SetToolTip(chkAutoUpdates, Localisation.Get("On each start, the program will connect to the server and check if the new updates are available."));
