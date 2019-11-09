@@ -1,15 +1,9 @@
 What's new in this release?
 
-Added:
-- Added cover art file info
-- You can now convert song to mono channel while converting to .OGG
-
-Changes:
-- Cover art preview loading optimization
-- Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
-- Replaced the default context menu for text boxes
-
-Removed:
-- Removed "Open History" and "Open Log Folder" from "Tools" in main form, because it was doubling the functionality of the same function in Settings
+Bug Fixes:
+- Fixed crash when opening Edit tab if the song list was empty
+- Fixed the playlist downloader showing an error and stopping working after all downloads are complete
+- Fixed playlist downloader downloading songs to incorrect folder
+- Fixed playlist downloader using incorrect folder paths
 
 For more, visit https://gitlab.com/aathlon/msc-ogg
