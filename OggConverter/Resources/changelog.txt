@@ -1,6 +1,25 @@
-What's new in this release?
+Added:
+- You can now download entire playlists from YouTube!
+- Added cover art file info
+- You can now convert song to mono channel while converting to .OGG
+
+Changes:
+- Cover art preview loading optimization
+- Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
+- Replaced the default context menu for text boxes
+- All downloader messages will now appear in downloader log window, instead of the global log
+- Minor UI changes and touches
+  - "Download" button in Downloader tab will be disabled if the text box is empty
+  - "Save" button in Edit tab will be disabled if the text box is empty, or if the text in text box is the same as the current song title
+  - Buttons in Recycle Bin are now context aware
+  - Youtube-dl related settings will be disabled, if youtube-dl hasn't been found
+  - "Edit with Audacity" button is disabled, if no song in Song List is selected
 
 Bug Fixes:
-- Fixed download audio quality setting not working properly
+- Fixed crash when opening Edit tab if the song list was empty
+- Fixed potential crash causing bug, if the song didn't exist and the user clicked "Edit with Audacity" button
 
-For more, visit https://gitlab.com/aathlon/msc-ogg
+Removed:
+- Removed "Open History" and "Open Log Folder" from "Tools" menu bar in main form, because it was doubling the functionality of the same function in Settings
+
+For more, visit https://gitlab.com/aathlon/msc-ogg.

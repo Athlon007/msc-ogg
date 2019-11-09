@@ -31,6 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.logOutput = new System.Windows.Forms.TextBox();
+            this.defaultContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextDefaultUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.songList = new System.Windows.Forms.ListBox();
             this.btnPlaySong = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
@@ -46,9 +51,6 @@
             this.btnSort = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
             this.menuTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLastLog = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLogFolder = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGitLab = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSteam = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,6 +89,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtSongName = new System.Windows.Forms.TextBox();
             this.tabCoverArt = new System.Windows.Forms.TabPage();
+            this.labImageInfo = new System.Windows.Forms.Label();
             this.picCoverArt = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnCoverArtImage = new System.Windows.Forms.Button();
@@ -108,6 +111,7 @@
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.defaultContext.SuspendLayout();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
             this.dragDropPanel.SuspendLayout();
@@ -125,6 +129,7 @@
             // 
             this.logOutput.BackColor = System.Drawing.SystemColors.Control;
             this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.logOutput.ContextMenuStrip = this.defaultContext;
             this.logOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logOutput.Location = new System.Drawing.Point(4, 4);
             this.logOutput.Margin = new System.Windows.Forms.Padding(4);
@@ -134,6 +139,49 @@
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logOutput.Size = new System.Drawing.Size(637, 397);
             this.logOutput.TabIndex = 2;
+            // 
+            // defaultContext
+            // 
+            this.defaultContext.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.defaultContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextDefaultUndo,
+            this.contextDefaultCopy,
+            this.contextDefaultPaste,
+            this.contextDefaultSelectAll});
+            this.defaultContext.Name = "songListContext";
+            this.defaultContext.Size = new System.Drawing.Size(141, 100);
+            this.defaultContext.Opened += new System.EventHandler(this.defaultContext_Opened);
+            // 
+            // contextDefaultUndo
+            // 
+            this.contextDefaultUndo.Name = "contextDefaultUndo";
+            this.contextDefaultUndo.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultUndo.Text = "Undo";
+            this.contextDefaultUndo.Click += new System.EventHandler(this.contextDefaultUndo_Click);
+            // 
+            // contextDefaultCopy
+            // 
+            this.contextDefaultCopy.Name = "contextDefaultCopy";
+            this.contextDefaultCopy.ShortcutKeyDisplayString = "";
+            this.contextDefaultCopy.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultCopy.Text = "Copy";
+            this.contextDefaultCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.contextDefaultCopy.Click += new System.EventHandler(this.contextDefaultCopy_Click);
+            // 
+            // contextDefaultPaste
+            // 
+            this.contextDefaultPaste.Name = "contextDefaultPaste";
+            this.contextDefaultPaste.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultPaste.Text = "Paste";
+            this.contextDefaultPaste.Click += new System.EventHandler(this.contextDefaultPaste_Click);
+            // 
+            // contextDefaultSelectAll
+            // 
+            this.contextDefaultSelectAll.Name = "contextDefaultSelectAll";
+            this.contextDefaultSelectAll.ShortcutKeyDisplayString = "";
+            this.contextDefaultSelectAll.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultSelectAll.Text = "Select All";
+            this.contextDefaultSelectAll.Click += new System.EventHandler(this.contextDefaultSelectAll_Click);
             // 
             // songList
             // 
@@ -315,9 +363,6 @@
             // 
             this.menuTool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.menuTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnLastLog,
-            this.btnLogFolder,
-            this.toolStripSeparator1,
             this.btnWebsite,
             this.btnGitLab,
             this.btnSteam,
@@ -327,25 +372,6 @@
             this.menuTool.Name = "menuTool";
             this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
-            // 
-            // btnLastLog
-            // 
-            this.btnLastLog.Name = "btnLastLog";
-            this.btnLastLog.Size = new System.Drawing.Size(285, 26);
-            this.btnLastLog.Text = "Open History";
-            this.btnLastLog.Click += new System.EventHandler(this.OpenLastConversionToolStripMenuItem_Click);
-            // 
-            // btnLogFolder
-            // 
-            this.btnLogFolder.Name = "btnLogFolder";
-            this.btnLogFolder.Size = new System.Drawing.Size(285, 26);
-            this.btnLogFolder.Text = "Open Log Folder";
-            this.btnLogFolder.Click += new System.EventHandler(this.BtnLogFolder_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(282, 6);
             // 
             // btnWebsite
             // 
@@ -581,6 +607,7 @@
             // 
             this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
             this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ytdlOutput.ContextMenuStrip = this.defaultContext;
             this.ytdlOutput.Location = new System.Drawing.Point(11, 179);
             this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4);
             this.ytdlOutput.Multiline = true;
@@ -615,6 +642,7 @@
             // 
             // btnDownload
             // 
+            this.btnDownload.Enabled = false;
             this.btnDownload.Location = new System.Drawing.Point(8, 65);
             this.btnDownload.Margin = new System.Windows.Forms.Padding(4);
             this.btnDownload.Name = "btnDownload";
@@ -636,11 +664,13 @@
             // 
             // txtboxVideo
             // 
+            this.txtboxVideo.ContextMenuStrip = this.defaultContext;
             this.txtboxVideo.Location = new System.Drawing.Point(8, 33);
             this.txtboxVideo.Margin = new System.Windows.Forms.Padding(4);
             this.txtboxVideo.Name = "txtboxVideo";
             this.txtboxVideo.Size = new System.Drawing.Size(624, 22);
             this.txtboxVideo.TabIndex = 1;
+            this.txtboxVideo.TextChanged += new System.EventHandler(this.txtboxVideo_TextChanged);
             this.txtboxVideo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtboxVideo_KeyDown);
             // 
             // tabMeta
@@ -692,6 +722,7 @@
             // 
             // btnSetName
             // 
+            this.btnSetName.Enabled = false;
             this.btnSetName.Location = new System.Drawing.Point(8, 91);
             this.btnSetName.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetName.Name = "btnSetName";
@@ -713,15 +744,18 @@
             // 
             // txtSongName
             // 
+            this.txtSongName.ContextMenuStrip = this.defaultContext;
             this.txtSongName.Location = new System.Drawing.Point(8, 59);
             this.txtSongName.Margin = new System.Windows.Forms.Padding(4);
             this.txtSongName.Name = "txtSongName";
             this.txtSongName.Size = new System.Drawing.Size(624, 22);
             this.txtSongName.TabIndex = 2;
+            this.txtSongName.TextChanged += new System.EventHandler(this.txtSongName_TextChanged);
             this.txtSongName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSongName_KeyDown);
             // 
             // tabCoverArt
             // 
+            this.tabCoverArt.Controls.Add(this.labImageInfo);
             this.tabCoverArt.Controls.Add(this.picCoverArt);
             this.tabCoverArt.Controls.Add(this.label7);
             this.tabCoverArt.Controls.Add(this.btnCoverArtImage);
@@ -736,6 +770,16 @@
             this.tabCoverArt.TabIndex = 4;
             this.tabCoverArt.Text = "Cover Art";
             this.tabCoverArt.UseVisualStyleBackColor = true;
+            // 
+            // labImageInfo
+            // 
+            this.labImageInfo.AutoSize = true;
+            this.labImageInfo.Location = new System.Drawing.Point(317, 358);
+            this.labImageInfo.Name = "labImageInfo";
+            this.labImageInfo.Size = new System.Drawing.Size(105, 34);
+            this.labImageInfo.TabIndex = 37;
+            this.labImageInfo.Text = "Resolution: 0x0\r\nScale: 0x";
+            this.labImageInfo.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // picCoverArt
             // 
@@ -789,6 +833,7 @@
             // 
             // txtCdText
             // 
+            this.txtCdText.ContextMenuStrip = this.defaultContext;
             this.txtCdText.Location = new System.Drawing.Point(11, 29);
             this.txtCdText.Margin = new System.Windows.Forms.Padding(4);
             this.txtCdText.MaxLength = 8;
@@ -887,6 +932,7 @@
             this.trashList.Size = new System.Drawing.Size(613, 324);
             this.trashList.Sorted = true;
             this.trashList.TabIndex = 24;
+            this.trashList.SelectedIndexChanged += new System.EventHandler(this.trashList_SelectedIndexChanged);
             // 
             // downloadProgress
             // 
@@ -977,6 +1023,7 @@
             this.DragLeave += new System.EventHandler(this.Form1_DragLeave);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.Resize += new System.EventHandler(this.Form1_Resize);
+            this.defaultContext.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menu.ResumeLayout(false);
@@ -1012,9 +1059,6 @@
         private System.Windows.Forms.Button btnSort;
         private System.Windows.Forms.Button btnMoveSong;
         private System.Windows.Forms.ToolStripMenuItem menuTool;
-        private System.Windows.Forms.ToolStripMenuItem btnLogFolder;
-        private System.Windows.Forms.ToolStripMenuItem btnLastLog;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem btnGitLab;
         private System.Windows.Forms.ToolStripMenuItem btnSteam;
         private System.Windows.Forms.ToolStripMenuItem btnAbout;
@@ -1080,6 +1124,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnCoverArtImage;
         private System.Windows.Forms.PictureBox picCoverArt;
+        private System.Windows.Forms.Label labImageInfo;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultCopy;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultSelectAll;
+        private System.Windows.Forms.ContextMenuStrip defaultContext;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultUndo;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultPaste;
     }
 }
 

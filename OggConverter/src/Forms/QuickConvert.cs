@@ -108,7 +108,7 @@ namespace OggConverter
                 foreach (string file in files)
                 {
                     string name = file.Substring(file.LastIndexOf('\\') + 1);
-                    Message = Localisation.Get("Converting\n{0}", name.Length > 40 ? name.Substring(0, 40) + "..." : name);
+                    Message = Localisation.Get("Converting\n{0}", (name.Length > 40 ? name.Substring(0, 40) + "..." : name));
                     await Converter.ConvertFile(file, to, limit, name);
                 }
             }

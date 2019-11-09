@@ -26,7 +26,12 @@ namespace OggConverter
         /// So if the image is 1024x1024, the scale used is 2x
         /// And if the image is 256x256, the scale is 0.5x
         /// </summary>
-        public double ScaleValue { get; set; }
+        public double Scale { get; set; }
+
+        /// <summary>
+        /// Currently used cover art
+        /// </summary>
+        Bitmap CoverArt { get; set; }
 
         /// <summary>
         /// Creates new cover art based of saved coverart.png
@@ -38,24 +43,28 @@ namespace OggConverter
             Form1.instance.Log(Localisation.Get("Creating new cover art for {0}...", folder));
 
             // Loading the coverart.png image
-            Bitmap coverArt = (Bitmap)Image.FromFile($"coverart.png");
+            CoverArt = (Bitmap)Image.FromFile($"coverart.png");
             // Calculate the cover art scale compared to the default MSC CD cover art (512x512)
-            ScaleValue = (double)coverArt.Width / (double)512;
+            Scale = (double)CoverArt.Width / (double)512;
 
             // Default starting point for the list of songs (rescaled according to ScaleValue)
-            PointF defaultPoint = new PointF(Scale(274), Scale(40));
+            PointF defaultPoint = new PointF(Rescale(274), Rescale(40));
             PointF currentPoint = defaultPoint;
             // By how many pixels does new line appear (scaled)
-            int jumpBy = Scale(19);
+            int jumpBy = Rescale(19);
             // Maximum ammount of sogns
             int maxSongs = 11;
 
             // Initialziing Graphics
-            using (Graphics graphics = Graphics.FromImage(coverArt))
+            using (Graphics graphics = Graphics.FromImage(CoverArt))
             {
-                Font font = new Font(Settings.CoverArtFont, Scale(10));
+                Font font = new Font(Settings.CoverArtFont, Rescale(10));
                 // Drawing the text on the CD from cdText
-                graphics.DrawString(cdText, new Font(Settings.CoverArtFont, Scale(20)), Brushes.Black, new PointF(Scale(299), Scale(415)));
+                graphics.DrawString(cdText, new Font(Settings.CoverArtFont,
+                    Rescale(20)), 
+                    Brushes.Black, 
+                    new PointF(Rescale(299),
+                    Rescale(415)));
 
                 // Drawing the song names on CD cover
                 for (int i = 0; (i < maxSongs) && (i < Player.WorkingSongList.Count); i++)
@@ -67,8 +76,8 @@ namespace OggConverter
             }
 
             // Saving the edited cover art to the folder
-            coverArt.Save($"{Settings.GamePath}\\{folder}\\coverart.png");
-            coverArt.Dispose();
+            CoverArt.Save($"{Settings.GamePath}\\{folder}\\coverart.png");
+            CoverArt.Dispose();
 
             Form1.instance.Log(Localisation.Get("Done!"));
             System.Windows.Forms.MessageBox.Show(Localisation.Get("Created CD cover art successfully!"));
@@ -79,9 +88,27 @@ namespace OggConverter
         /// </summary>
         /// <param name="value">Value to scale</param>
         /// <returns></returns>
-        public int Scale(object value)
+        public int Rescale(object value)
         {
-            return (int)Math.Round(Convert.ToDouble(value) * ScaleValue);
+            return (int)Math.Round(Convert.ToDouble(value) * Scale);
+        }
+
+        /// <summary>
+        /// Retrieves the info about image from file.
+        /// </summary>
+        /// <returns></returns>
+        public string GetImageInfo()
+        {
+            return Localisation.Get("Resolution: {0}x{1}\nScale: {2}x", CoverArt.Width, CoverArt.Height, Scale);
+        }
+
+        /// <summary>
+        /// Retrieves the info about image from file.
+        /// </summary>
+        /// <returns></returns>
+        public string GetImageInfo(Image image)
+        {
+            return Localisation.Get("Resolution: {0}x{1}\nScale: {2}x", image.Width, image.Height, (double)image.Width / (double)512);
         }
     }
 }

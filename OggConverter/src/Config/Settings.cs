@@ -125,6 +125,11 @@ namespace OggConverter
         /// </summary>
         public static string CoverArtFont { get => Get("CoverArtFont", "Arial"); set => Set("CoverArtFont", value); }
 
+        /// <summary>
+        /// If true, the program will convert the song file to mono channel.
+        /// </summary> 
+        public static bool ConvertToMono { get => Get("ConvertToMono", false); set => Set("ConvertToMono", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////

@@ -309,6 +309,20 @@ namespace OggConverter
             // Loads font used in preview
             labCurrentFont.Text = Settings.CoverArtFont;
             labCurrentFont.Font = new Font(Settings.CoverArtFont, 10);
+
+            // Loading coverart image preview
+            if (File.Exists("coverart.png"))
+            {
+                Image coverImg = Image.FromFile("coverart.png");
+                picCoverArt.Image = coverImg;
+                Cover cover = new Cover();
+                labImageInfo.Text = cover.GetImageInfo(coverImg);
+                labImageInfo.Left = picCoverArt.Left - labImageInfo.Width;
+            }
+            else
+            {
+                labImageInfo.Visible = false;
+            }
         }
 
         /// <summary>
@@ -358,8 +372,6 @@ namespace OggConverter
             btnHelp.Text = Localisation.Get("Help");
             btnDownloadUpdate.Text = Localisation.Get("Get Update Now!");
 
-            btnLastLog.Text = Localisation.Get("Open History");
-            btnLogFolder.Text = Localisation.Get("Open Log Folder");
             btnWebsite.Text = Localisation.Get("Website");
             btnGitLab.Text = Localisation.Get("GitLab repository");
             btnSteam.Text = Localisation.Get("Steam Community discussion");
@@ -391,7 +403,7 @@ namespace OggConverter
 
             tabDownload.Text = Localisation.Get("Download");
             tabMeta.Text = Localisation.Get("Edit");
-            label5.Text = Localisation.Get("Search Term/Video Link:");
+            label5.Text = Localisation.Get("Search Term/Video Link/Playlist Link:");
             btnDownload.Text = Localisation.Get("Download");
             btnCancelDownload.Text = Localisation.Get("Cancel");
             label6.Text = Localisation.Get("Note:\nThe autor of this tool doesn't take any responsibility for the way how that tool is used.");
@@ -412,6 +424,10 @@ namespace OggConverter
             label7.Text = Localisation.Get("Use the default cover art image with no text added for best result.");
             btnCreateCoverArt.Text = Localisation.Get("Create new cover art");
             tabCoverArt.Text = Localisation.Get("Cover Art");
+            contextDefaultCopy.Text = Localisation.Get("Copy");
+            contextDefaultPaste.Text = Localisation.Get("Paste");
+            contextDefaultSelectAll.Text = Localisation.Get("Select All");
+            contextDefaultUndo.Text = Localisation.Get("Undo");
         }
 
         /// <summary>
@@ -540,8 +556,6 @@ namespace OggConverter
             UpdateRecycleBinList();
 
             btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");
-            picCoverArt.Image = File.Exists("coverart.png") ? Image.FromFile("coverart.png") : null;
-
         }
 
         void UpdateRecycleBinList()
@@ -562,10 +576,9 @@ namespace OggConverter
 
             tabRecycle.Text = !noFiles ? Localisation.Get("Recycle Bin") + $" ({files.Length})" : Localisation.Get("Recycle Bin");
 
-            btnRecycleDelete.Enabled = !noFiles;
+            btnRecycleDelete.Enabled = !noFiles && trashList.SelectedIndex != -1;
             btnEmptyAll.Enabled = !noFiles;
-            btnRestore.Enabled = !noFiles;
-            
+            btnRestore.Enabled = !noFiles && trashList.SelectedIndex != -1;            
         }
 
         private void Log_TextChanged(object sender, EventArgs e)
@@ -633,26 +646,6 @@ namespace OggConverter
             }
 
             Player.Stop();
-        }
-
-        private void OpenLastConversionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!File.Exists("history.txt"))
-            {
-                Log(Localisation.Get("History file doesn't exist."));
-                return;
-            }
-
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                DialogResult dl = MessageBox.Show(Localisation.Get("Would you like to remove history file?"), Localisation.Get("Question"), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dl == DialogResult.Yes)
-                    File.Delete("history.txt");
-
-                return;
-            }
-
-            Process.Start("history.txt");
         }
 
         private void LaunchTheGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -723,32 +716,6 @@ namespace OggConverter
             Player.Stop();
         }
 
-        private void BtnLogFolder_Click(object sender, EventArgs e)
-        {
-            if (ModifierKeys.HasFlag(Keys.Shift))
-            {
-                DialogResult dl = MessageBox.Show(Localisation.Get("Would you like to remove all logs?"), Localisation.Get("Question"), 
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dl == DialogResult.Yes)
-                    Directory.Delete("LOG", true);
-
-                return;
-            }
-
-            if (!Settings.Logs)
-            {
-                Log(Localisation.Get("Logs are disabled"));
-                return;
-            }
-
-            if (!Directory.Exists("Log"))
-            {
-                Log(Localisation.Get("Log folder doesn't exist"));
-                return;
-            }
-
-            Process.Start(@"Log");
-        }
         /// <summary>
         /// Removes selected file on player
         /// </summary>
@@ -868,17 +835,14 @@ namespace OggConverter
 
             if (Updates.IsYoutubeDlUpdating)
             {
-                MessageBox.Show(Localisation.Get("youtube-dl is now updating or looking for the update. " +
-                    "You'll be notified on Log panel when it's done :)"),
-                    Localisation.Get("Stop"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Stop);
+                YoutubeDlLog(Localisation.Get("youtube-dl is now updating or looking for the update. " +
+                    "You'll be notified on Log panel when it's done :)"));
                 return;
             }
 
             if (Utilities.IsToolBusy())
             {
-                Log(Localisation.Get("Program is busy."));
+                YoutubeDlLog(Localisation.Get("Program is busy."));
                 return;
             }
 
@@ -909,10 +873,7 @@ namespace OggConverter
             {
                 if (!url.Contains("youtube.com/watch?v="))
                 {
-                    MessageBox.Show(Localisation.Get("Url is not a YouTube link."),
-                        Localisation.Get("Error"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                    YoutubeDlLog(Localisation.Get("Url is not a YouTube link."));
                     RestrictedMode(false);
                     return;
                 }
@@ -923,7 +884,7 @@ namespace OggConverter
             {
                 if (url == "")
                 {
-                    MessageBox.Show(Localisation.Get("Url is not valid and is empty."));
+                    YoutubeDlLog(Localisation.Get("Url is not valid and is empty."));
                     RestrictedMode(false);
                     return;
                 }
@@ -933,7 +894,15 @@ namespace OggConverter
                 forcedName = searchTerm;
             }
 
-            await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
+            if (url.Contains("&list="))
+            {
+                await Downloader.DownloadPlaylist(url, CurrentFolder, SongsLimit);
+            }
+            else
+            {
+                await Downloader.DownloadFile(url, CurrentFolder, SongsLimit, forcedName);
+            }
+
             btnDownload.Enabled = txtboxVideo.Enabled = true;
             txtboxVideo.Text = "";
         }
@@ -972,7 +941,8 @@ namespace OggConverter
 
         private void SongList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lastSelected = songList.SelectedIndex;
+            // If not a single song is selected in song list, disable the button.
+            btnOpenWithAudacity.Enabled = songList.SelectedIndex != -1;
 
             // If Edit tab is not open, or nothing's selected - don't load the song name to edit box
             if (tabs.SelectedIndex != 2 || songList.SelectedIndex == -1)
@@ -987,7 +957,7 @@ namespace OggConverter
             switch (tabs.SelectedIndex)
             {
                 case 2:
-                    txtSongName.Text = songList.SelectedItem.ToString();
+                    txtSongName.Text = songList.SelectedItem != null ? songList.SelectedItem.ToString() : "";
                     break;
                 case 4:
                     UpdateRecycleBinList();
@@ -1029,6 +999,9 @@ namespace OggConverter
         private void SelectedFolder_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSongList();
+
+            // If not a single song is selected in song list, disable the button.
+            btnOpenWithAudacity.Enabled = songList.SelectedIndex != -1;
         }
 
         private void TxtSongName_KeyDown(object sender, KeyEventArgs e)
@@ -1195,7 +1168,7 @@ namespace OggConverter
 
         void ResizeForm()
         {
-            if (this.WindowState == FormWindowState.Minimized && FormBorderStyle == FormBorderStyle.FixedSingle     ) return;
+            if (this.WindowState == FormWindowState.Minimized && FormBorderStyle == FormBorderStyle.FixedSingle) return;
             panel1.Width = this.Width / 2 - 164;
             panel1.Height = this.Height - panelDefaultY - 46;
 
@@ -1256,13 +1229,17 @@ namespace OggConverter
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (!File.Exists($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg"))
+                return;
+
             if (String.IsNullOrEmpty(Settings.AudacityPath) || !File.Exists(Settings.AudacityPath))
             {
                 MessageBox.Show(Localisation.Get("Audacity install path hasn't been set. Go to settings to change that."),
                     Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Process.Start(Settings.AudacityPath, $"\"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg\"");
+            Process.Start(Settings.AudacityPath, 
+                $"\"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg\"");
         }
 
         private void btnDonate_Click(object sender, EventArgs e)
@@ -1284,6 +1261,7 @@ namespace OggConverter
         {
             Cover cover = new Cover();
             cover.New(txtCdText.Text, CurrentFolder);
+            cover.GetImageInfo();
         }
 
         private void btnCoverArtImage_Click(object sender, EventArgs e)
@@ -1314,8 +1292,65 @@ namespace OggConverter
                     btnCoverArtImage.Text = Localisation.Get("CD cover is in use");
                     btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");
                     picCoverArt.Image = Image.FromFile("coverart.png");
+                    Cover cover = new Cover();
+                    labImageInfo.Text = cover.GetImageInfo(Image.FromFile("coverart.png"));
+                    labImageInfo.Left = picCoverArt.Left - labImageInfo.Width;
+                    labImageInfo.Visible = true;
                 }
             }
+        }
+
+        private void contextDefaultUndo_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).Undo(); 
+        }
+
+        private void contextDefaultCopy_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).Copy();
+        }
+
+        private void contextDefaultPaste_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).Paste();
+        }
+
+        private void contextDefaultSelectAll_Click(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)((ToolStripItem)sender).Owner).SourceControl;
+            (control as TextBox).SelectAll();
+        }
+
+        private void defaultContext_Opened(object sender, EventArgs e)
+        {
+            Control control = ((ContextMenuStrip)sender).SourceControl;
+            TextBox parentTextBox = control as TextBox;
+
+            defaultContext.Items[0].Enabled = !parentTextBox.ReadOnly;
+            defaultContext.Items[2].Enabled = !parentTextBox.ReadOnly;
+        }
+
+        private void txtboxVideo_TextChanged(object sender, EventArgs e)
+        {
+            string text = txtboxVideo.Text;
+            btnDownload.Enabled = text.Length > 0;
+        }
+
+        private void txtSongName_TextChanged(object sender, EventArgs e)
+        {
+            string text = txtSongName.Text;
+            btnSetName.Enabled = text != Player.WorkingSongList[songList.SelectedIndex].Item2;
+        }
+
+        private void trashList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool noFiles = trashList.Items.Count == 0;
+            btnRecycleDelete.Enabled = !noFiles && trashList.SelectedIndex != -1;
+            btnEmptyAll.Enabled = !noFiles;
+            btnRestore.Enabled = !noFiles && trashList.SelectedIndex != -1;
         }
     }
 }

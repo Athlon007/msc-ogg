@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ErrorMessage));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -35,8 +36,12 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnLog = new System.Windows.Forms.Button();
             this.logOutput = new System.Windows.Forms.TextBox();
+            this.defaultContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextDefaultCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextDefaultSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnExit = new System.Windows.Forms.Button();
+            this.defaultContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,10 +69,10 @@
             // 
             // btnMoreDetail
             // 
-            this.btnMoreDetail.Location = new System.Drawing.Point(16, 176);
+            this.btnMoreDetail.Location = new System.Drawing.Point(16, 160);
             this.btnMoreDetail.Margin = new System.Windows.Forms.Padding(4);
             this.btnMoreDetail.Name = "btnMoreDetail";
-            this.btnMoreDetail.Size = new System.Drawing.Size(156, 28);
+            this.btnMoreDetail.Size = new System.Drawing.Size(132, 44);
             this.btnMoreDetail.TabIndex = 2;
             this.btnMoreDetail.Text = "Show More Detail";
             this.btnMoreDetail.UseVisualStyleBackColor = true;
@@ -75,10 +80,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(504, 176);
+            this.btnClose.Location = new System.Drawing.Point(528, 160);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(156, 28);
+            this.btnClose.Size = new System.Drawing.Size(132, 44);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -86,10 +91,10 @@
             // 
             // btnLog
             // 
-            this.btnLog.Location = new System.Drawing.Point(340, 176);
+            this.btnLog.Location = new System.Drawing.Point(388, 160);
             this.btnLog.Margin = new System.Windows.Forms.Padding(4);
             this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(156, 28);
+            this.btnLog.Size = new System.Drawing.Size(132, 44);
             this.btnLog.TabIndex = 4;
             this.btnLog.Text = "Open Log";
             this.btnLog.UseVisualStyleBackColor = true;
@@ -99,6 +104,7 @@
             // 
             this.logOutput.BackColor = System.Drawing.SystemColors.Control;
             this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.logOutput.ContextMenuStrip = this.defaultContext;
             this.logOutput.Location = new System.Drawing.Point(16, 212);
             this.logOutput.Margin = new System.Windows.Forms.Padding(4);
             this.logOutput.Multiline = true;
@@ -107,6 +113,32 @@
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logOutput.Size = new System.Drawing.Size(643, 288);
             this.logOutput.TabIndex = 5;
+            // 
+            // defaultContext
+            // 
+            this.defaultContext.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.defaultContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextDefaultCopy,
+            this.contextDefaultSelectAll});
+            this.defaultContext.Name = "songListContext";
+            this.defaultContext.Size = new System.Drawing.Size(141, 52);
+            // 
+            // contextDefaultCopy
+            // 
+            this.contextDefaultCopy.Name = "contextDefaultCopy";
+            this.contextDefaultCopy.ShortcutKeyDisplayString = "";
+            this.contextDefaultCopy.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultCopy.Text = "Copy";
+            this.contextDefaultCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.contextDefaultCopy.Click += new System.EventHandler(this.contextDefaultCopy_Click);
+            // 
+            // contextDefaultSelectAll
+            // 
+            this.contextDefaultSelectAll.Name = "contextDefaultSelectAll";
+            this.contextDefaultSelectAll.ShortcutKeyDisplayString = "";
+            this.contextDefaultSelectAll.Size = new System.Drawing.Size(140, 24);
+            this.contextDefaultSelectAll.Text = "Select All";
+            this.contextDefaultSelectAll.Click += new System.EventHandler(this.contextDefaultSelectAll_Click);
             // 
             // pictureBox1
             // 
@@ -124,7 +156,7 @@
             this.btnExit.Location = new System.Drawing.Point(590, 15);
             this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(70, 28);
+            this.btnExit.Size = new System.Drawing.Size(70, 44);
             this.btnExit.TabIndex = 7;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -151,6 +183,7 @@
             this.Name = "ErrorMessage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Oopsie!";
+            this.defaultContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -167,5 +200,8 @@
         private System.Windows.Forms.TextBox logOutput;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ContextMenuStrip defaultContext;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultCopy;
+        private System.Windows.Forms.ToolStripMenuItem contextDefaultSelectAll;
     }
 }

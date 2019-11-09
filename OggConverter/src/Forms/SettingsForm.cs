@@ -62,6 +62,7 @@ namespace OggConverter
 
             txtAudacity.Text = Settings.AudacityPath;
             chkRecommendedFrequency.Checked = Settings.UseRecommendedFrequency;
+            chkMono.Checked = Settings.ConvertToMono;
 
             if (Directory.Exists("locales"))
             {
@@ -82,7 +83,6 @@ namespace OggConverter
                 ShowAlways = true
             };
 
-            //toolTip.SetToolTip(chkRemoveSource, Localisation.Get("Removes the original files that the song is converted from."));
             toolTip.SetToolTip(chkAutoSort, Localisation.Get("After each file change, all songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3)."));
             toolTip.SetToolTip(chkNoMetafiles, Localisation.Get("Disables song name saving into songnames.xml. Only file name will be used."));
             toolTip.SetToolTip(chkAutoUpdates, Localisation.Get("On each start, the program will connect to the server and check if the new updates are available."));
@@ -99,6 +99,14 @@ namespace OggConverter
 
             txtChangelog.Text = Properties.Resources.changelog;
             btnAudacity.Text = char.ConvertFromUtf32(0x1F4C1);
+
+            txtAudacity.ContextMenu = new ContextMenu();
+
+            if (!File.Exists("youtube-dl.exe"))
+            {
+                cbYoutubeDlUpdateFrequency.Enabled = false;
+                btnCheckYTDLUpdates.Enabled = false;
+            }
         }
 
         private void ChkAutoSort_Click(object sender, EventArgs e)
@@ -271,7 +279,7 @@ namespace OggConverter
             chkShortcut.Text = Localisation.Get("Desktop shortcut");
             chkNoSteam.Text = Localisation.Get("Start the game without Steam");
             label2.Text = Localisation.Get("Language");
-            chkAutoSort.Text = Localisation.Get("Sort files after conversion");
+            chkAutoSort.Text = Localisation.Get("Automatically rearrange file order");
             chkNoMetafiles.Text = Localisation.Get("Don't save song names");
             chkAutoUpdates.Text = Localisation.Get("Automatically look for updates");
             label1.Text = Localisation.Get("Update Channel:");
@@ -295,9 +303,7 @@ namespace OggConverter
             tabFiles.Text = Localisation.Get("Files");
             tabUpdates.Text = Localisation.Get("Updates");
             tabLogging.Text = Localisation.Get("Logging & Privacy");
-
             this.Text = Localisation.Get("Settings");
-
             chkShowFfmpegOutput.Text = Localisation.Get("Show ffmpeg output");
             chkIgnoreLimits.Text = Localisation.Get("Ignore limitation of songs in folder");
             labAudacity.Text = Localisation.Get("Audacity Executable:");
@@ -307,6 +313,8 @@ namespace OggConverter
             radQualityCompressed.Text = Localisation.Get("Compressed");
             btnChangelogHistory.Text = Localisation.Get("View Changelog History");
             chkRecommendedFrequency.Text = Localisation.Get("Set the music frequency to recomended 22050 Hz frequency");
+            chkMono.Text = Localisation.Get("Convert song to mono channel");
+            label7.Text = Localisation.Get("Conversion:");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -327,7 +335,6 @@ namespace OggConverter
 
         private async void btnChangelogHistory_Click(object sender, EventArgs e)
         {
-            //Process.Start("https://gitlab.com/aathlon/msc-ogg/blob/master/CHANGELOG.md");
             await Task.Run(() => GetChangelog());
         }
 
@@ -338,16 +345,14 @@ namespace OggConverter
                 await Task.Run(() => client.DownloadStringAsync(new Uri("https://gitlab.com/aathlon/msc-ogg/raw/master/CHANGELOG.md")));
                 client.DownloadStringCompleted += (s, e) =>
                 {
+                    string output = e.Result.Replace("# ", "").Replace("#", "").Replace("Changelog\n\n", "");
+
                     if (txtChangelog.InvokeRequired)
                     {
                         txtChangelog.Invoke(new Action(delegate ()
                         {
-                            txtChangelog.Text = e.Result;
+                            txtChangelog.Text = output;
                         }));
-                    }
-                    else
-                    {
-                        txtChangelog.Text = e.Result;
                     }
                 };
             }
@@ -390,6 +395,11 @@ namespace OggConverter
         private void chkRecommendedFrequency_Click(object sender, EventArgs e)
         {
             Settings.UseRecommendedFrequency ^= true;
+        }
+
+        private void chkMono_Click(object sender, EventArgs e)
+        {
+            Settings.ConvertToMono ^= true;
         }
     }
 }

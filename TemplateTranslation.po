@@ -74,7 +74,7 @@ msgstr ""
 msgid "Remove source files after conversion"
 msgstr ""
 
-msgid "Sort files after conversion"
+msgid "Automatically rearrange file order"
 msgstr ""
 
 msgid "Don't save song names"
@@ -165,7 +165,7 @@ msgstr ""
 msgid "Songs: {0}/{1}"
 msgstr ""
 
-msgid "Search Term/Video Link:"
+msgid "Search Term/Video Link/Playlist Link:"
 msgstr ""
 
 msgid "Download"
@@ -814,4 +814,32 @@ msgid "Cover Art"
 msgstr ""
 
 msgid "File is not in 1:1 ratio."
+msgstr ""
+
+msgid ""
+"Resolution: {0}x{1}\n"
+"Scale: {2}x"
+msgstr ""
+
+msgid "Conversion:"
+msgstr ""
+
+msgid "Convert song to mono channel"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Paste"
+msgstr ""
+
+msgid "Undo"
+msgstr ""
+
+msgid ""
+"\n"
+"Downloading playlist..."
+msgstr ""
+
+msgid "Downloader: Downloading playlist from '{0}'"
 msgstr ""

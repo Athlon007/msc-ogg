@@ -40,6 +40,8 @@
             this.chkNoSteam = new System.Windows.Forms.CheckBox();
             this.chkShortcut = new System.Windows.Forms.CheckBox();
             this.tabFiles = new System.Windows.Forms.TabPage();
+            this.chkMono = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.chkRecommendedFrequency = new System.Windows.Forms.CheckBox();
             this.radQualityCompressed = new System.Windows.Forms.RadioButton();
             this.label6 = new System.Windows.Forms.Label();
@@ -192,6 +194,8 @@
             // 
             // tabFiles
             // 
+            this.tabFiles.Controls.Add(this.chkMono);
+            this.tabFiles.Controls.Add(this.label7);
             this.tabFiles.Controls.Add(this.chkRecommendedFrequency);
             this.tabFiles.Controls.Add(this.radQualityCompressed);
             this.tabFiles.Controls.Add(this.label6);
@@ -208,10 +212,30 @@
             this.tabFiles.Text = "Files";
             this.tabFiles.UseVisualStyleBackColor = true;
             // 
+            // chkMono
+            // 
+            this.chkMono.AutoSize = true;
+            this.chkMono.Location = new System.Drawing.Point(29, 319);
+            this.chkMono.Name = "chkMono";
+            this.chkMono.Size = new System.Drawing.Size(223, 21);
+            this.chkMono.TabIndex = 29;
+            this.chkMono.Text = "Convert song to mono channel";
+            this.chkMono.UseVisualStyleBackColor = true;
+            this.chkMono.Click += new System.EventHandler(this.chkMono_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 272);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 17);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "Conversion:";
+            // 
             // chkRecommendedFrequency
             // 
             this.chkRecommendedFrequency.AutoSize = true;
-            this.chkRecommendedFrequency.Location = new System.Drawing.Point(29, 116);
+            this.chkRecommendedFrequency.Location = new System.Drawing.Point(29, 292);
             this.chkRecommendedFrequency.Name = "chkRecommendedFrequency";
             this.chkRecommendedFrequency.Size = new System.Drawing.Size(413, 21);
             this.chkRecommendedFrequency.TabIndex = 27;
@@ -222,7 +246,7 @@
             // radQualityCompressed
             // 
             this.radQualityCompressed.AutoSize = true;
-            this.radQualityCompressed.Location = new System.Drawing.Point(29, 231);
+            this.radQualityCompressed.Location = new System.Drawing.Point(29, 210);
             this.radQualityCompressed.Name = "radQualityCompressed";
             this.radQualityCompressed.Size = new System.Drawing.Size(108, 21);
             this.radQualityCompressed.TabIndex = 7;
@@ -234,7 +258,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(26, 157);
+            this.label6.Location = new System.Drawing.Point(26, 136);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(162, 17);
             this.label6.TabIndex = 6;
@@ -243,7 +267,7 @@
             // radQualityAverage
             // 
             this.radQualityAverage.AutoSize = true;
-            this.radQualityAverage.Location = new System.Drawing.Point(29, 204);
+            this.radQualityAverage.Location = new System.Drawing.Point(29, 183);
             this.radQualityAverage.Name = "radQualityAverage";
             this.radQualityAverage.Size = new System.Drawing.Size(82, 21);
             this.radQualityAverage.TabIndex = 5;
@@ -255,7 +279,7 @@
             // radQualityBest
             // 
             this.radQualityBest.AutoSize = true;
-            this.radQualityBest.Location = new System.Drawing.Point(29, 177);
+            this.radQualityBest.Location = new System.Drawing.Point(29, 156);
             this.radQualityBest.Name = "radQualityBest";
             this.radQualityBest.Size = new System.Drawing.Size(57, 21);
             this.radQualityBest.TabIndex = 4;
@@ -291,9 +315,9 @@
             this.chkAutoSort.AutoSize = true;
             this.chkAutoSort.Location = new System.Drawing.Point(29, 35);
             this.chkAutoSort.Name = "chkAutoSort";
-            this.chkAutoSort.Size = new System.Drawing.Size(191, 21);
+            this.chkAutoSort.Size = new System.Drawing.Size(240, 21);
             this.chkAutoSort.TabIndex = 1;
-            this.chkAutoSort.Text = "Sort files after conversion";
+            this.chkAutoSort.Text = "Automatically rearrange file order";
             this.chkAutoSort.UseVisualStyleBackColor = true;
             this.chkAutoSort.Click += new System.EventHandler(this.ChkAutoSort_Click);
             // 
@@ -331,7 +355,7 @@
             // 
             // btnChangelogHistory
             // 
-            this.btnChangelogHistory.Location = new System.Drawing.Point(26, 350);
+            this.btnChangelogHistory.Location = new System.Drawing.Point(29, 207);
             this.btnChangelogHistory.Name = "btnChangelogHistory";
             this.btnChangelogHistory.Size = new System.Drawing.Size(132, 44);
             this.btnChangelogHistory.TabIndex = 29;
@@ -341,7 +365,7 @@
             // 
             // btnCheckYTDLUpdates
             // 
-            this.btnCheckYTDLUpdates.Location = new System.Drawing.Point(26, 268);
+            this.btnCheckYTDLUpdates.Location = new System.Drawing.Point(29, 336);
             this.btnCheckYTDLUpdates.Name = "btnCheckYTDLUpdates";
             this.btnCheckYTDLUpdates.Size = new System.Drawing.Size(132, 44);
             this.btnCheckYTDLUpdates.TabIndex = 28;
@@ -371,7 +395,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 216);
+            this.label3.Location = new System.Drawing.Point(26, 284);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(198, 17);
             this.label3.TabIndex = 25;
@@ -381,10 +405,10 @@
             // 
             this.cbYoutubeDlUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbYoutubeDlUpdateFrequency.FormattingEnabled = true;
-            this.cbYoutubeDlUpdateFrequency.Location = new System.Drawing.Point(29, 237);
+            this.cbYoutubeDlUpdateFrequency.Location = new System.Drawing.Point(29, 305);
             this.cbYoutubeDlUpdateFrequency.Margin = new System.Windows.Forms.Padding(4);
             this.cbYoutubeDlUpdateFrequency.Name = "cbYoutubeDlUpdateFrequency";
-            this.cbYoutubeDlUpdateFrequency.Size = new System.Drawing.Size(160, 24);
+            this.cbYoutubeDlUpdateFrequency.Size = new System.Drawing.Size(195, 24);
             this.cbYoutubeDlUpdateFrequency.TabIndex = 24;
             this.cbYoutubeDlUpdateFrequency.SelectionChangeCommitted += new System.EventHandler(this.CbYoutubeDlUpdateFrequency_SelectionChangeCommitted);
             // 
@@ -619,5 +643,7 @@
         private System.Windows.Forms.TextBox txtAudacity;
         private System.Windows.Forms.RichTextBox txtChangelog;
         private System.Windows.Forms.CheckBox chkRecommendedFrequency;
+        private System.Windows.Forms.CheckBox chkMono;
+        private System.Windows.Forms.Label label7;
     }
 }

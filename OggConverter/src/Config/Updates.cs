@@ -29,13 +29,14 @@ namespace OggConverter
     {
         /// <summary>
         /// Stores the update version used to check if there's a newer version available
-        /// 
+        ///
         /// Pattern: YYWWB
         /// YY - year (ex. 19 for 2019)
         /// WW - week (ex. 18 for 18th week of year)
         /// B - build of this week
         /// </summary>
-        public const int version = 19452;
+
+        public const int version = 19460;
 
         static bool newUpdateReady;
         static bool newPreviewReady;
@@ -89,9 +90,9 @@ namespace OggConverter
             if (newUpdateReady)
             {
                 DialogResult res = MessageBox.Show(Localisation.Get("There's a new update ready to download. " +
-                    "Would you like to download it now?"), 
-                    Localisation.Get("Update"), 
-                    MessageBoxButtons.YesNo, 
+                    "Would you like to download it now?"),
+                    Localisation.Get("Update"),
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information);
                 Form1.instance.Log(Localisation.Get("\nThere's an update ready to download!"));
 
@@ -108,7 +109,7 @@ namespace OggConverter
                 using (WebClient client = new WebClient())
                 {
                     await Task.Run(() => client.DownloadStringAsync(new Uri(latestURL)));
-                    client.DownloadStringCompleted += (s, e) => 
+                    client.DownloadStringCompleted += (s, e) =>
                     {
                         int latest = int.Parse(e.Result);
 
@@ -164,8 +165,8 @@ namespace OggConverter
                 Form1.instance.Log(Localisation.Get("\nCouldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n" +
                     "In case the problem still occures, a new crash log has been created.\n"));
                 return;
-            }    
-        }        
+            }
+        }
 
         /// <summary>
         /// Downloads and installs the latest update.
@@ -183,7 +184,7 @@ namespace OggConverter
                 client.DownloadProgressChanged += (s, e) =>
                 {
                     Form1.instance.DownloadProgress.Invoke(new Action(() =>
-                    { 
+                    {
                         Form1.instance.DownloadProgress.Visible = true;
                         Form1.instance.DownloadProgress.Value = e.ProgressPercentage;
                     }));
@@ -212,7 +213,7 @@ namespace OggConverter
                     process.Start();
                     Application.Exit();
                 };
-            }            
+            }
         }
 
         /// <summary>
@@ -355,7 +356,7 @@ namespace OggConverter
                 {
                     await Task.Run(() => client.DownloadFileAsync(new Uri(link), "ffpack.zip"));
                 }
-                catch 
+                catch
                 {
                     MessageBox.Show(Localisation.Get("Looks like there was some kind of problem with downloading the FFmpeg pack. " +
                         "You'll be taken to the website from which you'll" +

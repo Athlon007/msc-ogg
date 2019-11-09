@@ -40,7 +40,6 @@ namespace OggConverter
             {
                 CancelDownload = false;
 
-                Form1.instance.Log(Localisation.Get("Downloaded youtube-dl successfully!"));
                 Form1.instance.DownloadProgress.Visible = false;
 
                 IsBusy = true;
@@ -48,7 +47,7 @@ namespace OggConverter
                 if (File.Exists("download.aac"))
                     File.Delete("download.aac");
 
-                Form1.instance.Log(Localisation.Get("\nDownloading song..."));
+                Form1.instance.YoutubeDlLog(Localisation.Get("\nDownloading song..."));
                 Logs.History(Localisation.Get("Downloader: Downloading song from '{0}'", url));
 
                 Process process = new Process();
@@ -80,7 +79,7 @@ namespace OggConverter
                 // File wasn't downloaded?
                 if (!File.Exists("download.mp3"))
                 {
-                    Form1.instance.Log(Localisation.Get("Couldn't donwnload the song.\n" +
+                    Form1.instance.YoutubeDlLog(Localisation.Get("Couldn't donwnload the song.\n" +
                         "If you canceled the download, then everything's fine.\n" +
                         "If not, check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n" +
                         "Also please check if youtube-dl supports the link that you use: " +
@@ -91,7 +90,7 @@ namespace OggConverter
                     return;
                 }
 
-                Form1.instance.Log(Localisation.Get("Converting..."));
+                Form1.instance.YoutubeDlLog(Localisation.Get("Converting..."));
 
                 if (CancelDownload)
                 {
@@ -113,7 +112,100 @@ namespace OggConverter
             }
             catch (Exception) when (CancelDownload)
             {
-                Form1.instance.Log(Localisation.Get("Canceled!"));
+                Form1.instance.YoutubeDlLog(Localisation.Get("Canceled!"));
+            }
+        }
+
+        /// <summary>
+        /// Downloads all songs from playlist
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="folder"></param>
+        /// <param name="limit"></param>
+        public async static Task DownloadPlaylist(string url, string folder, int limit)
+        {
+            try
+            {
+                CancelDownload = false;
+
+                Form1.instance.DownloadProgress.Visible = false;
+                
+                IsBusy = true;
+
+                if (Directory.Exists("downloads"))
+                    Directory.Delete("downloads", true);
+
+                Directory.CreateDirectory("downloads");
+
+                Form1.instance.YoutubeDlLog(Localisation.Get("\nDownloading playlist..."));
+                Logs.History(Localisation.Get("Downloader: Downloading playlist from '{0}'", url));
+
+                Process process = new Process();
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                // Setup executable and parameters
+                process.StartInfo.FileName = "youtube-dl.exe";
+                int audioQuality = GetAudioQuality();
+                process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality {audioQuality} -o \"downloads\\%(title)s.%(ext)s\" {url}";
+
+                if (CancelDownload)
+                {
+                    CancelDownload = true;
+                    return;
+                }
+
+                process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
+                Form1.instance.ClearYtLog();
+
+                await Task.Run(() => process.Start());
+                process.BeginOutputReadLine();
+                await Task.Run(() => process.WaitForExit());
+
+                Logs.History("-- youtube-dl output: --\n" + Form1.instance.GetYtDlLog);
+                Form1.instance.YoutubeDlLog("\n\n====================================\nDone!");
+
+                // File wasn't downloaded?
+                if (Directory.GetFiles("downloads").Length == 0)
+                {
+                    Form1.instance.YoutubeDlLog(Localisation.Get("Couldn't donwnload the song.\n" +
+                        "If you canceled the download, then everything's fine.\n" +
+                        "If not, check if there's a youtube-dl update, by clicking Tool -> Check for youtube-dl update.\n" +
+                        "Also please check if youtube-dl supports the link that you use: " +
+                        "https://ytdl-org.github.io/youtube-dl/supportedsites.html. \n" +
+                        "If it's going to happen again, please send the history.txt file content to developer on Steam, or via mail."));
+                    IsBusy = false;
+                    Form1.instance.RestrictedMode(false);
+                    return;
+                }
+
+                Form1.instance.YoutubeDlLog(Localisation.Get("Converting..."));
+
+                if (CancelDownload)
+                {
+                    CancelDownload = true;
+                    return;
+                }
+
+                DirectoryInfo di = new DirectoryInfo("downloads");
+                FileInfo[] files = di.GetFiles("*.mp3");
+
+                foreach (var file in files)
+                {
+                    string name = file.Name.Split('.')[0];
+                    await Converter.ConvertFile($"{file.FullName}", folder, limit, name);
+                }
+
+                File.Delete("download.mp3");
+                IsBusy = false;
+
+                Form1.instance.UpdateSongList();
+                Form1.instance.RestrictedMode(false);
+            }
+            catch (Exception) when (CancelDownload)
+            {
+                Form1.instance.YoutubeDlLog(Localisation.Get("Canceled!"));
             }
         }
 
@@ -141,6 +233,9 @@ namespace OggConverter
                 if (File.Exists(file.FullName))
                     File.Delete(file.FullName);
             }
+
+            if (Directory.Exists("downloads"))
+                Directory.Delete("downloads", true);
         }
 
         /// <summary>
