@@ -28,6 +28,9 @@ namespace OggConverter
         /// </summary>
         public double Scale { get; set; }
 
+        /// <summary>
+        /// Currently used cover art
+        /// </summary>
         Bitmap CoverArt { get; set; }
 
         /// <summary>

@@ -1,5 +1,14 @@
 # Changelog
 
+## Preview 2.10.0.2 (09.11.2019)
+
+### Bug Fixes
+
+- Fixed crash when opening Edit tab if the song list was empty
+- Fixed the playlist downloader showing an error and stopping working after all downloads are complete
+- Fixed playlist downloader downloading songs to incorrect folder
+- Fixed playlist downloader using incorrect folder paths
+
 ## Preview 2.10.0.1 (07.11.2019)
 
 ### Changes
@@ -23,7 +32,7 @@
 
 ### Removed
 
-- Removed "Open History" and "Open Log Folder" from "Tools" in main form, because it was doubling the functionality of the same function in Settings
+- Removed "Open History" and "Open Log Folder" from "Tools" menu bar in main form, because it was doubling the functionality of the same function in Settings
 
 ## 2.9.1 (05.11.2019)
 

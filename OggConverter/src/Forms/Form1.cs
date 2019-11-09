@@ -951,7 +951,7 @@ namespace OggConverter
             switch (tabs.SelectedIndex)
             {
                 case 2:
-                    txtSongName.Text = songList.SelectedItem.ToString();
+                    txtSongName.Text = songList.SelectedItem != null ? songList.SelectedItem.ToString() : "";
                     break;
                 case 4:
                     UpdateRecycleBinList();

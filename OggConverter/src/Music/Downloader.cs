@@ -148,7 +148,7 @@ namespace OggConverter
                 // Setup executable and parameters
                 process.StartInfo.FileName = "youtube-dl.exe";
                 int audioQuality = GetAudioQuality();
-                process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality {audioQuality} -o \"%(title)s.%(ext)s\" {url}";
+                process.StartInfo.Arguments = $"-f bestaudio -x --audio-format mp3 --audio-quality {audioQuality} -o \"downloads\\%(title)s.%(ext)s\" {url}";
 
                 if (CancelDownload)
                 {
@@ -167,7 +167,7 @@ namespace OggConverter
                 Form1.instance.YoutubeDlLog("\n\n====================================\nDone!");
 
                 // File wasn't downloaded?
-                if (!File.Exists("download.mp3"))
+                if (Directory.GetFiles("downloads").Length == 0)
                 {
                     Form1.instance.YoutubeDlLog(Localisation.Get("Couldn't donwnload the song.\n" +
                         "If you canceled the download, then everything's fine.\n" +
@@ -194,7 +194,7 @@ namespace OggConverter
                 foreach (var file in files)
                 {
                     string name = file.Name.Split('.')[0];
-                    await Converter.ConvertFile($"downloads\\{file.FullName}", folder, limit, name);
+                    await Converter.ConvertFile($"{file.FullName}", folder, limit, name);
                 }
 
                 File.Delete("download.mp3");
