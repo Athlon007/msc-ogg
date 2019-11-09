@@ -929,6 +929,8 @@ msgid ""
 "Resolution: {0}x{1}\n"
 "Scale: {2}x"
 msgstr ""
+"Rozdzielczość: {0}x{1}\n"
+"Skala: {2}x"
 
 msgid "Conversion:"
 msgstr "Konwersja:"

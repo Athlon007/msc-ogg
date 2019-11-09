@@ -722,6 +722,7 @@
             // 
             // btnSetName
             // 
+            this.btnSetName.Enabled = false;
             this.btnSetName.Location = new System.Drawing.Point(8, 91);
             this.btnSetName.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetName.Name = "btnSetName";

@@ -317,6 +317,11 @@ namespace OggConverter
                 picCoverArt.Image = coverImg;
                 Cover cover = new Cover();
                 labImageInfo.Text = cover.GetImageInfo(coverImg);
+                labImageInfo.Left = picCoverArt.Left - labImageInfo.Width;
+            }
+            else
+            {
+                labImageInfo.Visible = false;
             }
         }
 
@@ -936,7 +941,8 @@ namespace OggConverter
 
         private void SongList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lastSelected = songList.SelectedIndex;
+            // If not a single song is selected in song list, disable the button.
+            btnOpenWithAudacity.Enabled = songList.SelectedIndex != -1;
 
             // If Edit tab is not open, or nothing's selected - don't load the song name to edit box
             if (tabs.SelectedIndex != 2 || songList.SelectedIndex == -1)
@@ -993,6 +999,9 @@ namespace OggConverter
         private void SelectedFolder_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSongList();
+
+            // If not a single song is selected in song list, disable the button.
+            btnOpenWithAudacity.Enabled = songList.SelectedIndex != -1;
         }
 
         private void TxtSongName_KeyDown(object sender, KeyEventArgs e)
@@ -1220,13 +1229,17 @@ namespace OggConverter
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (!File.Exists($"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg"))
+                return;
+
             if (String.IsNullOrEmpty(Settings.AudacityPath) || !File.Exists(Settings.AudacityPath))
             {
                 MessageBox.Show(Localisation.Get("Audacity install path hasn't been set. Go to settings to change that."),
                     Localisation.Get("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Process.Start(Settings.AudacityPath, $"\"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg\"");
+            Process.Start(Settings.AudacityPath, 
+                $"\"{Settings.GamePath}\\{CurrentFolder}\\{Player.WorkingSongList[songList.SelectedIndex].Item1}.ogg\"");
         }
 
         private void btnDonate_Click(object sender, EventArgs e)
@@ -1279,6 +1292,10 @@ namespace OggConverter
                     btnCoverArtImage.Text = Localisation.Get("CD cover is in use");
                     btnCreateCoverArt.Enabled = CurrentFolder.StartsWith("CD") && File.Exists("coverart.png");
                     picCoverArt.Image = Image.FromFile("coverart.png");
+                    Cover cover = new Cover();
+                    labImageInfo.Text = cover.GetImageInfo(Image.FromFile("coverart.png"));
+                    labImageInfo.Left = picCoverArt.Left - labImageInfo.Width;
+                    labImageInfo.Visible = true;
                 }
             }
         }

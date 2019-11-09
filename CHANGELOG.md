@@ -1,22 +1,6 @@
 # Changelog
 
-## Preview 2.10.0.2 (09.11.2019)
-
-### Bug Fixes
-
-- Fixed crash when opening Edit tab if the song list was empty
-- Fixed the playlist downloader showing an error and stopping working after all downloads are complete
-- Fixed playlist downloader downloading songs to incorrect folder
-- Fixed playlist downloader using incorrect folder paths
-
-## Preview 2.10.0.1 (07.11.2019)
-
-### Changes
-
-- All downloader messages will now appear in downloader log window, instead of the global log
-- Minor UI changes and touches
-
-## Preview 2.10.0.0 (06.11.2019)
+## 2.10 (xx.11.2019)
 
 ### Added
 
@@ -29,6 +13,19 @@
 - Cover art preview loading optimization
 - Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
 - Replaced the default context menu for text boxes
+- All downloader messages will now appear in downloader log window, instead of the global log
+- Minor UI changes and touches
+  - "Download" button in Downloader tab will be disabled if the text box is empty
+  - "Save" button in Edit tab will be disabled if the text box is empty, or if the text in text box is the same as the current song title
+  - Buttons in Recycle Bin are now context aware
+  - Youtube-dl related settings will be disabled, if youtube-dl hasn't been found
+  - "Edit with Audacity" button is disabled, if no song in Song List is selected
+
+### Bug Fixes
+
+- Fixed crash when opening Edit tab if the song list was empty
+- Fixed potential crash causing bug, if the song didn't exist and the user clicked "Edit with Audacity" button
+- Fixed downloaded changelog formatting
 
 ### Removed
 

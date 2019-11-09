@@ -101,6 +101,12 @@ namespace OggConverter
             btnAudacity.Text = char.ConvertFromUtf32(0x1F4C1);
 
             txtAudacity.ContextMenu = new ContextMenu();
+
+            if (!File.Exists("youtube-dl.exe"))
+            {
+                cbYoutubeDlUpdateFrequency.Enabled = false;
+                btnCheckYTDLUpdates.Enabled = false;
+            }
         }
 
         private void ChkAutoSort_Click(object sender, EventArgs e)
@@ -329,7 +335,6 @@ namespace OggConverter
 
         private async void btnChangelogHistory_Click(object sender, EventArgs e)
         {
-            //Process.Start("https://gitlab.com/aathlon/msc-ogg/blob/master/CHANGELOG.md");
             await Task.Run(() => GetChangelog());
         }
 
@@ -340,16 +345,14 @@ namespace OggConverter
                 await Task.Run(() => client.DownloadStringAsync(new Uri("https://gitlab.com/aathlon/msc-ogg/raw/master/CHANGELOG.md")));
                 client.DownloadStringCompleted += (s, e) =>
                 {
+                    string output = e.Result.Replace("# ", "").Replace("#", "").Replace("Changelog\n\n", "");
+
                     if (txtChangelog.InvokeRequired)
                     {
                         txtChangelog.Invoke(new Action(delegate ()
                         {
-                            txtChangelog.Text = e.Result;
+                            txtChangelog.Text = output;
                         }));
-                    }
-                    else
-                    {
-                        txtChangelog.Text = e.Result;
                     }
                 };
             }
