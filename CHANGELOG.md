@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.10.1.x (xx.11.2019)
+
+### Changes
+
+- Changed how tabs in Settings are displayed to prevent the text overflow for some locales
+
+### Bug Fixes
+
+- Fixed crash which would sometimes occure when switching to Edit tab
+- Fixed about notice not translating after language change
+
 ## 2.10 (11.11.2019)
 
 ### Added

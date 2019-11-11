@@ -34,7 +34,7 @@ namespace OggConverter
             labVer.Text = Localisation.Get("Your Version: {0}\n" +
                 "Build: {1}", Utilities.GetVersion(true), Updates.version);
 
-            tabControl.ItemSize = new Size((tabControl.Width / tabControl.TabCount) - 1, 0);
+            //tabControl.ItemSize = new Size((tabControl.Width / tabControl.TabCount) - 1, 30);
 
             // Adding already translates elementr to youtube-dl update frequency setting
             cbYoutubeDlUpdateFrequency.Items.Add(Localisation.Get("Upon every start"));
@@ -297,7 +297,8 @@ namespace OggConverter
             btnOpenLog.Text = Localisation.Get("Open last log");
             btLogFolder.Text = Localisation.Get("Open Log Folder");
             btnDelLogs.Text = Localisation.Get("Delete all logs");
-            labNotice.Text = Localisation.Get("Notice: not a single log or any info is sent from your computer.\nEverything that is being logged is saved on Your computer.");
+            labNotice.Text = Localisation.Get("Notice: not a single log or any info is sent from your computer." +
+                "\nEverything that is being logged is saved on Your computer.");
 
             tabGeneral.Text = Localisation.Get("General");
             tabFiles.Text = Localisation.Get("Files");

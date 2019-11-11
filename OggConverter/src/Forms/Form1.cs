@@ -189,7 +189,7 @@ namespace OggConverter
 
                 // Showing legal notice if the tool is used for the first time
                 if (Settings.LatestVersion == 0)
-                    Log("\n" + Utilities.AboutNotice);
+                    Log("\n" + Utilities.AboutNotice());
 
                 // User is using this release for first time
                 if (Updates.version > Settings.LatestVersion)
@@ -675,7 +675,7 @@ namespace OggConverter
 
         private void MSCOGGToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Utilities.AboutNotice, Localisation.Get("Information"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Utilities.AboutNotice(), Localisation.Get("Information"), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BtnPlay(object sender, EventArgs e)
@@ -1341,7 +1341,7 @@ namespace OggConverter
 
         private void txtSongName_TextChanged(object sender, EventArgs e)
         {
-            string text = txtSongName.Text;
+            string text = songList.SelectedIndex != -1 ? txtSongName.Text : "";
             btnSetName.Enabled = text != Player.WorkingSongList[songList.SelectedIndex].Item2;
         }
 
