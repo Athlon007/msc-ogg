@@ -279,7 +279,7 @@ namespace OggConverter
             chkShortcut.Text = Localisation.Get("Desktop shortcut");
             chkNoSteam.Text = Localisation.Get("Start the game without Steam");
             label2.Text = Localisation.Get("Language");
-            chkAutoSort.Text = Localisation.Get("Automatically rearrange file order");
+            chkAutoSort.Text = Localisation.Get("Sort files after conversion");
             chkNoMetafiles.Text = Localisation.Get("Don't save song names");
             chkAutoUpdates.Text = Localisation.Get("Automatically look for updates");
             label1.Text = Localisation.Get("Update Channel:");
