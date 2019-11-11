@@ -165,7 +165,7 @@ msgstr ""
 msgid "Songs: {0}/{1}"
 msgstr ""
 
-msgid "Search Term/Video Link/Playlist Link:"
+msgid "Search Term/Video Link:"
 msgstr ""
 
 msgid "Download"
