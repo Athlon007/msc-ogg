@@ -74,7 +74,7 @@ msgstr "Uruchom grę bez Steam"
 msgid "Remove source files after conversion"
 msgstr "Usuń pliki źródłowe po konwersji"
 
-msgid "Automatically rearrange file order"
+msgid "Sort files after conversion"
 msgstr "Automatycznie przearanżuj kolejność plików"
 
 msgid "Don't save song names"
@@ -169,7 +169,7 @@ msgstr "Losuj"
 msgid "Songs: {0}/{1}"
 msgstr "Piosenki: {0}/{1}"
 
-msgid "Search Term/Video Link/Playlist Link:"
+msgid "Search Term/Video Link:"
 msgstr "Fraza Wyszukiwania/Link do Filmu/Link do listy odtwarzania:"
 
 msgid "Download"

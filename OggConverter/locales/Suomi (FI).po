@@ -1,0 +1,950 @@
+# TITLE
+# Copyright (C) YEAR Your Name
+# This file is distributed under GNU General Public License v3
+# FIRST NAME, <your@email.com> YEAR
+msgid ""
+msgstr ""
+"Project-Id-Version: MSCMM 2\n"
+"POT-Creation-Date: 2019-09-24 22:13+0200\n"
+"PO-Revision-Date: 2019-11-05 18:52+0200\n"
+"Last-Translator: Daniel Pomell <danielpomell@outlook.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fi_FI\n"
+
+msgid "Game Folder: {0}"
+msgstr "Pelikansio: {0}"
+
+msgid "Tools"
+msgstr "Työkalut"
+
+msgid "Settings"
+msgstr "Asetukset"
+
+msgid "Launch Game"
+msgstr "Käynnistä peli"
+
+msgid "Help"
+msgstr "Apua"
+
+msgid "Open History"
+msgstr "Avaa historia"
+
+msgid "Open Log Folder"
+msgstr "Avaa lokikansio"
+
+msgid "Website"
+msgstr "Nettisivu"
+
+msgid "GitLab repository"
+msgstr "GitLab tiedostovarasto"
+
+msgid "Steam Community discussion"
+msgstr "Steam Communityn keskustelu"
+
+msgid "About"
+msgstr "Tietoja"
+
+msgid "Quit"
+msgstr "Lopeta"
+
+msgid "General"
+msgstr "Yleiset"
+
+msgid "Files"
+msgstr "Tiedostot"
+
+msgid "Updates"
+msgstr "Päivitykset"
+
+msgid "Logging & Privacy"
+msgstr "Lokitietojen kirjaaminen & Yksityisyys"
+
+msgid "Desktop shortcut"
+msgstr "Pikakuvake"
+
+msgid "Start the game without Steam"
+msgstr "Käynnistä peli ilman Steamia"
+
+msgid "Remove source files after conversion"
+msgstr "Poista lähdetiedostot konversion jälkeen"
+
+msgid "Sort files after conversion"
+msgstr "Järjestele tiedostot konversion jälkeen"
+
+msgid "Don't save song names"
+msgstr "Älä tallenna kappaleiden nimiä"
+
+msgid "Automatically look for updates"
+msgstr "Tarkista päivitykset automaattisesti"
+
+msgid "Update Channel:"
+msgstr "Päivityskanava:"
+
+msgid "Official"
+msgstr "Virallinen"
+
+msgid "Preview"
+msgstr "Esikatselu"
+
+msgid "Check for Update"
+msgstr "Tarkista päivitykset"
+
+msgid "Check for youtube-dl updates:"
+msgstr "Tarkista youtube-dl päivitykset:"
+
+msgid "Upon every start"
+msgstr "Jokaisen käynnistyksen yhteydessä"
+
+msgid "Daily"
+msgstr "Päivittäin"
+
+msgid "Weekly"
+msgstr "Viikoittain"
+
+msgid "Monthly"
+msgstr "Kuukausittain"
+
+msgid "Never"
+msgstr "Ei koskaan"
+
+msgid ""
+"Your Version: {0}\n"
+"Build: {1}"
+msgstr ""
+"Ohjelmasi versio: {0}\n"
+"Koontiversio: {1}"
+
+msgid "Create logs after crash"
+msgstr "Luo lokit kaatumisen jälkeen"
+
+msgid "Save usage into history"
+msgstr "Tallenna käyttö historiaan"
+
+msgid "Open history"
+msgstr "Avaa historia"
+
+msgid "Delete history"
+msgstr "Poista historia"
+
+msgid "Open last log"
+msgstr "Avaa viimeisin loki"
+
+msgid "Delete all logs"
+msgstr "Poista kaikki lokit"
+
+msgid ""
+"Notice: not a single log or any info is sent from your computer.\n"
+"Everything that is being logged is saved on Your computer."
+msgstr ""
+"Huomautus: yhtäkään lokia tai mitään tietoa ei lähetetä tietokoneeltasi.\n"
+"Kaikki mitä kirjoitetaan lokeihin tallennetaan tietokoneellesi."
+
+msgid "Set Game Folder"
+msgstr "Aseta pelikansio"
+
+msgid "Open in Explorer"
+msgstr "Avaa resurssienhallinnassa"
+
+msgid "Sort"
+msgstr "Järjestele"
+
+msgid "Move"
+msgstr "Siirrä"
+
+msgid "Clone"
+msgstr "Kopioi"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "Shuffle"
+msgstr "Sekoita"
+
+msgid "Songs: {0}/{1}"
+msgstr "Kappaleet: {0}/{1}"
+
+msgid "Search Term/Video Link:"
+msgstr "Hae termillä/Videolinkillä:"
+
+msgid "Download"
+msgstr "Lataa"
+
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "Select song from the list to the left and edit it's displayed name."
+msgstr "Valitse kappale vasemmalla olevasta listasta ja muokkaa sen esitettyä nimeä."
+
+msgid "Name:"
+msgstr "Nimi:"
+
+msgid ""
+"Note:\n"
+"The autor of this tool doesn't take any responsibility for the way how that tool is used."
+msgstr ""
+"Huomautus:\n"
+"Tämän työkalun tekijä ei ota mitään vastuuta siitä, kuinka tai miten tätä työkalua käytetään tai on käytetty."
+
+msgid "There's a new update ready to download. Would you like to download it now?"
+msgstr "Uusi päivitys on valmiina ladattavaksi. Haluaisitko ladata sen nyt?"
+
+msgid "Update"
+msgstr "Päivitys"
+
+msgid ""
+"\n"
+"There's an update ready to download!"
+msgstr ""
+"\n"
+"Päivitys on valmiina ladattavaksi!"
+
+msgid "There's a newer stable version available to download than yours Preview. Would you like to download the update?"
+msgstr "Uusi vakaampi versio on valmiina ladattavaksi. Haluaisitko ladata päivityksen?"
+
+msgid ""
+"\n"
+"\n"
+"Your version: {0}\n"
+"Newest version: {1}"
+msgstr ""
+"\n"
+"\n"
+"Sinun versiosi: {0}\n"
+"Uusin versio: {1}"
+
+msgid ""
+"Looks like you use a preview release and you disable preview update channel. Do you want to downgrade now?\n"
+"\n"
+"WARNING: In order to keep things still working, all settings will be reset.\n"
+"\n"
+"Your version: {0}\n"
+"Newest version: {1}"
+msgstr ""
+"Näyttää siltä että käytät esikatselu versiota, ja olet poistanut käytöstä esikatselun päivityskanavan. Haluatko vaihtaa vanhempaan versioon nyt?\n"
+"\n"
+"VAROITUS: Pitääksemme asiat toimimassa, kaikki asetukset palautetaan.\n"
+"\n"
+"Sinun versiosi: {0}\n"
+"Uusin versio: {1}"
+
+msgid "Question"
+msgstr "Kysymys"
+
+msgid ""
+"\n"
+"You can downgrade now."
+msgstr ""
+"\n"
+"Voit vaihtaa vanhempaan versioon nyt."
+
+msgid ""
+"\n"
+"Tool is up-to-date"
+msgstr ""
+"\n"
+"Työkalu on päivitetty"
+
+msgid ""
+"\n"
+"Couldn't download the latest version info. Visit https://gitlab.com/aathlon/msc-ogg and see if there has been an update.\n"
+"In case the problem still occures, a new crash log has been created.\n"
+msgstr ""
+"\n"
+"Ei pystytty lataamaan viimeisimmän version tietoja. Vieraile osoitteessa https://gitlab.com/aathlon/msc-ogg ja katso, jos on julkaistu päivitys.\n"
+"Jos ongelma jatkuu, uusi kaatumisloki on luotu.\n"
+
+msgid ""
+"\n"
+"Downloading an update..."
+msgstr ""
+"\n"
+"Ladataan päivitystä..."
+
+msgid "Extracting..."
+msgstr "Puretaan..."
+
+msgid "Installing..."
+msgstr "Asennetaan..."
+
+msgid ""
+"\n"
+"Downloading youtube-dl..."
+msgstr ""
+"\n"
+"Ladataan youtube-dl..."
+
+msgid "youtube-dl downloaded successfully!"
+msgstr "youtube-dl ladattu onnistuneesti!"
+
+msgid "Couldn't download youtube-dl. Crash log has been created."
+msgstr "Ei pystytty lataamaan youtube-dl:llää. Kaatumisloki on luotu."
+
+msgid "Looking for youtube-dl updates..."
+msgstr "Etsitään youtube-dl päivityksiä..."
+
+msgid "youtube-dl is up-to-date!"
+msgstr "youtube-dl on päivitetty!"
+
+msgid ""
+"\n"
+"Downloading ffmpeg and ffplay..."
+msgstr ""
+"\n"
+"Ladataan ffmpeg ja ffplay..."
+
+msgid "Looks like there was some kind of problem with downloading the FFmpeg pack. You'll be taken to the website from which you'll download the ffpack.zip. Unzip it into the root folder of MSCMM."
+msgstr "Näyttää siltä että FFmpeg paketin latauksessa oli ongelma. Sinut viedään nettisivulle mistä voit ladata ffpack.zip tiedoston. Pura se MSCMM:än juurikansioon."
+
+msgid ""
+"An error has occured and the info has been saved to {0}.\n"
+"If it happens again, please send the log to the MSCMM developer."
+msgstr ""
+"Virhe on tapahtunut ja tiedot on tallennettu {0}.\n"
+"Jos sama virhe tapahtuu uudelleen, lähetä loki MSCMM:än kehittäjälle."
+
+msgid "Show More Info"
+msgstr "Näytä lisätietoja"
+
+msgid "Open Log"
+msgstr "Avaa loki"
+
+msgid "Close"
+msgstr "Sulje"
+
+msgid ""
+"An error has occured and the info has been saved to {0} inside of LOG folder.\n"
+"If it happens again, please send the log to the MSCMM developer."
+msgstr ""
+"Virhe on tapahtunut ja tiedon on tallennettu {0} LOG kansion sisälle.\n"
+"Jos sama virhe toistuu, lähetä loki MSCMM:än kehittäjälle."
+
+msgid ""
+"Looks like you installed Music Manager into My Summer Car root path. While nothing should happen, I'm not not responsible for any damages done to you/your computer/your game/Satsuma/Teimo/or anything other at all!\n"
+"\n"
+"I'll also bother you with this message until you move Music Manager somewhere else every time you start the tool ;)"
+msgstr ""
+"Näyttää siltä, että olet asentanut Music Managerin My Summer Carin juurikansioon. Vaikka mitään ei pitäisi tapahtua, en ole vastuussa minkäänlaisista vahingoista sinulle/sinun tietokoneellesi/pelillesi/Satsumalle/Teimolle/enkä millekään muullekaan!\n"
+"\n"
+"Tulen myöskin häiritsemään sinua tällä viestillä kunnes siirrät Music Managerin jonnekin muualle ;)"
+
+msgid ""
+"Hello there! I've asked Teimo nicely where My Summer Car is installed, but he wouldn't tell me at all!.\n"
+"\n"
+"Please select where the game is installed :)"
+msgstr ""
+"Terve! Kysyin Teimolta ystävällisesti, minne My Summer Car on asennettu, mutta hän ei kertonut minulle.\n"
+"\n"
+"Valitse minne peli on asennettu"
+
+msgid ""
+"\n"
+"Select My Summer Car Directory\n"
+"Ex. C:\\Steam\\steamapps\\common\\My Summer Car\\."
+msgstr ""
+"\n"
+"Valitse My Summer Carin kansio\n"
+"Esim. C:\\Steam\\steamapps\\common\\My Summer Car\\."
+
+msgid "Error"
+msgstr "Virhe"
+
+msgid ""
+"\n"
+"Couldn't find mysummercar.exe. Please set the correct game path."
+msgstr ""
+"\n"
+"Ei pystytty löytämään tiedostoa mysummercar.exe. Valitse oikea kansio."
+
+msgid ""
+"Hi there! In order to this tool to work, the ffmpeg and ffplay need to be downloaded.\n"
+"The tool will now download it and restart itself."
+msgstr ""
+"Terve! Että tämä työkalu toimisi, tiedostot ffmpeg ja ffplay pitää olla ladattuina.\n"
+"Työkalu lataa ne nyt ja käynnistää itsensä uudelleen."
+
+msgid "Info"
+msgstr "Tietoja"
+
+msgid ""
+"Found temp song file in {0}, possibly due to the crash\n"
+"Trying to fix it..."
+msgstr ""
+"Löydetty kappale polussa {0}, todennäköisesti kaatumisen takia\n"
+"Yritetään korjausta..."
+
+msgid "Converted {0} folder from .MSCMM to XML database."
+msgstr "Konvertoitu {0} kansio .MSCMM:ästä XML tietokantaan."
+
+msgid ""
+"Would you like MSC Music Manager to get song names from already existing songs?\n"
+"\n"
+"(It may take a while, depending on how many songs you have)."
+msgstr ""
+"Haluaisitko että MSC Music Manager ottaa kappeleiden nimet jo olemassa olevista kappaleista?\n"
+"\n"
+"(Tässä voi kestää hetki, riippuen siitä kuinka monta kappaletta sinulla on)"
+
+msgid "Do you want to create desktop shortcut?"
+msgstr "Haluatko luoda työpöydälle pikakuvakkeen?"
+
+msgid ""
+"Looks like you've updated to the new My Summer Car version which now supports extra 2 CDs. All songs from the original CD have to be imported to the new CD1 folder in order to be read by My Summer Car. Press OK to do that now, or Cancel to exit.\n"
+"\n"
+"WARNING: This will override currently existing files in CD1!"
+msgstr ""
+"Näyttää siltä että olet päivittänyt uuteen My Summer Car versioon joka tukee kahta extra CD:tä. Kaikki kappaleet alkuperäiseltä CD:ltä pitää siirtää uuteen CD1 kansioon, että My Summer Car voi lukea niitä. Paina OK tehdäksesi sen nyt, tai paina Cancel poistuaksesi.\n"
+"VAROITUS: Tämä poistaa CD1 kansiossa tällä hetkellä olevat tiedostot!"
+
+msgid "Succesfully imported CD songs to new CD1 folder!"
+msgstr "Siirretty CD kappaleet uuteen CD1 kansioon onnistuneesti!"
+
+msgid "YOU ARE USING PREVIEW VERSION"
+msgstr "KÄYTÄT ESIKATSELU VERSIOTA"
+
+msgid ""
+"\n"
+"Updates are disabled"
+msgstr ""
+"\n"
+"Päivitykset on poistettu käytöstä"
+
+msgid "Sorts all songs so there are no gaps between songs (ex. if there's track1 and track3, the track3 will be renamed to track2)."
+msgstr "Järjestää kaikki kappaleet siten, että kappaleiden välillä ei ole välejä (esim. jos on track1 ja track3, track3 nimetään track2)."
+
+msgid "Move selected song one up."
+msgstr "Siirrä valittu kappale yksi ylöspäin."
+
+msgid "Move selected song one down."
+msgstr "Siirrä valittu kappale yksi alaspäin."
+
+msgid "Move selected songs to selected folder."
+msgstr "Siirrä valitut kappaleet valittuun kansioon."
+
+msgid "Clones selected song with it's displayed name."
+msgstr "Kopioi valitun kappaleen sen esitetyllä nimellä."
+
+msgid "Deletes selected song."
+msgstr "Poistaa valitun kappaleen."
+
+msgid "Randomizes songs order in chosen folder."
+msgstr "Sekoittaa kappaleiden järjestyksen valitussa kansiossa."
+
+msgid "Opens My Summer Car folder in Explorer."
+msgstr "Avaa My Summer Car kansion Resurssienhallinassa."
+
+msgid "Lets you change My Summer Car folder."
+msgstr "Antaa sinun vaihtaa My Summer Car kansiota."
+
+msgid "My Summer Car folder loaded successfully!"
+msgstr "My Summer Car kansio ladattu onnistuneesti!"
+
+msgid "Operation canceled"
+msgstr "Operaatio peruutettu"
+
+msgid "Couldn't find mysummercar.exe. Make sure you've selected the game's ROOT folder (ex. C:\\Steam\\steamapps\\common\\My Summer Car) and NOT Radio or CD!"
+msgstr "Ei pystytty löytämään tiedostoa mysummercar.exe. Varmista että olet valinnut pelin JUURIkansion (esim. C:\\Steam\\steamapps\\common\\My Summer Car) EIKÄ kansioita Radio tai CD!"
+
+msgid "Set the game path first."
+msgstr "Aseta pelin polku ensin."
+
+msgid "Program is busy."
+msgstr "Ohjelma on kiireinen."
+
+msgid "History file doesn't exist."
+msgstr "Historia tiedosto ei ole olemassa."
+
+msgid "Would you like to remove history file?"
+msgstr "Haluaisitko poistaa historia tiedoston?"
+
+msgid "Information"
+msgstr "Tietoja"
+
+msgid "Would you like to remove all logs?"
+msgstr "Haluaisitko poistaa kaikki lokit?"
+
+msgid "Logs are disabled"
+msgstr "Lokit ovat poissa käytöstä"
+
+msgid "Log folder doesn't exist"
+msgstr "Lokikansio ei ole olemassa"
+
+msgid "Convert {0} file(s)?"
+msgstr "Muunna {0} tiedosto(t)?"
+
+msgid "youtube-dl is now updating or looking for the update. You'll be notified on Log panel when it's done :)"
+msgstr "youtube-dl on nyt päivittämässä tai etsimässä päivitystä. Sinulle ilmoitetaan lokipaneelissa kun on valmista"
+
+msgid "Stop"
+msgstr "Pysäytä"
+
+msgid "In order to download the song, the tool requires youtube-dl to be downloaded. Press 'Yes' to download it now"
+msgstr "Ladataksesi kappaleen youtube-dl pitää olla ladattuna. Paina 'Yes' ladataksesi sen nyt"
+
+msgid ""
+"How to use:\n"
+"\n"
+"- Drag and drop music files on the program's window or executable to quickly convert one or more songs\n"
+"- Paste songs into Radio or CD folder in My Summer Car folder and click on the program's window - the program will detect new songs automatically\n"
+"- Go to the 'Download' tab to get your songs directly from YouTube - either by using URL, or using search term\n"
+"\n"
+"Use Shuffle to randomize songs order.\n"
+"In Edit tab you can change song's displayed name."
+msgstr ""
+"Kuinka käyttää:\n"
+"\n"
+"- Vedä ja pudota musiikkitiedostoja ohjelman ikkunaan tai ajotiedostoon muuttaaksesi nopeasti yhden kappaleen tai enemmän\n"
+"- Laita kappaleita Radio tai CD kansioon My Summer Car kansiossa ja klikkaa ohjelman ikkunaa - ohjelma tunnistaa uuden kappaleet automaattisesti\n"
+"- Mene 'Lataa' sarakkeeseen saadaksesi kappaleesi suoraan YouTubesta - joko käyttämällä URL-osoitetta tai hakemalla.\n"
+"\n"
+"Käytä sekoitusta tehdäksesi kappaleiden järjestyksestä satunnaista\n"
+"Muokkaa sarakkeessa voit vaihtaa kappaleen näytettyä nimeä."
+
+msgid "Where do you want to move {0} file(s)?"
+msgstr "Minne haluat siirtää {0} tiedostoa?"
+
+msgid "Couldn't find My Summer Car path. Set it up first!"
+msgstr "Ei pystytty löytämään My Summer Car polkua. Aseta se ensin!"
+
+msgid "FFmpeg needs to be downloaded first. Start the program to download it now."
+msgstr "FFmpeg pitää ladata ensin. Käynnistä ohjelma ladataksesi sen nyt."
+
+msgid "One or more files are not supported music file formats. Exiting now."
+msgstr "Yksi tai useampi tiedostoista eivät ole tuettua muotoa. Poistutaan nyt."
+
+msgid "Where do you want to convert {0} file(s)?"
+msgstr "Minne haluat konvertoida {0} tiedostoa?"
+
+msgid "Converting now..."
+msgstr "Muutetaan nyt..."
+
+msgid ""
+"Converting\n"
+"{0}"
+msgstr ""
+"Muutetaan\n"
+"{0}"
+
+msgid "Done!"
+msgstr "Valmis!"
+
+msgid ""
+"Disabling metafiles will result in MSC Music Manager using file names, instead of saved song names.\n"
+"Are you sure you want to continue?"
+msgstr ""
+"Metatiedostojen poistaminen käytöstä johtaa siihen, että MSC Music Manager käyttää tiedostonimiä, tallennettujen kappaleiden nimien sijaan.\n"
+"Oletko varma että haluat jatkaa?"
+
+msgid "Would you like to remove ALL meta files?"
+msgstr "Haluaisitko poistaa KAIKKI metatiedostot?"
+
+msgid "Would you like the MSCMM to get song names directly from files now? (It may take some time, depending on how many songs you have)"
+msgstr "Haluaisitko että MSCMM ottaa kappaleiden nimet suoraan tiedostoista? (Se voi kestää jonkin aikaa, riippuen siitä kuinka monta kappaletta sinulla on)"
+
+msgid ""
+"\n"
+"Forcing the update..."
+msgstr ""
+"\n"
+"Pakotetaan päivitystä..."
+
+msgid "Are you sure you want to remove entire history?"
+msgstr "Oletko varma että haluat poistaa koko historian?"
+
+msgid "Are you sure you want to delete all logs?"
+msgstr "Oletko varma että haluat poistaa kaikki lokit?"
+
+msgid "Add, Remove and Download Songs!"
+msgstr "Lisää, poista ja lataa kappaleita!"
+
+msgid "An error has occured. Log has been saved into LOG folder. Would you like to open it now?"
+msgstr "Virhe on tapahtunut. Loki on tallennettu LOG kansioon. Haluaisitko avata sen nyt?"
+
+msgid ""
+"MSC Music Manager {0} ({1})\n"
+"Copyright (C) 2019 Athlon\n"
+"\n"
+"This program comes with ABSOLUTELY NO WARRANTY.\n"
+"This is free software, and you are welcome to redistribute it, as long as you include original copyright, state changes and include license.\n"
+"\n"
+"MSC Music Manager uses FFmpeg, which is licensed under LGPL 2.1 license."
+msgstr ""
+"MSC Music Manager {0} ({1})\n"
+"Tekijänoikeus (C) 2019 Athlon\n"
+"\n"
+"Tämä ohjelma tulee TÄYSIN ILMAN TAKUUTA.\n"
+"Tämä on ilmainen ohjelma, ja sinulla on oikeus levittää sitä eteenpäin, kunhan sisällytät alkuperäisen tekijänoikeuden, tilan muutokset ja sisällytät lisenssin.\n"
+"\n"
+"MSC Music Manager käyttää FFmpeg:tä, joka on lisensoitu LGPL 2.1 lisenssin alle."
+
+msgid "Looks like you're offline. Can't check for the update availability"
+msgstr "Näyttää siltä, että olet offline-tilassa. Päivityksiä ei voida tarkistaa"
+
+msgid "Select the game path first."
+msgstr "Valitse pelin polku ensin."
+
+msgid ""
+"\n"
+"Done!"
+msgstr ""
+"\n"
+"Valmis!"
+
+msgid "Converted {0} file(s) in total"
+msgstr "Muunnettu {0} tiedostoa yhteensä"
+
+msgid "Conversion log was saved to history.txt"
+msgstr "Muuntoloki tallennettiin tiedostoon history.txt"
+
+msgid "Conversion log will not be saved, because both Radio and CDs were skipped"
+msgstr "Muuntoloki ei tallenneta, koska sekä Radio että CD:eet jätettiin väliin"
+
+msgid "FFmpeg.exe is missing! Try to re-download MSC Music Manager."
+msgstr "FFmpeg.exe puuttuu! Yritä ladata MSC Music Manager uudelleen."
+
+msgid "Initializing {0} conversion...\n"
+msgstr "Käynnistetään {0} muuntoa...\n"
+
+msgid "Skipping {0} because it doesn't exist..."
+msgstr "Jätetään välistä {0} koska se ei ole olemassa..."
+
+msgid "Couldn't find any file to convert in {0}"
+msgstr "Ei pystytty löytämään tiedostoja muutettavaksi sijainnista {0}"
+
+msgid "Aborted {0} conversion."
+msgstr "Hylätty {0} konversiota."
+
+msgid "Finished {0} as track{1}.ogg"
+msgstr "Suoritettu {0} tiedostona track{1}.ogg"
+
+msgid "Added '{0}' (track{1}.ogg) in {2}"
+msgstr "Lisätty '{0}' (track{1}.ogg) sijainnissa {2}"
+
+msgid "Converted {0} file(s) in {1}"
+msgstr "Muutettu {0} tiedostoa sijainnissa {1}"
+
+msgid "'{0}' is not a recognizable music file, so it will be skipped."
+msgstr "'{0}' ei ole tunnistettava musiikkitiedosto, joten sen yli hypätään."
+
+msgid ""
+"\n"
+"Converting '{0}'\n"
+msgstr ""
+"\n"
+"Muutetaan '{0}'\n"
+
+msgid "There's over {0} files in {1} already converted. My Summer Car allows max {0} files for {1} and any file above that will be ignored. Would you like to continue?"
+msgstr "On jo yli {0} tiedostoa sijainnissa {1} jo konvertoituna. My Summer Car sallii maksimissaan {1} tiedostoa sijainnille {1} ja kaikki tiedostot sen jälkeen jätetään huomioimatta. Haluatko jatkaa?"
+
+msgid "Finished '{0}' as 'track{1}.ogg'"
+msgstr "Suoritettu '{0}' tiedostona 'track{1}.ogg'"
+
+msgid "Downloaded youtube-dl successfully!"
+msgstr "Ladattu youtube-dl onnistuneesti!"
+
+msgid "Not a valid URL. Currently only YouTube is suported."
+msgstr "Ei pätevä URL. Tällä hetkellä ainoastaan YouTubea tuetaan."
+
+msgid "Downloader: Downloading song from '{0}'"
+msgstr "Lataaja: Ladataan kappaletta sijainnista '{0}'"
+
+msgid ""
+"Couldn't donwnload the song.\n"
+"If you canceled the download, then everything's fine.\n"
+"If not, check if there's a youtube-dl update, in settings.\n"
+"Also please check if youtube-dl supports the link that you use: https://ytdl-org.github.io/youtube-dl/supportedsites.html.\n"
+"If it's going to happen again, please send the history.txt file content to developer on Steam, or via mail."
+msgstr ""
+"Ei pystytty lataamaan kappaletta.\n"
+"Jos peruutit latauksen, kaikki on hyvin.\n"
+"Jos et, tarkista jos youtube-dl:älle on tullut päivitys. Katso asetuksista.\n"
+"Ja katso että tukeeko youtube-dl linkkiä jota käytät: https://ytdl-org.github.io/youtube-dl/supportedsites.html.\n"
+"Jos sama tapahtuu uudelleen, lähetä history.txt tiedosto kehittäjälle Steamissa, tai sähköpostin kautta."
+
+msgid "Canceled!"
+msgstr "Peruutettu!"
+
+msgid "FFplay is missing! Try to re-download MSC Music Manager."
+msgstr "FFplay puuttuu! Yritä ladata MSC Music Manager uudelleen."
+
+msgid "Sorting: moved 'track{0}' to 'track{1}' in {2}"
+msgstr "Järjestellään: siirretty 'track{0}' sijaintiin 'track{1}' sijainnissa {2}"
+
+msgid "Changing Order: moved '{0}' to '{1}', and '{1}' to '{0}'"
+msgstr "Vaihdetaan järjestystä: siirretty '{0}' sijaintiin '{1}', ja '{1}' sijaintiin '{0}'"
+
+msgid "File Moving: moved '{0}' from '{1}' to '{2}' as 'track{3}'"
+msgstr "Tiedostojen siirto: siirretty '{0}' sijainnista '{1}' sijaintiin '{2}' tiedostona 'track{3}'"
+
+msgid "Cloned '{0}' to '{1}' in {2}"
+msgstr "Kopioitu '{0}' sijaintiin '{1}' sijainnissa {2}"
+
+msgid "Shuffling!"
+msgstr "Sekoitetaan!"
+
+msgid ""
+"Are you sure you want to delete\n"
+"\n"
+msgstr ""
+"Oletko varma että haluat poistaa\n"
+"\n"
+
+msgid ""
+"\n"
+"\n"
+"...and {0} more?"
+msgstr ""
+"\n"
+"\n"
+"...ja {0} lisää?"
+
+msgid "Removed '{0}' ({1}) from {2}"
+msgstr "Poistettu '{0}' ({1}) kohteesta {2}"
+
+msgid "Select All"
+msgstr "Valitse kaikki"
+
+msgid "History"
+msgstr "Historia"
+
+msgid "Logs"
+msgstr "Lokit"
+
+msgid "Removes the original files that the song is converted from."
+msgstr "Poistaa alkuperäiset tiedostot joista kappaleet ovat konvertoitu."
+
+msgid "After each file change, all songs will be sorted (ex. if you remove the track2, there won't be a gap between track1 and track3)."
+msgstr "Jokaisen tiedostomuutoksen jälkeen kaikki kappaleet lajitellaan (esim. jos poistat tiedoston track2, tiedostojen track1 ja track3 välillä ei ole rakoa)."
+
+msgid "Disables song name saving into songnames.xml. Only file name will be used."
+msgstr "Ottaa pois käytöstä kappaleiden nimien tallentamisen tiedostoon songnames.xml. Pelkkää tiedostonimeä käytetään."
+
+msgid "On each start, the program will connect to the server and check if the new updates are available."
+msgstr "Jokaisen käynnistyksen yhteydessä ohjelma yhdistää palvelimeen ja tarkistaa, onko uusia päivityksiä saatavilla."
+
+msgid "Official update channel is the most stable one and is recommended for most users."
+msgstr "Virallinen päivityskanava on vakain, ja on suositeltu useimmille käyttäjille."
+
+msgid "Preview update channel offers you an early access to new updates and improvements. Only for advanced users."
+msgstr "Esikatselun päivityskanava tarjoaa sinulle aikaisen pääsyn uusiin päivityksiin ja parannuksiin. Vain edistyneille käyttäjille."
+
+msgid "Set how often does youtube-dl start in order to check for updates."
+msgstr "Valitse kuinka usein youtube-dl käynnistyy tarkistaakseen päivitykset."
+
+msgid "The program after each crash causing error will try to save the crash info to log folder."
+msgstr "Ohjelma yrittää jokaisen kaatumisen aiheuttavan virheen jälkeen tallentaa kaatumisen lokitiedostoon."
+
+msgid "All operations on songs will be saved into history file - converting, moving, deleting and more."
+msgstr "Kaikki kappaleille tehdyt operaatiot tallennetaan historiatiedostoon - muunnot, siirrot, poistot ja muuta."
+
+msgid "Create desktop shortcut to MSCMM."
+msgstr "Luo MSCMM:älle pikakuvake työpöydälle."
+
+msgid "Uppon pressing 'Launch Game', the program won't use Steam, and rather start the game through exe."
+msgstr "Painettaessa 'Launch Game', ohjelma ei käytä Steamia, vaan käynnistää pelin suoraan ajotiedoston kautta."
+
+msgid "In order to apply the change, you need to restart MSCMM. Would you like to do that now?"
+msgstr "Ottaaksesi muutokset käyttöön, sinun pitää käynnistää MSCMM uudelleen. Haluaisitko tehdä sen nyt?"
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "Apply"
+msgstr "Ota käyttöön"
+
+msgid "All your settings have been wiped. Restart the MSCMM without 'wipe' argument."
+msgstr "Kaikki asetuksesi on pyyhitty. Käynnistä MSCMM uudelleen ilman 'wipe' argumenttia."
+
+msgid "Exit"
+msgstr "Poistu"
+
+msgid "Hide More Info"
+msgstr "Piilota lisätieto"
+
+msgid ""
+"Convert {0} file(s) to {1}?\n"
+"\n"
+"(Drop to Confirm)"
+msgstr ""
+"Muuta {0} tiedosto(t) {1} tiedostoiksi?\n"
+"\n"
+"(Pudota vahvistaaksesi)"
+
+msgid "Get Update Now!"
+msgstr "Hanki päivitys nyt!"
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Quick Convert"
+msgstr "Nopea muunto"
+
+msgid "Url is not a YouTube link."
+msgstr "Url ei ole YouTube linkki."
+
+msgid "Url is not valid and is empty."
+msgstr "Url ei ole pätevä ja on tyhjä."
+
+msgid "Show ffmpeg output"
+msgstr "Näytä ffmpeg ulostulo"
+
+msgid ""
+"Useful keyboard shortcuts:\n"
+"\n"
+"Player:\n"
+"- Enter - when song is selected, it will play or stop the song playback\n"
+"- Delete - when song is selected, will remove the selected song\n"
+"- Ctrl + A - select all songs\n"
+"- Ctrl + Up/Down arrows - move selected song up or down\n"
+"- Alt + Up/Down - toggle between Radio and CD folders\n"
+"- Ctrl + C - clone selected song\n"
+"- Cltr + X - move selected song to a different folder"
+msgstr ""
+"Hyödyllisiä näppäinkomentoja:\n"
+"\n"
+"Pelaaja:\n"
+"- Enter - kun kappale on valittuna, se aloittaa tai pysäyttää kappaleen soiton\n"
+"- Delete - kun kappale on valittuna, se poistaa valitun kappaleen\n"
+"- Ctrl + A - valitse kaikki kappaleet\n"
+"- Ctrl + Ylös/Alaspäin nuolet - siirrä valittu kappale ylös tai alaspäin\n"
+"- Alt + Up/Down - vaihtele Radio ja CD kansioiden välillä\n"
+"- Ctrl + C - kopioi valittu kappale\n"
+"- Ctrl + x - siirrä valittu kappale eri kansioon"
+
+msgid "Moved '{0}' ({1}) from {2} to recycle bin"
+msgstr "Siirretty '{0}' ({1}) sijainnista {2} roskakoriin"
+
+msgid "Recycle Bin"
+msgstr "Roskakori"
+
+msgid "Restore"
+msgstr "Palauta"
+
+msgid "Restored '{0}' from the recycle bin"
+msgstr "Palautettu '{0}' roskakorista"
+
+msgid "Recycle bin is empty"
+msgstr "Roskakori on tyhjä"
+
+msgid "There are {0} files in recycle bin"
+msgstr "Roskakorissa on {0} tiedostoa"
+
+msgid "Delete all"
+msgstr "Poista kaikki"
+
+msgid "Are you sure you want to delete all {0} files?"
+msgstr "Oletko varma että haluat poistaa kaikki {0} tiedostot?"
+
+msgid "Remove"
+msgstr "Poista"
+
+msgid "Ignore limitation of songs in folder"
+msgstr "Jätä huomioimatta kappaleiden raja kansiossa"
+
+msgid "Normally the program will show a warning during conversion, when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, it will be ignored."
+msgstr "Normaalisti ohjelma antaa varoituksen konversion aikana, kun prosessoitavana on enemmän tiedostoja kuin kansio hyväksyy (99 Radiolle, 15 CD:ille). Jos tämä asetus on valittuna, varoitusta ei huomioida."
+
+msgid "Audacity Executable:"
+msgstr "Audacityn ajotiedosto:"
+
+msgid "Music Download Quality:"
+msgstr "Musiikin latauslaatu:"
+
+msgid "Best"
+msgstr "Paras"
+
+msgid "Average"
+msgstr "Keskitaso"
+
+msgid "Compressed"
+msgstr "Pakattu"
+
+msgid "View Changelog History"
+msgstr "Näytä muutoslokin historia"
+
+msgid "Select the audacity folder."
+msgstr "Valitse Audacityn kansio."
+
+msgid "Audacity install path hasn't been set. Go to settings to change that."
+msgstr "Audacityn asennuspolkua ei ole asetettu. Mene asetuksiin valitaksesi sen."
+
+msgid "Support the project"
+msgstr "Tue projektia"
+
+msgid "Modify the song:"
+msgstr "Muokkaa kappaletta:"
+
+msgid "Edit with Audacity"
+msgstr "Muokkaa Audacityllä"
+
+msgid "Set the music frequency to recomended 22050 Hz frequency"
+msgstr "Aseta musiikin taajuus suositellulle 22050 Hz taajuudelle"
+
+msgid "Text on CD:"
+msgstr "Teksti CD:ssä:"
+
+msgid "Choose the font"
+msgstr "Valitse fontti"
+
+msgid "No CD cover file found"
+msgstr "CD:n kansi tiedostoa ei löydetty"
+
+msgid "CD cover is in use"
+msgstr "CD:n kansi on käytössä"
+
+msgid "Use the default cover art image with no text added for best result."
+msgstr "Käytä oletuskansitaidetta ilman lisättyä tekstiä parhaan tuloksen saamiseksi."
+
+msgid "Create new cover art"
+msgstr "Luo uusi kansitaide"
+
+msgid "Select the cover art."
+msgstr "Valitse kansitaide."
+
+msgid "Creating new cover art for {0}..."
+msgstr "Luodaan uutta kansitaidetta kohteelle {0}..."
+
+msgid "Created CD cover art successfully!"
+msgstr "Luotu CD:n kansitaide onnistuneesti!"
+
+msgid "Cover Art"
+msgstr "Kansitaide"
+
+msgid "File is not in 1:1 ratio."
+msgstr "Tiedosto ei ole 1:1 suhteessa."
+
+msgid ""
+"Resolution: {0}x{1}\n"
+"Scale: {2}x"
+msgstr ""
+
+msgid "Conversion:"
+msgstr "Konversion:"
+
+msgid "Convert song to mono channel"
+msgstr ""
+
+msgid "Copy"
+msgstr "Kopio"
+
+msgid "Paste"
+msgstr "Liitä"
+
+msgid "Undo"
+msgstr "Kumoa"
+
+msgid ""
+"\n"
+"Downloading playlist..."
+msgstr ""
+
+msgid "Downloader: Downloading playlist from '{0}'"
+msgstr ""

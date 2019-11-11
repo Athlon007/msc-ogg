@@ -1,9 +1,10 @@
 # Changelog
 
-## 2.10 (xx.11.2019)
+## 2.10 (11.11.2019)
 
 ### Added
 
+- Added Finnish localisaiton (thanks to Daniel Pommell)
 - You can now download entire playlists from YouTube!
 - Added cover art file info
 - You can now convert song to mono channel while converting to .OGG
@@ -11,7 +12,6 @@
 ### Changes
 
 - Cover art preview loading optimization
-- Renamed "Sort files after conversion" to "Automatically rearrange file order" in the settings
 - Replaced the default context menu for text boxes
 - All downloader messages will now appear in downloader log window, instead of the global log
 - Minor UI changes and touches

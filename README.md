@@ -33,7 +33,7 @@ You're ready to start making your translation! After you're done, you can test y
 
 Once you're done, you can send the file either o [this mail](mail.jpg), or send it on Steam Community discussion.
 
-**Wanted translators for Finnish, Spanish, Brazilian (Portuguese), German, French, Italian, and Russian.**
+**Wanted translators for Spanish, Brazilian (Portuguese), German, French, Italian, and Russian.**
 
 Available translations:
 
@@ -41,6 +41,7 @@ Available translations:
 |----|--------------|---------------|------------|
 | 🇬🇧 | English (UK) | Konrad Figura | 100%       |
 | 🇵🇱 | Polski       | Konrad Figura | 100%       |
+| 🇫🇮 | Suomi (FI)   | Daniel Pommell | 98%       |
 
 Note: translation corrections are also welcome :)
 

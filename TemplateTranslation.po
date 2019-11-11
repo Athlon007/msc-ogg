@@ -74,7 +74,7 @@ msgstr ""
 msgid "Remove source files after conversion"
 msgstr ""
 
-msgid "Automatically rearrange file order"
+msgid "Sort files after conversion"
 msgstr ""
 
 msgid "Don't save song names"

@@ -403,7 +403,7 @@ namespace OggConverter
 
             tabDownload.Text = Localisation.Get("Download");
             tabMeta.Text = Localisation.Get("Edit");
-            label5.Text = Localisation.Get("Search Term/Video Link/Playlist Link:");
+            label5.Text = Localisation.Get("Search Term/Video Link:");
             btnDownload.Text = Localisation.Get("Download");
             btnCancelDownload.Text = Localisation.Get("Cancel");
             label6.Text = Localisation.Get("Note:\nThe autor of this tool doesn't take any responsibility for the way how that tool is used.");
