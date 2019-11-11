@@ -31,7 +31,7 @@ MSCMM at this moment is fully localised in English and Polish languages. If you 
 
 You're ready to start making your translation! After you're done, you can test your translation, by pasting it into "locales" folder in MSCMM folder and going into Settings -> Languages.
 
-Once you're done, you can send the file either o [this mail](mail.jpg), or send it on Steam Community discussion.
+Once you're done, you can send the file either to [this mail](mail.jpg), or send it on Steam Community discussion.
 
 **Wanted translators for Spanish, Brazilian (Portuguese), German, French, Italian, and Russian.**
 
