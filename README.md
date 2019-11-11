@@ -37,11 +37,11 @@ Once you're done, you can send the file either o [this mail](mail.jpg), or send 
 
 Available translations:
 
-|    | Language     | Translator(s)  | % Complete | Notes                                                                                                                                        |
-|----|--------------|----------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| 🇬🇧 | English (UK) | Konrad Figura  | 100%       |                                                                                                                                              |
-| 🇫🇮 | Suomi (FI)   | Daniel Pommell | 98%        | Due to the fact that this locale has been sent  with 2.9.1 in mind, some lines have been  machine translated not by the original translator! |
-| 🇵🇱 | Polski       | Konrad Figura  | 100%       |                                                                                                                                              |
+|    | Language     | Translator(s)  | % Complete | Notes                                                                                                                                      |
+|:--:|--------------|----------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| 🇬🇧 | English (UK) | Konrad Figura  | 100%       |                                                                                                                                            |
+| 🇫🇮 | Suomi (FI)   | Daniel Pommell | 98%        | Due to the fact that this locale has been sent with 2.9.1 in mind, some lines have been machine translated not by the original translator! |
+| 🇵🇱 | Polski       | Konrad Figura  | 100%       |                                                                                                                                            |
 
 Note: translation corrections are also welcome :)
 
