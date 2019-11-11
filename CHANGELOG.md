@@ -4,7 +4,7 @@
 
 ### Added
 
-- Added Finnish localisaiton (thanks to Daniel Pommell)
+- Added Finnish localisation (thanks to Daniel Pommell)
 - You can now download entire playlists from YouTube!
 - Added cover art file info
 - You can now convert song to mono channel while converting to .OGG
