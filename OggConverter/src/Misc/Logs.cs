@@ -88,8 +88,9 @@ namespace OggConverter
         static string GetWittyComment()
         {
             string[] messages = new String[] { "Oops!", "My bad", ":(", "Sorry :(", "Well this is awkwkard...",
-                "A team of higly trained monkeys have been dispatched!", "D'oh!",
-                "What, what, what, what, what, what, what, what, what?", "Move along, move along...", "I'm sorry Dave"};
+                "A team of higly trained monkeys has been dispatched!", "D'oh!",
+                "What, what, what, what, what, what, what, what, what?", "Move along, move along...", "I'm sorry Dave",
+                "Allan, please add details!", "Little error punk!", "Huh?", "Great Scott!" };
             var random = new Random();
             int index = random.Next(messages.Length);
             return messages[index];

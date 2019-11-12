@@ -115,10 +115,6 @@ namespace OggConverter
             songListRight = tabs.Left - songList.Right;
             songListBottom = panel1.Bottom - songList.Bottom;
 
-            //panel1.Dock = DockStyle.Fill;
-            //btnDirectory.Dock = DockStyle.Top;
-            //btnOpenGameDir.Dock = DockStyle.Top;
-
             // Removing temporary or unused files
             Utilities.Cleanup();
 
@@ -488,7 +484,7 @@ namespace OggConverter
         /// </summary>
         public void ClearYtLog() => ytdlOutput.Text = "";
 
-        /// <summary>
+        /// <summary> 
         /// Return text from youtube-dl log
         /// </summary>
         public string GetYtDlLog { get => ytdlOutput.Text; }
@@ -622,6 +618,12 @@ namespace OggConverter
 
         private void BtnOpenGameDir_Click(object sender, EventArgs e)
         {
+            if (ModifierKeys.HasFlag(Keys.Shift))
+            {
+                Process.Start(Application.StartupPath);
+                return;
+            }
+
             if (Settings.GamePath.Length == 0)
             {
                 Log(Localisation.Get("Set the game path first."));
@@ -722,7 +724,7 @@ namespace OggConverter
         private void BtnDel_Click(object sender, EventArgs e)
         {
             if (songList.SelectedIndex == -1) return;
-            Player.Remove(CurrentFolder, Utilities.GetSelectedItemsToArray(songList, Utilities.ArrayReturnValueSource.SongList));
+            RecycleBin.Remove(CurrentFolder, Utilities.GetSelectedItemsToArray(songList, Utilities.ArrayReturnValueSource.SongList));
         }
 
         private void BtnSort_Click(object sender, EventArgs e)
@@ -1110,6 +1112,13 @@ namespace OggConverter
                 this.FormBorderStyle = FormBorderStyle.Sizable;
                 this.MaximizeBox = true;
             }
+
+            // Create error window
+            if (e.Control && e.Alt && e.KeyCode == Keys.D4)
+            {
+                ErrorMessage err = new ErrorMessage(new Exception());
+                err.ShowDialog();
+            }
 #endif
             // Change folder Down (Alt+Down Arrow)
             if (e.Alt && e.KeyCode == Keys.Down)
@@ -1213,18 +1222,18 @@ namespace OggConverter
         private void BtnRestore_Click(object sender, EventArgs e)
         {
             if (trashList.SelectedIndex == -1) return;
-            Player.Restore(CurrentFolder, Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+            RecycleBin.Restore(CurrentFolder, Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
         }
 
         private void BtnRecycleDelete_Click(object sender, EventArgs e)
         {
             if (trashList.SelectedIndex == -1) return;
-            Player.Delete("Recycle Bin", Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
+            RecycleBin.Delete("Recycle Bin", Utilities.GetSelectedItemsToArray(trashList, Utilities.ArrayReturnValueSource.Name));
         }
 
         private void BtnEmptyAll_Click(object sender, EventArgs e)
         {
-            Player.DeleteAll();
+            RecycleBin.DeleteAll();
         }
 
         private void button1_Click(object sender, EventArgs e)

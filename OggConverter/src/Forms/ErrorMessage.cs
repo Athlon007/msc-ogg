@@ -51,9 +51,8 @@ namespace OggConverter
 
             FileName = fileName;
 
-            label2.Text = Localisation.Get("An error has occured and the info has been saved to {0}\n" +
-                $"inside of LOG folder.\n" +
-                $"If it happens again, please send the log to the MSCMM developer.", fileName);
+            label2.Text = Localisation.Get("An error has occured and the info has been saved to {0}.\n" +
+            "If it happens again, please send the log to the MSCMM developer.", fileName);
 
             Logs.CrashLog(ex.ToString(), true);
             btnMoreDetail.Text = (char.ConvertFromUtf32(0x2193) + " " + Localisation.Get("Show More Info"));

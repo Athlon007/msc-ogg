@@ -1,25 +1,14 @@
 Added:
-- Added Finnish (Suomi) localisaiton!
-- You can now download entire playlists from YouTube!
-- Added cover art file info
-- You can now convert song to mono channel while converting to .OGG
+- You can now click the links in changelog text box in the Settings
+- You can now open current MSCMM directory by Shift + click on "Open in Explorer" button
 
 Changes:
-- Cover art preview loading optimization
-- Replaced the default context menu for text boxes
-- All downloader messages will now appear in downloader log window, instead of the global log
-- Minor UI changes and touches
-  - "Download" button in Downloader tab will be disabled if the text box is empty
-  - "Save" button in Edit tab will be disabled if the text box is empty, or if the text in text box is the same as the current song title
-  - Buttons in Recycle Bin are now context aware
-  - Youtube-dl related settings will be disabled, if youtube-dl hasn't been found
-  - "Edit with Audacity" button is disabled, if no song in Song List is selected
+- Changed how tabs in Settings are displayed to prevent the text overflow for some locales
+- Small changes in the code
 
 Bug Fixes:
-- Fixed crash when opening Edit tab if the song list was empty
-- Fixed potential crash causing bug, if the song didn't exist and the user clicked "Edit with Audacity" button
-
-Removed:
-- Removed "Open History" and "Open Log Folder" from "Tools" menu bar in main form, because it was doubling the functionality of the same function in Settings
+- Fixed crash which would sometimes occure when switching to Edit tab
+- Fixed about notice not translating after language change
+- Fixed locale error in Error Message window
 
 For more, visit https://gitlab.com/aathlon/msc-ogg.

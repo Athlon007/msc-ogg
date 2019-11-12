@@ -91,7 +91,6 @@
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(800, 450);
-            this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl.TabIndex = 0;
             // 
             // tabGeneral
@@ -352,6 +351,7 @@
             this.txtChangelog.Size = new System.Drawing.Size(515, 325);
             this.txtChangelog.TabIndex = 30;
             this.txtChangelog.Text = "";
+            this.txtChangelog.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.txtChangelog_LinkClicked);
             // 
             // btnChangelogHistory
             // 

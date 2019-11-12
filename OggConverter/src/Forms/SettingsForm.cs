@@ -402,5 +402,10 @@ namespace OggConverter
         {
             Settings.ConvertToMono ^= true;
         }
+
+        private void txtChangelog_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
+        }
     }
 }

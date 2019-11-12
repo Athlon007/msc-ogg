@@ -1,15 +1,22 @@
 # Changelog
 
-## 2.10.1.x (xx.11.2019)
+## Preview 2.10.1.5 (12.11.2019)
+
+### Added
+
+- You can now click the links in changelog text box in the Settings
+- You can now open current MSCMM directory by Shift + click on "Open in Explorer" button
 
 ### Changes
 
 - Changed how tabs in Settings are displayed to prevent the text overflow for some locales
+- Small changes in the code
 
 ### Bug Fixes
 
 - Fixed crash which would sometimes occure when switching to Edit tab
 - Fixed about notice not translating after language change
+- Fixed locale error in Error Message window
 
 ## 2.10 (11.11.2019)
 

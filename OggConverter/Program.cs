@@ -26,6 +26,9 @@ namespace OggConverter
             {
                 switch (args[0])
                 {
+                    default:
+                        Application.Run(new QuickConvert(args));
+                        break;
                     case "wipe":
                         Settings.WipeAll();
                         MessageBox.Show(Localisation.Get("All your settings have been wiped. Restart the MSCMM without 'wipe' argument."), 
@@ -33,9 +36,6 @@ namespace OggConverter
                             MessageBoxButtons.OK, 
                             MessageBoxIcon.Information);
                         Application.Exit();
-                        break;
-                    default:
-                        Application.Run(new QuickConvert(args));
                         break;
                 }
                 return;
