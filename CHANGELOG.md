@@ -1,11 +1,19 @@
 # Changelog
 
+## PReview 2.10.1.6 (13.11.2019)
+
+### Bug Fixes
+
+- Final fix for crash in Edit tab
+
 ## Preview 2.10.1.5 (12.11.2019)
 
 ### Added
 
 - You can now click the links in changelog text box in the Settings
 - You can now open current MSCMM directory by Shift + click on "Open in Explorer" button
+- "downloads" folder will be now removed after playlist download ends
+- "downloads" will be removed on start, if it exists
 
 ### Changes
 

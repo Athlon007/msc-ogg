@@ -197,7 +197,7 @@ namespace OggConverter
                     await Converter.ConvertFile($"{file.FullName}", folder, limit, name);
                 }
 
-                File.Delete("download.mp3");
+                Directory.Delete("downloads", true);
                 IsBusy = false;
 
                 Form1.instance.UpdateSongList();

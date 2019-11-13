@@ -108,7 +108,10 @@ namespace OggConverter
 
             string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "download*.*");
             foreach (string file in files)
-                File.Delete(file);            
+                File.Delete(file);
+
+            if (Directory.Exists("downloads"))
+                Directory.Delete("downloads", true);
         }
 
         /// <summary>

@@ -1351,7 +1351,8 @@ namespace OggConverter
         private void txtSongName_TextChanged(object sender, EventArgs e)
         {
             string text = songList.SelectedIndex != -1 ? txtSongName.Text : "";
-            btnSetName.Enabled = text != Player.WorkingSongList[songList.SelectedIndex].Item2;
+            string playerSongListName = songList.SelectedIndex != -1 ? Player.WorkingSongList[songList.SelectedIndex].Item2 : "";
+            btnSetName.Enabled = text != playerSongListName;
         }
 
         private void trashList_SelectedIndexChanged(object sender, EventArgs e)
