@@ -1,12 +1,6 @@
 # Changelog
 
-## PReview 2.10.1.6 (13.11.2019)
-
-### Bug Fixes
-
-- Final fix for crash in Edit tab
-
-## Preview 2.10.1.5 (12.11.2019)
+## 2.10.1 (14.11.2019)
 
 ### Added
 
