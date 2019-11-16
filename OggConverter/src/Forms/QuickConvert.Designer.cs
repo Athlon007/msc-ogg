@@ -100,6 +100,7 @@
             this.Name = "QuickConvert";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quick Convert";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.QuickConvert_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

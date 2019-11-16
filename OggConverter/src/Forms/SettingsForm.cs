@@ -63,6 +63,8 @@ namespace OggConverter
             chkRecommendedFrequency.Checked = Settings.UseRecommendedFrequency;
             chkMono.Checked = Settings.ConvertToMono;
 
+            chkTranslatorMode.Checked = Settings.TranslatorMode;
+
             if (Directory.Exists("locales"))
             {
                 DirectoryInfo di = new DirectoryInfo("locales");
@@ -95,6 +97,8 @@ namespace OggConverter
             toolTip.SetToolTip(chkIgnoreLimits, Localisation.Get("Normally the program will show a warning during conversion, " +
                 "when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, " +
                 "it will be ignored."));
+            toolTip.SetToolTip(chkTranslatorMode, Localisation.Get("When enabled, it enables you to reload the localisation and reloads current window's " +
+                "translations (only on current window) by pressing F5."));
 
             txtChangelog.Text = Properties.Resources.changelog;
             btnAudacity.Text = char.ConvertFromUtf32(0x1F4C1);
@@ -316,6 +320,7 @@ namespace OggConverter
             chkMono.Text = Localisation.Get("Convert song to mono channel");
             label7.Text = Localisation.Get("Conversion:");
             labTranslator.Text = Localisation.Get("Translation Author:\n{0}", Localisation.TranslationAuthor);
+            chkTranslatorMode.Text = Localisation.Get("Translator Mode");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -406,6 +411,22 @@ namespace OggConverter
         private void txtChangelog_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);
+        }
+
+        private void chkTranslatorMode_Click(object sender, EventArgs e)
+        {
+            Settings.TranslatorMode ^= true;
+        }
+
+        private void SettingsForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Refresh the localization (translator mode)
+            if (Settings.TranslatorMode)
+                if (e.KeyCode == Keys.F5)
+                {
+                    Localisation.LoadLocaleFile();
+                    Localise();
+                }
         }
     }
 }

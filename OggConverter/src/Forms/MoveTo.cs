@@ -84,5 +84,16 @@ namespace OggConverter
             btnApply.Text = Localisation.Get("Apply");
             this.Text = Localisation.Get("Move");
         }
+
+        private void MoveTo_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Refresh the localization (translator mode)
+            if (Settings.TranslatorMode)
+                if (e.KeyCode == Keys.F5)
+                {
+                    Localisation.LoadLocaleFile();
+                    Localise();
+                }
+        }
     }
 }

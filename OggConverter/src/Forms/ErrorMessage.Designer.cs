@@ -196,6 +196,7 @@
             this.Name = "ErrorMessage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Oopsie!";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ErrorMessage_KeyDown);
             this.defaultContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

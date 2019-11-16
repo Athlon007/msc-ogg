@@ -4,7 +4,10 @@
 
 ### Added
 
+- Added "Translator Mode" into settings
+  - When enabled, uppon pressing F5, the current localisation will be reloaded and the current window's translation refreshed
 - Added "Report an Issue" button
+- Added info about the translation creator
 
 ### Bug Fixes
 

@@ -107,5 +107,16 @@ namespace OggConverter
         private void btnReportIssue_Click(object sender, EventArgs e)
         {
             Process.Start("https://docs.google.com/forms/d/e/1FAIpQLSd9HKoKB5yf3m4W_TjLelQthujHxioKVxvrE5FCAwUrP0I67g/viewform?usp=sf_link");        }
+
+        private void ErrorMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Refresh the localization (translator mode)
+            if (Settings.TranslatorMode)
+                if (e.KeyCode == Keys.F5)
+                {
+                    Localisation.LoadLocaleFile();
+                    Localise();
+                }
+        }
     }
 }

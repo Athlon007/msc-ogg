@@ -131,5 +131,16 @@ namespace OggConverter
             btnExit.Text = Localisation.Get("Exit");
             this.Text = Localisation.Get("Quick Convert");
         }
+
+        private void QuickConvert_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Refresh the localization (translator mode)
+            if (Settings.TranslatorMode)
+                if (e.KeyCode == Keys.F5)
+                {
+                    Localisation.LoadLocaleFile();
+                    Localise();
+                }
+        }
     }
 }

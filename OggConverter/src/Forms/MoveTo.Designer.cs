@@ -90,6 +90,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Move to";
             this.Load += new System.EventHandler(this.MoveTo_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MoveTo_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

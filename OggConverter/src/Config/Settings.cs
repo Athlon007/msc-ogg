@@ -130,6 +130,11 @@ namespace OggConverter
         /// </summary> 
         public static bool ConvertToMono { get => Get("ConvertToMono", false); set => Set("ConvertToMono", value); }
 
+        /// <summary>
+        /// Enabled "F5" button to refresh the window localisation
+        /// </summary>
+        public static bool TranslatorMode { get => Get("TranslatorMode", false); set => Set("TranslatorMode", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////
