@@ -111,6 +111,7 @@
             this.contextMove = new System.Windows.Forms.ToolStripMenuItem();
             this.contextAll = new System.Windows.Forms.ToolStripMenuItem();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.btnReportIssue = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultContext.SuspendLayout();
             this.panel1.SuspendLayout();
             this.menu.SuspendLayout();
@@ -370,7 +371,7 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 24);
+            this.menuTool.Size = new System.Drawing.Size(58, 26);
             this.menuTool.Text = "Tools";
             // 
             // btnWebsite
@@ -432,14 +433,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 24);
+            this.menuSettings.Size = new System.Drawing.Size(76, 26);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -453,25 +454,26 @@
             this.btnLaunchGame,
             this.btnHelp,
             this.btnDonate,
+            this.btnReportIssue,
             this.btnDownloadUpdate});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 28);
+            this.menu.Size = new System.Drawing.Size(991, 30);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 24);
+            this.btnHelp.Size = new System.Drawing.Size(55, 26);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // btnDonate
             // 
             this.btnDonate.Name = "btnDonate";
-            this.btnDonate.Size = new System.Drawing.Size(152, 24);
+            this.btnDonate.Size = new System.Drawing.Size(152, 26);
             this.btnDonate.Text = "Support the project";
             this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
@@ -479,7 +481,7 @@
             // 
             this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
-            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 24);
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 26);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
             this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
@@ -994,6 +996,13 @@
             this.fontDialog1.MinSize = 10;
             this.fontDialog1.ShowEffects = false;
             // 
+            // btnReportIssue
+            // 
+            this.btnReportIssue.Name = "btnReportIssue";
+            this.btnReportIssue.Size = new System.Drawing.Size(124, 26);
+            this.btnReportIssue.Text = "Report an Issue";
+            this.btnReportIssue.Click += new System.EventHandler(this.btnReportIssue_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -1130,6 +1139,7 @@
         private System.Windows.Forms.ContextMenuStrip defaultContext;
         private System.Windows.Forms.ToolStripMenuItem contextDefaultUndo;
         private System.Windows.Forms.ToolStripMenuItem contextDefaultPaste;
+        private System.Windows.Forms.ToolStripMenuItem btnReportIssue;
     }
 }
 

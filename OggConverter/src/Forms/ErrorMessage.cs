@@ -65,6 +65,7 @@ namespace OggConverter
             btnClose.Text = Localisation.Get("Close");
             contextDefaultCopy.Text = Localisation.Get("Copy");
             contextDefaultSelectAll.Text = Localisation.Get("Select All");
+            btnReportIssue.Text = Localisation.Get("Report an Issue");
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
@@ -102,5 +103,9 @@ namespace OggConverter
         {
             logOutput.SelectAll();
         }
+
+        private void btnReportIssue_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://docs.google.com/forms/d/e/1FAIpQLSd9HKoKB5yf3m4W_TjLelQthujHxioKVxvrE5FCAwUrP0I67g/viewform?usp=sf_link");        }
     }
 }

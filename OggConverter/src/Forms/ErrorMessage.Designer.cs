@@ -41,6 +41,7 @@
             this.contextDefaultSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnReportIssue = new System.Windows.Forms.Button();
             this.defaultContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -162,11 +163,23 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
+            // btnReportIssue
+            // 
+            this.btnReportIssue.Location = new System.Drawing.Point(156, 160);
+            this.btnReportIssue.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReportIssue.Name = "btnReportIssue";
+            this.btnReportIssue.Size = new System.Drawing.Size(132, 44);
+            this.btnReportIssue.TabIndex = 8;
+            this.btnReportIssue.Text = "Report an Issue";
+            this.btnReportIssue.UseVisualStyleBackColor = true;
+            this.btnReportIssue.Click += new System.EventHandler(this.btnReportIssue_Click);
+            // 
             // ErrorMessage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(676, 208);
+            this.Controls.Add(this.btnReportIssue);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.logOutput);
@@ -203,5 +216,6 @@
         private System.Windows.Forms.ContextMenuStrip defaultContext;
         private System.Windows.Forms.ToolStripMenuItem contextDefaultCopy;
         private System.Windows.Forms.ToolStripMenuItem contextDefaultSelectAll;
+        private System.Windows.Forms.Button btnReportIssue;
     }
 }

@@ -296,7 +296,7 @@ namespace OggConverter
             toolTip.SetToolTip(btnUp, Localisation.Get("Move selected song one up."));
             toolTip.SetToolTip(btnDown, Localisation.Get("Move selected song one down."));
             toolTip.SetToolTip(btnMoveSong, Localisation.Get("Move selected songs to selected folder."));
-            toolTip.SetToolTip(btnCloneSong, Localisation.Get("Clones selected song with it's displayed name."));
+            toolTip.SetToolTip(btnCloneSong, Localisation.Get("Clones selected song with it's displayed name.")); 
             toolTip.SetToolTip(btnDel, Localisation.Get("Deletes selected song."));
             toolTip.SetToolTip(btnShuffle, Localisation.Get("Randomizes songs order in chosen folder."));
             toolTip.SetToolTip(btnOpenGameDir, Localisation.Get("Opens My Summer Car folder in Explorer."));
@@ -424,6 +424,7 @@ namespace OggConverter
             contextDefaultPaste.Text = Localisation.Get("Paste");
             contextDefaultSelectAll.Text = Localisation.Get("Select All");
             contextDefaultUndo.Text = Localisation.Get("Undo");
+            btnReportIssue.Text = Localisation.Get("Report an Issue");
         }
 
         /// <summary>
@@ -1092,6 +1093,15 @@ namespace OggConverter
             }
 #if DEBUG
             // DEBUG TOOLS
+            // Print info
+            if (e.Control && e.Alt && e.KeyCode == Keys.H)
+            {
+                Log("- Ctrl+Alt+1 - toggle restricted mode\n" +
+                    "- Ctrl+Alt+2 - toggle restricted mode (total)\n" +
+                    "- Ctrl+Alt+3 - toggle sizable window\n" +
+                    "- Ctrl+Alt+4 - Create error window");
+            }
+
             // Toggle restricted mode
             if (e.Control && e.Alt && e.KeyCode == Keys.D1)
             {
@@ -1361,6 +1371,11 @@ namespace OggConverter
             btnRecycleDelete.Enabled = !noFiles && trashList.SelectedIndex != -1;
             btnEmptyAll.Enabled = !noFiles;
             btnRestore.Enabled = !noFiles && trashList.SelectedIndex != -1;
+        }
+
+        private void btnReportIssue_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://docs.google.com/forms/d/e/1FAIpQLSd9HKoKB5yf3m4W_TjLelQthujHxioKVxvrE5FCAwUrP0I67g/viewform?usp=sf_link");
         }
     }
 }

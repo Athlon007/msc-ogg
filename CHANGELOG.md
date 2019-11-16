@@ -1,5 +1,11 @@
 # Changelog
 
+## Preview 2.11.0.0 (xx.11.2019)
+
+### Added
+
+- Added "Report an Issue" button
+
 ## 2.10.1 (14.11.2019)
 
 ### Added
