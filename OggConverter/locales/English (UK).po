@@ -846,3 +846,8 @@ msgstr ""
 
 msgid "Report an Issue"
 msgstr ""
+
+msgid ""
+"Translation Author:\n"
+"{0}"
+msgstr ""

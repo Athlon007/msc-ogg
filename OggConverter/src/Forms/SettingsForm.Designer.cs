@@ -73,6 +73,7 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
+            this.labTranslator = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -95,6 +96,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.labTranslator);
             this.tabGeneral.Controls.Add(this.btnAudacity);
             this.tabGeneral.Controls.Add(this.labAudacity);
             this.tabGeneral.Controls.Add(this.txtAudacity);
@@ -113,7 +115,7 @@
             // btnAudacity
             // 
             this.btnAudacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnAudacity.Location = new System.Drawing.Point(455, 263);
+            this.btnAudacity.Location = new System.Drawing.Point(455, 298);
             this.btnAudacity.Name = "btnAudacity";
             this.btnAudacity.Size = new System.Drawing.Size(44, 44);
             this.btnAudacity.TabIndex = 31;
@@ -124,7 +126,7 @@
             // labAudacity
             // 
             this.labAudacity.AutoSize = true;
-            this.labAudacity.Location = new System.Drawing.Point(27, 254);
+            this.labAudacity.Location = new System.Drawing.Point(27, 289);
             this.labAudacity.Name = "labAudacity";
             this.labAudacity.Size = new System.Drawing.Size(139, 17);
             this.labAudacity.TabIndex = 30;
@@ -132,7 +134,7 @@
             // 
             // txtAudacity
             // 
-            this.txtAudacity.Location = new System.Drawing.Point(29, 274);
+            this.txtAudacity.Location = new System.Drawing.Point(29, 309);
             this.txtAudacity.Name = "txtAudacity";
             this.txtAudacity.ReadOnly = true;
             this.txtAudacity.Size = new System.Drawing.Size(420, 22);
@@ -141,7 +143,7 @@
             // chkShowFfmpegOutput
             // 
             this.chkShowFfmpegOutput.AutoSize = true;
-            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 191);
+            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 226);
             this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
             this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
             this.chkShowFfmpegOutput.TabIndex = 28;
@@ -575,6 +577,15 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
+            // labTranslator
+            // 
+            this.labTranslator.AutoSize = true;
+            this.labTranslator.Location = new System.Drawing.Point(26, 171);
+            this.labTranslator.Name = "labTranslator";
+            this.labTranslator.Size = new System.Drawing.Size(99, 17);
+            this.labTranslator.TabIndex = 32;
+            this.labTranslator.Text = "Translator: {0}";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -645,5 +656,6 @@
         private System.Windows.Forms.CheckBox chkRecommendedFrequency;
         private System.Windows.Forms.CheckBox chkMono;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labTranslator;
     }
 }

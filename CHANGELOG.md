@@ -6,6 +6,10 @@
 
 - Added "Report an Issue" button
 
+### Bug Fixes
+
+- Fixed an error in which the program would crash if variable "args" was empty in Localisation.DumpError
+
 ## 2.10.1 (14.11.2019)
 
 ### Added

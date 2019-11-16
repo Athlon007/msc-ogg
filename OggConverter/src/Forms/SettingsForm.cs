@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-using System.Drawing;
 using System.Net;
 
 namespace OggConverter
@@ -316,6 +315,7 @@ namespace OggConverter
             chkRecommendedFrequency.Text = Localisation.Get("Set the music frequency to recomended 22050 Hz frequency");
             chkMono.Text = Localisation.Get("Convert song to mono channel");
             label7.Text = Localisation.Get("Conversion:");
+            labTranslator.Text = Localisation.Get("Translation Author:\n{0}", Localisation.TranslationAuthor);
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)

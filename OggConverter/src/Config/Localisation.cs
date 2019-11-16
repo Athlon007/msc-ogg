@@ -23,7 +23,15 @@ namespace OggConverter
 {
     class Localisation
     {
+        /// <summary>
+        /// Stores all translations.
+        /// </summary>
         public static Dictionary<string, string> LocaleFileContent { get; set; }
+
+        /// <summary>
+        /// Stores name of the translation author
+        /// </summary>
+        public static string TranslationAuthor { get; set; }
 
         /// <summary>
         /// Get translated by ID from localeFileContent.
@@ -78,8 +86,11 @@ namespace OggConverter
 
             string[] localeArray = File.ReadLines(localeFilePath)
                 .Where(line => line.Length > 0).Where(line => line.StartsWith("msg") || line.StartsWith("\""))
-                //.Where(line => !line.ContainsAny(forbiddenElements))
                 .ToArray();
+
+            // Get translation author info
+            string[] authors = File.ReadLines(localeFilePath).Where(line => line.Contains("\"Last-Translator: ")).ToArray();
+            TranslationAuthor = authors[0].Replace("\\n", "").Replace("\"", "").Split(':')[1].Split('<')[0];
 
             // Reading array one by one
             for (int i = 0; i < localeArray.Length; i++)
@@ -146,8 +157,9 @@ namespace OggConverter
             string errorMessage = $"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\nCouldn't find id in dictionary.\n\n" +
                 $"ID: {id}\nLanguage: {Settings.Language}\n\nArgs:\n\n";
 
-            foreach (object arg in args)
-                errorMessage += arg.ToString() + ", ";
+            if (args.Length > 0)
+                foreach (object arg in args)
+                    errorMessage += arg.ToString() + ", ";
 
             errorMessage += "\n\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
 
