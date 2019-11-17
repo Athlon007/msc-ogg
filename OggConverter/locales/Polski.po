@@ -957,7 +957,7 @@ msgstr ""
 msgid "Downloader: Downloading playlist from '{0}'"
 msgstr "Pobieranie: Pobieranie listy odtwarzania z '{0}'"
 
-msgid "Report an Issue"
+msgid "Report a Bug"
 msgstr ""
 
 msgid ""

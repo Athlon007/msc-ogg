@@ -424,7 +424,7 @@ namespace OggConverter
             contextDefaultPaste.Text = Localisation.Get("Paste");
             contextDefaultSelectAll.Text = Localisation.Get("Select All");
             contextDefaultUndo.Text = Localisation.Get("Undo");
-            btnReportIssue.Text = Localisation.Get("Report an Issue");
+            btnReportIssue.Text = Localisation.Get("Report a Bug");
         }
 
         /// <summary>

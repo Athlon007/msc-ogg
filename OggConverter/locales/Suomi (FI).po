@@ -949,7 +949,7 @@ msgstr ""
 msgid "Downloader: Downloading playlist from '{0}'"
 msgstr ""
 
-msgid "Report an Issue"
+msgid "Report a Bug"
 msgstr ""
 
 msgid ""
