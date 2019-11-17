@@ -73,6 +73,42 @@ namespace OggConverter
             if (dl == DialogResult.Yes) Process.Start(fileName);
         }
 
+        /// <summary>
+        /// Creates error log and saves it into log/locales_errors
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
+        public static void LocaleError(string id, object[] args)
+        {
+            string thisVersion = Application.ProductVersion;
+
+            string systemInfo = $"// MSC Music Manager //\n" +
+                $"// VERSION: {thisVersion} ({Updates.version})\n" +
+                $"// SYSTEM: {GetSystemInfo()}\n" +
+                $"// MSCMM DIRECTORY: {Directory.GetCurrentDirectory()}\n" +
+                $"// GAME DIRECTORY: {Settings.GamePath}\n" +
+                $"// TIME OF CRASH: {DateTime.Now}\n" +
+                $"// LANGUAGE: {Settings.Language}\n\n" +
+                $"// {GetWittyComment()}\n\n";
+
+            string errorMessage = systemInfo + $"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\nCouldn't find id in dictionary.\n\n" +
+                $"ID: {id}\nLanguage: {Settings.Language}\n\nArgs:\n\n";
+
+            if (args.Length > 0)
+                foreach (object arg in args)
+                    errorMessage += arg.ToString() + ", ";
+
+            errorMessage += "\n\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
+
+            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} " +
+                    $"{DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
+
+            Directory.CreateDirectory("log");
+            Directory.CreateDirectory("log\\locale_errors");
+            File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
+
+            Form1.instance.Log(String.Format("An error has occured with current localisation. The problem has been saved into {0}.txt", date));
+        }
 
         static string GetSystemInfo()
         {

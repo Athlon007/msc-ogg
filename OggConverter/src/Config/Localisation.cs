@@ -55,7 +55,7 @@ namespace OggConverter
             // Return the id
             if (!LocaleFileContent.ContainsKey(id))
             {
-                DumpError(id, args);
+                Logs.LocaleError(id, args);
                 return String.Format(id, args);
             }
 
@@ -145,32 +145,6 @@ namespace OggConverter
             output = output.Remove(output.LastIndexOf("\""));
             output = output.Replace("\\n", "\n");
             return output;
-        }
-
-        /// <summary>
-        /// Creates error log and saves it into log/locales_errors
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="args"></param>
-        static void DumpError(string id, object[] args)
-        {
-            string errorMessage = $"\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\nCouldn't find id in dictionary.\n\n" +
-                $"ID: {id}\nLanguage: {Settings.Language}\n\nArgs:\n\n";
-
-            if (args.Length > 0)
-                foreach (object arg in args)
-                    errorMessage += arg.ToString() + ", ";
-
-            errorMessage += "\n\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
-
-            string date = $"{DateTime.Now.Date.Day}.{DateTime.Now.Date.Month}.{DateTime.Now.Date.Year} " +
-                    $"{DateTime.Now.Hour.ToString()}.{DateTime.Now.Minute.ToString()}.{DateTime.Now.Second.ToString()}";
-
-            Directory.CreateDirectory("log");
-            Directory.CreateDirectory("log\\locale_errors");
-            File.WriteAllText($"log\\locale_errors\\{date}.txt", errorMessage);
-
-            Form1.instance.Log(String.Format("An error has occured with current localisation. The problem has been saved into {0}.txt", date));
         }
     }
 }
