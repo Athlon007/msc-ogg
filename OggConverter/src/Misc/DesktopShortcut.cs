@@ -31,6 +31,8 @@ namespace OggConverter
         /// <returns></returns>
         public static bool Exists() { return System.IO.File.Exists($"{DesktopPath}\\My Summer Car Music Manager.lnk"); }
 
+        public static bool CustomExists() { return System.IO.File.Exists($"{DesktopPath}\\Play My Summer Car.lnk"); }
+
         /// <summary>
         /// Creates a new desktop shortcut.
         /// </summary>
@@ -44,6 +46,23 @@ namespace OggConverter
             shortcut.TargetPath = Application.ExecutablePath;
             shortcut.WorkingDirectory = Application.StartupPath;
             shortcut.Description = Localisation.Get("Add, Remove and Download Songs!");
+            shortcut.Save();
+        }
+
+        /// <summary>
+        /// Creates custom shortcut.
+        /// </summary>
+        public static void CreateCustomShortcut()
+        {
+            if (CustomExists()) return;
+
+            string link = DesktopPath + Path.DirectorySeparatorChar + "Play My Summer Car.lnk";
+            var shell = new WshShell();
+            var shortcut = shell.CreateShortcut(link) as IWshShortcut;
+            shortcut.Arguments = "startgame";
+            shortcut.TargetPath = Application.ExecutablePath;
+            shortcut.WorkingDirectory = Application.StartupPath;
+            shortcut.Description = Localisation.Get("Shuffles all songs and starts the My Summer Car.");
             shortcut.Save();
         }
 

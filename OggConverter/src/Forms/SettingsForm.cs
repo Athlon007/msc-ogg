@@ -321,6 +321,10 @@ namespace OggConverter
             label7.Text = Localisation.Get("Conversion:");
             labTranslator.Text = Localisation.Get("Translation Author:\n{0}", Localisation.TranslationAuthor);
             chkTranslatorMode.Text = Localisation.Get("Translator Mode");
+            label8.Text = Localisation.Get("Shuffle and Play Shortcut:");
+            btnCreateCustomShortcut.Text = Localisation.Get("Create");
+            label9.Text = Localisation.Get("Creates a custom game shortcut that first starts MSCMM\n" +
+                "and shuffles all songs, then starts the game.");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -427,6 +431,11 @@ namespace OggConverter
                     Localisation.LoadLocaleFile();
                     Localise();
                 }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DesktopShortcut.CreateCustomShortcut();
         }
     }
 }

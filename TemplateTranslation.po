@@ -857,3 +857,17 @@ msgstr ""
 
 msgid "Translator Mode"
 msgstr ""
+
+msgid "Shuffles all songs and starts the My Summer Car."
+msgstr ""
+
+msgid "Shuffle and Play Shortcut:"
+msgstr ""
+
+msgid "Create"
+msgstr ""
+
+msgid ""
+"Creates a custom game shortcut that first starts MSCMM\n"
+"and shuffles all songs, then starts the game."
+msgstr ""

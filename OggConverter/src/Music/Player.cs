@@ -318,7 +318,8 @@ namespace OggConverter
             IsBusy = true;
             Stop();
 
-            Form1.instance.Log(Localisation.Get("Shuffling!"));
+            if (Form1.instance != null)
+                Form1.instance.Log(Localisation.Get("Shuffling!"));
 
             try
             {

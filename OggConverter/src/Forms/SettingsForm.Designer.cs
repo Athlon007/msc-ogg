@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.chkTranslatorMode = new System.Windows.Forms.CheckBox();
+            this.labTranslator = new System.Windows.Forms.Label();
             this.btnAudacity = new System.Windows.Forms.Button();
             this.labAudacity = new System.Windows.Forms.Label();
             this.txtAudacity = new System.Windows.Forms.TextBox();
@@ -73,8 +75,9 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.labTranslator = new System.Windows.Forms.Label();
-            this.chkTranslatorMode = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnCreateCustomShortcut = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -97,6 +100,10 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.AutoScroll = true;
+            this.tabGeneral.Controls.Add(this.label9);
+            this.tabGeneral.Controls.Add(this.btnCreateCustomShortcut);
+            this.tabGeneral.Controls.Add(this.label8);
             this.tabGeneral.Controls.Add(this.chkTranslatorMode);
             this.tabGeneral.Controls.Add(this.labTranslator);
             this.tabGeneral.Controls.Add(this.btnAudacity);
@@ -114,10 +121,30 @@
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
+            // chkTranslatorMode
+            // 
+            this.chkTranslatorMode.AutoSize = true;
+            this.chkTranslatorMode.Location = new System.Drawing.Point(29, 221);
+            this.chkTranslatorMode.Name = "chkTranslatorMode";
+            this.chkTranslatorMode.Size = new System.Drawing.Size(134, 21);
+            this.chkTranslatorMode.TabIndex = 33;
+            this.chkTranslatorMode.Text = "Translator Mode";
+            this.chkTranslatorMode.UseVisualStyleBackColor = true;
+            this.chkTranslatorMode.Click += new System.EventHandler(this.chkTranslatorMode_Click);
+            // 
+            // labTranslator
+            // 
+            this.labTranslator.AutoSize = true;
+            this.labTranslator.Location = new System.Drawing.Point(27, 168);
+            this.labTranslator.Name = "labTranslator";
+            this.labTranslator.Size = new System.Drawing.Size(77, 34);
+            this.labTranslator.TabIndex = 32;
+            this.labTranslator.Text = "Translator:\r\n{0}";
+            // 
             // btnAudacity
             // 
             this.btnAudacity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.btnAudacity.Location = new System.Drawing.Point(455, 324);
+            this.btnAudacity.Location = new System.Drawing.Point(454, 433);
             this.btnAudacity.Name = "btnAudacity";
             this.btnAudacity.Size = new System.Drawing.Size(44, 44);
             this.btnAudacity.TabIndex = 31;
@@ -128,7 +155,7 @@
             // labAudacity
             // 
             this.labAudacity.AutoSize = true;
-            this.labAudacity.Location = new System.Drawing.Point(27, 315);
+            this.labAudacity.Location = new System.Drawing.Point(26, 424);
             this.labAudacity.Name = "labAudacity";
             this.labAudacity.Size = new System.Drawing.Size(139, 17);
             this.labAudacity.TabIndex = 30;
@@ -136,7 +163,7 @@
             // 
             // txtAudacity
             // 
-            this.txtAudacity.Location = new System.Drawing.Point(29, 335);
+            this.txtAudacity.Location = new System.Drawing.Point(28, 444);
             this.txtAudacity.Name = "txtAudacity";
             this.txtAudacity.ReadOnly = true;
             this.txtAudacity.Size = new System.Drawing.Size(420, 22);
@@ -145,7 +172,7 @@
             // chkShowFfmpegOutput
             // 
             this.chkShowFfmpegOutput.AutoSize = true;
-            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 252);
+            this.chkShowFfmpegOutput.Location = new System.Drawing.Point(29, 248);
             this.chkShowFfmpegOutput.Name = "chkShowFfmpegOutput";
             this.chkShowFfmpegOutput.Size = new System.Drawing.Size(155, 21);
             this.chkShowFfmpegOutput.TabIndex = 28;
@@ -218,7 +245,7 @@
             // chkMono
             // 
             this.chkMono.AutoSize = true;
-            this.chkMono.Location = new System.Drawing.Point(29, 319);
+            this.chkMono.Location = new System.Drawing.Point(29, 313);
             this.chkMono.Name = "chkMono";
             this.chkMono.Size = new System.Drawing.Size(223, 21);
             this.chkMono.TabIndex = 29;
@@ -229,7 +256,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(26, 272);
+            this.label7.Location = new System.Drawing.Point(26, 266);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 17);
             this.label7.TabIndex = 28;
@@ -238,7 +265,7 @@
             // chkRecommendedFrequency
             // 
             this.chkRecommendedFrequency.AutoSize = true;
-            this.chkRecommendedFrequency.Location = new System.Drawing.Point(29, 292);
+            this.chkRecommendedFrequency.Location = new System.Drawing.Point(29, 286);
             this.chkRecommendedFrequency.Name = "chkRecommendedFrequency";
             this.chkRecommendedFrequency.Size = new System.Drawing.Size(413, 21);
             this.chkRecommendedFrequency.TabIndex = 27;
@@ -579,25 +606,34 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // labTranslator
+            // label8
             // 
-            this.labTranslator.AutoSize = true;
-            this.labTranslator.Location = new System.Drawing.Point(26, 171);
-            this.labTranslator.Name = "labTranslator";
-            this.labTranslator.Size = new System.Drawing.Size(77, 34);
-            this.labTranslator.TabIndex = 32;
-            this.labTranslator.Text = "Translator:\r\n{0}";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(27, 300);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(172, 17);
+            this.label8.TabIndex = 34;
+            this.label8.Text = "Shuffle and Play Shortcut:";
             // 
-            // chkTranslatorMode
+            // btnCreateCustomShortcut
             // 
-            this.chkTranslatorMode.AutoSize = true;
-            this.chkTranslatorMode.Location = new System.Drawing.Point(29, 225);
-            this.chkTranslatorMode.Name = "chkTranslatorMode";
-            this.chkTranslatorMode.Size = new System.Drawing.Size(134, 21);
-            this.chkTranslatorMode.TabIndex = 33;
-            this.chkTranslatorMode.Text = "Translator Mode";
-            this.chkTranslatorMode.UseVisualStyleBackColor = true;
-            this.chkTranslatorMode.Click += new System.EventHandler(this.chkTranslatorMode_Click);
+            this.btnCreateCustomShortcut.Location = new System.Drawing.Point(30, 324);
+            this.btnCreateCustomShortcut.Name = "btnCreateCustomShortcut";
+            this.btnCreateCustomShortcut.Size = new System.Drawing.Size(132, 44);
+            this.btnCreateCustomShortcut.TabIndex = 35;
+            this.btnCreateCustomShortcut.Text = "Create";
+            this.btnCreateCustomShortcut.UseVisualStyleBackColor = true;
+            this.btnCreateCustomShortcut.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(27, 371);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(365, 34);
+            this.label9.TabIndex = 36;
+            this.label9.Text = "Creates a custom game shortcut that first starts MSCMM \r\nand shuffles all songs, " +
+    "then starts the game.";
             // 
             // SettingsForm
             // 
@@ -672,5 +708,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label labTranslator;
         private System.Windows.Forms.CheckBox chkTranslatorMode;
+        private System.Windows.Forms.Button btnCreateCustomShortcut;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }

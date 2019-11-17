@@ -4,6 +4,8 @@
 
 ### Added
 
+- Added "Shuffle and Play" custom shortcut! A shortcut that first shuffles all song folders, and then starts the game
+  - You can create it in the settings
 - Added "Translator Mode" into settings
   - When enabled, uppon pressing F5, the current localisation will be reloaded and the current window's translation refreshed
 - Added "Report an Issue" button

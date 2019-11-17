@@ -106,6 +106,7 @@
     <Compile Include="src\Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Misc\CustomStartGame.cs" />
     <Compile Include="src\Misc\DesktopShortcut.cs" />
     <Compile Include="src\Forms\QuickConvert.cs">
       <SubType>Form</SubType>

@@ -371,7 +371,7 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(58, 26);
+            this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
             // 
             // btnWebsite
@@ -433,14 +433,14 @@
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(76, 26);
+            this.menuSettings.Size = new System.Drawing.Size(76, 24);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(112, 26);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -459,28 +459,28 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(991, 30);
+            this.menu.Size = new System.Drawing.Size(991, 28);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(55, 26);
+            this.btnHelp.Size = new System.Drawing.Size(55, 24);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // btnDonate
             // 
             this.btnDonate.Name = "btnDonate";
-            this.btnDonate.Size = new System.Drawing.Size(152, 26);
+            this.btnDonate.Size = new System.Drawing.Size(152, 24);
             this.btnDonate.Text = "Support the project";
             this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
             // btnReportIssue
             // 
             this.btnReportIssue.Name = "btnReportIssue";
-            this.btnReportIssue.Size = new System.Drawing.Size(118, 26);
+            this.btnReportIssue.Size = new System.Drawing.Size(118, 24);
             this.btnReportIssue.Text = "Report an Bug";
             this.btnReportIssue.Click += new System.EventHandler(this.btnReportIssue_Click);
             // 
@@ -488,7 +488,7 @@
             // 
             this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
-            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 26);
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 24);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
             this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
