@@ -959,3 +959,6 @@ msgstr ""
 
 msgid "When enabled, it enables you to reload the localisation and reloads current window's translations (only on current window) by pressing F5."
 msgstr ""
+
+msgid "Translator Mode"
+msgstr ""
