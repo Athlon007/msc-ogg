@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnCreateCustomShortcut = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
             this.chkTranslatorMode = new System.Windows.Forms.CheckBox();
             this.labTranslator = new System.Windows.Forms.Label();
             this.btnAudacity = new System.Windows.Forms.Button();
@@ -75,9 +78,7 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.btnCreateCustomShortcut = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.chkCreateLocaleErrorLogs = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -120,6 +121,35 @@
             this.tabGeneral.TabIndex = 3;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(27, 371);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(365, 34);
+            this.label9.TabIndex = 36;
+            this.label9.Text = "Creates a custom game shortcut that first starts MSCMM \r\nand shuffles all songs, " +
+    "then starts the game.";
+            // 
+            // btnCreateCustomShortcut
+            // 
+            this.btnCreateCustomShortcut.Location = new System.Drawing.Point(30, 324);
+            this.btnCreateCustomShortcut.Name = "btnCreateCustomShortcut";
+            this.btnCreateCustomShortcut.Size = new System.Drawing.Size(132, 44);
+            this.btnCreateCustomShortcut.TabIndex = 35;
+            this.btnCreateCustomShortcut.Text = "Create";
+            this.btnCreateCustomShortcut.UseVisualStyleBackColor = true;
+            this.btnCreateCustomShortcut.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(27, 300);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(172, 17);
+            this.label8.TabIndex = 34;
+            this.label8.Text = "Shuffle and Play Shortcut:";
             // 
             // chkTranslatorMode
             // 
@@ -489,6 +519,7 @@
             // 
             // tabLogging
             // 
+            this.tabLogging.Controls.Add(this.chkCreateLocaleErrorLogs);
             this.tabLogging.Controls.Add(this.label5);
             this.tabLogging.Controls.Add(this.label4);
             this.tabLogging.Controls.Add(this.btnDelLogs);
@@ -509,7 +540,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 168);
+            this.label5.Location = new System.Drawing.Point(26, 200);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(39, 17);
             this.label5.TabIndex = 32;
@@ -518,7 +549,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 98);
+            this.label4.Location = new System.Drawing.Point(26, 130);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 17);
             this.label4.TabIndex = 31;
@@ -526,7 +557,7 @@
             // 
             // btnDelLogs
             // 
-            this.btnDelLogs.Location = new System.Drawing.Point(305, 188);
+            this.btnDelLogs.Location = new System.Drawing.Point(305, 220);
             this.btnDelLogs.Name = "btnDelLogs";
             this.btnDelLogs.Size = new System.Drawing.Size(132, 44);
             this.btnDelLogs.TabIndex = 30;
@@ -536,7 +567,7 @@
             // 
             // btnDelHis
             // 
-            this.btnDelHis.Location = new System.Drawing.Point(167, 118);
+            this.btnDelHis.Location = new System.Drawing.Point(167, 150);
             this.btnDelHis.Name = "btnDelHis";
             this.btnDelHis.Size = new System.Drawing.Size(132, 44);
             this.btnDelHis.TabIndex = 29;
@@ -556,7 +587,7 @@
             // 
             // btLogFolder
             // 
-            this.btLogFolder.Location = new System.Drawing.Point(167, 188);
+            this.btLogFolder.Location = new System.Drawing.Point(167, 220);
             this.btLogFolder.Name = "btLogFolder";
             this.btLogFolder.Size = new System.Drawing.Size(132, 44);
             this.btLogFolder.TabIndex = 5;
@@ -566,7 +597,7 @@
             // 
             // btnOpenLog
             // 
-            this.btnOpenLog.Location = new System.Drawing.Point(29, 188);
+            this.btnOpenLog.Location = new System.Drawing.Point(29, 220);
             this.btnOpenLog.Name = "btnOpenLog";
             this.btnOpenLog.Size = new System.Drawing.Size(132, 44);
             this.btnOpenLog.TabIndex = 4;
@@ -576,7 +607,7 @@
             // 
             // btnOpenHistory
             // 
-            this.btnOpenHistory.Location = new System.Drawing.Point(29, 118);
+            this.btnOpenHistory.Location = new System.Drawing.Point(29, 150);
             this.btnOpenHistory.Name = "btnOpenHistory";
             this.btnOpenHistory.Size = new System.Drawing.Size(132, 44);
             this.btnOpenHistory.TabIndex = 3;
@@ -606,34 +637,16 @@
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
             // 
-            // label8
+            // chkCreateLocaleErrorLogs
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(27, 300);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(172, 17);
-            this.label8.TabIndex = 34;
-            this.label8.Text = "Shuffle and Play Shortcut:";
-            // 
-            // btnCreateCustomShortcut
-            // 
-            this.btnCreateCustomShortcut.Location = new System.Drawing.Point(30, 324);
-            this.btnCreateCustomShortcut.Name = "btnCreateCustomShortcut";
-            this.btnCreateCustomShortcut.Size = new System.Drawing.Size(132, 44);
-            this.btnCreateCustomShortcut.TabIndex = 35;
-            this.btnCreateCustomShortcut.Text = "Create";
-            this.btnCreateCustomShortcut.UseVisualStyleBackColor = true;
-            this.btnCreateCustomShortcut.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(27, 371);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(365, 34);
-            this.label9.TabIndex = 36;
-            this.label9.Text = "Creates a custom game shortcut that first starts MSCMM \r\nand shuffles all songs, " +
-    "then starts the game.";
+            this.chkCreateLocaleErrorLogs.AutoSize = true;
+            this.chkCreateLocaleErrorLogs.Location = new System.Drawing.Point(29, 89);
+            this.chkCreateLocaleErrorLogs.Name = "chkCreateLocaleErrorLogs";
+            this.chkCreateLocaleErrorLogs.Size = new System.Drawing.Size(178, 21);
+            this.chkCreateLocaleErrorLogs.TabIndex = 33;
+            this.chkCreateLocaleErrorLogs.Text = "Create locale error logs";
+            this.chkCreateLocaleErrorLogs.UseVisualStyleBackColor = true;
+            this.chkCreateLocaleErrorLogs.Click += new System.EventHandler(this.chkCreateLocaleErrorLogs_Click);
             // 
             // SettingsForm
             // 
@@ -711,5 +724,6 @@
         private System.Windows.Forms.Button btnCreateCustomShortcut;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox chkCreateLocaleErrorLogs;
     }
 }

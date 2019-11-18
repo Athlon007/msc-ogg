@@ -1,6 +1,6 @@
 # Changelog
 
-## Preview 2.11.0.0 (xx.11.2019)
+## Preview 2.11.0.0 (18.11.2019)
 
 ### Added
 
@@ -11,6 +11,7 @@
 - Added "Report an Issue" button
 - Added info about the translation creator
 - Locale error logs now contain system info
+- You can now disable locale error logs in the settings
 
 ### Bug Fixes
 

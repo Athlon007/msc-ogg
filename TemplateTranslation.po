@@ -871,3 +871,6 @@ msgid ""
 "Creates a custom game shortcut that first starts MSCMM\n"
 "and shuffles all songs, then starts the game."
 msgstr ""
+
+msgid "Create locale error logs"
+msgstr ""

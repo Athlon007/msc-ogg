@@ -64,6 +64,7 @@ namespace OggConverter
             chkMono.Checked = Settings.ConvertToMono;
 
             chkTranslatorMode.Checked = Settings.TranslatorMode;
+            chkCreateLocaleErrorLogs.Checked = Settings.CreateLocaleErrorLogs;
 
             if (Directory.Exists("locales"))
             {
@@ -325,6 +326,7 @@ namespace OggConverter
             btnCreateCustomShortcut.Text = Localisation.Get("Create");
             label9.Text = Localisation.Get("Creates a custom game shortcut that first starts MSCMM\n" +
                 "and shuffles all songs, then starts the game.");
+            chkCreateLocaleErrorLogs.Text = Localisation.Get("Create locale error logs");
         }
 
         private void CbYoutubeDlUpdateFrequency_SelectionChangeCommitted(object sender, EventArgs e)
@@ -436,6 +438,11 @@ namespace OggConverter
         private void button1_Click(object sender, EventArgs e)
         {
             DesktopShortcut.CreateCustomShortcut();
+        }
+
+        private void chkCreateLocaleErrorLogs_Click(object sender, EventArgs e)
+        {
+            Settings.CreateLocaleErrorLogs ^= true;
         }
     }
 }

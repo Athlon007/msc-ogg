@@ -80,6 +80,8 @@ namespace OggConverter
         /// <param name="args"></param>
         public static void LocaleError(string id, object[] args)
         {
+            if (!Settings.CreateLocaleErrorLogs) return;
+
             string thisVersion = Application.ProductVersion;
 
             string systemInfo = $"// MSC Music Manager //\n" +

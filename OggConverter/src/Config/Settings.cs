@@ -135,6 +135,11 @@ namespace OggConverter
         /// </summary>
         public static bool TranslatorMode { get => Get("TranslatorMode", false); set => Set("TranslatorMode", value); }
 
+        /// <summary>
+        /// If true, the program will generate locale errors.
+        /// </summary>
+        public static bool CreateLocaleErrorLogs { get => Get("CreateLocaleErrorLogs", true); set => Set("CreateLocaleErrorLogs", value); }
+
         //////////////////////////////////////////////
         // THESE SETTINGS CAN'T BE CHANGED BY USER! //
         //////////////////////////////////////////////
