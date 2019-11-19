@@ -852,7 +852,7 @@ msgid ""
 "{0}"
 msgstr ""
 
-msgid "When enabled, it enables you to reload the localisation and reloads current window's translations (only on current window) by pressing F5."
+msgid "When enabled, it enables you to reload the translation and reloads current window's translations by pressing F5."
 msgstr ""
 
 msgid "Translator Mode"
@@ -873,4 +873,7 @@ msgid ""
 msgstr ""
 
 msgid "Create locale error logs"
+msgstr ""
+
+msgid "Are you sure you want to continue?"
 msgstr ""

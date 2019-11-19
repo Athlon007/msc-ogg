@@ -69,6 +69,7 @@ namespace OggConverter
             InitializeComponent();
             instance = this;
             this.KeyPreview = true;
+
 #if DEBUG
             Log($"MSC Music Manager {Utilities.GetVersion(true)} ({Updates.version}) DEBUG\n" +
                 $"THIS VERSION IS NOT INTENDED FOR DISTRIBUTION!");
@@ -111,9 +112,6 @@ namespace OggConverter
             btnPlaySong.Left = btnPlaySong.CenterHorizontally(panel1) - btnPlaySong.Width / 2 - 2;
             btnStop.Left = btnStop.CenterHorizontally(panel1) + btnStop.Width / 2 + 2;
             selectedFolder.Left = selectedFolder.CenterHorizontally(panel1);
-
-            songListRight = tabs.Left - songList.Right;
-            songListBottom = panel1.Bottom - songList.Bottom;
 
             // Removing temporary or unused files
             Utilities.Cleanup();
@@ -1106,8 +1104,7 @@ namespace OggConverter
             {
                 Log("- Ctrl+Alt+1 - toggle restricted mode\n" +
                     "- Ctrl+Alt+2 - toggle restricted mode (total)\n" +
-                    "- Ctrl+Alt+3 - toggle sizable window\n" +
-                    "- Ctrl+Alt+4 - Create error window");
+                    "- Ctrl+Alt+3 - Create error window");
             }
 
             // Toggle restricted mode
@@ -1124,15 +1121,8 @@ namespace OggConverter
                 RestrictedMode(debugToggle, true);
             }
 
-            // Toggle sizable window
-            if (e.Control && e.Alt && e.KeyCode == Keys.D3)
-            {
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-                this.MaximizeBox = true;
-            }
-
             // Create error window
-            if (e.Control && e.Alt && e.KeyCode == Keys.D4)
+            if (e.Control && e.Alt && e.KeyCode == Keys.D3)
             {
                 ErrorMessage err = new ErrorMessage(new Exception());
                 err.ShowDialog();
@@ -1186,55 +1176,6 @@ namespace OggConverter
             // Select all items on songlist
             for (int i = 0; i < songList.Items.Count; i++)
                 songList.SelectedItem = songList.Items[i];
-        }
-
-        int tabsDefaultX = 340;
-        int panelDefaultY = 58;
-        int songListRight = -1;
-        int songListBottom = -1;
-
-        void ResizeForm()
-        {
-            if (this.WindowState == FormWindowState.Minimized && FormBorderStyle == FormBorderStyle.FixedSingle) return;
-            panel1.Width = this.Width / 2 - 164;
-            panel1.Height = this.Height - panelDefaultY - 46;
-
-            tabs.Size = new Size(this.Width - tabs.Location.X - 16, this.Height - tabs.Location.Y - 46);
-            tabs.ItemSize = new Size((tabs.Width / tabs.TabCount) - 2, 0);
-            double d = tabsDefaultX + (Math.Pow(this.Width, 0.95) - tabsDefaultX * 2) - 34;
-            d = Math.Round(d);
-            tabs.Location = new Point(panel1.Width, tabs.Location.Y);
-
-            labCounter.Location = new Point(labCounter.Location.X, panel1.Height - labCounter.Height - 5);
-            songList.Width = tabs.Left - songListRight - songList.Left;
-            songList.Height = panel1.Bottom - songListBottom - 20;
-
-            btnUp.Left = songList.Right + 4;
-            btnDown.Left = btnUp.Left;
-            btnSort.Left = btnUp.Left;
-            btnMoveSong.Left = btnUp.Left;
-            btnCloneSong.Left = btnUp.Left;
-            btnDel.Left = btnUp.Left;
-            btnShuffle.Left = btnUp.Left;
-
-            labNowPlaying.Left = labNowPlaying.CenterHorizontally(panel1);
-            labNowPlaying.Top = songList.Bottom;
-            btnPlaySong.Top = labNowPlaying.Bottom;
-            btnStop.Top = btnPlaySong.Top;
-
-            btnDirectory.Size = new Size(tabs.Left / 2, btnDirectory.Height);
-            btnOpenGameDir.Location = new Point(btnDirectory.Right, btnOpenGameDir.Location.Y);
-            btnOpenGameDir.Width = btnDirectory.Width;
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            ResizeForm();
-        }
-
-        private void Form1_ResizeEnd(object sender, EventArgs e)
-        {
-            ResizeForm();
         }
 
         private void BtnRestore_Click(object sender, EventArgs e)

@@ -979,3 +979,6 @@ msgstr ""
 
 msgid "Create locale error logs"
 msgstr ""
+
+msgid "Are you sure you want to continue?"
+msgstr "Oletko varma että haluat jatkaa?"

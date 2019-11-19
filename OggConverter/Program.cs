@@ -46,11 +46,20 @@ namespace OggConverter
                         Application.Run(new QuickConvert(args));
                         break;
                     case "wipe":
-                        Settings.WipeAll();
-                        MessageBox.Show(Localisation.Get("All your settings have been wiped. Restart the MSCMM without 'wipe' argument."), 
-                            Localisation.Get("Information"), 
-                            MessageBoxButtons.OK, 
-                            MessageBoxIcon.Information);
+                        DialogResult dl = MessageBox.Show(Localisation.Get("Are you sure you want to continue?"),
+                                                Localisation.Get("Information"),
+                                                MessageBoxButtons.YesNo,
+                                                MessageBoxIcon.Information);
+
+                        if (dl == DialogResult.Yes)
+                        {
+                            Settings.WipeAll();
+                            MessageBox.Show(Localisation.Get("All your settings have been wiped. Restart the MSCMM without 'wipe' argument."),
+                                Localisation.Get("Information"),
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                        }
+
                         Application.Exit();
                         break;
                     case "startgame":

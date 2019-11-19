@@ -15,7 +15,7 @@
 // along with this program.If not, see<http://www.gnu.org/licenses/>.
 
 using System.IO;
-using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace OggConverter
 {
@@ -26,20 +26,22 @@ namespace OggConverter
         /// </summary>
         public static void Play()
         {
+            // List of all possible folders
             string[] folders = new string[] { "Radio", "CD", "CD1", "CD2", "CD3" };
-            List<string> availableFolders = new List<string>();
 
+            // Shuffle these folders
             foreach (string folder in folders)
-                if (Directory.Exists($"{Settings.GamePath}\\{folder}"))
-                    availableFolders.Add(folder);
-
-            foreach (string folder in availableFolders)
             {
-                MetaData.AlternateFolder = folder;
-                Player.Shuffle(folder);
+                if (Directory.Exists($"{Settings.GamePath}\\{folder}"))
+                {
+                    MetaData.AlternateFolder = folder;
+                    Player.Shuffle(folder);
+                }
             }
 
+            // Start the game
             Utilities.LaunchGame();
+            Application.Exit();
         }
     }
 }

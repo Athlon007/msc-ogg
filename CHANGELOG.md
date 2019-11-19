@@ -1,5 +1,16 @@
 # Changelog
 
+## Preview 2.11.0.1 (19.11.2019)
+
+### Changes
+
+- Starting the program with "wipe" will require the user's confirmation
+- Code optimization
+
+### Bug Fixes
+
+- Fixed possible UI scaling issues
+
 ## Preview 2.11.0.0 (18.11.2019)
 
 ### Added

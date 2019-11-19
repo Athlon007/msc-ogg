@@ -8,7 +8,12 @@ Added:
 - Locale error logs now contain system info
 - You can now disable locale error logs in the settings
 
+Changes:
+- Starting the program with "wipe" will require the user's confirmation
+- Code optimization
+
 Bug Fixes:
 - Fixed an error in which the program would crash if variable "args" was empty in Localisation.DumpError
+- Fixed possible UI scaling issues
 
 For more, visit https://gitlab.com/aathlon/msc-ogg.

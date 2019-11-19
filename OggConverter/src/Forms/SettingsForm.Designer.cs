@@ -68,6 +68,7 @@
             this.radOfficial = new System.Windows.Forms.RadioButton();
             this.chkAutoUpdates = new System.Windows.Forms.CheckBox();
             this.tabLogging = new System.Windows.Forms.TabPage();
+            this.chkCreateLocaleErrorLogs = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnDelLogs = new System.Windows.Forms.Button();
@@ -78,7 +79,6 @@
             this.btnOpenHistory = new System.Windows.Forms.Button();
             this.chkHistory = new System.Windows.Forms.CheckBox();
             this.chkCrashLog = new System.Windows.Forms.CheckBox();
-            this.chkCreateLocaleErrorLogs = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tabFiles.SuspendLayout();
@@ -165,7 +165,7 @@
             // labTranslator
             // 
             this.labTranslator.AutoSize = true;
-            this.labTranslator.Location = new System.Drawing.Point(27, 168);
+            this.labTranslator.Location = new System.Drawing.Point(27, 163);
             this.labTranslator.Name = "labTranslator";
             this.labTranslator.Size = new System.Drawing.Size(77, 34);
             this.labTranslator.TabIndex = 32;
@@ -213,7 +213,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 111);
+            this.label2.Location = new System.Drawing.Point(26, 106);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 17);
             this.label2.TabIndex = 27;
@@ -223,7 +223,7 @@
             // 
             this.comboLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboLang.FormattingEnabled = true;
-            this.comboLang.Location = new System.Drawing.Point(29, 132);
+            this.comboLang.Location = new System.Drawing.Point(29, 127);
             this.comboLang.Margin = new System.Windows.Forms.Padding(4);
             this.comboLang.Name = "comboLang";
             this.comboLang.Size = new System.Drawing.Size(160, 24);
@@ -537,6 +537,17 @@
             this.tabLogging.Text = "Logging & Privacy";
             this.tabLogging.UseVisualStyleBackColor = true;
             // 
+            // chkCreateLocaleErrorLogs
+            // 
+            this.chkCreateLocaleErrorLogs.AutoSize = true;
+            this.chkCreateLocaleErrorLogs.Location = new System.Drawing.Point(29, 89);
+            this.chkCreateLocaleErrorLogs.Name = "chkCreateLocaleErrorLogs";
+            this.chkCreateLocaleErrorLogs.Size = new System.Drawing.Size(178, 21);
+            this.chkCreateLocaleErrorLogs.TabIndex = 33;
+            this.chkCreateLocaleErrorLogs.Text = "Create locale error logs";
+            this.chkCreateLocaleErrorLogs.UseVisualStyleBackColor = true;
+            this.chkCreateLocaleErrorLogs.Click += new System.EventHandler(this.chkCreateLocaleErrorLogs_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -636,17 +647,6 @@
             this.chkCrashLog.Text = "Create logs after crash";
             this.chkCrashLog.UseVisualStyleBackColor = true;
             this.chkCrashLog.Click += new System.EventHandler(this.ChkCrashLog_Click);
-            // 
-            // chkCreateLocaleErrorLogs
-            // 
-            this.chkCreateLocaleErrorLogs.AutoSize = true;
-            this.chkCreateLocaleErrorLogs.Location = new System.Drawing.Point(29, 89);
-            this.chkCreateLocaleErrorLogs.Name = "chkCreateLocaleErrorLogs";
-            this.chkCreateLocaleErrorLogs.Size = new System.Drawing.Size(178, 21);
-            this.chkCreateLocaleErrorLogs.TabIndex = 33;
-            this.chkCreateLocaleErrorLogs.Text = "Create locale error logs";
-            this.chkCreateLocaleErrorLogs.UseVisualStyleBackColor = true;
-            this.chkCreateLocaleErrorLogs.Click += new System.EventHandler(this.chkCreateLocaleErrorLogs_Click);
             // 
             // SettingsForm
             // 

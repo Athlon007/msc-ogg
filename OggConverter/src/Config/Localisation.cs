@@ -84,12 +84,14 @@ namespace OggConverter
             "Last-Translator: ", "Language-Team: ", "MIME-Version: ", "Content-Type: ", "Content-Transfer-Encoding: ", "X-Generator: ",
             "X-Poedit-Basepath: ", "Plural-Forms: ", "Language: "};
 
-            string[] localeArray = File.ReadLines(localeFilePath)
+            var fileContent = File.ReadLines(localeFilePath);
+
+            string[] localeArray = fileContent
                 .Where(line => line.Length > 0).Where(line => line.StartsWith("msg") || line.StartsWith("\""))
-                .ToArray();
+                .ToArray();            
 
             // Get translation author info
-            string[] authors = File.ReadLines(localeFilePath).Where(line => line.Contains("\"Last-Translator: ")).ToArray();
+            string[] authors = fileContent.Where(line => line.Contains("\"Last-Translator: ")).ToArray();
             TranslationAuthor = authors[0].Replace("\\n", "").Replace("\"", "").Split(':')[1].Split('<')[0];
 
             // Reading array one by one

@@ -958,32 +958,39 @@ msgid "Downloader: Downloading playlist from '{0}'"
 msgstr "Pobieranie: Pobieranie listy odtwarzania z '{0}'"
 
 msgid "Report a Bug"
-msgstr ""
+msgstr "Zgłoś błąd"
 
 msgid ""
 "Translation Author:\n"
 "{0}"
 msgstr ""
+"Twórca tłumaczenia:\n"
+"{0}"
 
-msgid "When enabled, it enables you to reload the localisation and reloads current window's translations (only on current window) by pressing F5."
-msgstr ""
+msgid "When enabled, it enables you to reload the translation and reloads current window's translations by pressing F5."
+msgstr "Gdy włączony, pozwala na odświeżenie tłumaczenia i przeładowuje tłumaczenie aktualnego okna przez wciśnięcie F5."
 
 msgid "Translator Mode"
-msgstr ""
+msgstr "Tryb Tłumacza"
 
 msgid "Shuffles all songs and starts the My Summer Car."
-msgstr ""
+msgstr "Losuje kolejność wszystkich piosenek i uruchamia My Summer Car."
 
 msgid "Shuffle and Play Shortcut:"
-msgstr ""
+msgstr "Skrót losuj i graj:"
 
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 msgid ""
 "Creates a custom game shortcut that first starts MSCMM\n"
 "and shuffles all songs, then starts the game."
 msgstr ""
+"Tworzy niestandardowy skrót do gry który najpierw uruchamia MSCMM\n"
+"a potem losuje kolejność wszystkich piosenek, a potem uruchamia grę."
 
 msgid "Create locale error logs"
-msgstr ""
+msgstr "Twórz logi o błędach tłumaczeń"
+
+msgid "Are you sure you want to continue?"
+msgstr "Czy na pewno chcesz kontynuować?"

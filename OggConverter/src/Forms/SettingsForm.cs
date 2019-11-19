@@ -98,8 +98,7 @@ namespace OggConverter
             toolTip.SetToolTip(chkIgnoreLimits, Localisation.Get("Normally the program will show a warning during conversion, " +
                 "when there are more files than the folder allows (99 for Radio, 15 for CDs). If this setting is enabled, " +
                 "it will be ignored."));
-            toolTip.SetToolTip(chkTranslatorMode, Localisation.Get("When enabled, it enables you to reload the localisation and reloads current window's " +
-                "translations (only on current window) by pressing F5."));
+            toolTip.SetToolTip(chkTranslatorMode, Localisation.Get("When enabled, it enables you to reload the translation and reloads current window's translations by pressing F5."));
 
             txtChangelog.Text = Properties.Resources.changelog;
             btnAudacity.Text = char.ConvertFromUtf32(0x1F4C1);
