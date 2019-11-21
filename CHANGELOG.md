@@ -1,17 +1,6 @@
 # Changelog
 
-## Preview 2.11.0.1 (19.11.2019)
-
-### Changes
-
-- Starting the program with "wipe" will require the user's confirmation
-- Code optimization
-
-### Bug Fixes
-
-- Fixed possible UI scaling issues
-
-## Preview 2.11.0.0 (18.11.2019)
+## 2.11 (21.11.2019)
 
 ### Added
 
@@ -24,9 +13,15 @@
 - Locale error logs now contain system info
 - You can now disable locale error logs in the settings
 
+### Changes
+
+- Starting the program with "wipe" will require the user's confirmation
+- Code optimization
+
 ### Bug Fixes
 
 - Fixed an error in which the program would crash if variable "args" was empty in Localisation.DumpError
+- Fixed possible UI scaling issues
 
 ## 2.10.1 (14.11.2019)
 
