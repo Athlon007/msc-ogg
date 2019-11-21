@@ -132,12 +132,13 @@
             this.logOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.logOutput.ContextMenuStrip = this.defaultContext;
             this.logOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logOutput.Location = new System.Drawing.Point(3, 3);
+            this.logOutput.Location = new System.Drawing.Point(4, 4);
+            this.logOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.logOutput.Multiline = true;
             this.logOutput.Name = "logOutput";
             this.logOutput.ReadOnly = true;
             this.logOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.logOutput.Size = new System.Drawing.Size(476, 330);
+            this.logOutput.Size = new System.Drawing.Size(637, 409);
             this.logOutput.TabIndex = 2;
             // 
             // defaultContext
@@ -149,13 +150,13 @@
             this.contextDefaultPaste,
             this.contextDefaultSelectAll});
             this.defaultContext.Name = "songListContext";
-            this.defaultContext.Size = new System.Drawing.Size(123, 92);
+            this.defaultContext.Size = new System.Drawing.Size(141, 100);
             this.defaultContext.Opened += new System.EventHandler(this.defaultContext_Opened);
             // 
             // contextDefaultUndo
             // 
             this.contextDefaultUndo.Name = "contextDefaultUndo";
-            this.contextDefaultUndo.Size = new System.Drawing.Size(122, 22);
+            this.contextDefaultUndo.Size = new System.Drawing.Size(140, 24);
             this.contextDefaultUndo.Text = "Undo";
             this.contextDefaultUndo.Click += new System.EventHandler(this.contextDefaultUndo_Click);
             // 
@@ -163,7 +164,7 @@
             // 
             this.contextDefaultCopy.Name = "contextDefaultCopy";
             this.contextDefaultCopy.ShortcutKeyDisplayString = "";
-            this.contextDefaultCopy.Size = new System.Drawing.Size(122, 22);
+            this.contextDefaultCopy.Size = new System.Drawing.Size(140, 24);
             this.contextDefaultCopy.Text = "Copy";
             this.contextDefaultCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.contextDefaultCopy.Click += new System.EventHandler(this.contextDefaultCopy_Click);
@@ -171,7 +172,7 @@
             // contextDefaultPaste
             // 
             this.contextDefaultPaste.Name = "contextDefaultPaste";
-            this.contextDefaultPaste.Size = new System.Drawing.Size(122, 22);
+            this.contextDefaultPaste.Size = new System.Drawing.Size(140, 24);
             this.contextDefaultPaste.Text = "Paste";
             this.contextDefaultPaste.Click += new System.EventHandler(this.contextDefaultPaste_Click);
             // 
@@ -179,7 +180,7 @@
             // 
             this.contextDefaultSelectAll.Name = "contextDefaultSelectAll";
             this.contextDefaultSelectAll.ShortcutKeyDisplayString = "";
-            this.contextDefaultSelectAll.Size = new System.Drawing.Size(122, 22);
+            this.contextDefaultSelectAll.Size = new System.Drawing.Size(140, 24);
             this.contextDefaultSelectAll.Text = "Select All";
             this.contextDefaultSelectAll.Click += new System.EventHandler(this.contextDefaultSelectAll_Click);
             // 
@@ -187,10 +188,12 @@
             // 
             this.songList.FormattingEnabled = true;
             this.songList.HorizontalScrollbar = true;
-            this.songList.Location = new System.Drawing.Point(5, 23);
+            this.songList.ItemHeight = 16;
+            this.songList.Location = new System.Drawing.Point(7, 28);
+            this.songList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.songList.Name = "songList";
             this.songList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.songList.Size = new System.Drawing.Size(197, 264);
+            this.songList.Size = new System.Drawing.Size(261, 324);
             this.songList.TabIndex = 8;
             this.songList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
             this.songList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SongList_KeyDown);
@@ -198,9 +201,10 @@
             // 
             // btnPlaySong
             // 
-            this.btnPlaySong.Location = new System.Drawing.Point(74, 307);
+            this.btnPlaySong.Location = new System.Drawing.Point(99, 378);
+            this.btnPlaySong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPlaySong.Name = "btnPlaySong";
-            this.btnPlaySong.Size = new System.Drawing.Size(43, 23);
+            this.btnPlaySong.Size = new System.Drawing.Size(57, 28);
             this.btnPlaySong.TabIndex = 9;
             this.btnPlaySong.Text = "Play";
             this.btnPlaySong.UseVisualStyleBackColor = true;
@@ -208,9 +212,10 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(126, 307);
+            this.btnStop.Location = new System.Drawing.Point(168, 378);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(43, 23);
+            this.btnStop.Size = new System.Drawing.Size(57, 28);
             this.btnStop.TabIndex = 10;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -232,9 +237,10 @@
             this.panel1.Controls.Add(this.songList);
             this.panel1.Controls.Add(this.btnPlaySong);
             this.panel1.Controls.Add(this.btnStop);
-            this.panel1.Location = new System.Drawing.Point(-1, 47);
+            this.panel1.Location = new System.Drawing.Point(-1, 58);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(256, 342);
+            this.panel1.Size = new System.Drawing.Size(341, 420);
             this.panel1.TabIndex = 13;
             // 
             // selectedFolder
@@ -247,17 +253,19 @@
             "CD1",
             "CD2",
             "CD3"});
-            this.selectedFolder.Location = new System.Drawing.Point(63, 1);
+            this.selectedFolder.Location = new System.Drawing.Point(84, 1);
+            this.selectedFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.selectedFolder.Name = "selectedFolder";
-            this.selectedFolder.Size = new System.Drawing.Size(121, 21);
+            this.selectedFolder.Size = new System.Drawing.Size(160, 24);
             this.selectedFolder.TabIndex = 23;
             this.selectedFolder.SelectedIndexChanged += new System.EventHandler(this.SelectedFolder_SelectedIndexChanged);
             // 
             // btnShuffle
             // 
-            this.btnShuffle.Location = new System.Drawing.Point(204, 307);
+            this.btnShuffle.Location = new System.Drawing.Point(272, 378);
+            this.btnShuffle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnShuffle.Name = "btnShuffle";
-            this.btnShuffle.Size = new System.Drawing.Size(48, 23);
+            this.btnShuffle.Size = new System.Drawing.Size(64, 28);
             this.btnShuffle.TabIndex = 22;
             this.btnShuffle.Text = "Shuffle";
             this.btnShuffle.UseVisualStyleBackColor = true;
@@ -265,9 +273,10 @@
             // 
             // btnCloneSong
             // 
-            this.btnCloneSong.Location = new System.Drawing.Point(204, 228);
+            this.btnCloneSong.Location = new System.Drawing.Point(272, 281);
+            this.btnCloneSong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCloneSong.Name = "btnCloneSong";
-            this.btnCloneSong.Size = new System.Drawing.Size(48, 23);
+            this.btnCloneSong.Size = new System.Drawing.Size(64, 28);
             this.btnCloneSong.TabIndex = 21;
             this.btnCloneSong.Text = "Clone";
             this.btnCloneSong.UseVisualStyleBackColor = true;
@@ -278,27 +287,30 @@
             this.labCounter.AutoSize = true;
             this.labCounter.BackColor = System.Drawing.SystemColors.Control;
             this.labCounter.ForeColor = System.Drawing.Color.Black;
-            this.labCounter.Location = new System.Drawing.Point(2, 315);
+            this.labCounter.Location = new System.Drawing.Point(3, 388);
+            this.labCounter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labCounter.Name = "labCounter";
-            this.labCounter.Size = new System.Drawing.Size(48, 13);
+            this.labCounter.Size = new System.Drawing.Size(62, 17);
             this.labCounter.TabIndex = 20;
             this.labCounter.Text = "Songs: x";
             // 
             // labNowPlaying
             // 
             this.labNowPlaying.AutoSize = true;
-            this.labNowPlaying.Location = new System.Drawing.Point(81, 290);
+            this.labNowPlaying.Location = new System.Drawing.Point(108, 357);
+            this.labNowPlaying.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labNowPlaying.Name = "labNowPlaying";
-            this.labNowPlaying.Size = new System.Drawing.Size(77, 13);
+            this.labNowPlaying.Size = new System.Drawing.Size(100, 17);
             this.labNowPlaying.TabIndex = 19;
             this.labNowPlaying.Text = "labNowPlaying";
             this.labNowPlaying.Visible = false;
             // 
             // btnMoveSong
             // 
-            this.btnMoveSong.Location = new System.Drawing.Point(204, 170);
+            this.btnMoveSong.Location = new System.Drawing.Point(272, 209);
+            this.btnMoveSong.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnMoveSong.Name = "btnMoveSong";
-            this.btnMoveSong.Size = new System.Drawing.Size(48, 23);
+            this.btnMoveSong.Size = new System.Drawing.Size(64, 28);
             this.btnMoveSong.TabIndex = 17;
             this.btnMoveSong.Text = "Move";
             this.btnMoveSong.UseVisualStyleBackColor = true;
@@ -306,9 +318,10 @@
             // 
             // btnDown
             // 
-            this.btnDown.Location = new System.Drawing.Point(204, 52);
+            this.btnDown.Location = new System.Drawing.Point(272, 64);
+            this.btnDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(48, 23);
+            this.btnDown.Size = new System.Drawing.Size(64, 28);
             this.btnDown.TabIndex = 16;
             this.btnDown.Text = "v";
             this.btnDown.UseVisualStyleBackColor = true;
@@ -316,9 +329,10 @@
             // 
             // btnUp
             // 
-            this.btnUp.Location = new System.Drawing.Point(204, 23);
+            this.btnUp.Location = new System.Drawing.Point(272, 28);
+            this.btnUp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(48, 23);
+            this.btnUp.Size = new System.Drawing.Size(64, 28);
             this.btnUp.TabIndex = 15;
             this.btnUp.Text = "^";
             this.btnUp.UseVisualStyleBackColor = true;
@@ -326,9 +340,10 @@
             // 
             // btnSort
             // 
-            this.btnSort.Location = new System.Drawing.Point(204, 105);
+            this.btnSort.Location = new System.Drawing.Point(272, 129);
+            this.btnSort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(48, 23);
+            this.btnSort.Size = new System.Drawing.Size(64, 28);
             this.btnSort.TabIndex = 14;
             this.btnSort.Text = "Sort";
             this.btnSort.UseVisualStyleBackColor = true;
@@ -336,9 +351,10 @@
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(204, 260);
+            this.btnDel.Location = new System.Drawing.Point(272, 320);
+            this.btnDel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(48, 23);
+            this.btnDel.Size = new System.Drawing.Size(64, 28);
             this.btnDel.TabIndex = 13;
             this.btnDel.Text = "Remove";
             this.btnDel.UseVisualStyleBackColor = true;
@@ -355,34 +371,34 @@
             this.btnAbout,
             this.btnQuit});
             this.menuTool.Name = "menuTool";
-            this.menuTool.Size = new System.Drawing.Size(46, 20);
+            this.menuTool.Size = new System.Drawing.Size(58, 24);
             this.menuTool.Text = "Tools";
             // 
             // btnWebsite
             // 
             this.btnWebsite.Name = "btnWebsite";
-            this.btnWebsite.Size = new System.Drawing.Size(232, 22);
+            this.btnWebsite.Size = new System.Drawing.Size(285, 26);
             this.btnWebsite.Text = "Website";
             this.btnWebsite.Click += new System.EventHandler(this.BtnWebsite_Click);
             // 
             // btnGitLab
             // 
             this.btnGitLab.Name = "btnGitLab";
-            this.btnGitLab.Size = new System.Drawing.Size(232, 22);
+            this.btnGitLab.Size = new System.Drawing.Size(285, 26);
             this.btnGitLab.Text = "GitLab repository";
             this.btnGitLab.Click += new System.EventHandler(this.GitToolStripMenuItem_Click);
             // 
             // btnSteam
             // 
             this.btnSteam.Name = "btnSteam";
-            this.btnSteam.Size = new System.Drawing.Size(232, 22);
+            this.btnSteam.Size = new System.Drawing.Size(285, 26);
             this.btnSteam.Text = "Steam Community discussion";
             this.btnSteam.Click += new System.EventHandler(this.SteamCommunityDiscussionToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(282, 6);
             // 
             // btnAbout
             // 
@@ -390,41 +406,41 @@
             this.btnMSCMMAbout,
             this.btnFFmpegLicense});
             this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(232, 22);
+            this.btnAbout.Size = new System.Drawing.Size(285, 26);
             this.btnAbout.Text = "About";
             // 
             // btnMSCMMAbout
             // 
             this.btnMSCMMAbout.Name = "btnMSCMMAbout";
-            this.btnMSCMMAbout.Size = new System.Drawing.Size(184, 22);
+            this.btnMSCMMAbout.Size = new System.Drawing.Size(227, 26);
             this.btnMSCMMAbout.Text = "MSC Music Manager";
             this.btnMSCMMAbout.Click += new System.EventHandler(this.MSCOGGToolStripMenuItem_Click);
             // 
             // btnFFmpegLicense
             // 
             this.btnFFmpegLicense.Name = "btnFFmpegLicense";
-            this.btnFFmpegLicense.Size = new System.Drawing.Size(184, 22);
+            this.btnFFmpegLicense.Size = new System.Drawing.Size(227, 26);
             this.btnFFmpegLicense.Text = "FFmpeg";
             this.btnFFmpegLicense.Click += new System.EventHandler(this.BtnFFmpegLicense_Click);
             // 
             // btnQuit
             // 
             this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(232, 22);
+            this.btnQuit.Size = new System.Drawing.Size(285, 26);
             this.btnQuit.Text = "Quit";
             this.btnQuit.Click += new System.EventHandler(this.QuitToolStripMenuItem_Click);
             // 
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(61, 20);
+            this.menuSettings.Size = new System.Drawing.Size(76, 24);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // btnLaunchGame
             // 
             this.btnLaunchGame.Name = "btnLaunchGame";
-            this.btnLaunchGame.Size = new System.Drawing.Size(92, 20);
+            this.btnLaunchGame.Size = new System.Drawing.Size(112, 24);
             this.btnLaunchGame.Text = "Launch Game";
             this.btnLaunchGame.Click += new System.EventHandler(this.LaunchTheGameToolStripMenuItem_Click);
             // 
@@ -442,30 +458,30 @@
             this.btnDownloadUpdate});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
-            this.menu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menu.Size = new System.Drawing.Size(745, 24);
+            this.menu.Size = new System.Drawing.Size(993, 28);
             this.menu.TabIndex = 7;
             this.menu.Text = "menu";
             // 
             // btnHelp
             // 
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(44, 20);
+            this.btnHelp.Size = new System.Drawing.Size(55, 24);
             this.btnHelp.Text = "Help";
             this.btnHelp.Click += new System.EventHandler(this.BtnHelp_Click);
             // 
             // btnDonate
             // 
             this.btnDonate.Name = "btnDonate";
-            this.btnDonate.Size = new System.Drawing.Size(121, 20);
+            this.btnDonate.Size = new System.Drawing.Size(152, 24);
             this.btnDonate.Text = "Support the project";
             this.btnDonate.Click += new System.EventHandler(this.btnDonate_Click);
             // 
             // btnReportIssue
             // 
             this.btnReportIssue.Name = "btnReportIssue";
-            this.btnReportIssue.Size = new System.Drawing.Size(94, 20);
+            this.btnReportIssue.Size = new System.Drawing.Size(118, 24);
             this.btnReportIssue.Text = "Report an Bug";
             this.btnReportIssue.Click += new System.EventHandler(this.btnReportIssue_Click);
             // 
@@ -473,7 +489,7 @@
             // 
             this.btnDownloadUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDownloadUpdate.Name = "btnDownloadUpdate";
-            this.btnDownloadUpdate.Size = new System.Drawing.Size(117, 20);
+            this.btnDownloadUpdate.Size = new System.Drawing.Size(145, 24);
             this.btnDownloadUpdate.Text = "Get Update Now!";
             this.btnDownloadUpdate.Visible = false;
             this.btnDownloadUpdate.Click += new System.EventHandler(this.BtnDownloadUpdate_Click);
@@ -486,9 +502,10 @@
             // 
             // btnOpenGameDir
             // 
-            this.btnOpenGameDir.Location = new System.Drawing.Point(126, 26);
+            this.btnOpenGameDir.Location = new System.Drawing.Point(168, 32);
+            this.btnOpenGameDir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOpenGameDir.Name = "btnOpenGameDir";
-            this.btnOpenGameDir.Size = new System.Drawing.Size(130, 23);
+            this.btnOpenGameDir.Size = new System.Drawing.Size(173, 28);
             this.btnOpenGameDir.TabIndex = 5;
             this.btnOpenGameDir.Text = "Open in Explorer";
             this.btnOpenGameDir.UseVisualStyleBackColor = true;
@@ -496,9 +513,10 @@
             // 
             // btnDirectory
             // 
-            this.btnDirectory.Location = new System.Drawing.Point(-1, 26);
+            this.btnDirectory.Location = new System.Drawing.Point(-1, 32);
+            this.btnDirectory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDirectory.Name = "btnDirectory";
-            this.btnDirectory.Size = new System.Drawing.Size(129, 23);
+            this.btnDirectory.Size = new System.Drawing.Size(172, 28);
             this.btnDirectory.TabIndex = 4;
             this.btnDirectory.Text = "Set Game Folder";
             this.btnDirectory.UseVisualStyleBackColor = true;
@@ -508,9 +526,10 @@
             // 
             this.labelConvert.AutoSize = true;
             this.labelConvert.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.labelConvert.Location = new System.Drawing.Point(243, 151);
+            this.labelConvert.Location = new System.Drawing.Point(324, 186);
+            this.labelConvert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelConvert.Name = "labelConvert";
-            this.labelConvert.Size = new System.Drawing.Size(136, 20);
+            this.labelConvert.Size = new System.Drawing.Size(169, 25);
             this.labelConvert.TabIndex = 0;
             this.labelConvert.Text = "Convert to {folder}";
             this.labelConvert.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -519,9 +538,10 @@
             // 
             this.dragDropPanel.BackColor = System.Drawing.Color.White;
             this.dragDropPanel.Controls.Add(this.labelConvert);
-            this.dragDropPanel.Location = new System.Drawing.Point(579, 28);
+            this.dragDropPanel.Location = new System.Drawing.Point(772, 34);
+            this.dragDropPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dragDropPanel.Name = "dragDropPanel";
-            this.dragDropPanel.Size = new System.Drawing.Size(184, 65);
+            this.dragDropPanel.Size = new System.Drawing.Size(245, 80);
             this.dragDropPanel.TabIndex = 14;
             this.dragDropPanel.Visible = false;
             // 
@@ -533,10 +553,11 @@
             this.tabs.Controls.Add(this.tabCoverArt);
             this.tabs.Controls.Add(this.tabRecycle);
             this.tabs.HotTrack = true;
-            this.tabs.Location = new System.Drawing.Point(255, 27);
+            this.tabs.Location = new System.Drawing.Point(340, 33);
+            this.tabs.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(490, 362);
+            this.tabs.Size = new System.Drawing.Size(653, 446);
             this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabs.TabIndex = 1;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.TabControl1_SelectedIndexChanged);
@@ -547,10 +568,11 @@
             this.tabLog.Controls.Add(this.logOutput);
             this.tabLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.tabLog.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.tabLog.Location = new System.Drawing.Point(4, 22);
+            this.tabLog.Location = new System.Drawing.Point(4, 25);
+            this.tabLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabLog.Name = "tabLog";
-            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLog.Size = new System.Drawing.Size(482, 336);
+            this.tabLog.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabLog.Size = new System.Drawing.Size(645, 417);
             this.tabLog.TabIndex = 0;
             this.tabLog.Text = "Log";
             // 
@@ -565,27 +587,30 @@
             this.tabDownload.Controls.Add(this.btnDownload);
             this.tabDownload.Controls.Add(this.label5);
             this.tabDownload.Controls.Add(this.txtboxVideo);
-            this.tabDownload.Location = new System.Drawing.Point(4, 22);
+            this.tabDownload.Location = new System.Drawing.Point(4, 25);
+            this.tabDownload.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabDownload.Name = "tabDownload";
-            this.tabDownload.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDownload.Size = new System.Drawing.Size(482, 336);
+            this.tabDownload.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabDownload.Size = new System.Drawing.Size(645, 417);
             this.tabDownload.TabIndex = 1;
             this.tabDownload.Text = "Download";
             // 
             // labProgress
             // 
             this.labProgress.AutoSize = true;
-            this.labProgress.Location = new System.Drawing.Point(6, 128);
+            this.labProgress.Location = new System.Drawing.Point(8, 158);
+            this.labProgress.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labProgress.Name = "labProgress";
-            this.labProgress.Size = new System.Drawing.Size(122, 13);
+            this.labProgress.Size = new System.Drawing.Size(159, 17);
             this.labProgress.TabIndex = 21;
             this.labProgress.Text = "0% 0.00 KiB/s ETA 0:00";
             // 
             // proYt
             // 
-            this.proYt.Location = new System.Drawing.Point(8, 102);
+            this.proYt.Location = new System.Drawing.Point(11, 126);
+            this.proYt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.proYt.Name = "proYt";
-            this.proYt.Size = new System.Drawing.Size(466, 23);
+            this.proYt.Size = new System.Drawing.Size(621, 28);
             this.proYt.TabIndex = 20;
             // 
             // ytdlOutput
@@ -593,20 +618,22 @@
             this.ytdlOutput.BackColor = System.Drawing.SystemColors.Control;
             this.ytdlOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ytdlOutput.ContextMenuStrip = this.defaultContext;
-            this.ytdlOutput.Location = new System.Drawing.Point(8, 145);
+            this.ytdlOutput.Location = new System.Drawing.Point(11, 178);
+            this.ytdlOutput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ytdlOutput.Multiline = true;
             this.ytdlOutput.Name = "ytdlOutput";
             this.ytdlOutput.ReadOnly = true;
             this.ytdlOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ytdlOutput.Size = new System.Drawing.Size(466, 142);
+            this.ytdlOutput.Size = new System.Drawing.Size(621, 174);
             this.ytdlOutput.TabIndex = 17;
             // 
             // btnCancelDownload
             // 
             this.btnCancelDownload.Enabled = false;
-            this.btnCancelDownload.Location = new System.Drawing.Point(111, 53);
+            this.btnCancelDownload.Location = new System.Drawing.Point(148, 65);
+            this.btnCancelDownload.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCancelDownload.Name = "btnCancelDownload";
-            this.btnCancelDownload.Size = new System.Drawing.Size(99, 36);
+            this.btnCancelDownload.Size = new System.Drawing.Size(132, 44);
             this.btnCancelDownload.TabIndex = 16;
             this.btnCancelDownload.Text = "Cancel";
             this.btnCancelDownload.UseVisualStyleBackColor = true;
@@ -615,9 +642,10 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 301);
+            this.label6.Location = new System.Drawing.Point(4, 370);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(405, 26);
+            this.label6.Size = new System.Drawing.Size(543, 34);
             this.label6.TabIndex = 15;
             this.label6.Text = "Note:\r\nThe autor of this tool doesn\'t take any responsibility for the way how tha" +
     "t tool is used.";
@@ -625,9 +653,10 @@
             // btnDownload
             // 
             this.btnDownload.Enabled = false;
-            this.btnDownload.Location = new System.Drawing.Point(6, 53);
+            this.btnDownload.Location = new System.Drawing.Point(8, 65);
+            this.btnDownload.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(99, 36);
+            this.btnDownload.Size = new System.Drawing.Size(132, 44);
             this.btnDownload.TabIndex = 15;
             this.btnDownload.Text = "Download";
             this.btnDownload.UseVisualStyleBackColor = true;
@@ -636,19 +665,22 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 11);
+            this.label5.Location = new System.Drawing.Point(8, 14);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 13);
+            this.label5.Size = new System.Drawing.Size(164, 17);
             this.label5.TabIndex = 15;
             this.label5.Text = "Search Term/Video Link:";
             // 
             // txtboxVideo
             // 
             this.txtboxVideo.ContextMenuStrip = this.defaultContext;
-            this.txtboxVideo.Location = new System.Drawing.Point(6, 27);
+            this.txtboxVideo.Location = new System.Drawing.Point(8, 33);
+            this.txtboxVideo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtboxVideo.Name = "txtboxVideo";
-            this.txtboxVideo.Size = new System.Drawing.Size(469, 20);
+            this.txtboxVideo.Size = new System.Drawing.Size(624, 22);
             this.txtboxVideo.TabIndex = 1;
+            this.txtboxVideo.Click += new System.EventHandler(this.txtboxVideo_Click);
             this.txtboxVideo.TextChanged += new System.EventHandler(this.txtboxVideo_TextChanged);
             this.txtboxVideo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtboxVideo_KeyDown);
             // 
@@ -660,9 +692,10 @@
             this.tabMeta.Controls.Add(this.btnSetName);
             this.tabMeta.Controls.Add(this.label1);
             this.tabMeta.Controls.Add(this.txtSongName);
-            this.tabMeta.Location = new System.Drawing.Point(4, 22);
+            this.tabMeta.Location = new System.Drawing.Point(4, 25);
+            this.tabMeta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabMeta.Name = "tabMeta";
-            this.tabMeta.Size = new System.Drawing.Size(482, 336);
+            this.tabMeta.Size = new System.Drawing.Size(645, 417);
             this.tabMeta.TabIndex = 2;
             this.tabMeta.Text = "Edit";
             this.tabMeta.UseVisualStyleBackColor = true;
@@ -670,17 +703,19 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 141);
+            this.label3.Location = new System.Drawing.Point(8, 174);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.Size = new System.Drawing.Size(112, 17);
             this.label3.TabIndex = 20;
             this.label3.Text = "Modify the song:";
             // 
             // btnOpenWithAudacity
             // 
-            this.btnOpenWithAudacity.Location = new System.Drawing.Point(6, 158);
+            this.btnOpenWithAudacity.Location = new System.Drawing.Point(8, 194);
+            this.btnOpenWithAudacity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOpenWithAudacity.Name = "btnOpenWithAudacity";
-            this.btnOpenWithAudacity.Size = new System.Drawing.Size(99, 36);
+            this.btnOpenWithAudacity.Size = new System.Drawing.Size(132, 44);
             this.btnOpenWithAudacity.TabIndex = 19;
             this.btnOpenWithAudacity.Text = "Edit with Audacity";
             this.btnOpenWithAudacity.UseVisualStyleBackColor = true;
@@ -689,18 +724,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 6);
+            this.label2.Location = new System.Drawing.Point(4, 7);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(301, 13);
+            this.label2.Size = new System.Drawing.Size(405, 17);
             this.label2.TabIndex = 18;
             this.label2.Text = "Select song from the list to the left and edit it\'s displayed name.";
             // 
             // btnSetName
             // 
             this.btnSetName.Enabled = false;
-            this.btnSetName.Location = new System.Drawing.Point(6, 74);
+            this.btnSetName.Location = new System.Drawing.Point(8, 91);
+            this.btnSetName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSetName.Name = "btnSetName";
-            this.btnSetName.Size = new System.Drawing.Size(99, 36);
+            this.btnSetName.Size = new System.Drawing.Size(132, 44);
             this.btnSetName.TabIndex = 17;
             this.btnSetName.Text = "Save";
             this.btnSetName.UseVisualStyleBackColor = true;
@@ -709,18 +746,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 32);
+            this.label1.Location = new System.Drawing.Point(8, 39);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(49, 17);
             this.label1.TabIndex = 16;
             this.label1.Text = "Name:";
             // 
             // txtSongName
             // 
             this.txtSongName.ContextMenuStrip = this.defaultContext;
-            this.txtSongName.Location = new System.Drawing.Point(6, 48);
+            this.txtSongName.Location = new System.Drawing.Point(8, 59);
+            this.txtSongName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSongName.Name = "txtSongName";
-            this.txtSongName.Size = new System.Drawing.Size(469, 20);
+            this.txtSongName.Size = new System.Drawing.Size(624, 22);
             this.txtSongName.TabIndex = 2;
             this.txtSongName.TextChanged += new System.EventHandler(this.txtSongName_TextChanged);
             this.txtSongName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSongName_KeyDown);
@@ -736,10 +775,10 @@
             this.tabCoverArt.Controls.Add(this.txtCdText);
             this.tabCoverArt.Controls.Add(this.btnSelectFont);
             this.tabCoverArt.Controls.Add(this.btnCreateCoverArt);
-            this.tabCoverArt.Location = new System.Drawing.Point(4, 22);
-            this.tabCoverArt.Margin = new System.Windows.Forms.Padding(2);
+            this.tabCoverArt.Location = new System.Drawing.Point(4, 25);
+            this.tabCoverArt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabCoverArt.Name = "tabCoverArt";
-            this.tabCoverArt.Size = new System.Drawing.Size(482, 336);
+            this.tabCoverArt.Size = new System.Drawing.Size(645, 417);
             this.tabCoverArt.TabIndex = 4;
             this.tabCoverArt.Text = "Cover Art";
             this.tabCoverArt.UseVisualStyleBackColor = true;
@@ -747,20 +786,19 @@
             // labImageInfo
             // 
             this.labImageInfo.AutoSize = true;
-            this.labImageInfo.Location = new System.Drawing.Point(238, 291);
-            this.labImageInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labImageInfo.Location = new System.Drawing.Point(317, 358);
             this.labImageInfo.Name = "labImageInfo";
-            this.labImageInfo.Size = new System.Drawing.Size(80, 26);
+            this.labImageInfo.Size = new System.Drawing.Size(105, 34);
             this.labImageInfo.TabIndex = 37;
             this.labImageInfo.Text = "Resolution: 0x0\r\nScale: 0x";
             this.labImageInfo.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // picCoverArt
             // 
-            this.picCoverArt.Location = new System.Drawing.Point(340, 176);
-            this.picCoverArt.Margin = new System.Windows.Forms.Padding(2);
+            this.picCoverArt.Location = new System.Drawing.Point(453, 217);
+            this.picCoverArt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picCoverArt.Name = "picCoverArt";
-            this.picCoverArt.Size = new System.Drawing.Size(135, 146);
+            this.picCoverArt.Size = new System.Drawing.Size(180, 180);
             this.picCoverArt.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picCoverArt.TabIndex = 36;
             this.picCoverArt.TabStop = false;
@@ -768,20 +806,19 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(112, 115);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Location = new System.Drawing.Point(149, 142);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(314, 13);
+            this.label7.Size = new System.Drawing.Size(419, 17);
             this.label7.TabIndex = 35;
             this.label7.Text = "Use the default cover art image with no text added for best result.";
             // 
             // btnCoverArtImage
             // 
             this.btnCoverArtImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.btnCoverArtImage.Location = new System.Drawing.Point(8, 106);
-            this.btnCoverArtImage.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCoverArtImage.Location = new System.Drawing.Point(11, 130);
+            this.btnCoverArtImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCoverArtImage.Name = "btnCoverArtImage";
-            this.btnCoverArtImage.Size = new System.Drawing.Size(99, 36);
+            this.btnCoverArtImage.Size = new System.Drawing.Size(132, 44);
             this.btnCoverArtImage.TabIndex = 34;
             this.btnCoverArtImage.Text = "No CD cover found";
             this.btnCoverArtImage.UseVisualStyleBackColor = true;
@@ -791,35 +828,39 @@
             // 
             this.labCurrentFont.AutoSize = true;
             this.labCurrentFont.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labCurrentFont.Location = new System.Drawing.Point(113, 64);
+            this.labCurrentFont.Location = new System.Drawing.Point(151, 79);
+            this.labCurrentFont.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labCurrentFont.Name = "labCurrentFont";
-            this.labCurrentFont.Size = new System.Drawing.Size(36, 16);
+            this.labCurrentFont.Size = new System.Drawing.Size(42, 19);
             this.labCurrentFont.TabIndex = 30;
             this.labCurrentFont.Text = "Arial";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 7);
+            this.label4.Location = new System.Drawing.Point(11, 9);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 13);
+            this.label4.Size = new System.Drawing.Size(82, 17);
             this.label4.TabIndex = 29;
             this.label4.Text = "Text on CD:";
             // 
             // txtCdText
             // 
             this.txtCdText.ContextMenuStrip = this.defaultContext;
-            this.txtCdText.Location = new System.Drawing.Point(8, 24);
+            this.txtCdText.Location = new System.Drawing.Point(11, 30);
+            this.txtCdText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtCdText.MaxLength = 8;
             this.txtCdText.Name = "txtCdText";
-            this.txtCdText.Size = new System.Drawing.Size(468, 20);
+            this.txtCdText.Size = new System.Drawing.Size(623, 22);
             this.txtCdText.TabIndex = 28;
             // 
             // btnSelectFont
             // 
-            this.btnSelectFont.Location = new System.Drawing.Point(8, 53);
+            this.btnSelectFont.Location = new System.Drawing.Point(11, 65);
+            this.btnSelectFont.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSelectFont.Name = "btnSelectFont";
-            this.btnSelectFont.Size = new System.Drawing.Size(99, 36);
+            this.btnSelectFont.Size = new System.Drawing.Size(132, 44);
             this.btnSelectFont.TabIndex = 27;
             this.btnSelectFont.Text = "Choose the font";
             this.btnSelectFont.UseVisualStyleBackColor = true;
@@ -827,9 +868,10 @@
             // 
             // btnCreateCoverArt
             // 
-            this.btnCreateCoverArt.Location = new System.Drawing.Point(8, 158);
+            this.btnCreateCoverArt.Location = new System.Drawing.Point(11, 194);
+            this.btnCreateCoverArt.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCreateCoverArt.Name = "btnCreateCoverArt";
-            this.btnCreateCoverArt.Size = new System.Drawing.Size(99, 36);
+            this.btnCreateCoverArt.Size = new System.Drawing.Size(132, 44);
             this.btnCreateCoverArt.TabIndex = 16;
             this.btnCreateCoverArt.Text = "Create new cover art";
             this.btnCreateCoverArt.UseVisualStyleBackColor = true;
@@ -842,19 +884,20 @@
             this.tabRecycle.Controls.Add(this.btnRestore);
             this.tabRecycle.Controls.Add(this.btnRecycleDelete);
             this.tabRecycle.Controls.Add(this.trashList);
-            this.tabRecycle.Location = new System.Drawing.Point(4, 22);
-            this.tabRecycle.Margin = new System.Windows.Forms.Padding(2);
+            this.tabRecycle.Location = new System.Drawing.Point(4, 25);
+            this.tabRecycle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabRecycle.Name = "tabRecycle";
-            this.tabRecycle.Size = new System.Drawing.Size(482, 336);
+            this.tabRecycle.Size = new System.Drawing.Size(645, 417);
             this.tabRecycle.TabIndex = 3;
             this.tabRecycle.Text = "Recycle Bin";
             this.tabRecycle.UseVisualStyleBackColor = true;
             // 
             // btnEmptyAll
             // 
-            this.btnEmptyAll.Location = new System.Drawing.Point(117, 290);
+            this.btnEmptyAll.Location = new System.Drawing.Point(156, 357);
+            this.btnEmptyAll.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnEmptyAll.Name = "btnEmptyAll";
-            this.btnEmptyAll.Size = new System.Drawing.Size(99, 36);
+            this.btnEmptyAll.Size = new System.Drawing.Size(132, 44);
             this.btnEmptyAll.TabIndex = 28;
             this.btnEmptyAll.Text = "Empty All";
             this.btnEmptyAll.UseVisualStyleBackColor = true;
@@ -863,17 +906,19 @@
             // labRecycle
             // 
             this.labRecycle.AutoSize = true;
-            this.labRecycle.Location = new System.Drawing.Point(10, 5);
+            this.labRecycle.Location = new System.Drawing.Point(13, 6);
+            this.labRecycle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labRecycle.Name = "labRecycle";
-            this.labRecycle.Size = new System.Drawing.Size(104, 13);
+            this.labRecycle.Size = new System.Drawing.Size(137, 17);
             this.labRecycle.TabIndex = 27;
             this.labRecycle.Text = "Recycle bin is empty";
             // 
             // btnRestore
             // 
-            this.btnRestore.Location = new System.Drawing.Point(373, 291);
+            this.btnRestore.Location = new System.Drawing.Point(497, 358);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRestore.Name = "btnRestore";
-            this.btnRestore.Size = new System.Drawing.Size(99, 36);
+            this.btnRestore.Size = new System.Drawing.Size(132, 44);
             this.btnRestore.TabIndex = 26;
             this.btnRestore.Text = "Restore";
             this.btnRestore.UseVisualStyleBackColor = true;
@@ -881,9 +926,10 @@
             // 
             // btnRecycleDelete
             // 
-            this.btnRecycleDelete.Location = new System.Drawing.Point(12, 290);
+            this.btnRecycleDelete.Location = new System.Drawing.Point(16, 357);
+            this.btnRecycleDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRecycleDelete.Name = "btnRecycleDelete";
-            this.btnRecycleDelete.Size = new System.Drawing.Size(99, 36);
+            this.btnRecycleDelete.Size = new System.Drawing.Size(132, 44);
             this.btnRecycleDelete.TabIndex = 25;
             this.btnRecycleDelete.Text = "Delete";
             this.btnRecycleDelete.UseVisualStyleBackColor = true;
@@ -893,19 +939,22 @@
             // 
             this.trashList.FormattingEnabled = true;
             this.trashList.HorizontalScrollbar = true;
-            this.trashList.Location = new System.Drawing.Point(12, 20);
+            this.trashList.ItemHeight = 16;
+            this.trashList.Location = new System.Drawing.Point(16, 25);
+            this.trashList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.trashList.Name = "trashList";
             this.trashList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.trashList.Size = new System.Drawing.Size(461, 264);
+            this.trashList.Size = new System.Drawing.Size(613, 324);
             this.trashList.Sorted = true;
             this.trashList.TabIndex = 24;
             this.trashList.SelectedIndexChanged += new System.EventHandler(this.trashList_SelectedIndexChanged);
             // 
             // downloadProgress
             // 
-            this.downloadProgress.Location = new System.Drawing.Point(386, 1);
+            this.downloadProgress.Location = new System.Drawing.Point(515, 1);
+            this.downloadProgress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.downloadProgress.Name = "downloadProgress";
-            this.downloadProgress.Size = new System.Drawing.Size(356, 23);
+            this.downloadProgress.Size = new System.Drawing.Size(475, 28);
             this.downloadProgress.TabIndex = 19;
             this.downloadProgress.Visible = false;
             // 
@@ -918,13 +967,13 @@
             this.contextMove,
             this.contextAll});
             this.songListContext.Name = "songListContext";
-            this.songListContext.Size = new System.Drawing.Size(165, 92);
+            this.songListContext.Size = new System.Drawing.Size(193, 100);
             // 
             // contextCopy
             // 
             this.contextCopy.Name = "contextCopy";
             this.contextCopy.ShortcutKeyDisplayString = "Ctrl+C";
-            this.contextCopy.Size = new System.Drawing.Size(164, 22);
+            this.contextCopy.Size = new System.Drawing.Size(192, 24);
             this.contextCopy.Text = "Clone";
             this.contextCopy.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.contextCopy.Click += new System.EventHandler(this.ContextCopy_Click);
@@ -933,7 +982,7 @@
             // 
             this.contextDelete.Name = "contextDelete";
             this.contextDelete.ShortcutKeyDisplayString = "Delete";
-            this.contextDelete.Size = new System.Drawing.Size(164, 22);
+            this.contextDelete.Size = new System.Drawing.Size(192, 24);
             this.contextDelete.Text = "Delete";
             this.contextDelete.Click += new System.EventHandler(this.ContextDelete_Click);
             // 
@@ -941,7 +990,7 @@
             // 
             this.contextMove.Name = "contextMove";
             this.contextMove.ShortcutKeyDisplayString = "Ctrl+X";
-            this.contextMove.Size = new System.Drawing.Size(164, 22);
+            this.contextMove.Size = new System.Drawing.Size(192, 24);
             this.contextMove.Text = "Move";
             this.contextMove.Click += new System.EventHandler(this.ContextMove_Click);
             // 
@@ -949,7 +998,7 @@
             // 
             this.contextAll.Name = "contextAll";
             this.contextAll.ShortcutKeyDisplayString = "Ctrl+A";
-            this.contextAll.Size = new System.Drawing.Size(164, 22);
+            this.contextAll.Size = new System.Drawing.Size(192, 24);
             this.contextAll.Text = "Select All";
             this.contextAll.Click += new System.EventHandler(this.ContextAll_Click);
             // 
@@ -963,9 +1012,9 @@
             // Form1
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 385);
+            this.ClientSize = new System.Drawing.Size(993, 474);
             this.Controls.Add(this.downloadProgress);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabs);
@@ -976,8 +1025,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(761, 424);
+            this.MinimumSize = new System.Drawing.Size(1009, 511);
             this.Name = "Form1";
             this.Text = "MSC Music Manager";
             this.Activated += new System.EventHandler(this.Form1_Activated);

@@ -1,5 +1,11 @@
 # Changelog
 
+## Preview 2.12.0.0 (xx.11.2019)
+
+### Added
+
+- Uppon pressing the URL textbox, the program will automatically paste the text from clipboard, if it's a YouTube link
+
 ## 2.11 (21.11.2019)
 
 ### Added
